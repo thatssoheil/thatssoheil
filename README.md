@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # OpenNext Starter
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
@@ -63,4 +62,3 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
->>>>>>> f0591d204b42c02feacdf69c94a0f309cda18431
