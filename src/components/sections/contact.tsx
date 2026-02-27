@@ -88,7 +88,7 @@ export function ContactSection() {
 					{/* Email CTA */}
 					<motion.div variants={fadeUp}>
 						<Button asChild size="lg" className="gap-2 text-base px-8 h-12">
-							<a href="mailto:hello@thatssoheil.com">
+							<a href="mailto:soheil.fakour@gmail.com">
 								<Mail className="size-5" />
 								Say Hello
 							</a>

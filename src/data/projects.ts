@@ -5,6 +5,7 @@ export interface Project {
   title: string;
   description: string;
   tech: string[];
+  context: string; // employer / context label
   github?: string;
   live?: string;
 }
@@ -18,35 +19,33 @@ export const PROJECTS: {
   subheading: "Selected work",
   entries: [
     {
-      title: "Realtime Shader Playground",
+      title: "Rechat CRM Template Engine",
       description:
-        "A browser-based WebGPU sandbox for authoring and live-previewing WGSL shaders with hot reload, multi-pass pipelines, and exportable screenshots.",
-      tech: ["WebGPU", "WGSL", "TypeScript", "Next.js"],
-      github: "https://github.com/soheil/shader-playground",
-      live: "https://shaders.thatssoheil.com",
+        "A dynamic, CMS-integrated template system that lets US and Canadian realtors create, edit, and publish marketing assets — deal papers, email campaigns, and social media posts — without leaving the platform. Templates are pixel-perfect, responsive, and fully customisable via declared attributes.",
+      tech: ["JavaScript", "HTML", "CSS", "CMS Integration"],
+      context: "Rechat · Dallas, TX",
+      live: "https://rechat.com",
     },
     {
-      title: "Edge Analytics Dashboard",
+      title: "Engenesis Platform",
       description:
-        "High-performance analytics dashboard running entirely at the edge with Cloudflare Workers and D1. Sub-50 ms p99 latency for complex aggregations.",
-      tech: ["Cloudflare Workers", "D1", "React", "Tailwind CSS"],
-      github: "https://github.com/soheil/edge-analytics",
-      live: "https://analytics.thatssoheil.com",
+        "A social-learning platform that brings together the professional networking of LinkedIn and the structured course delivery of Coursera. Built a scalable component architecture, enforced clean-code standards, and collaborated cross-functionally to ship features consistently.",
+      tech: ["React", "TypeScript", "Node.js", "REST API"],
+      context: "Zaman · Tehran",
     },
     {
-      title: "Generative Art Engine",
+      title: "Nova Panel — Legacy Redesign",
       description:
-        "A creative-coding framework for producing deterministic generative artwork from seed values. Exports to SVG and high-res PNG for print.",
-      tech: ["Canvas API", "TypeScript", "Node.js", "SVG"],
-      github: "https://github.com/soheil/gen-art-engine",
+        "Full modernisation of a legacy B2B enterprise panel at MCINEXT. Migrated the entire UI to Material UI, implemented a new design system aligned with contemporary UX principles, and rewired complex backend interactions to support dynamic, real-time data updates.",
+      tech: ["React", "Material UI", "TypeScript", "REST API"],
+      context: "MCINEXT · Tehran",
     },
     {
-      title: "Collaborative Whiteboard",
+      title: "Dideban Watcher Platform",
       description:
-        "Real-time multiplayer whiteboard with CRDT-based conflict resolution, infinite canvas, and pressure-sensitive brush engine.",
-      tech: ["WebSockets", "Y.js", "React", "PostgreSQL"],
-      github: "https://github.com/soheil/collab-board",
-      live: "https://board.thatssoheil.com",
+        "A web-scraping SaaS that lets users monitor anything that changes cyclically online — from cryptocurrency prices to product availability. Joined at the founding stage and built the entire frontend panel from scratch, establishing the component system and design language.",
+      tech: ["React", "TypeScript", "Tailwind CSS", "REST API"],
+      context: "Dideban · Tehran",
     },
   ],
 } as const;

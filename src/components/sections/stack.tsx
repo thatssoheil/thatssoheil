@@ -1,68 +1,119 @@
 "use client";
 
-import { useRef, useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import type { SectionId } from "@/lib/constants";
-import { STACK } from "@/data/stack";
+import { STACK, type TechItem } from "@/data/stack";
 import { TechIcon } from "./tech-icons";
 
-// ─── Animation Variants ───
+// --- Animation Variants ---------------------------------------------------
 
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.08 },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
+    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, scale: 0.85 },
+const pillContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.05 },
+  },
+};
+
+const pillVariant = {
+  hidden: { opacity: 0, scale: 0.88, y: 10 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const },
+    y: 0,
+    transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
 };
 
-// ─── Stack Section ───
+// --- Tech Pill ------------------------------------------------------------
+
+function TechPill({ item }: { item: TechItem }) {
+  const [hovered, setHovered] = useState(false);
+  const brandHex = item.hex;
+
+  return (
+    <motion.div
+      variants={pillVariant}
+      className="flex items-center gap-2.5 rounded-full px-4 py-2 cursor-default select-none"
+      style={{
+        border: `1px solid ${hovered ? `#${brandHex}55` : "rgba(255,255,255,0.08)"}`,
+        backgroundColor: hovered
+          ? `#${brandHex}18`
+          : "rgba(255,255,255,0.025)",
+        transition: "border-color 250ms ease, background-color 250ms ease",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <TechIcon
+        slug={item.slug}
+        hex={hovered ? brandHex : "888888"}
+        size={16}
+      />
+      <span
+        className="text-[11px] sm:text-xs font-mono tracking-wide whitespace-nowrap"
+        style={{
+          color: hovered ? "#fff" : "rgba(255,255,255,0.5)",
+          transition: "color 250ms ease",
+        }}
+      >
+        {item.name}
+      </span>
+    </motion.div>
+  );
+}
+
+// --- Category Block -------------------------------------------------------
+
+function CategoryBlock({
+  label,
+  items,
+}: {
+  label: string;
+  items: TechItem[];
+}) {
+  return (
+    <motion.div variants={fadeUp} className="flex flex-col gap-4">
+      <p className="font-mono text-[10px] tracking-[0.22em] uppercase text-white/25">
+        {label}
+      </p>
+      <motion.div
+        className="flex flex-wrap gap-2"
+        variants={pillContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        {items.map((item) => (
+          <TechPill key={item.slug} item={item} />
+        ))}
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// --- Stack Section --------------------------------------------------------
 
 export function StackSection() {
-  const gridRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
-
-  // Track mouse position relative to the grid for proximity effect
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!gridRef.current) return;
-    const rect = gridRef.current.getBoundingClientRect();
-    setMousePos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setMousePos(null);
-  }, []);
-
-  useEffect(() => {
-    const el = gridRef.current;
-    if (!el) return;
-    el.addEventListener("mousemove", handleMouseMove);
-    el.addEventListener("mouseleave", handleMouseLeave);
-    return () => {
-      el.removeEventListener("mousemove", handleMouseMove);
-      el.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, [handleMouseMove, handleMouseLeave]);
+  // Split STACK into two columns for desktop layout
+  const leftCol = STACK.slice(0, 2);  // Languages + Frameworks & Libraries
+  const rightCol = STACK.slice(2);    // Tools + Platforms
 
   return (
     <section
@@ -76,9 +127,9 @@ export function StackSection() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: true, amount: 0.1 }}
         >
-          {/* ── Heading ── */}
+          {/* -- Heading -- */}
           <motion.p
             className="font-mono text-sm tracking-[0.2em] uppercase text-white/40 mb-2"
             variants={fadeUp}
@@ -92,110 +143,32 @@ export function StackSection() {
             Stack
           </motion.h2>
 
-          {/* ── Grid with proximity effect ── */}
-          <div ref={gridRef} className="space-y-12">
-            {STACK.map((category) => (
-              <motion.div key={category.label} variants={fadeUp}>
-                {/* Category label */}
-                <h3 className="font-mono text-xs tracking-[0.2em] uppercase text-white/30 mb-5">
-                  {category.label}
-                </h3>
+          {/* -- Two-column grid at lg, single column on mobile -- */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-x-20 lg:gap-y-16">
+            {/* Left column */}
+            <div className="flex flex-col gap-10">
+              {leftCol.map((cat) => (
+                <CategoryBlock
+                  key={cat.label}
+                  label={cat.label}
+                  items={cat.items}
+                />
+              ))}
+            </div>
 
-                {/* Items grid */}
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
-                  {category.items.map((item) => (
-                    <TechStackItem
-                      key={item.name}
-                      name={item.name}
-                      icon={item.icon}
-                      mousePos={mousePos}
-                      gridRef={gridRef}
-                    />
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+            {/* Right column */}
+            <div className="flex flex-col gap-10">
+              {rightCol.map((cat) => (
+                <CategoryBlock
+                  key={cat.label}
+                  label={cat.label}
+                  items={cat.items}
+                />
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
     </section>
-  );
-}
-
-// ─── Single Tech Item ───
-
-interface TechStackItemProps {
-  name: string;
-  icon: string;
-  mousePos: { x: number; y: number } | null;
-  gridRef: React.RefObject<HTMLDivElement | null>;
-}
-
-function TechStackItem({ name, icon, mousePos, gridRef }: TechStackItemProps) {
-  const itemRef = useRef<HTMLDivElement>(null);
-  const [proximity, setProximity] = useState(0);
-
-  useEffect(() => {
-    if (!mousePos || !itemRef.current || !gridRef.current) {
-      setProximity(0);
-      return;
-    }
-
-    const el = itemRef.current;
-    const gridRect = gridRef.current.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-
-    // Center of element relative to grid
-    const elCenterX = elRect.left - gridRect.left + elRect.width / 2;
-    const elCenterY = elRect.top - gridRect.top + elRect.height / 2;
-
-    const dx = mousePos.x - elCenterX;
-    const dy = mousePos.y - elCenterY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    // Proximity radius in px — items within this distance get the effect
-    const radius = 150;
-    const p = Math.max(0, 1 - distance / radius);
-    setProximity(p);
-  }, [mousePos, gridRef]);
-
-  const scale = 1 + proximity * 0.08;
-  const brightness = 0.4 + proximity * 0.6; // base 0.4 → full 1.0
-
-  return (
-    <motion.div
-      ref={itemRef}
-      variants={itemVariants}
-      className="tech-stack-item group relative flex flex-col items-center justify-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 transition-all duration-200 ease-out hover:border-white/20 hover:bg-white/[0.06]"
-      style={{
-        transform: `scale(${scale})`,
-        willChange: proximity > 0 ? "transform" : "auto",
-      }}
-    >
-      {/* Icon */}
-      <div
-        className="transition-[filter] duration-200"
-        style={{
-          filter: `brightness(${brightness})`,
-        }}
-      >
-        <TechIcon id={icon} className="w-7 h-7 text-white" />
-      </div>
-
-      {/* Label — subtle on idle, fully visible on hover / proximity */}
-      <span
-        className="text-[10px] sm:text-xs font-mono tracking-wide text-center transition-opacity duration-200 whitespace-nowrap"
-        style={{
-          opacity: Math.max(0.3, proximity > 0 ? 0.3 + proximity * 0.7 : 0),
-        }}
-      >
-        {name}
-      </span>
-
-      {/* Hover tooltip for small screens */}
-      <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md bg-white/10 backdrop-blur-md px-2 py-1 text-[10px] font-mono text-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-10">
-        {name}
-      </span>
-    </motion.div>
   );
 }

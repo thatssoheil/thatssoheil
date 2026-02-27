@@ -50,9 +50,16 @@ function ProjectCard({ project, index }: ProjectCardProps) {
 		>
 			{/* Title + Links */}
 			<div className="flex items-start justify-between gap-3">
-				<h3 className="text-lg font-semibold text-white tracking-tight">
-					{project.title}
-				</h3>
+				<div>
+					<h3 className="text-lg font-semibold text-white tracking-tight">
+						{project.title}
+					</h3>
+					{project.context && (
+						<p className="mt-0.5 font-mono text-[10px] tracking-wide text-white/30">
+							{project.context}
+						</p>
+					)}
+				</div>
 
 				<div className="flex items-center gap-2 shrink-0 pt-0.5">
 					{project.github && (

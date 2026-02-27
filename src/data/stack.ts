@@ -1,10 +1,12 @@
 // ─── Tech Stack Data ───
 // Edit this file to update the Stack section content.
+// slug → key used to look up the icon in simple-icons (e.g. siTypescript)
+// hex  → brand colour WITHOUT the leading #
 
 export interface TechItem {
   name: string;
-  /** SVG path data or a simple icon identifier */
-  icon: string;
+  slug: string;
+  hex: string;
 }
 
 export interface TechCategory {
@@ -16,52 +18,38 @@ export const STACK: TechCategory[] = [
   {
     label: "Languages",
     items: [
-      { name: "TypeScript", icon: "typescript" },
-      { name: "JavaScript", icon: "javascript" },
-      { name: "Python", icon: "python" },
-      { name: "Rust", icon: "rust" },
-      { name: "Go", icon: "go" },
-      { name: "HTML", icon: "html" },
-      { name: "CSS", icon: "css" },
-      { name: "SQL", icon: "sql" },
-      { name: "WGSL", icon: "wgsl" },
+      { name: "TypeScript",   slug: "typescript",   hex: "3178C6" },
+      { name: "JavaScript",   slug: "javascript",   hex: "F7DF1E" },
+      { name: "HTML5",        slug: "html5",        hex: "E34F26" },
+      { name: "CSS3",         slug: "css",          hex: "1572B6" },
     ],
   },
   {
-    label: "Frameworks",
+    label: "Frameworks & Libraries",
     items: [
-      { name: "React", icon: "react" },
-      { name: "Next.js", icon: "nextjs" },
-      { name: "Node.js", icon: "nodejs" },
-      { name: "Tailwind CSS", icon: "tailwind" },
-      { name: "Express", icon: "express" },
-      { name: "FastAPI", icon: "fastapi" },
-      { name: "Three.js", icon: "threejs" },
-      { name: "Framer Motion", icon: "framer" },
+      { name: "React",        slug: "react",        hex: "61DAFB" },
+      { name: "Next.js",      slug: "nextdotjs",    hex: "FFFFFF" },
+      { name: "Node.js",      slug: "nodedotjs",    hex: "5FA04E" },
+      { name: "Tailwind CSS", slug: "tailwindcss",  hex: "06B6D4" },
+      { name: "Material UI",  slug: "mui",          hex: "007FFF" },
+      { name: "WordPress",    slug: "wordpress",    hex: "21759B" },
     ],
   },
   {
     label: "Tools",
     items: [
-      { name: "Git", icon: "git" },
-      { name: "Docker", icon: "docker" },
-      { name: "Figma", icon: "figma" },
-      { name: "VS Code", icon: "vscode" },
-      { name: "Webpack", icon: "webpack" },
-      { name: "Vite", icon: "vite" },
-      { name: "ESLint", icon: "eslint" },
-      { name: "Postgres", icon: "postgres" },
+      { name: "Git",          slug: "git",          hex: "F05032" },
+      { name: "Figma",        slug: "figma",        hex: "F24E1E" },
+      { name: "VS Code",      slug: "vscodium",     hex: "2F80ED" },
+      { name: "Vite",         slug: "vite",         hex: "646CFF" },
     ],
   },
   {
     label: "Platforms",
     items: [
-      { name: "Cloudflare", icon: "cloudflare" },
-      { name: "AWS", icon: "aws" },
-      { name: "Vercel", icon: "vercel" },
-      { name: "GitHub", icon: "github" },
-      { name: "Linux", icon: "linux" },
-      { name: "WebGPU", icon: "webgpu" },
+      { name: "GitHub",       slug: "github",       hex: "FFFFFF" },
+      { name: "Vercel",       slug: "vercel",       hex: "FFFFFF" },
+      { name: "Cloudflare",   slug: "cloudflare",   hex: "F38020" },
     ],
   },
-] as const;
+];

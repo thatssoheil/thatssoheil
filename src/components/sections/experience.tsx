@@ -157,9 +157,26 @@ function EntryCard({ entry, isInView, align, delay }: EntryCardProps) {
 			<p className="mt-0.5 font-mono text-xs tracking-wide text-white/40">
 				{entry.company}
 			</p>
-			<p className="mt-2 text-sm leading-relaxed text-white/55 font-light">
+			{entry.location && (
+				<p className="mt-0.5 font-mono text-[10px] tracking-wide text-white/25">
+					{entry.location}
+				</p>
+			)}
+			<p className="mt-2.5 text-sm leading-relaxed text-white/55 font-light">
 				{entry.description}
 			</p>
+			{entry.bullets && entry.bullets.length > 0 && (
+				<ul className={`mt-3 flex flex-col gap-1.5 ${align === "right" ? "items-end" : "items-start"}`}>
+					{entry.bullets.map((b, i) => (
+						<li
+							key={i}
+							className="text-xs leading-relaxed text-white/40 font-light before:content-['—'] before:mr-1.5 before:text-white/20"
+						>
+							{b}
+						</li>
+					))}
+				</ul>
+			)}
 		</motion.div>
 	);
 }
