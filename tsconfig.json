@@ -24,7 +24,6 @@
 		"types": [
 			"./cloudflare-env.d.ts",
 			"node",
-			"@webgpu/types"
 		]
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
