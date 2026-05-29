@@ -1,218 +1,240 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useRef } from "react";
 import { CipherText } from "@/components/matrix/cipher-text";
-import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { gsap, useGSAP } from "@/lib/gsap";
 import type { SectionId } from "@/lib/constants";
 
-// ─── Animation Variants ───
+// ─── Ambient plane — a single asymmetric triangle behind the hero text ───
+// Deliberately subliminal: a faint neutral fill + faint neutral edges read as a
+// tilted "plane", with one dim, slow accent drift along the perimeter as the
+// only whisper of life — it must never compete with the name. The triangle is
+// scalene and off-axis (never a symmetric, centred badge), and composed with the
+// type: its sharpest vertex aims at the name while the mass fills the right-hand
+// negative space the left-aligned type leaves, balancing the layout. (Gestural,
+// not pixel-locked — the full-bleed SVG and the reflowing type differ in space.)
+// pathLength=1 normalises the perimeter so the dash maths is geometry-free.
 
-const heroContainer = {
-	hidden: {},
-	visible: {
-		transition: { staggerChildren: 0.18, delayChildren: 0.3 },
-	},
-};
+const TRIANGLE = "M 700 400 L 1200 300 L 1020 820 Z";
 
-const heroFadeUp = {
-	hidden: { opacity: 0, y: 30 },
-	visible: {
-		opacity: 1,
-		y: 0,
-		transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
-	},
-};
+function HeroPlane() {
+	return (
+		<svg
+			data-hero-plane
+			aria-hidden="true"
+			className="pointer-events-none absolute inset-0 h-full w-full will-change-[transform,opacity,filter]"
+			viewBox="0 0 1440 900"
+			fill="none"
+			preserveAspectRatio="xMidYMid slice"
+		>
+			<defs>
+				<linearGradient id="hero-plane-fill" x1="0" y1="0" x2="1" y2="1">
+					<stop offset="0%" stopColor="var(--plane-tint)" />
+					<stop offset="100%" stopColor="transparent" />
+				</linearGradient>
+			</defs>
 
-const heroFadeUpReduced = {
-	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: { duration: 0.4 },
-	},
-};
+			{/* The plane — faint signal-tinted wash (per-theme --plane-tint), brightest
+			    at the name-facing vertex and fading into the void; reads as lit
+			    atmosphere in both themes rather than a flat grey smudge */}
+			<path d={TRIANGLE} fill="url(#hero-plane-fill)" />
 
-// ─── Parallax config ───
+			{/* The edges — faint neutral wire (solid). It fades with the whole plane
+			    on exit; no per-edge dash animation, so it can never render partial. */}
+			<path
+				d={TRIANGLE}
+				stroke="var(--foreground)"
+				strokeWidth={1.25}
+				strokeOpacity={0.08}
+				strokeLinejoin="round"
+				vectorEffect="non-scaling-stroke"
+			/>
 
-/** Max px translation for each depth layer */
-const LAYER_CONFIG = {
-	/** First name — foreground layer, moves most */
-	foreground: { x: 12, y: 6 },
-	/** Last name — midground layer, moves less */
-	midground: { x: 6, y: 3 },
-	/** Subtitle — deepest layer, barely moves */
-	background: { x: 3, y: 1.5 },
-} as const;
+			{/* A single dim, slow accent drift — a whisper of life, never a spectacle */}
+			<path
+				d={TRIANGLE}
+				stroke="var(--brand)"
+				strokeWidth={1.5}
+				strokeOpacity={0.3}
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				pathLength={1}
+				strokeDasharray="0.14 0.86"
+				vectorEffect="non-scaling-stroke"
+				style={{
+					filter: "drop-shadow(0 0 4px var(--signal-500))",
+					animation: "triangle-ray 11s linear infinite",
+				}}
+			/>
+		</svg>
+	);
+}
 
-// ─── Scroll-down chevron ───
+// ─── Scroll cue — a faint signal hairline that drips downward (no chevron) ───
 
-function ScrollChevron() {
+function ScrollCue() {
 	const handleClick = () => {
-		const about = document.getElementById("about");
-		about?.scrollIntoView({ behavior: "smooth" });
+		document.getElementById("manifesto")?.scrollIntoView({ behavior: "smooth" });
 	};
 
 	return (
-		<motion.button
-			onClick={handleClick}
-			aria-label="Scroll to About section"
-			className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40 hover:text-white/70 transition-colors duration-300 cursor-pointer"
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			transition={{ delay: 1.4, duration: 0.6 }}
-		>
-			<span className="text-xs font-mono tracking-widest uppercase">
-				Scroll
-			</span>
-			<svg
-				className="w-5 h-5 animate-bounce-slow"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-				strokeWidth={2}
-				aria-hidden="true"
+		<div className="pointer-events-none absolute inset-x-0 bottom-10 z-10 mx-auto w-full max-w-6xl px-6 sm:px-8 md:px-12 lg:px-16">
+			<button
+				data-hero-cue
+				onClick={handleClick}
+				aria-label="Scroll to content"
+				className="group pointer-events-auto block h-12 w-px overflow-hidden bg-foreground/15 cursor-pointer"
 			>
-				<path
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					d="M19 9l-7 7-7-7"
+				{/* Accent drip is hidden at rest; it only plays on hover/focus, so
+				    it never competes with the triangle ray's ambient motion. */}
+				<span
+					aria-hidden="true"
+					className="block h-1/3 w-full bg-brand opacity-0 group-hover:animate-scroll-cue group-focus-visible:animate-scroll-cue"
 				/>
-			</svg>
-		</motion.button>
+			</button>
+		</div>
 	);
 }
 
 // ─── Hero Section ───
 
 export function HeroSection() {
-	const prefersReduced = useReducedMotion();
-	const variants = prefersReduced ? heroFadeUpReduced : heroFadeUp;
-
-	// Refs for each parallax layer
-	const firstNameRef = useRef<HTMLSpanElement>(null);
-	const lastNameRef = useRef<HTMLSpanElement>(null);
-	const subtitleRef = useRef<HTMLParagraphElement>(null);
 	const sectionRef = useRef<HTMLElement>(null);
-	const rafRef = useRef<number>(0);
 
-	// Smoothed mouse position (lerped each frame)
-	const mouseTarget = useRef({ x: 0, y: 0 });
-	const mouseCurrent = useRef({ x: 0, y: 0 });
-
-	const applyTransform = useCallback(
-		(
-			el: HTMLElement | null,
-			nx: number,
-			ny: number,
-			cfg: { x: number; y: number },
-		) => {
-			if (!el) return;
-			const tx = nx * cfg.x;
-			const ty = ny * cfg.y;
-			el.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0)`;
+	// ── Page-load entrance (GSAP, before paint via useGSAP) ──
+	useGSAP(
+		() => {
+			const mm = gsap.matchMedia();
+			mm.add("(prefers-reduced-motion: no-preference)", () => {
+				gsap.from("[data-hero]", {
+					opacity: 0,
+					y: 24,
+					duration: 0.7,
+					ease: "power2.out",
+					stagger: 0.18,
+					delay: 0.3,
+				});
+			});
+			mm.add("(prefers-reduced-motion: reduce)", () => {
+				gsap.from("[data-hero]", { opacity: 0, duration: 0.4, stagger: 0.1 });
+			});
 		},
-		[],
+		{ scope: sectionRef },
 	);
 
-	useEffect(() => {
-		if (prefersReduced) return;
+	// ── Scroll-directed exit: dolly the name in + blur, then dip the frame to
+	//    the flat background so the manifesto (same bg) emerges with no seam ──
+	useGSAP(
+		() => {
+			const mm = gsap.matchMedia();
+			mm.add("(prefers-reduced-motion: no-preference)", () => {
+				const tl = gsap.timeline({
+					scrollTrigger: {
+						trigger: sectionRef.current,
+						start: "top top",
+						end: "+=75%",
+						pin: true,
+						scrub: 0.6,
+					},
+				});
 
-		const section = sectionRef.current;
-		if (!section) return;
-
-		const LERP = 0.08; // Smoothing factor — lower = silkier
-
-		const onMouseMove = (e: MouseEvent) => {
-			const rect = section.getBoundingClientRect();
-			// Normalise mouse to -1…1 from section center
-			mouseTarget.current = {
-				x: ((e.clientX - rect.left) / rect.width - 0.5) * 2,
-				y: ((e.clientY - rect.top) / rect.height - 0.5) * 2,
-			};
-		};
-
-		const onMouseLeave = () => {
-			// Drift back to center
-			mouseTarget.current = { x: 0, y: 0 };
-		};
-
-		function tick() {
-			const cur = mouseCurrent.current;
-			const tgt = mouseTarget.current;
-
-			// Lerp towards target
-			cur.x += (tgt.x - cur.x) * LERP;
-			cur.y += (tgt.y - cur.y) * LERP;
-
-			applyTransform(
-				firstNameRef.current,
-				cur.x,
-				cur.y,
-				LAYER_CONFIG.foreground,
-			);
-			applyTransform(
-				lastNameRef.current,
-				cur.x,
-				cur.y,
-				LAYER_CONFIG.midground,
-			);
-			applyTransform(
-				subtitleRef.current,
-				cur.x,
-				cur.y,
-				LAYER_CONFIG.background,
-			);
-
-			rafRef.current = requestAnimationFrame(tick);
-		}
-
-		section.addEventListener("mousemove", onMouseMove);
-		section.addEventListener("mouseleave", onMouseLeave);
-		rafRef.current = requestAnimationFrame(tick);
-
-		return () => {
-			section.removeEventListener("mousemove", onMouseMove);
-			section.removeEventListener("mouseleave", onMouseLeave);
-			cancelAnimationFrame(rafRef.current);
-		};
-	}, [prefersReduced, applyTransform]);
+				tl.to(
+					"[data-hero-content]",
+					{
+						yPercent: -6,
+						scale: 1.14,
+						filter: "blur(16px)",
+						opacity: 0,
+						ease: "power1.in",
+						duration: 1,
+					},
+					0,
+				)
+					.to(
+						"[data-hero-cue]",
+						{ opacity: 0, y: 18, ease: "none", duration: 0.35 },
+						0,
+					)
+					// The plane plays the background half of the camera move: as the
+					// text dollies forward + blurs, the whole plane recedes, defocuses,
+					// and fades out — mirroring the text's exit.
+					.to(
+						"[data-hero-plane]",
+						{
+							scale: 0.9,
+							opacity: 0,
+							filter: "blur(10px)",
+							ease: "power1.in",
+							duration: 0.85,
+						},
+						0,
+					)
+					.to(
+						"[data-hero-veil]",
+						{ opacity: 1, ease: "power1.in", duration: 0.6 },
+						0.5,
+					);
+			});
+		},
+		{ scope: sectionRef },
+	);
 
 	return (
 		<section
 			ref={sectionRef}
 			id={"hero" satisfies SectionId}
-			className="relative w-full h-[100dvh] overflow-hidden snap-start bg-black"
+			className="relative w-full h-[100dvh] overflow-hidden snap-start bg-[image:var(--gradient-hero)]"
 			aria-label="Hero"
 		>
-			{/* Content overlay — staggered page-load reveal */}
-			<motion.div
-				className="relative z-10 flex flex-col items-center justify-center h-full px-6 pointer-events-none select-none"
-				variants={heroContainer}
-				initial="hidden"
-				animate="visible"
-			>
-				<motion.h1
-					className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white text-center font-mono flex flex-wrap justify-center gap-x-[0.3em]"
-					variants={variants}
-				>
-					<span ref={firstNameRef} className="will-change-transform">
-						<CipherText text="Soheil" as="span" />
-					</span>
-					<span ref={lastNameRef} className="will-change-transform">
-						<CipherText text="Fakour" as="span" />
-					</span>
-				</motion.h1>
-				<motion.p
-					ref={subtitleRef}
-					className="mt-4 font-mono text-sm sm:text-base text-white/50 tracking-[0.2em] uppercase text-center will-change-transform"
-					variants={variants}
-				>
-					Coding Vision into Existence
-				</motion.p>
-			</motion.div>
+			<HeroPlane />
 
-			{/* Scroll-down chevron */}
-			<ScrollChevron />
+			<div
+				data-hero-content
+				className="relative z-10 flex h-full flex-col justify-center pb-[12vh] px-6 sm:px-8 md:px-12 lg:px-16 pointer-events-none select-none will-change-[transform,filter]"
+			>
+				<div className="relative mx-auto w-full max-w-6xl">
+					{/* Faint signal haze behind the name — atmosphere, not a spotlight */}
+					<div
+						aria-hidden="true"
+						className="pointer-events-none absolute -left-[8%] top-1/2 -z-10 h-[34rem] w-[34rem] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--signal-500),transparent_70%)] opacity-[0.06] blur-[110px]"
+					/>
+
+					<p
+						data-hero
+						className="font-mono text-xs sm:text-sm tracking-[0.3em] uppercase text-brand"
+					>
+						Frontend Developer · Product Curator
+					</p>
+
+					<h1
+						data-hero
+						className="mt-6 flex flex-col items-start font-mono font-light tracking-tight leading-[0.9] text-foreground text-[clamp(3.25rem,12vw,11rem)]"
+					>
+						<CipherText text="Soheil" as="span" ambient />
+						<CipherText text="Fakour" as="span" ambient />
+					</h1>
+
+					<div data-hero className="mt-9 w-full max-w-md">
+						{/* Faint full-width hairline, neutral, with a short signal lead-in
+						    at the left so it never reads as a hard dev-tool rule */}
+						<span aria-hidden="true" className="relative block h-px w-full bg-foreground/10">
+							<span className="absolute inset-y-0 left-0 w-12 bg-[linear-gradient(to_right,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--signal-500))]" />
+						</span>
+						<p className="mt-4 font-mono text-sm tracking-[0.2em] uppercase text-foreground/45">
+							Coding vision into existence
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<ScrollCue />
+
+			{/* Dip-to-background veil — driven by the scroll-exit timeline */}
+			<div
+				data-hero-veil
+				aria-hidden="true"
+				className="pointer-events-none absolute inset-0 z-20 bg-background opacity-0"
+			/>
 		</section>
 	);
 }

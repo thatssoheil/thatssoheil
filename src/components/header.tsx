@@ -1,19 +1,42 @@
 "use client";
 
-import { useCallback } from "react";
-import { motion } from "framer-motion";
+import { useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { SITE, NAV_LINKS } from "@/lib/constants";
 import type { SectionId } from "@/lib/constants";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { CommandMenu } from "@/components/command-menu";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { LogoMark } from "@/components/logo";
+import { gsap, useGSAP } from "@/lib/gsap";
 
 /**
- * Fixed minimal header with staggered page-load entrance.
- * Name (left) — section links (right), monospace throughout.
+ * Fixed minimal header with a staggered page-load entrance.
+ * Name (left) — section links + theme toggle + command menu (right), monospace throughout.
  */
 export function Header() {
 	const { activeSection, scrollTo } = useActiveSection();
+	const headerRef = useRef<HTMLElement>(null);
+
+	useGSAP(
+		() => {
+			const mm = gsap.matchMedia();
+			mm.add("(prefers-reduced-motion: no-preference)", () => {
+				gsap.from(headerRef.current, {
+					y: -56,
+					opacity: 0,
+					duration: 0.5,
+					delay: 0.1,
+					ease: "power2.out",
+				});
+			});
+			mm.add("(prefers-reduced-motion: reduce)", () => {
+				gsap.from(headerRef.current, { opacity: 0, duration: 0.3 });
+			});
+		},
+		{ scope: headerRef },
+	);
 
 	const handleClick = useCallback(
 		(e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -27,13 +50,11 @@ export function Header() {
 	return (
 		<>
 			<ScrollProgress />
-			<motion.header
+			<header
+				ref={headerRef}
 				role="banner"
-				initial={{ y: -56, opacity: 0 }}
-				animate={{ y: 0, opacity: 1 }}
-				transition={{ delay: 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
 				className={cn(
-					"fixed inset-x-0 top-0 z-50",
+					"fixed inset-x-0 top-0 z-[var(--z-header)]",
 					"flex h-14 items-center justify-between",
 					"px-6 sm:px-8 md:px-12 lg:px-16",
 					"bg-background/80 backdrop-blur-md",
@@ -45,68 +66,52 @@ export function Header() {
 				<a
 					href="#hero"
 					onClick={(e) => handleClick(e, "#hero")}
-					className="tracking-tight text-foreground hover:text-foreground/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+					aria-label={`${SITE.name} — home`}
+					className="flex items-center gap-2.5 tracking-tight text-foreground hover:text-foreground/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
 				>
+					<LogoMark className="h-[18px]" />
 					{SITE.name}
 				</a>
 
-				{/* ── Navigation ── */}
-				<nav aria-label="Main navigation" className="hidden sm:flex items-center gap-6">
-					{NAV_LINKS.map(({ label, href }) => {
-						const sectionId = href.replace("#", "");
-						const isActive = activeSection === sectionId;
+				{/* ── Right cluster: nav (desktop) + theme toggle + command menu ── */}
+				<div className="flex items-center gap-4 sm:gap-6">
+					<nav aria-label="Main navigation" className="hidden sm:flex items-center gap-6">
+						{NAV_LINKS.map(({ label, href }) => {
+							const sectionId = href.replace("#", "");
+							const isActive = activeSection === sectionId;
 
-						return (
-							<a
-								key={href}
-								href={href}
-								onClick={(e) => handleClick(e, href)}
-								aria-current={isActive ? "true" : undefined}
-								className={cn(
-									"relative py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm",
-									isActive
-										? "text-foreground"
-										: "text-muted-foreground hover:text-foreground/80",
-								)}
-							>
-								{label}
-								{/* active underline indicator */}
-								<span
-									aria-hidden="true"
+							return (
+								<a
+									key={href}
+									href={href}
+									onClick={(e) => handleClick(e, href)}
+									aria-current={isActive ? "true" : undefined}
 									className={cn(
-										"absolute inset-x-0 -bottom-px h-px bg-foreground transition-opacity duration-200",
-										isActive ? "opacity-100" : "opacity-0",
+										"relative py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm",
+										isActive
+											? "text-foreground"
+											: "text-muted-foreground hover:text-foreground/80",
 									)}
-								/>
-							</a>
-						);
-					})}
-				</nav>
+								>
+									{label}
+									<span
+										aria-hidden="true"
+										className={cn(
+											"absolute inset-x-0 -bottom-px h-px bg-foreground transition-opacity duration-200",
+											isActive ? "opacity-100" : "opacity-0",
+										)}
+									/>
+								</a>
+							);
+						})}
+					</nav>
 
-				{/* ── Mobile menu toggle ── */}
-				<button
-					type="button"
-					className="sm:hidden text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
-					aria-label="Toggle navigation menu"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="20"
-						height="20"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.5"
-						strokeLinecap="round"
-						strokeLinejoin="round"
-						aria-hidden="true"
-					>
-						<line x1="4" y1="7" x2="20" y2="7" />
-						<line x1="4" y1="12" x2="20" y2="12" />
-						<line x1="4" y1="17" x2="20" y2="17" />
-					</svg>
-				</button>
-			</motion.header>
+					<div className="flex items-center gap-2">
+						<ThemeToggle />
+						<CommandMenu />
+					</div>
+				</div>
+			</header>
 		</>
 	);
 }

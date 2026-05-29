@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { SITE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -81,7 +82,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-	themeColor: "#0a0a0a",
+	themeColor: [
+		{ media: "(prefers-color-scheme: dark)", color: "#1c1c1c" },
+		{ media: "(prefers-color-scheme: light)", color: "#f7f7f7" },
+	],
 	width: "device-width",
 	initialScale: 1,
 };
@@ -93,15 +97,22 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className="dark" suppressHydrationWarning>
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				<PersonJsonLd />
 			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<SkipToContent />
-				{children}
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="dark"
+					enableSystem={false}
+					disableTransitionOnChange
+				>
+					<SkipToContent />
+					{children}
+				</ThemeProvider>
 			</body>
 		</html>
 	);

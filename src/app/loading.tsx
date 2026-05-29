@@ -2,10 +2,10 @@ export default function Loading() {
 	return (
 		<div className="min-h-screen bg-background flex flex-col" role="status" aria-label="Loading page">
 			{/* Header skeleton */}
-			<div className="fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between px-6 sm:px-8 md:px-12 lg:px-16 bg-background/80 backdrop-blur-md border-b border-border/40">
+			<div className="fixed inset-x-0 top-0 z-[var(--z-header)] flex h-14 items-center justify-between px-6 sm:px-8 md:px-12 lg:px-16 bg-background/80 backdrop-blur-md border-b border-border/40">
 				<div className="h-4 w-28 rounded bg-foreground/10 animate-pulse" />
 				<div className="hidden sm:flex items-center gap-6">
-					{Array.from({ length: 5 }).map((_, i) => (
+					{Array.from({ length: 7 }).map((_, i) => (
 						<div key={i} className="h-3 w-16 rounded bg-foreground/8 animate-pulse" style={{ animationDelay: `${i * 80}ms` }} />
 					))}
 				</div>
