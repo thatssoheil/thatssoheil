@@ -35,6 +35,14 @@ function randomChar(): string {
   return CHAR_POOL[Math.floor(Math.random() * CHAR_POOL.length)];
 }
 
+// Deterministic per-index glyph (Knuth multiplicative hash). Used for the
+// initial SSR/first-client render so the pre-hydration markup already looks
+// like the cipher mid-spin — no underscores, no hydration mismatch.
+function seededChar(i: number): string {
+  const n = (Math.imul(i + 1, 2654435761) >>> 0) % CHAR_POOL.length;
+  return CHAR_POOL[n];
+}
+
 // ─── Per-character mutable state ───
 
 type CharPhase =
@@ -89,11 +97,12 @@ export function CipherText({
     tint: number;
   };
 
-  // Initial render is deterministic (underscores) to avoid hydration mismatch.
-  // The pre-trigger useEffect immediately replaces with random chars on mount.
+  // Initial render is deterministic (seeded scramble) to avoid hydration
+  // mismatch while still looking like the cipher mid-spin before JS hydrates.
+  // The pre-trigger useEffect takes over with live random chars on mount.
   const [display, setDisplay] = useState<DisplayChar[]>(() =>
-    text.split("").map((ch) => ({
-      char: ch === " " ? " " : "_",
+    text.split("").map((ch, i) => ({
+      char: ch === " " ? " " : seededChar(i),
       blur: ch === " " ? 0 : 2,
       brightness: 1,
       scale: 1,
