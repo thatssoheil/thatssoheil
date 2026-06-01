@@ -22,17 +22,30 @@ export function Header() {
 	useGSAP(
 		() => {
 			const mm = gsap.matchMedia();
+			// fromTo (not from): the CSS FOUC gate holds the header hidden in the SSR
+			// markup, so we state the visible end explicitly. clearProps:"transform"
+			// drops the inline translate but keeps the inline opacity:1 (which the
+			// fixed header needs so the gate never re-hides it).
 			mm.add("(prefers-reduced-motion: no-preference)", () => {
-				gsap.from(headerRef.current, {
-					y: -56,
-					opacity: 0,
-					duration: 0.5,
-					delay: 0.1,
-					ease: "power2.out",
-				});
+				gsap.fromTo(
+					headerRef.current,
+					{ y: -56, opacity: 0 },
+					{
+						y: 0,
+						opacity: 1,
+						duration: 0.5,
+						delay: 0.1,
+						ease: "power2.out",
+						clearProps: "transform",
+					},
+				);
 			});
 			mm.add("(prefers-reduced-motion: reduce)", () => {
-				gsap.from(headerRef.current, { opacity: 0, duration: 0.3 });
+				gsap.fromTo(
+					headerRef.current,
+					{ opacity: 0 },
+					{ opacity: 1, duration: 0.3 },
+				);
 			});
 		},
 		{ scope: headerRef },
@@ -52,6 +65,7 @@ export function Header() {
 			<ScrollProgress />
 			<header
 				ref={headerRef}
+				data-header
 				role="banner"
 				className={cn(
 					"fixed inset-x-0 top-0 z-[var(--z-header)]",

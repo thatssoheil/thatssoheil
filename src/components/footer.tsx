@@ -1,28 +1,40 @@
-"use client";
+import { LogoMark } from "@/components/logo";
+import { SITE } from "@/lib/constants";
 
-import { Separator } from "@/components/ui/separator";
-import { useReveal } from "@/hooks/use-reveal";
-
+/**
+ * Full-width footer bar — the bottom bookend to the fixed header. A faint
+ * signal hairline (the hero's rule motif) rides the top edge, and the bar
+ * blends up out of the page's black via a soft surface gradient. Static and
+ * crisp by design: the page ends at the footer, so a scroll reveal can never
+ * reliably complete — this is chrome, so it's simply present.
+ */
 export function Footer() {
-	const scope = useReveal<HTMLElement>();
+	const year = new Date().getFullYear();
 
 	return (
 		<footer
-			ref={scope}
 			role="contentinfo"
-			className="relative w-full px-6 sm:px-8 md:px-12 lg:px-16 pb-8 pt-0"
+			className="relative w-full overflow-hidden bg-[linear-gradient(to_bottom,transparent,var(--card))]"
 		>
-			<div className="mx-auto w-full max-w-5xl" data-reveal>
-				<Separator className="mb-8 bg-foreground/10" />
+			{/* Top hairline — faint neutral rule with a short signal lead-in (hero motif) */}
+			<span
+				aria-hidden="true"
+				className="absolute inset-x-0 top-0 block h-px w-full bg-foreground/10"
+			>
+				<span className="absolute inset-y-0 left-0 w-24 bg-[linear-gradient(to_right,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--signal-500))]" />
+			</span>
 
-				<div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-foreground/30">
-					<p className="font-mono text-xs tracking-wide">
-						&copy; {new Date().getFullYear()} Soheil Fakour
-					</p>
-					<p className="font-mono text-xs tracking-wide">
-						Built with Next.js and a sprinkle of Matrix magic.
-					</p>
+			<div className="flex w-full flex-col items-center gap-3 px-6 py-10 font-mono text-xs tracking-wide sm:flex-row sm:justify-between sm:px-8 md:px-12 lg:px-16">
+				<div className="flex items-center gap-2.5 text-foreground/50">
+					<LogoMark className="h-4" />
+					<span>
+						&copy; {year} {SITE.name}
+					</span>
 				</div>
+
+				<p className="text-foreground/35">
+					Built with Next.js and a sprinkle of Matrix magic.
+				</p>
 			</div>
 		</footer>
 	);

@@ -99,6 +99,15 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head>
+				{/* Marks the document as JS-capable before the body paints, arming the
+				    entrance FOUC gate in globals.css. Inline + synchronous so it runs
+				    during head parse, ahead of first paint. No-JS visitors never get
+				    the `.js` class, so the gate stays inert and content is visible. */}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `document.documentElement.classList.add('js');try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}`,
+					}}
+				/>
 				<PersonJsonLd />
 			</head>
 			<body

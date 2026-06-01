@@ -105,18 +105,31 @@ export function HeroSection() {
 	useGSAP(
 		() => {
 			const mm = gsap.matchMedia();
+			// fromTo (not from): the CSS FOUC gate holds [data-hero] hidden in the
+			// SSR markup, so we state the visible end explicitly and reveal into it.
+			// clearProps:"transform" tidies the inline translate but keeps the
+			// inline opacity:1 that overrides the gate.
 			mm.add("(prefers-reduced-motion: no-preference)", () => {
-				gsap.from("[data-hero]", {
-					opacity: 0,
-					y: 24,
-					duration: 0.7,
-					ease: "power2.out",
-					stagger: 0.18,
-					delay: 0.3,
-				});
+				gsap.fromTo(
+					"[data-hero]",
+					{ opacity: 0, y: 24 },
+					{
+						opacity: 1,
+						y: 0,
+						duration: 0.7,
+						ease: "power2.out",
+						stagger: 0.18,
+						delay: 0.3,
+						clearProps: "transform",
+					},
+				);
 			});
 			mm.add("(prefers-reduced-motion: reduce)", () => {
-				gsap.from("[data-hero]", { opacity: 0, duration: 0.4, stagger: 0.1 });
+				gsap.fromTo(
+					"[data-hero]",
+					{ opacity: 0 },
+					{ opacity: 1, duration: 0.4, stagger: 0.1 },
+				);
 			});
 		},
 		{ scope: sectionRef },
