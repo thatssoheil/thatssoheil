@@ -18,6 +18,10 @@ export interface CipherTextProps {
   decelDuration?: number;
   /** Ms for the spin-up (re-lock) sweep. */
   spinUpDuration?: number;
+  /** When true, the name perpetually re-scrambles. Default: decode once and hold. */
+  loop?: boolean;
+  /** After the one-time decode, occasionally re-flicker a single locked char (subtle "alive" pulse). Ignored when `loop`. */
+  ambient?: boolean;
   /** Wrapper element type. */
   as?: React.ElementType;
 }
@@ -29,6 +33,14 @@ const TICK_MS = 28;
 
 function randomChar(): string {
   return CHAR_POOL[Math.floor(Math.random() * CHAR_POOL.length)];
+}
+
+// Deterministic per-index glyph (Knuth multiplicative hash). Used for the
+// initial SSR/first-client render so the pre-hydration markup already looks
+// like the cipher mid-spin — no underscores, no hydration mismatch.
+function seededChar(i: number): string {
+  const n = (Math.imul(i + 1, 2654435761) >>> 0) % CHAR_POOL.length;
+  return CHAR_POOL[n];
 }
 
 // ─── Per-character mutable state ───
@@ -46,6 +58,10 @@ interface CharState {
   brightness: number;
   scale: number;
   opacity: number;
+  /** 0 = foreground, 1 = full signal accent (used during the flash). */
+  tint: number;
+  /** Marks a char as mid-flicker during the ambient phase. */
+  flicker: boolean;
   phase: CharPhase;
   elapsed: number;
   delay: number;
@@ -64,6 +80,8 @@ export function CipherText({
   spinningHold = 2200,
   decelDuration = 2000,
   spinUpDuration = 900,
+  loop = false,
+  ambient = false,
   as: Component = "h1",
 }: CipherTextProps) {
   const prefersReduced = useReducedMotion();
@@ -76,17 +94,20 @@ export function CipherText({
     brightness: number;
     scale: number;
     opacity: number;
+    tint: number;
   };
 
-  // Initial render is deterministic (underscores) to avoid hydration mismatch.
-  // The pre-trigger useEffect immediately replaces with random chars on mount.
+  // Initial render is deterministic (seeded scramble) to avoid hydration
+  // mismatch while still looking like the cipher mid-spin before JS hydrates.
+  // The pre-trigger useEffect takes over with live random chars on mount.
   const [display, setDisplay] = useState<DisplayChar[]>(() =>
-    text.split("").map((ch) => ({
-      char: ch === " " ? " " : "_",
+    text.split("").map((ch, i) => ({
+      char: ch === " " ? " " : seededChar(i),
       blur: ch === " " ? 0 : 2,
       brightness: 1,
       scale: 1,
       opacity: ch === " " ? 1 : 0.45,
+      tint: 0,
     })),
   );
 
@@ -103,6 +124,7 @@ export function CipherText({
           brightness: 1,
           scale: 1,
           opacity: ch === " " ? 1 : 0.45,
+          tint: 0,
         })),
       );
     }, TICK_MS);
@@ -110,29 +132,27 @@ export function CipherText({
     return () => clearInterval(id);
   }, [text, prefersReduced, triggered]);
 
-  // ── Scroll trigger ──
-  useEffect(() => {
-    if (prefersReduced) {
-      setDisplay(
-        text.split("").map((ch) => ({
-          char: ch,
-          blur: 0,
-          brightness: 1,
-          scale: 1,
-          opacity: 1,
-        })),
-      );
-      setTriggered(true);
-      return;
-    }
+  // Reduced motion: sync to final state during render (avoids set-state-in-effect)
+  if (prefersReduced && !triggered) {
+    setTriggered(true);
+    setDisplay(
+      text.split("").map((ch) => ({
+        char: ch,
+        blur: 0,
+        brightness: 1,
+        scale: 1,
+        opacity: 1,
+        tint: 0,
+      })),
+    );
+  }
 
-    const onScroll = () => {
-      setTriggered(true);
-      window.removeEventListener("scroll", onScroll);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [prefersReduced, text]);
+  // ── Trigger the one-time decode shortly after mount ──
+  useEffect(() => {
+    if (prefersReduced) return;
+    const t = setTimeout(() => setTriggered(true), 600);
+    return () => clearTimeout(t);
+  }, [prefersReduced]);
 
   // ── Main animation loop ──
   const statesRef = useRef<CharState[] | null>(null);
@@ -152,6 +172,12 @@ export function CipherText({
     const DECEL_PER_CHAR = decelDuration * 0.5;
     const ACCEL_PER_CHAR = spinUpDuration * 0.45;
 
+    // ── Ambient flicker (post-decode "alive" pulse) ──
+    const FLICKER_SPIN_MS = 320;
+    const ambientActive = ambient && !loop;
+    const nextAmbientDelay = () =>
+      Math.round((3000 + Math.random() * 3500) / TICK_MS);
+
     // ── Initialise per-character state ──
     function makeCharState(i: number, phase: CharPhase): CharState {
       return {
@@ -160,6 +186,8 @@ export function CipherText({
         brightness: 1,
         scale: 1,
         opacity: phase === "locked" ? 1 : 0.45,
+        tint: 0,
+        flicker: false,
         phase: chars[i] === " " ? "locked" : phase,
         elapsed: 0,
         delay: 0,
@@ -179,9 +207,12 @@ export function CipherText({
       | "decelerating"
       | "revealed"
       | "accelerating"
-      | "spinning";
+      | "spinning"
+      | "ambient";
     let gPhase: GlobalPhase = "decelerating";
     let gElapsed = 0;
+    let ambientCountdown = nextAmbientDelay();
+    let flickerActive = false;
 
     const cs: CharState[] = chars.map((_, i) => makeCharState(i, "spinning"));
     // Set stagger delays for initial deceleration
@@ -236,10 +267,37 @@ export function CipherText({
       gElapsed += TICK_MS;
 
       // ── Global phase transitions (hold timers) ──
-      if (gPhase === "revealed" && gElapsed >= revealedHold) {
-        gPhase = "accelerating";
-        gElapsed = 0;
-        resetForAccel();
+      if (gPhase === "revealed") {
+        if (loop) {
+          if (gElapsed >= revealedHold) {
+            gPhase = "accelerating";
+            gElapsed = 0;
+            resetForAccel();
+          }
+        } else if (ambientActive) {
+          // Decode-once + ambient: keep ticking, drip rare single-char flickers.
+          gPhase = "ambient";
+          gElapsed = 0;
+          ambientCountdown = nextAmbientDelay();
+        } else {
+          // Decode-once: settle crisp and stop the loop entirely.
+          clearInterval(id);
+          return;
+        }
+      } else if (gPhase === "ambient") {
+        ambientCountdown--;
+        if (!flickerActive && ambientCountdown <= 0 && nsCount > 0) {
+          const pick = nonSpacePositions[Math.floor(Math.random() * nsCount)];
+          const s = cs[pick];
+          s.flicker = true;
+          s.phase = "spinning";
+          s.elapsed = 0;
+          s.tickCount = 0;
+          s.flashElapsed = 0;
+          s.blur = 1.2;
+          s.opacity = 0.6;
+          flickerActive = true;
+        }
       } else if (gPhase === "spinning" && gElapsed >= spinningHold) {
         gPhase = "decelerating";
         gElapsed = 0;
@@ -288,8 +346,9 @@ export function CipherText({
               s.char = s.targetChar;
               s.blur = 0;
               s.opacity = 1;
-              s.brightness = 2;
+              s.brightness = 1.35;
               s.scale = 1.08;
+              s.tint = 1;
               s.flashElapsed = 0;
             } else {
               allDone = false;
@@ -298,13 +357,15 @@ export function CipherText({
             s.flashElapsed += TICK_MS;
             const fp = Math.min(s.flashElapsed / FLASH_MS, 1);
             const ease = 1 - (1 - fp) * (1 - fp);
-            s.brightness = 2 - ease;
+            s.brightness = 1.35 - 0.35 * ease;
             s.scale = 1.08 - 0.08 * ease;
+            s.tint = 1 - ease;
 
             if (fp >= 1) {
               s.phase = "locked";
               s.brightness = 1;
               s.scale = 1;
+              s.tint = 0;
             } else {
               allDone = false;
             }
@@ -352,6 +413,42 @@ export function CipherText({
         else if (gPhase === "spinning") {
           s.char = randomChar();
         }
+
+        // ─────────────────────────────────────────
+        // AMBIENT: locked chars rest; one re-flickers at a time
+        // ─────────────────────────────────────────
+        else if (gPhase === "ambient") {
+          if (!s.flicker) continue;
+          if (s.phase === "spinning") {
+            s.char = randomChar();
+            if (s.elapsed >= FLICKER_SPIN_MS) {
+              s.phase = "flash";
+              s.char = s.targetChar;
+              s.blur = 0;
+              s.opacity = 1;
+              s.brightness = 1.35;
+              s.scale = 1.08;
+              s.tint = 1;
+              s.flashElapsed = 0;
+            }
+          } else if (s.phase === "flash") {
+            s.flashElapsed += TICK_MS;
+            const fp = Math.min(s.flashElapsed / FLASH_MS, 1);
+            const ease = 1 - (1 - fp) * (1 - fp);
+            s.brightness = 1.35 - 0.35 * ease;
+            s.scale = 1.08 - 0.08 * ease;
+            s.tint = 1 - ease;
+            if (fp >= 1) {
+              s.phase = "locked";
+              s.brightness = 1;
+              s.scale = 1;
+              s.tint = 0;
+              s.flicker = false;
+              flickerActive = false;
+              ambientCountdown = nextAmbientDelay();
+            }
+          }
+        }
       }
 
       // Advance global phase when all chars finish their transition
@@ -371,6 +468,7 @@ export function CipherText({
           brightness: s.brightness,
           scale: s.scale,
           opacity: s.opacity,
+          tint: s.tint,
         })),
       );
     }, TICK_MS);
@@ -384,6 +482,8 @@ export function CipherText({
     spinningHold,
     decelDuration,
     spinUpDuration,
+    loop,
+    ambient,
   ]);
 
   return (
@@ -395,13 +495,17 @@ export function CipherText({
             display: "inline-block",
             minWidth: d.char === " " ? "0.3em" : undefined,
             opacity: d.opacity,
+            color:
+              d.tint > 0.01
+                ? `color-mix(in oklch, var(--signal-400) ${(d.tint * 100).toFixed(0)}%, var(--foreground))`
+                : undefined,
             filter:
               d.blur > 0.05 || d.brightness !== 1
                 ? `blur(${d.blur.toFixed(1)}px) brightness(${d.brightness.toFixed(2)})`
                 : undefined,
             transform:
               d.scale !== 1 ? `scale(${d.scale.toFixed(3)})` : undefined,
-            transition: "filter 50ms linear, transform 50ms linear",
+            transition: "filter 50ms linear, transform 50ms linear, color 50ms linear",
             willChange: "filter, transform, opacity",
           }}
         >

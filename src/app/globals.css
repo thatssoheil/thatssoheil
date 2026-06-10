@@ -23,19 +23,6 @@
 	--text-6xl: 3.75rem;
 	--text-7xl: 4.5rem;
 
-	/* 10-step gray scale (neutral) */
-	--color-gray-50: #fafafa;
-	--color-gray-100: #f5f5f5;
-	--color-gray-200: #e5e5e5;
-	--color-gray-300: #d4d4d4;
-	--color-gray-400: #a3a3a3;
-	--color-gray-500: #737373;
-	--color-gray-600: #525252;
-	--color-gray-700: #404040;
-	--color-gray-800: #262626;
-	--color-gray-900: #171717;
-	--color-gray-950: #0a0a0a;
-
 	/* Semantic palette */
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
@@ -52,22 +39,13 @@
 	--color-accent: var(--accent);
 	--color-accent-foreground: var(--accent-foreground);
 	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
-	--color-chart-1: var(--chart-1);
-	--color-chart-2: var(--chart-2);
-	--color-chart-3: var(--chart-3);
-	--color-chart-4: var(--chart-4);
-	--color-chart-5: var(--chart-5);
-	--color-sidebar: var(--sidebar);
-	--color-sidebar-foreground: var(--sidebar-foreground);
-	--color-sidebar-primary: var(--sidebar-primary);
-	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-	--color-sidebar-accent: var(--sidebar-accent);
-	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-	--color-sidebar-border: var(--sidebar-border);
-	--color-sidebar-ring: var(--sidebar-ring);
+
+	/* Brand — the signal accent (legible, per-theme) */
+	--color-brand: var(--brand);
 
 	/* Radius */
 	--radius-sm: calc(var(--radius) - 4px);
@@ -115,75 +93,155 @@
 	--spacing-96: 24rem;
 }
 
-/* ─── Light Mode (default) ─── */
+/* ─── Primitive scales + global tokens (theme-independent, source of truth) ─── */
 :root {
-	--radius: 0.625rem;
-	--background: oklch(1 0 0);
-	--foreground: oklch(0.145 0 0);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.145 0 0);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.145 0 0);
-	--primary: oklch(0.145 0 0);
-	--primary-foreground: oklch(0.985 0 0);
-	--secondary: oklch(0.97 0 0);
-	--secondary-foreground: oklch(0.205 0 0);
-	--muted: oklch(0.97 0 0);
-	--muted-foreground: oklch(0.556 0 0);
-	--accent: oklch(0.97 0 0);
-	--accent-foreground: oklch(0.205 0 0);
-	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.922 0 0);
-	--input: oklch(0.922 0 0);
-	--ring: oklch(0.708 0 0);
-	--chart-1: oklch(0.646 0.222 41.116);
-	--chart-2: oklch(0.6 0.118 184.704);
-	--chart-3: oklch(0.398 0.07 227.392);
-	--chart-4: oklch(0.828 0.189 84.429);
-	--chart-5: oklch(0.769 0.188 70.08);
-	--sidebar: oklch(0.985 0 0);
-	--sidebar-foreground: oklch(0.145 0 0);
-	--sidebar-primary: oklch(0.205 0 0);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.97 0 0);
-	--sidebar-accent-foreground: oklch(0.205 0 0);
-	--sidebar-border: oklch(0.922 0 0);
-	--sidebar-ring: oklch(0.708 0 0);
+	/* Ink — true neutral shades of black (no hue tint). Never pure #000. */
+	--ink-950: oklch(0.12 0 0);
+	--ink-900: oklch(0.16 0 0);
+	--ink-850: oklch(0.19 0 0);
+	--ink-800: oklch(0.23 0 0);
+	--ink-700: oklch(0.31 0 0);
+	--ink-600: oklch(0.43 0 0);
+	--ink-500: oklch(0.55 0 0);
+	--ink-400: oklch(0.67 0 0);
+	--ink-300: oklch(0.78 0 0);
+	--ink-200: oklch(0.87 0 0);
+	--ink-100: oklch(0.93 0 0);
+	--ink-50: oklch(0.97 0 0);
+
+	/* Signal — the ambient accent ramp. Currently iMessage blue (≈ #0A84FF).
+	   Swap these six values to retheme the accent; everything else points here.
+	   Fills/CTAs use signal-500; TEXT uses --brand (a legible per-theme step). */
+	--signal-200: oklch(0.82 0.08 250);
+	--signal-300: oklch(0.74 0.14 253);
+	--signal-400: oklch(0.69 0.17 255);
+	--signal-500: oklch(0.64 0.19 256);
+	--signal-600: oklch(0.56 0.18 257);
+	--signal-700: oklch(0.46 0.15 258);
+
+	/* Motion — one easing family, four duration steps */
+	--ease-signature: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	--ease-snap: cubic-bezier(0.4, 0, 0.2, 1);
+	--dur-micro: 150ms;
+	--dur-ui: 300ms;
+	--dur-page: 500ms;
+	--dur-grand: 800ms;
+
+	/* Z-index scale — keep stacking deliberate */
+	--z-sticky: 20;    /* in-page sticky bars (e.g. /ds nav) */
+	--z-header: 50;    /* fixed site header */
+	--z-progress: 60;  /* scroll-progress bar, above header */
+	--z-overlay: 100;  /* modal backdrop, skip link */
+	--z-modal: 110;    /* modal content */
 }
 
-/* ─── Dark Mode ─── */
+/* ─── Light theme (default) — neutral paper + signal accent ─── */
+:root {
+	--radius: 0.625rem;
+
+	/* Surfaces — soft paper, never pure #fff */
+	--background: oklch(0.97 0 0);
+	--foreground: oklch(0.2 0 0);
+	--card: oklch(0.99 0 0);
+	--card-foreground: oklch(0.2 0 0);
+	--popover: oklch(0.99 0 0);
+	--popover-foreground: oklch(0.2 0 0);
+
+	/* Primary — signal accent with light text */
+	--primary: var(--signal-500);
+	--primary-foreground: oklch(0.99 0 0);
+
+	--secondary: oklch(0.94 0 0);
+	--secondary-foreground: oklch(0.2 0 0);
+	--muted: oklch(0.94 0 0);
+	--muted-foreground: oklch(0.45 0 0);
+	--accent: oklch(0.92 0 0);
+	--accent-foreground: oklch(0.2 0 0);
+	--destructive: oklch(0.55 0.2 25);
+	--destructive-foreground: oklch(0.97 0 0);
+
+	/* Borders — dark-on-light, soft; focus ring is the signal accent */
+	--border: oklch(0 0 0 / 10%);
+	--input: oklch(0 0 0 / 14%);
+	--ring: var(--signal-500);
+
+	/* Accent-as-text — darker signal step for AA contrast on paper (≈ 5.4:1) */
+	--brand: var(--signal-700);
+
+	/* Ambient plane tint — a faint signal wash (faded to transparent in the
+	   gradient) so the hero triangle reads as lit atmosphere, not a grey smudge.
+	   Tuned per theme; lower on paper where a cool tint shows more readily. */
+	--plane-tint: color-mix(in oklch, var(--signal-500) 6%, transparent);
+
+	/* Light shadows — soft, low alpha; gradients — paper */
+	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.08);
+	--shadow-elevated: 0 8px 48px rgba(0, 0, 0, 0.12);
+	--shadow-glow: 0 0 32px rgba(10, 132, 255, 0.22);
+	--gradient-hero: radial-gradient(
+		ellipse at 50% 38%,
+		oklch(0.99 0 0) 0%,
+		oklch(0.97 0 0) 55%,
+		oklch(0.95 0 0) 100%
+	);
+	--gradient-surface: linear-gradient(
+		180deg,
+		oklch(0.99 0 0) 0%,
+		oklch(0.97 0 0) 100%
+	);
+}
+
+/* ─── Dark Mode — neutral black + signal accent (the active theme) ─── */
 .dark {
-	--background: oklch(0.1 0 0);
-	--foreground: oklch(0.985 0 0);
-	--card: oklch(0.145 0 0);
-	--card-foreground: oklch(0.985 0 0);
-	--popover: oklch(0.145 0 0);
-	--popover-foreground: oklch(0.985 0 0);
-	--primary: oklch(0.985 0 0);
-	--primary-foreground: oklch(0.145 0 0);
-	--secondary: oklch(0.205 0 0);
-	--secondary-foreground: oklch(0.985 0 0);
-	--muted: oklch(0.205 0 0);
-	--muted-foreground: oklch(0.708 0 0);
-	--accent: oklch(0.205 0 0);
-	--accent-foreground: oklch(0.985 0 0);
-	--destructive: oklch(0.704 0.191 22.216);
-	--border: oklch(1 0 0 / 10%);
-	--input: oklch(1 0 0 / 15%);
-	--ring: oklch(0.556 0 0);
-	--chart-1: oklch(0.488 0.243 264.376);
-	--chart-2: oklch(0.696 0.17 162.48);
-	--chart-3: oklch(0.769 0.188 70.08);
-	--chart-4: oklch(0.627 0.265 303.9);
-	--chart-5: oklch(0.645 0.246 16.439);
-	--sidebar: oklch(0.145 0 0);
-	--sidebar-foreground: oklch(0.985 0 0);
-	--sidebar-primary: oklch(0.488 0.243 264.376);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.205 0 0);
-	--sidebar-accent-foreground: oklch(0.985 0 0);
-	--sidebar-border: oklch(1 0 0 / 10%);
-	--sidebar-ring: oklch(0.556 0 0);
+	/* Surfaces — neutral shades of black, never pure #000 */
+	--background: var(--ink-950);
+	--foreground: var(--ink-50);
+	--card: var(--ink-900);
+	--card-foreground: var(--ink-50);
+	--popover: var(--ink-900);
+	--popover-foreground: var(--ink-50);
+
+	/* Primary — signal accent (CTAs, key accents) with light text (iMessage-style) */
+	--primary: var(--signal-500);
+	--primary-foreground: var(--ink-50);
+
+	--secondary: var(--ink-850);
+	--secondary-foreground: var(--ink-50);
+	--muted: var(--ink-850);
+	--muted-foreground: var(--ink-400);
+	--accent: var(--ink-800);
+	--accent-foreground: var(--ink-50);
+	--destructive: oklch(0.62 0.2 25);
+	--destructive-foreground: var(--ink-50);
+
+	/* Borders — soft, low-contrast; focus ring is the signal accent */
+	--border: oklch(1 0 0 / 7%);
+	--input: oklch(1 0 0 / 12%);
+	--ring: var(--signal-500);
+
+	/* Accent-as-text — brighter signal step for comfortable contrast on black (≈ 5.5:1) */
+	--brand: var(--signal-400);
+
+	/* Ambient plane tint — slightly stronger on the near-black void (see :root) */
+	--plane-tint: color-mix(in oklch, var(--signal-500) 9%, transparent);
+
+	/* Dark shadows — deeper alpha for black-on-black; gradients — neutral near-black */
+	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5);
+	--shadow-elevated: 0 8px 48px rgba(0, 0, 0, 0.6);
+	--shadow-glow: 0 0 32px rgba(10, 132, 255, 0.2);
+	/* Deep "void" — near-pure-black field that darkens toward the edges,
+	   pulling focus inward. The hero layers a *faint* signal haze behind the
+	   name on top of this (see hero.tsx) — atmosphere, never a bright spotlight. */
+	--gradient-hero: radial-gradient(
+		ellipse 135% 120% at 50% 50%,
+		oklch(0.075 0 0) 0%,
+		oklch(0.06 0 0) 50%,
+		oklch(0.03 0 0) 100%
+	);
+	--gradient-surface: linear-gradient(
+		180deg,
+		oklch(0.16 0 0) 0%,
+		oklch(0.13 0 0) 100%
+	);
 }
 
 /* ─── Base Styles ─── */
@@ -206,26 +264,60 @@
 		@apply font-mono;
 	}
 
-	/* Selection */
+	/* Selection — faint signal-accent tint */
 	::selection {
-		@apply bg-foreground/15;
+		@apply bg-brand/25 text-foreground;
 	}
+}
+
+/* ─── Entrance FOUC gate ───
+   The page-load entrances (header, hero) animate FROM a hidden state via GSAP.
+   Without this, the server-rendered markup paints fully visible, then GSAP
+   snaps it hidden on hydration and animates it back in — a jarring flash on
+   cold loads. Hiding the entrance targets in the SSR markup makes the first
+   paint already match GSAP's start state, so the fromTo() tweens reveal them
+   with no blink. Scoped to `.js` (set pre-paint by the inline script in
+   <head>) so visitors without JS still get visible content. (The below-the-fold
+   [data-reveal] scroll reveals are intentionally NOT gated — they're never in
+   the initial paint, and gsap.from() needs their visible state as its target.) */
+.js [data-hero],
+.js [data-header] {
+	opacity: 0;
 }
 
 /* ─── Custom Animations ─── */
-@keyframes bounce-slow {
-	0%, 100% {
-		transform: translateY(0);
-		animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+/* Scroll cue — a signal segment drips down a faint hairline */
+@keyframes scroll-cue {
+	0% {
+		transform: translateY(-100%);
+		opacity: 0;
 	}
-	50% {
-		transform: translateY(6px);
-		animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+	25% {
+		opacity: 1;
+	}
+	75% {
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(300%);
+		opacity: 0;
 	}
 }
 
-@utility animate-bounce-slow {
-	animation: bounce-slow 2s infinite;
+@utility animate-scroll-cue {
+	animation: scroll-cue 2.4s var(--ease-signature) infinite;
+}
+
+/* Triangle ray — a single glossy pulse orbiting the perimeter at constant
+   speed. The path is normalised to pathLength=1, so sweeping the dashoffset
+   one full period (1 → 0) loops seamlessly. */
+@keyframes triangle-ray {
+	from {
+		stroke-dashoffset: 1;
+	}
+	to {
+		stroke-dashoffset: 0;
+	}
 }
 
 /* ─── Reduced Motion ─── */
@@ -238,11 +330,6 @@
 		transition-duration: 0.01ms !important;
 		scroll-behavior: auto !important;
 	}
-}
-
-/* ─── Matrix-green text glow ─── */
-@utility text-glow-matrix {
-	text-shadow: 0 0 6px rgba(0, 255, 65, 0.6), 0 0 12px rgba(0, 255, 65, 0.3);
 }
 
 /* ─── Focus-visible styles ─── */

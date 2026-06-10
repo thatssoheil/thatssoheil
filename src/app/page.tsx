@@ -1,11 +1,8 @@
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { HeroSection } from "@/components/sections/hero";
-import { AboutSection } from "@/components/sections/about";
-import { ProjectsSection } from "@/components/sections/projects";
-import { ExperienceSection } from "@/components/sections/experience";
-import { StackSection } from "@/components/sections/stack";
-import { ContactSection } from "@/components/sections/contact";
+import { ManifestoSection } from "@/components/sections/manifesto";
+import { ConnectSection } from "@/components/sections/connect";
 
 export default function Home() {
 	return (
@@ -16,20 +13,11 @@ export default function Home() {
 				{/* ── Hero ── */}
 				<HeroSection />
 
-				{/* ── About ── */}
-				<AboutSection />
+				{/* ── Manifesto ── */}
+				<ManifestoSection />
 
-				{/* ── Projects ── */}
-				<ProjectsSection />
-
-				{/* ── Experience ── */}
-				<ExperienceSection />
-
-				{/* ── Stack ── */}
-				<StackSection />
-
-				{/* ── Contact ── */}
-				<ContactSection />
+				{/* ── Connect ── */}
+				<ConnectSection />
 			</main>
 
 			<Footer />
