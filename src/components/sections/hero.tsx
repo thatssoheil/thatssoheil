@@ -83,14 +83,17 @@ function ScrollCue() {
 				data-hero-cue
 				onClick={handleClick}
 				aria-label="Scroll to content"
-				className="group pointer-events-auto block h-12 w-px overflow-hidden bg-foreground/15 cursor-pointer"
+				className="group pointer-events-auto flex h-12 w-11 items-center cursor-pointer"
 			>
-				{/* Accent drip is hidden at rest; it only plays on hover/focus, so
-				    it never competes with the triangle ray's ambient motion. */}
-				<span
-					aria-hidden="true"
-					className="block h-1/3 w-full bg-brand opacity-0 group-hover:animate-scroll-cue group-focus-visible:animate-scroll-cue"
-				/>
+				{/* The 1px hairline is the only visual; the button around it is a
+				    44px-wide touch target. Accent drip is hidden at rest; it only
+				    plays on hover/focus, so it never competes with the triangle ray. */}
+				<span className="relative block h-full w-px overflow-hidden bg-foreground/15">
+					<span
+						aria-hidden="true"
+						className="block h-1/3 w-full bg-brand opacity-0 group-hover:animate-scroll-cue group-focus-visible:animate-scroll-cue"
+					/>
+				</span>
 			</button>
 		</div>
 	);
@@ -196,7 +199,7 @@ export function HeroSection() {
 		<section
 			ref={sectionRef}
 			id={"hero" satisfies SectionId}
-			className="relative w-full h-[100dvh] overflow-hidden snap-start bg-[image:var(--gradient-hero)]"
+			className="relative w-full h-[100dvh] overflow-hidden bg-[image:var(--gradient-hero)]"
 			aria-label="Hero"
 		>
 			<HeroPlane />

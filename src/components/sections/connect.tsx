@@ -12,7 +12,7 @@ export function ConnectSection() {
 		<section
 			ref={scope}
 			id={"connect" satisfies SectionId}
-			className="relative w-full min-h-[80dvh] overflow-hidden snap-start bg-background"
+			className="relative w-full min-h-[80dvh] overflow-hidden bg-background"
 			aria-label="Connect"
 		>
 			<div className="flex items-center justify-center min-h-[80dvh] px-6 sm:px-8 md:px-12 lg:px-16">
@@ -35,11 +35,11 @@ export function ConnectSection() {
 						data-reveal
 						className="text-lg text-foreground/55 max-w-xl leading-relaxed font-light"
 					>
-						I&rsquo;m easy to find. Email is fastest. I read DMs.
+						Email first. Catch me on X. Everything else, eventually.
 					</p>
 
 					<div data-reveal>
-						<Button asChild size="lg" className="gap-2 text-base px-8 h-12">
+						<Button asChild size="lg" className="gap-2 text-base h-12">
 							<a href={`mailto:${EMAIL}`}>
 								<Mail className="size-5" />
 								{EMAIL}
@@ -58,10 +58,10 @@ export function ConnectSection() {
 								target="_blank"
 								rel="noopener noreferrer"
 								aria-label={label}
-								className="group flex items-center gap-2 rounded-full border border-foreground/10 px-5 py-2.5 text-sm text-foreground/50 transition-all duration-300 hover:border-foreground/30 hover:text-foreground hover:bg-foreground/5"
+								title={label}
+								className="group flex items-center justify-center rounded-full border border-foreground/10 p-3.5 text-foreground/50 transition-all duration-300 hover:border-foreground/30 hover:text-foreground hover:bg-foreground/5"
 							>
-								<Icon className="size-4" />
-								<span>{label}</span>
+								<Icon className="size-5" />
 							</a>
 						))}
 					</div>

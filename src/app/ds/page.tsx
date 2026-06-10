@@ -3,7 +3,6 @@ import {
 	Terminal,
 	Command as CommandIcon,
 	ArrowUpRight,
-	Github,
 	Mail,
 	Hash,
 	Search,
@@ -131,7 +130,7 @@ const SHADOWS = [
 	{ name: "--shadow-glow", use: "accent (blue) hover halo" },
 ] as const;
 
-const ICONS = [Terminal, CommandIcon, ArrowUpRight, Github, Mail, Hash, Search] as const;
+const ICONS = [Terminal, CommandIcon, ArrowUpRight, Mail, Hash, Search] as const;
 
 const NAV = [
 	{ id: "color", label: "Color" },
@@ -222,7 +221,7 @@ export default function DesignSystemPage() {
 						<a
 							key={n.id}
 							href={`#${n.id}`}
-							className="text-muted-foreground transition-colors hover:text-brand whitespace-nowrap"
+							className="flex items-center self-stretch px-2 text-muted-foreground transition-colors hover:text-brand whitespace-nowrap"
 						>
 							{n.label}
 						</a>
@@ -406,11 +405,11 @@ export default function DesignSystemPage() {
 							{Z_INDEX.map((z) => (
 								<div
 									key={z.name}
-									className="flex items-baseline justify-between gap-4 border-b border-border/60 pb-3"
+									className="flex flex-col gap-1 border-b border-border/60 pb-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
 								>
 									<span className="font-mono text-sm text-foreground/90">{z.name}</span>
 									<span className="font-mono text-xs text-foreground/50">{z.value}</span>
-									<span className="flex-1 text-right font-mono text-[10px] text-foreground/40">
+									<span className="font-mono text-[10px] text-foreground/40 sm:flex-1 sm:text-right">
 										{z.use}
 									</span>
 								</div>
@@ -455,10 +454,10 @@ export default function DesignSystemPage() {
 						</div>
 						<div className="flex flex-col gap-3">
 							{MOTION_DUR.map((d) => (
-								<div key={d.name} className="flex items-baseline justify-between gap-4">
+								<div key={d.name} className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
 									<span className="font-mono text-sm text-foreground/90">{d.name}</span>
 									<span className="font-mono text-xs text-foreground/50">{d.value}</span>
-									<span className="flex-1 text-right font-mono text-[10px] text-foreground/40">{d.use}</span>
+									<span className="font-mono text-[10px] text-foreground/40 sm:flex-1 sm:text-right">{d.use}</span>
 								</div>
 							))}
 						</div>

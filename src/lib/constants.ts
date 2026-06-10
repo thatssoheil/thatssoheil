@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/brand-icons";
 
 // ─── Site Constants ───
 
@@ -34,7 +34,7 @@ export const EMAIL = "soheil.fakour@gmail.com";
     section, and the Person JSON-LD `sameAs`, so the three can't drift. Icons +
     command-menu search keywords ride along as data. */
 export const SOCIALS = [
-	{ label: "GitHub", href: "https://github.com/soheilfakour", icon: Github, keywords: "code repos source" },
-	{ label: "LinkedIn", href: "https://linkedin.com/in/soheilfakour", icon: Linkedin, keywords: "work cv resume" },
-	{ label: "X / Twitter", href: "https://x.com/soheilfakour", icon: Twitter, keywords: "tweets social" },
+	{ label: "GitHub", href: "https://github.com/thatssoheil", icon: GitHubIcon, keywords: "code repos source" },
+	{ label: "LinkedIn", href: "https://linkedin.com/in/soheilfakour", icon: LinkedInIcon, keywords: "work cv resume" },
+	{ label: "X / Twitter", href: "https://x.com/Thatssoheil", icon: XIcon, keywords: "tweets social" },
 ] as const;

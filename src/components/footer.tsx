@@ -33,7 +33,7 @@ export function Footer() {
 				</div>
 
 				<p className="text-foreground/35">
-					Built with Next.js and a sprinkle of Matrix magic.
+					Built with Next.js, deployed on Cloudflare.
 				</p>
 			</div>
 		</footer>

@@ -81,7 +81,7 @@ export function Header() {
 					href="#hero"
 					onClick={(e) => handleClick(e, "#hero")}
 					aria-label={`${SITE.name} — home`}
-					className="flex items-center gap-2.5 tracking-tight text-foreground hover:text-foreground/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+					className="flex h-full items-center gap-2.5 tracking-tight text-foreground hover:text-foreground/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
 				>
 					<LogoMark className="h-[18px]" />
 					{SITE.name}

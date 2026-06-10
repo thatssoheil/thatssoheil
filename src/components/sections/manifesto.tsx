@@ -11,7 +11,7 @@ export function ManifestoSection() {
 		<section
 			ref={scope}
 			id={"manifesto" satisfies SectionId}
-			className="relative w-full min-h-[100dvh] overflow-hidden snap-start bg-background"
+			className="relative w-full min-h-[100dvh] overflow-hidden bg-background"
 			aria-label="Manifesto"
 		>
 			<div className="flex items-center justify-center min-h-[100dvh] px-6 sm:px-8 md:px-12 lg:px-16">
