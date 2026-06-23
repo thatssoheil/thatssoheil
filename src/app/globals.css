@@ -142,10 +142,18 @@
 	/* Motion — one easing family, four duration steps */
 	--ease-signature: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	--ease-snap: cubic-bezier(0.4, 0, 0.2, 1);
+	/* Swift — Geist's slight-overshoot curve for UI entrances (popovers, menus).
+	   Source of truth: vercel.com/design.md. */
+	--ease-swift: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 	--dur-micro: 150ms;
 	--dur-ui: 300ms;
 	--dur-page: 500ms;
 	--dur-grand: 800ms;
+
+	/* Focus — Geist's two-layer ring: a 2px surface gap, then a 4px signal ring.
+	   Resolves per theme via --background/--ring (the brand accent, not Vercel
+	   blue). Apply to controls with shadow-[var(--ring-focus)]. */
+	--ring-focus: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
 
 	/* Z-index scale — keep stacking deliberate */
 	--z-sticky: 20;    /* in-page sticky bars (e.g. /ds nav) */
