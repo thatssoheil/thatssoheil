@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { TokenValue } from "@/components/ds/token-value";
 
 export const metadata: Metadata = {
 	title: "Design System — Soheil Fakour",
@@ -22,27 +23,27 @@ export const metadata: Metadata = {
 // ─── Token data (mirrors globals.css; swatches render from the live CSS vars) ───
 
 const INK = [
-	{ name: "ink-950", value: "oklch(0.12 0 0)", role: "background" },
-	{ name: "ink-900", value: "oklch(0.16 0 0)", role: "card · popover" },
-	{ name: "ink-850", value: "oklch(0.19 0 0)", role: "secondary · muted" },
-	{ name: "ink-800", value: "oklch(0.23 0 0)", role: "accent (hover)" },
-	{ name: "ink-700", value: "oklch(0.31 0 0)", role: "—" },
-	{ name: "ink-600", value: "oklch(0.43 0 0)", role: "—" },
-	{ name: "ink-500", value: "oklch(0.55 0 0)", role: "—" },
-	{ name: "ink-400", value: "oklch(0.67 0 0)", role: "muted-foreground" },
-	{ name: "ink-300", value: "oklch(0.78 0 0)", role: "—" },
-	{ name: "ink-200", value: "oklch(0.87 0 0)", role: "—" },
-	{ name: "ink-100", value: "oklch(0.93 0 0)", role: "—" },
-	{ name: "ink-50", value: "oklch(0.97 0 0)", role: "foreground" },
+	{ name: "ink-950", role: "background" },
+	{ name: "ink-900", role: "card · popover" },
+	{ name: "ink-850", role: "secondary · muted" },
+	{ name: "ink-800", role: "accent (hover)" },
+	{ name: "ink-700", role: "—" },
+	{ name: "ink-600", role: "—" },
+	{ name: "ink-500", role: "—" },
+	{ name: "ink-400", role: "muted-foreground" },
+	{ name: "ink-300", role: "—" },
+	{ name: "ink-200", role: "—" },
+	{ name: "ink-100", role: "—" },
+	{ name: "ink-50", role: "foreground" },
 ] as const;
 
 const SIGNAL = [
-	{ name: "signal-200", value: "oklch(0.82 0.08 250)", role: "—" },
-	{ name: "signal-300", value: "oklch(0.74 0.14 253)", role: "—" },
-	{ name: "signal-400", value: "oklch(0.69 0.17 255)", role: "brand text (dark)" },
-	{ name: "signal-500", value: "oklch(0.64 0.19 256)", role: "primary · ring · fills" },
-	{ name: "signal-600", value: "oklch(0.56 0.18 257)", role: "—" },
-	{ name: "signal-700", value: "oklch(0.46 0.15 258)", role: "brand text (light)" },
+	{ name: "signal-200", role: "—" },
+	{ name: "signal-300", role: "—" },
+	{ name: "signal-400", role: "brand text (dark)" },
+	{ name: "signal-500", role: "primary · ring · fills" },
+	{ name: "signal-600", role: "—" },
+	{ name: "signal-700", role: "brand text (light)" },
 ] as const;
 
 const SEMANTIC = [
@@ -179,15 +180,7 @@ function Block({
 	);
 }
 
-function Swatch({
-	name,
-	value,
-	role,
-}: {
-	name: string;
-	value: string;
-	role?: string;
-}) {
+function Swatch({ name, role }: { name: string; role?: string }) {
 	return (
 		<div className="flex flex-col gap-2">
 			<div
@@ -199,9 +192,7 @@ function Swatch({
 				{role && role !== "—" && (
 					<span className="font-mono text-[10px] text-foreground/40">{role}</span>
 				)}
-				<span className="font-mono text-[10px] text-foreground/30 break-all">
-					{value}
-				</span>
+				<TokenValue name={name} />
 			</div>
 		</div>
 	);
@@ -251,7 +242,7 @@ export default function DesignSystemPage() {
 				<Block id="color" label="Color" title="Ink — neutral shades of black">
 					<div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 md:grid-cols-4">
 						{INK.map((c) => (
-							<Swatch key={c.name} name={c.name} value={c.value} role={c.role} />
+							<Swatch key={c.name} name={c.name} role={c.role} />
 						))}
 					</div>
 					<p className="max-w-2xl text-sm font-light text-foreground/45">
@@ -267,7 +258,7 @@ export default function DesignSystemPage() {
 				<Block label="Color" title="Signal — the accent (iMessage blue)">
 					<div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 md:grid-cols-6">
 						{SIGNAL.map((c) => (
-							<Swatch key={c.name} name={c.name} value={c.value} role={c.role} />
+							<Swatch key={c.name} name={c.name} role={c.role} />
 						))}
 					</div>
 					<p className="max-w-2xl text-sm font-light text-foreground/45">
