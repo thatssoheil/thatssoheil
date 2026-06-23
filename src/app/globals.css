@@ -319,6 +319,51 @@
 	opacity: 0;
 }
 
+/* ─── Composite type ramps ───
+   Geist's four named ramps (source of truth: vercel.com/design.md). Each
+   utility sets family + size + line-height + weight (+ tracking for headings)
+   in one class. One deliberate brand deviation: headings keep our signature
+   weight 300 — Geist sets them at 600. Tracking law preserved: ≤20px → -0.02em,
+   24–32px → -0.04em, ≥40px → -0.06em; the largest headings sit at line-height 1. */
+
+/* heading-* — Geist Sans, weight 300 (brand voice), negative tracking */
+@utility text-heading-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 300; letter-spacing: -0.02em; }
+@utility text-heading-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.5rem; font-weight: 300; letter-spacing: -0.02em; }
+@utility text-heading-20 { font-family: var(--font-sans); font-size: 1.25rem; line-height: 1.625rem; font-weight: 300; letter-spacing: -0.02em; }
+@utility text-heading-24 { font-family: var(--font-sans); font-size: 1.5rem; line-height: 2rem; font-weight: 300; letter-spacing: -0.04em; }
+@utility text-heading-32 { font-family: var(--font-sans); font-size: 2rem; line-height: 2.5rem; font-weight: 300; letter-spacing: -0.04em; }
+@utility text-heading-40 { font-family: var(--font-sans); font-size: 2.5rem; line-height: 3rem; font-weight: 300; letter-spacing: -0.06em; }
+@utility text-heading-48 { font-family: var(--font-sans); font-size: 3rem; line-height: 3.5rem; font-weight: 300; letter-spacing: -0.06em; }
+@utility text-heading-56 { font-family: var(--font-sans); font-size: 3.5rem; line-height: 1; font-weight: 300; letter-spacing: -0.06em; }
+@utility text-heading-64 { font-family: var(--font-sans); font-size: 4rem; line-height: 1; font-weight: 300; letter-spacing: -0.06em; }
+@utility text-heading-72 { font-family: var(--font-sans); font-size: 4.5rem; line-height: 1; font-weight: 300; letter-spacing: -0.06em; }
+
+/* copy-* — Geist Sans, weight 400 (body / prose); taller line-heights */
+@utility text-copy-13 { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1.125rem; font-weight: 400; }
+@utility text-copy-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
+@utility text-copy-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.5rem; font-weight: 400; }
+@utility text-copy-18 { font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.75rem; font-weight: 400; }
+@utility text-copy-20 { font-family: var(--font-sans); font-size: 1.25rem; line-height: 2.25rem; font-weight: 400; }
+@utility text-copy-24 { font-family: var(--font-sans); font-size: 1.5rem; line-height: 2.25rem; font-weight: 400; }
+@utility text-copy-13-mono { font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.125rem; font-weight: 400; }
+@utility text-copy-14-mono { font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
+
+/* label-* — Geist Sans, weight 400 (UI labels, tight line-height) */
+@utility text-label-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 400; }
+@utility text-label-13 { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1rem; font-weight: 400; }
+@utility text-label-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
+@utility text-label-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.25rem; font-weight: 400; }
+@utility text-label-18 { font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.25rem; font-weight: 400; }
+@utility text-label-20 { font-family: var(--font-sans); font-size: 1.25rem; line-height: 2rem; font-weight: 400; }
+@utility text-label-12-mono { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1rem; font-weight: 400; }
+@utility text-label-13-mono { font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1rem; font-weight: 400; }
+@utility text-label-14-mono { font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
+
+/* button-* — Geist Sans, weight 500 (interactive labels) */
+@utility text-button-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 500; }
+@utility text-button-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; }
+@utility text-button-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.25rem; font-weight: 500; }
+
 /* ─── Custom Animations ─── */
 /* Scroll cue — a signal segment drips down a faint hairline */
 @keyframes scroll-cue {
