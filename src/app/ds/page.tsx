@@ -64,6 +64,38 @@ const TYPE_SCALE = [
 	{ label: "Small / caption", cls: "text-sm font-normal font-sans", note: "Geist Sans" },
 ] as const;
 
+// Geist's composite ramps (family+size+LH+weight+tracking in one class), retuned
+// to the brand: headings keep weight 300 (Geist uses 600). Source: vercel.com/design.md
+const TYPE_RAMPS = [
+	{ cls: "text-heading-48", label: "heading-48", note: "48 / 56 · -0.06em · w300" },
+	{ cls: "text-heading-32", label: "heading-32", note: "32 / 40 · -0.04em · w300" },
+	{ cls: "text-heading-24", label: "heading-24", note: "24 / 32 · -0.04em · w300" },
+	{ cls: "text-heading-20", label: "heading-20", note: "20 / 26 · -0.02em · w300" },
+	{ cls: "text-copy-18", label: "copy-18", note: "18 / 28 · w400 — prose" },
+	{ cls: "text-copy-16", label: "copy-16", note: "16 / 24 · w400 — body" },
+	{ cls: "text-label-14", label: "label-14", note: "14 / 20 · w400 — UI label" },
+	{ cls: "text-button-14", label: "button-14", note: "14 / 20 · w500 — controls" },
+	{ cls: "text-label-13-mono", label: "label-13-mono", note: "13 / 16 · Geist Mono" },
+] as const;
+
+const FLUID = [
+	{ name: "text-fluid-20-24", range: "20 → 24px" },
+	{ name: "text-fluid-24-32", range: "24 → 32px" },
+	{ name: "text-fluid-32-48", range: "32 → 48px" },
+	{ name: "text-fluid-36-48", range: "36 → 48px — manifesto" },
+	{ name: "text-fluid-36-60", range: "36 → 60px — connect" },
+	{ name: "text-fluid-48-72", range: "48 → 72px" },
+] as const;
+
+const ALPHA = [
+	{ name: "alpha-100", role: "—" },
+	{ name: "alpha-200", role: "border · dark" },
+	{ name: "alpha-300", role: "border · light + hairline" },
+	{ name: "alpha-400", role: "input" },
+	{ name: "alpha-500", role: "—" },
+	{ name: "alpha-600", role: "strong edge" },
+] as const;
+
 const LAYOUT = [
 	{ name: "Content width", value: "64rem wide · 48rem prose (max-w-5xl / max-w-3xl)" },
 	{ name: "Section height", value: "full viewport — min-h-[100dvh] (80dvh for lighter sections)" },
@@ -115,6 +147,7 @@ const SPACING = [
 const MOTION_EASE = [
 	{ name: "--ease-signature", value: "cubic-bezier(0.25, 0.46, 0.45, 0.94)", use: "everything entrance-y" },
 	{ name: "--ease-snap", value: "cubic-bezier(0.4, 0, 0.2, 1)", use: "UI state changes" },
+	{ name: "--ease-swift", value: "cubic-bezier(0.175, 0.885, 0.32, 1.1)", use: "popover / menu overshoot (Geist)" },
 ] as const;
 
 const MOTION_DUR = [
@@ -125,6 +158,7 @@ const MOTION_DUR = [
 ] as const;
 
 const SHADOWS = [
+	{ name: "--shadow-border", use: "1px hairline — border-first (Geist)" },
 	{ name: "--shadow-soft", use: "resting elevated surface" },
 	{ name: "--shadow-elevated", use: "raised / floating" },
 	{ name: "--shadow-glow", use: "accent (blue) hover halo" },
@@ -327,6 +361,59 @@ export default function DesignSystemPage() {
 							</span>
 						</div>
 					</div>
+
+					{/* Composite ramps — Geist's named type system, brand weights */}
+					<div className="flex flex-col gap-5 border-t border-border/60 pt-10">
+						<SectionLabel>Composite ramps</SectionLabel>
+						<p className="max-w-2xl text-sm font-light text-foreground/45">
+							Geist&rsquo;s four named ramps —{" "}
+							<code className="text-brand">text-heading/copy/label/button-*</code> — each set
+							family + size + line-height + weight + tracking in one class. One brand deviation:
+							headings keep our{" "}
+							<strong className="font-normal text-foreground/70">weight 300</strong> (Geist sets
+							600). Tracking law preserved: ≤20px → -0.02em, 24–32 → -0.04em, ≥40 → -0.06em.
+						</p>
+						<div className="flex flex-col gap-4">
+							{TYPE_RAMPS.map((t) => (
+								<div
+									key={t.label}
+									className="flex flex-col gap-1 border-b border-border/40 pb-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
+								>
+									<span className={t.cls}>{t.label}</span>
+									<span className="shrink-0 font-mono text-[10px] text-foreground/40">
+										{t.note}
+									</span>
+								</div>
+							))}
+						</div>
+					</div>
+
+					{/* Fluid type — clamp() ramps */}
+					<div className="flex flex-col gap-5 border-t border-border/60 pt-10">
+						<SectionLabel>Fluid type</SectionLabel>
+						<p className="max-w-2xl text-sm font-light text-foreground/45">
+							<code className="text-brand">text-fluid-*</code> tokens interpolate between a 360px
+							and 1280px viewport, so headings scale with the page instead of stepping at
+							breakpoints. Resize the window to watch them move.
+						</p>
+						<div className="flex flex-col gap-3">
+							{FLUID.map((f) => (
+								<div
+									key={f.name}
+									className="flex items-baseline justify-between gap-8 border-b border-border/40 pb-3"
+								>
+									<span className={`${f.name} font-light tracking-tight text-foreground/90`}>
+										Aa
+									</span>
+									<span className="shrink-0 text-right font-mono text-[10px] text-foreground/40">
+										<code className="text-foreground/70">{f.name}</code>
+										<br />
+										{f.range}
+									</span>
+								</div>
+							))}
+						</div>
+					</div>
 				</Block>
 
 				{/* ── Space: layout, radius, borders, spacing, z-index, focus ── */}
@@ -350,6 +437,41 @@ export default function DesignSystemPage() {
 								<span className="font-mono text-[10px] text-foreground/40">{r.note}</span>
 							</div>
 						))}
+					</div>
+
+					{/* Alpha ramp — translucent neutrals, border-first hairlines */}
+					<div className="flex flex-col gap-3">
+						<SectionLabel>Alpha ramp</SectionLabel>
+						<p className="max-w-2xl text-sm font-light text-foreground/45">
+							Translucent neutrals (Geist&rsquo;s gray-alpha) so a hairline reads identically over any
+							surface. <code className="text-brand">--border</code> and{" "}
+							<code className="text-brand">--input</code> source from this ramp; reach for{" "}
+							<code className="text-brand">--shadow-border</code> when you want a 1px ring that
+							takes no layout box. Shown over a checker to reveal the transparency.
+						</p>
+						<div className="grid grid-cols-3 gap-x-5 gap-y-6 sm:grid-cols-6">
+							{ALPHA.map((a) => (
+								<div key={a.name} className="flex flex-col gap-2">
+									<div
+										className="h-14 w-full overflow-hidden rounded-lg border border-border"
+										style={{
+											backgroundImage:
+												"repeating-conic-gradient(var(--muted) 0 25%, transparent 0 50%)",
+											backgroundSize: "14px 14px",
+										}}
+									>
+										<div
+											className="h-full w-full"
+											style={{ background: `var(--${a.name})` }}
+										/>
+									</div>
+									<span className="font-mono text-xs text-foreground/90">{a.name}</span>
+									{a.role !== "—" && (
+										<span className="font-mono text-[10px] text-foreground/40">{a.role}</span>
+									)}
+								</div>
+							))}
+						</div>
 					</div>
 
 					{/* Borders — live per-theme; values shown for both themes */}
@@ -421,20 +543,21 @@ export default function DesignSystemPage() {
 					<div className="flex flex-col gap-3">
 						<SectionLabel>Focus ring</SectionLabel>
 						<p className="text-sm font-light text-foreground/45">
-							Tab through these — the ring is the signal accent (
-							<code className="text-brand">--ring</code>), 2px with 2px offset.
+							Tab through these — the two-layer ring (
+							<code className="text-brand">--ring-focus</code>) is Geist&rsquo;s pattern: a 2px surface
+							gap, then a 4px signal-accent ring. Used on every control.
 						</p>
 						<div className="flex flex-wrap items-center gap-4">
 							<button
 								type="button"
-								className="rounded-md border border-border px-4 py-2 text-sm text-foreground/80 transition-colors hover:border-foreground/30"
+								className="rounded-md border border-border px-4 py-2 text-sm text-foreground/80 transition-colors hover:border-foreground/30 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 							>
 								Focusable button
 							</button>
 							<input
 								type="text"
 								placeholder="Focusable input"
-								className="rounded-md border border-input bg-card px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground"
+								className="rounded-md border border-input bg-card px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:shadow-[var(--ring-focus)]"
 							/>
 						</div>
 					</div>
@@ -586,6 +709,26 @@ export default function DesignSystemPage() {
 						</div>
 					</div>
 				</Block>
+
+				{/* ── Source of truth ── */}
+				<footer className="flex flex-col gap-3 border-t border-border pt-12 text-sm font-light text-foreground/45">
+					<SectionLabel>Reference</SectionLabel>
+					<p className="max-w-2xl leading-relaxed">
+						Structure adopted from Vercel&rsquo;s Geist — the composite type ramps, the alpha ramp
+						and border-first hairline, swift easing, the two-layer focus ring, and the fluid
+						scale. The brand stays ours: ink neutrals, the iMessage-blue signal, dark-first, and
+						our light headings. Source of truth:{" "}
+						<a
+							href="https://vercel.com/design.md"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-brand underline-offset-4 hover:underline focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)] rounded-sm"
+						>
+							vercel.com/design.md
+						</a>
+						. Blur, container, and breakpoint scales are inherited from Tailwind v4.
+					</p>
+				</footer>
 			</div>
 		</main>
 	);

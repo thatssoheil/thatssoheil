@@ -81,7 +81,7 @@ export function Header() {
 					href="#hero"
 					onClick={(e) => handleClick(e, "#hero")}
 					aria-label={`${SITE.name} — home`}
-					className="flex h-full items-center gap-2.5 tracking-tight text-foreground hover:text-foreground/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+					className="flex h-full items-center gap-2.5 tracking-tight text-foreground hover:text-foreground/80 transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)] rounded-sm"
 				>
 					<LogoMark className="h-[18px]" />
 					{SITE.name}
@@ -101,7 +101,7 @@ export function Header() {
 									onClick={(e) => handleClick(e, href)}
 									aria-current={isActive ? "true" : undefined}
 									className={cn(
-										"relative py-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm",
+										"relative py-1 transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)] rounded-sm",
 										isActive
 											? "text-foreground"
 											: "text-muted-foreground hover:text-foreground/80",
