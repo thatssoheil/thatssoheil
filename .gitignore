@@ -50,6 +50,3 @@ next-env.d.ts
 
 
 !.dev.vars.example
-
-# claude
-CLAUDE.md
