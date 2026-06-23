@@ -3,7 +3,10 @@
 import { useRef } from "react";
 import { CipherText } from "@/components/matrix/cipher-text";
 import { gsap, useGSAP } from "@/lib/gsap";
+import { useMotion } from "@/hooks/use-motion";
+import { MOTION_EASE } from "@/lib/motion";
 import { SM_BREAKPOINT_PX, type SectionId } from "@/lib/constants";
+import { jumpToSection } from "@/lib/section-navigation";
 
 // ─── Ambient plane — a single asymmetric triangle behind the hero text ───
 // Deliberately subliminal: a faint neutral fill + faint neutral edges read as a
@@ -74,7 +77,7 @@ function HeroPlane() {
 
 function ScrollCue() {
 	const handleClick = () => {
-		document.getElementById("manifesto")?.scrollIntoView({ behavior: "smooth" });
+		jumpToSection("manifesto");
 	};
 
 	return (
@@ -105,14 +108,13 @@ export function HeroSection() {
 	const sectionRef = useRef<HTMLElement>(null);
 
 	// ── Page-load entrance (GSAP, before paint via useGSAP) ──
-	useGSAP(
-		() => {
-			const mm = gsap.matchMedia();
-			// fromTo (not from): the CSS FOUC gate holds [data-hero] hidden in the
-			// SSR markup, so we state the visible end explicitly and reveal into it.
-			// clearProps:"transform" tidies the inline translate but keeps the
-			// inline opacity:1 that overrides the gate.
-			mm.add("(prefers-reduced-motion: no-preference)", () => {
+	// fromTo (not from): the CSS FOUC gate holds [data-hero] hidden in the
+	// SSR markup, so we state the visible end explicitly and reveal into it.
+	// clearProps:"transform" tidies the inline translate but keeps the
+	// inline opacity:1 that overrides the gate.
+	useMotion(
+		{
+			full: () => {
 				gsap.fromTo(
 					"[data-hero]",
 					{ opacity: 0, y: 24 },
@@ -120,20 +122,20 @@ export function HeroSection() {
 						opacity: 1,
 						y: 0,
 						duration: 0.7,
-						ease: "power2.out",
+						ease: MOTION_EASE,
 						stagger: 0.18,
 						delay: 0.3,
 						clearProps: "transform",
 					},
 				);
-			});
-			mm.add("(prefers-reduced-motion: reduce)", () => {
+			},
+			reduced: () => {
 				gsap.fromTo(
 					"[data-hero]",
 					{ opacity: 0 },
 					{ opacity: 1, duration: 0.4, stagger: 0.1 },
 				);
-			});
+			},
 		},
 		{ scope: sectionRef },
 	);
@@ -143,6 +145,8 @@ export function HeroSection() {
 	useGSAP(
 		() => {
 			const mm = gsap.matchMedia();
+			// Stays on raw useGSAP, not the useMotion seam: that seam only gates
+			// reduced-motion, and this needs a min-width gate too —
 			// Desktop only (sm+). Pinning a full-screen section and scrubbing a 16px
 			// blur feels heavy and "stuck" on touch — and the dynamic mobile viewport
 			// (collapsing URL bar vs. 100dvh) makes a pinned trigger jump. On phones

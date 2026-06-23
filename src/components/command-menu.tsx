@@ -11,8 +11,9 @@ import {
 	Menu,
 	CornerDownLeft,
 } from "lucide-react";
-import { SECTIONS, SOCIALS, EMAIL, type SectionId } from "@/lib/constants";
+import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
+import { jumpToSection } from "@/lib/section-navigation";
 
 const ITEM_CLASS =
 	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
@@ -21,13 +22,6 @@ const ITEM_CLASS =
 
 const ICON_CLASS =
 	"size-4 text-muted-foreground group-data-[selected=true]:text-brand";
-
-function prefersReducedMotion() {
-	return (
-		typeof window !== "undefined" &&
-		window.matchMedia("(prefers-reduced-motion: reduce)").matches
-	);
-}
 
 export function CommandMenu() {
 	const [open, setOpen] = useState(false);
@@ -46,21 +40,6 @@ export function CommandMenu() {
 		};
 		document.addEventListener("keydown", onKey);
 		return () => document.removeEventListener("keydown", onKey);
-	}, []);
-
-	const jumpTo = useCallback((id: SectionId) => {
-		setOpen(false);
-		const behavior = prefersReducedMotion() ? "auto" : "smooth";
-		// On desktop the hero is pinned (GSAP ScrollTrigger), so its element spans
-		// the whole pin range — scrollIntoView would land at the end of that range,
-		// where the exit transition has already played out and the screen reads
-		// blank. Scrolling to the absolute top lands on the hero's start in both
-		// cases (mobile isn't pinned), so use it unconditionally.
-		if (id === ("hero" satisfies SectionId)) {
-			window.scrollTo({ top: 0, behavior });
-			return;
-		}
-		document.getElementById(id)?.scrollIntoView({ behavior });
 	}, []);
 
 	const openLink = useCallback((href: string) => {
@@ -136,7 +115,7 @@ export function CommandMenu() {
 										<Command.Item
 											key={s.id}
 											value={`section ${s.label}`}
-											onSelect={() => jumpTo(s.id)}
+											onSelect={() => { setOpen(false); jumpToSection(s.id); }}
 											className={ITEM_CLASS}
 										>
 											<Hash className={ICON_CLASS} strokeWidth={1.5} />
