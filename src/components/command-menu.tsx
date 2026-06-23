@@ -8,12 +8,16 @@ import {
 	Mail,
 	Copy,
 	Search,
+	Menu,
 	CornerDownLeft,
 } from "lucide-react";
 import { SECTIONS, SOCIALS, EMAIL, type SectionId } from "@/lib/constants";
+import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 
 const ITEM_CLASS =
-	"group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-accent data-[selected=true]:text-foreground";
+	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
+	// mobile nav); sm:py-2.5 keeps the compact desktop rows unchanged.
+	"group flex items-center gap-3 rounded-md px-3 py-3 sm:py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-accent data-[selected=true]:text-foreground";
 
 const ICON_CLASS =
 	"size-4 text-muted-foreground group-data-[selected=true]:text-brand";
@@ -28,6 +32,10 @@ function prefersReducedMotion() {
 export function CommandMenu() {
 	const [open, setOpen] = useState(false);
 	const [copied, setCopied] = useState(false);
+	// On touch devices the menu doubles as mobile nav, so the palette input must
+	// not autofocus — that would pop the on-screen keyboard over the section list
+	// the moment the menu opens.
+	const coarsePointer = useCoarsePointer();
 
 	useEffect(() => {
 		const onKey = (e: KeyboardEvent) => {
@@ -43,10 +51,11 @@ export function CommandMenu() {
 	const jumpTo = useCallback((id: SectionId) => {
 		setOpen(false);
 		const behavior = prefersReducedMotion() ? "auto" : "smooth";
-		// The hero is pinned (GSAP ScrollTrigger), so its element spans the whole
-		// pin range — scrollIntoView would land at the end of that range, where the
-		// exit transition has already played out and the screen reads blank. Scroll
-		// to the absolute top instead to land on the hero's start.
+		// On desktop the hero is pinned (GSAP ScrollTrigger), so its element spans
+		// the whole pin range — scrollIntoView would land at the end of that range,
+		// where the exit transition has already played out and the screen reads
+		// blank. Scrolling to the absolute top lands on the hero's start in both
+		// cases (mobile isn't pinned), so use it unconditionally.
 		if (id === ("hero" satisfies SectionId)) {
 			window.scrollTo({ top: 0, behavior });
 			return;
@@ -90,7 +99,7 @@ export function CommandMenu() {
 				aria-label="Open command menu"
 				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)] rounded-sm"
 			>
-				<Search className="size-5" strokeWidth={1.5} aria-hidden="true" />
+				<Menu className="size-5" strokeWidth={1.5} aria-hidden="true" />
 			</button>
 
 			<Dialog.Root open={open} onOpenChange={setOpen}>
@@ -111,7 +120,7 @@ export function CommandMenu() {
 							<div className="flex items-center gap-2 border-b border-border px-4">
 								<Search className="size-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
 								<Command.Input
-									autoFocus
+									autoFocus={!coarsePointer}
 									placeholder="Jump to a section, open a link…"
 									className="w-full bg-transparent py-3.5 text-sm font-mono text-foreground outline-none placeholder:text-muted-foreground"
 								/>
