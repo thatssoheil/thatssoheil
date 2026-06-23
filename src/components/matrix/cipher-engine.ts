@@ -1,0 +1,417 @@
+// Framework-free cipher decode engine. Holds the per-character state machine
+// and advances one TICK per `tick()`, returning the display snapshot. Pure: no
+// React, no timers, no DOM. The RNG is injectable (defaults to Math.random) so
+// the decode is deterministic when a seeded generator is supplied.
+
+export type DisplayChar = {
+  char: string;
+  blur: number;
+  brightness: number;
+  scale: number;
+  opacity: number;
+  tint: number;
+};
+
+export type CipherConfig = {
+  /** Ms the name holds after reveal before re-locking (loop mode). */
+  revealedHold: number;
+  /** Ms the tumblers spin before next unlock (loop mode). */
+  spinningHold: number;
+  /** Ms for the full left-to-right deceleration sweep. */
+  decelDuration: number;
+  /** Ms for the spin-up (re-lock) sweep (loop mode). */
+  spinUpDuration: number;
+  /** When true, the name perpetually re-scrambles. */
+  loop: boolean;
+  /** After a one-time decode, occasionally re-flicker a single locked char. */
+  ambient: boolean;
+  /** Tick granularity in ms. */
+  tickMs: number;
+};
+
+export const CHAR_POOL =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&".split("");
+
+/** Pick a random glyph from the pool using the given RNG. */
+export function randomGlyph(rng: () => number = Math.random): string {
+  return CHAR_POOL[Math.floor(rng() * CHAR_POOL.length)];
+}
+
+// Deterministic per-index glyph (Knuth multiplicative hash). Used for the
+// initial SSR/first-client render so the pre-hydration markup already looks
+// like the cipher mid-spin — no underscores, no hydration mismatch.
+export function seededChar(i: number): string {
+  const n = (Math.imul(i + 1, 2654435761) >>> 0) % CHAR_POOL.length;
+  return CHAR_POOL[n];
+}
+
+type CharPhase =
+  | "spinning"
+  | "decelerating"
+  | "flash"
+  | "locked"
+  | "accelerating";
+
+interface CharState {
+  char: string;
+  blur: number;
+  brightness: number;
+  scale: number;
+  opacity: number;
+  tint: number;
+  flicker: boolean;
+  phase: CharPhase;
+  elapsed: number;
+  delay: number;
+  tickCount: number;
+  spinRate: number;
+  flashElapsed: number;
+  targetChar: string;
+}
+
+type GlobalPhase =
+  | "decelerating"
+  | "revealed"
+  | "accelerating"
+  | "spinning"
+  | "ambient";
+
+export interface CipherEngine {
+  /** Advance one tick and return the current display snapshot. */
+  tick(): DisplayChar[];
+  /** Current display snapshot without advancing. */
+  snapshot(): DisplayChar[];
+  /** True once a decode-once run has settled — the caller can stop ticking. */
+  readonly done: boolean;
+}
+
+export function createCipherEngine(
+  text: string,
+  config: CipherConfig,
+  rng: () => number = Math.random,
+): CipherEngine {
+  const {
+    revealedHold,
+    spinningHold,
+    decelDuration,
+    spinUpDuration,
+    loop,
+    ambient,
+    tickMs: TICK_MS,
+  } = config;
+
+  const randomChar = () => randomGlyph(rng);
+
+  const chars = text.split("");
+  const nonSpacePositions: number[] = [];
+  for (let i = 0; i < chars.length; i++) {
+    if (chars[i] !== " ") nonSpacePositions.push(i);
+  }
+  const nsCount = nonSpacePositions.length;
+
+  // ── Timing constants ──
+  const FLASH_MS = 280;
+  const DECEL_PER_CHAR = decelDuration * 0.5;
+  const ACCEL_PER_CHAR = spinUpDuration * 0.45;
+
+  // ── Ambient flicker (post-decode "alive" pulse) ──
+  const FLICKER_SPIN_MS = 320;
+  const ambientActive = ambient && !loop;
+  const nextAmbientDelay = () =>
+    Math.round((3000 + rng() * 3500) / TICK_MS);
+
+  function makeCharState(i: number, phase: CharPhase): CharState {
+    return {
+      char: chars[i] === " " ? " " : randomChar(),
+      blur: phase === "locked" ? 0 : 2,
+      brightness: 1,
+      scale: 1,
+      opacity: phase === "locked" ? 1 : 0.45,
+      tint: 0,
+      flicker: false,
+      phase: chars[i] === " " ? "locked" : phase,
+      elapsed: 0,
+      delay: 0,
+      tickCount: 0,
+      spinRate: phase === "locked" ? 999 : 1,
+      flashElapsed: 0,
+      targetChar: chars[i],
+    };
+  }
+
+  function stagger(nsIdx: number, spread: number): number {
+    return nsCount > 1 ? (nsIdx / (nsCount - 1)) * spread : 0;
+  }
+
+  let gPhase: GlobalPhase = "decelerating";
+  let gElapsed = 0;
+  let ambientCountdown = nextAmbientDelay();
+  let flickerActive = false;
+  let done = false;
+
+  const cs: CharState[] = chars.map((_, i) => makeCharState(i, "spinning"));
+  // Set stagger delays for initial deceleration
+  let nsIdx = 0;
+  for (let i = 0; i < cs.length; i++) {
+    if (chars[i] === " ") continue;
+    cs[i].delay = stagger(nsIdx, decelDuration * 0.55);
+    nsIdx++;
+  }
+
+  function resetForDecel() {
+    let idx = 0;
+    for (let i = 0; i < cs.length; i++) {
+      if (chars[i] === " ") continue;
+      const s = cs[i];
+      s.phase = "spinning";
+      s.elapsed = 0;
+      s.delay = stagger(idx, decelDuration * 0.55);
+      s.tickCount = 0;
+      s.spinRate = 1;
+      s.flashElapsed = 0;
+      s.blur = 2;
+      s.opacity = 0.45;
+      s.brightness = 1;
+      s.scale = 1;
+      idx++;
+    }
+  }
+
+  function resetForAccel() {
+    let idx = 0;
+    for (let i = 0; i < cs.length; i++) {
+      if (chars[i] === " ") continue;
+      const s = cs[i];
+      s.phase = "locked";
+      s.elapsed = 0;
+      s.delay = stagger(idx, spinUpDuration * 0.5);
+      s.tickCount = 0;
+      s.spinRate = 14;
+      s.flashElapsed = 0;
+      s.blur = 0;
+      s.opacity = 1;
+      s.brightness = 1;
+      s.scale = 1;
+      idx++;
+    }
+  }
+
+  function snapshot(): DisplayChar[] {
+    return cs.map((s) => ({
+      char: s.char,
+      blur: s.blur,
+      brightness: s.brightness,
+      scale: s.scale,
+      opacity: s.opacity,
+      tint: s.tint,
+    }));
+  }
+
+  function tick(): DisplayChar[] {
+    gElapsed += TICK_MS;
+
+    // ── Global phase transitions (hold timers) ──
+    if (gPhase === "revealed") {
+      if (loop) {
+        if (gElapsed >= revealedHold) {
+          gPhase = "accelerating";
+          gElapsed = 0;
+          resetForAccel();
+        }
+      } else if (ambientActive) {
+        // Decode-once + ambient: keep ticking, drip rare single-char flickers.
+        gPhase = "ambient";
+        gElapsed = 0;
+        ambientCountdown = nextAmbientDelay();
+      } else {
+        // Decode-once: settle crisp and stop the loop entirely.
+        done = true;
+        return snapshot();
+      }
+    } else if (gPhase === "ambient") {
+      ambientCountdown--;
+      if (!flickerActive && ambientCountdown <= 0 && nsCount > 0) {
+        const pick = nonSpacePositions[Math.floor(rng() * nsCount)];
+        const s = cs[pick];
+        s.flicker = true;
+        s.phase = "spinning";
+        s.elapsed = 0;
+        s.tickCount = 0;
+        s.flashElapsed = 0;
+        s.blur = 1.2;
+        s.opacity = 0.6;
+        flickerActive = true;
+      }
+    } else if (gPhase === "spinning" && gElapsed >= spinningHold) {
+      gPhase = "decelerating";
+      gElapsed = 0;
+      resetForDecel();
+    }
+
+    // ── Per-character tick ──
+    let allDone = true;
+
+    for (let i = 0; i < cs.length; i++) {
+      const s = cs[i];
+      if (chars[i] === " ") continue;
+
+      s.elapsed += TICK_MS;
+      s.tickCount++;
+
+      // ─────────────────────────────────────────
+      // DECELERATION: spinning → decelerating → flash → locked
+      // ─────────────────────────────────────────
+      if (gPhase === "decelerating") {
+        if (s.phase === "spinning") {
+          s.char = randomChar();
+          if (s.elapsed >= s.delay) {
+            s.phase = "decelerating";
+            s.elapsed = 0;
+            s.tickCount = 0;
+          }
+          allDone = false;
+        } else if (s.phase === "decelerating") {
+          const p = Math.min(s.elapsed / DECEL_PER_CHAR, 1);
+
+          s.spinRate = Math.max(1, Math.floor(1 + p * 13));
+          s.blur = 2 * (1 - p * p);
+          s.opacity = 0.45 + p * 0.55;
+
+          if (s.tickCount % s.spinRate === 0) {
+            if (p > 0.65 && rng() < (p - 0.65) * 2.2) {
+              s.char = s.targetChar;
+            } else {
+              s.char = randomChar();
+            }
+          }
+
+          if (p >= 1) {
+            s.phase = "flash";
+            s.char = s.targetChar;
+            s.blur = 0;
+            s.opacity = 1;
+            s.brightness = 1.35;
+            s.scale = 1.08;
+            s.tint = 1;
+            s.flashElapsed = 0;
+          } else {
+            allDone = false;
+          }
+        } else if (s.phase === "flash") {
+          s.flashElapsed += TICK_MS;
+          const fp = Math.min(s.flashElapsed / FLASH_MS, 1);
+          const ease = 1 - (1 - fp) * (1 - fp);
+          s.brightness = 1.35 - 0.35 * ease;
+          s.scale = 1.08 - 0.08 * ease;
+          s.tint = 1 - ease;
+
+          if (fp >= 1) {
+            s.phase = "locked";
+            s.brightness = 1;
+            s.scale = 1;
+            s.tint = 0;
+          } else {
+            allDone = false;
+          }
+        }
+      }
+
+      // ─────────────────────────────────────────
+      // ACCELERATION: locked → accelerating → spinning
+      // ─────────────────────────────────────────
+      else if (gPhase === "accelerating") {
+        if (s.phase === "locked") {
+          if (s.elapsed >= s.delay) {
+            s.phase = "accelerating";
+            s.elapsed = 0;
+            s.tickCount = 0;
+          }
+          allDone = false;
+        } else if (s.phase === "accelerating") {
+          const p = Math.min(s.elapsed / ACCEL_PER_CHAR, 1);
+
+          s.spinRate = Math.max(1, Math.floor(14 - p * 13));
+          s.blur = 2 * p * p;
+          s.opacity = 1 - p * 0.55;
+
+          if (s.tickCount % s.spinRate === 0) {
+            s.char = randomChar();
+          }
+
+          if (p >= 1) {
+            s.phase = "spinning";
+            s.spinRate = 1;
+            s.blur = 2;
+            s.opacity = 0.45;
+          } else {
+            allDone = false;
+          }
+        } else if (s.phase === "spinning") {
+          s.char = randomChar();
+        }
+      }
+
+      // ─────────────────────────────────────────
+      // SPINNING / REVEALED (hold phases)
+      // ─────────────────────────────────────────
+      else if (gPhase === "spinning") {
+        s.char = randomChar();
+      }
+
+      // ─────────────────────────────────────────
+      // AMBIENT: locked chars rest; one re-flickers at a time
+      // ─────────────────────────────────────────
+      else if (gPhase === "ambient") {
+        if (!s.flicker) continue;
+        if (s.phase === "spinning") {
+          s.char = randomChar();
+          if (s.elapsed >= FLICKER_SPIN_MS) {
+            s.phase = "flash";
+            s.char = s.targetChar;
+            s.blur = 0;
+            s.opacity = 1;
+            s.brightness = 1.35;
+            s.scale = 1.08;
+            s.tint = 1;
+            s.flashElapsed = 0;
+          }
+        } else if (s.phase === "flash") {
+          s.flashElapsed += TICK_MS;
+          const fp = Math.min(s.flashElapsed / FLASH_MS, 1);
+          const ease = 1 - (1 - fp) * (1 - fp);
+          s.brightness = 1.35 - 0.35 * ease;
+          s.scale = 1.08 - 0.08 * ease;
+          s.tint = 1 - ease;
+          if (fp >= 1) {
+            s.phase = "locked";
+            s.brightness = 1;
+            s.scale = 1;
+            s.tint = 0;
+            s.flicker = false;
+            flickerActive = false;
+            ambientCountdown = nextAmbientDelay();
+          }
+        }
+      }
+    }
+
+    // Advance global phase when all chars finish their transition
+    if (gPhase === "decelerating" && allDone) {
+      gPhase = "revealed";
+      gElapsed = 0;
+    } else if (gPhase === "accelerating" && allDone) {
+      gPhase = "spinning";
+      gElapsed = 0;
+    }
+
+    return snapshot();
+  }
+
+  return {
+    tick,
+    snapshot,
+    get done() {
+      return done;
+    },
+  };
+}
