@@ -206,9 +206,13 @@ export function HeroSection() {
 
 			<div
 				data-hero-content
-				className="relative z-10 flex h-full flex-col justify-center pb-[12vh] px-6 sm:px-8 md:px-12 lg:px-16 pointer-events-none select-none will-change-[transform,filter]"
+				className="relative z-10 flex h-full flex-col justify-center pb-[12vh] sm:px-8 md:px-12 lg:px-16 pointer-events-none select-none will-change-[transform,filter]"
 			>
-				<div className="relative mx-auto w-full max-w-6xl">
+				{/* On mobile the wrapper spans the full viewport (no gutter, no max-width)
+				    so the name can bleed to both edges; the eyebrow + tagline below
+				    re-add their own `px-6` so they alone keep the margin. Desktop keeps
+				    the centred `max-w-6xl` column with the parent's gutter. */}
+				<div className="relative mx-auto w-full max-w-none sm:max-w-6xl">
 					{/* Faint signal haze behind the name — atmosphere, not a spotlight */}
 					<div
 						aria-hidden="true"
@@ -217,20 +221,36 @@ export function HeroSection() {
 
 					<p
 						data-hero
-						className="font-mono text-xs sm:text-sm tracking-[0.3em] uppercase text-brand"
+						className="px-6 sm:px-0 font-mono text-xs sm:text-sm tracking-[0.3em] uppercase text-brand"
 					>
 						Frontend Developer · Product Curator
 					</p>
 
+					{/* Mobile: name bleeds edge-to-edge. Each word is a full-width flex
+					    row whose monospace chars spread via justify-between (first char
+					    flush left, last flush right — exact at any phone width, no
+					    font-metric math). ~26vw keeps glyphs large so the residual gaps
+					    read as light tracking. Desktop (sm+) reverts to the natural
+					    left-aligned clamp() type inside the max-w-6xl column. */}
 					<h1
 						data-hero
-						className="mt-6 flex flex-col items-start font-mono font-light tracking-tight leading-[0.9] text-foreground text-[clamp(3.25rem,12vw,11rem)]"
+						className="mt-6 flex flex-col items-start font-mono font-light tracking-tight leading-[0.9] text-foreground text-[26vw] sm:text-[clamp(3.25rem,12vw,11rem)]"
 					>
-						<CipherText text="Soheil" as="span" ambient />
-						<CipherText text="Fakour" as="span" ambient />
+						<CipherText
+							text="Soheil"
+							as="span"
+							ambient
+							className="flex w-full justify-between sm:block sm:w-auto"
+						/>
+						<CipherText
+							text="Fakour"
+							as="span"
+							ambient
+							className="flex w-full justify-between sm:block sm:w-auto"
+						/>
 					</h1>
 
-					<div data-hero className="mt-9 w-full max-w-md">
+					<div data-hero className="mt-9 w-full max-w-md px-6 sm:px-0">
 						{/* Faint full-width hairline, neutral, with a short signal lead-in
 						    at the left so it never reads as a hard dev-tool rule */}
 						<span aria-hidden="true" className="relative block h-px w-full bg-foreground/10">
