@@ -143,7 +143,12 @@ export function HeroSection() {
 	useGSAP(
 		() => {
 			const mm = gsap.matchMedia();
-			mm.add("(prefers-reduced-motion: no-preference)", () => {
+			// Desktop only (sm+). Pinning a full-screen section and scrubbing a 16px
+			// blur feels heavy and "stuck" on touch — and the dynamic mobile viewport
+			// (collapsing URL bar vs. 100dvh) makes a pinned trigger jump. On phones
+			// the hero just scrolls away naturally; the manifesto shares its
+			// background, so the seam stays invisible without the veil dip.
+			mm.add("(min-width: 640px) and (prefers-reduced-motion: no-preference)", () => {
 				const tl = gsap.timeline({
 					scrollTrigger: {
 						trigger: sectionRef.current,
