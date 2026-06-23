@@ -47,6 +47,16 @@
 	/* Brand — the signal accent (legible, per-theme) */
 	--color-brand: var(--brand);
 
+	/* Alpha — translucent neutral ramp (hairlines, dividers, overlays).
+	   Geist's gray-alpha idea, retuned per theme below. Use border-alpha-300
+	   etc. for edges that must read over any surface. */
+	--color-alpha-100: var(--alpha-100);
+	--color-alpha-200: var(--alpha-200);
+	--color-alpha-300: var(--alpha-300);
+	--color-alpha-400: var(--alpha-400);
+	--color-alpha-500: var(--alpha-500);
+	--color-alpha-600: var(--alpha-600);
+
 	/* Radius */
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
@@ -160,10 +170,23 @@
 	--destructive: oklch(0.55 0.2 25);
 	--destructive-foreground: oklch(0.97 0 0);
 
+	/* Translucent neutral ramp — black-on-transparent on paper. Borders source
+	   from it, so a hairline reads identically over card, muted, or accent. */
+	--alpha-100: oklch(0 0 0 / 4%);
+	--alpha-200: oklch(0 0 0 / 7%);
+	--alpha-300: oklch(0 0 0 / 10%);
+	--alpha-400: oklch(0 0 0 / 14%);
+	--alpha-500: oklch(0 0 0 / 22%);
+	--alpha-600: oklch(0 0 0 / 44%);
+
 	/* Borders — dark-on-light, soft; focus ring is the signal accent */
-	--border: oklch(0 0 0 / 10%);
-	--input: oklch(0 0 0 / 14%);
+	--border: var(--alpha-300); /* 10% (unchanged) */
+	--input: var(--alpha-400); /* 14% (unchanged) */
 	--ring: var(--signal-500);
+
+	/* Border-first elevation — a 1px translucent ring as inset shadow, so it
+	   separates a surface without taking a layout box (Geist's hairline). */
+	--shadow-border: inset 0 0 0 1px var(--alpha-300);
 
 	/* Accent-as-text — darker signal step for AA contrast on paper (≈ 5.4:1) */
 	--brand: var(--signal-700);
@@ -213,10 +236,21 @@
 	--destructive: oklch(0.62 0.2 25);
 	--destructive-foreground: var(--ink-50);
 
+	/* Translucent neutral ramp — white-on-transparent on the void. */
+	--alpha-100: oklch(1 0 0 / 4%);
+	--alpha-200: oklch(1 0 0 / 7%);
+	--alpha-300: oklch(1 0 0 / 10%);
+	--alpha-400: oklch(1 0 0 / 12%);
+	--alpha-500: oklch(1 0 0 / 24%);
+	--alpha-600: oklch(1 0 0 / 51%);
+
 	/* Borders — soft, low-contrast; focus ring is the signal accent */
-	--border: oklch(1 0 0 / 7%);
-	--input: oklch(1 0 0 / 12%);
+	--border: var(--alpha-200); /* 7% (unchanged) */
+	--input: var(--alpha-400); /* 12% (unchanged) */
 	--ring: var(--signal-500);
+
+	/* Border-first elevation — hairline ring, brighter on black */
+	--shadow-border: inset 0 0 0 1px var(--alpha-300);
 
 	/* Accent-as-text — brighter signal step for comfortable contrast on black (≈ 5.5:1) */
 	--brand: var(--signal-400);
