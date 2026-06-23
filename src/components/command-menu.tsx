@@ -15,7 +15,9 @@ import { SECTIONS, SOCIALS, EMAIL, type SectionId } from "@/lib/constants";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 
 const ITEM_CLASS =
-	"group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-accent data-[selected=true]:text-foreground";
+	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
+	// mobile nav); sm:py-2.5 keeps the compact desktop rows unchanged.
+	"group flex items-center gap-3 rounded-md px-3 py-3 sm:py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-accent data-[selected=true]:text-foreground";
 
 const ICON_CLASS =
 	"size-4 text-muted-foreground group-data-[selected=true]:text-brand";
