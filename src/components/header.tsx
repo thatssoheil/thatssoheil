@@ -10,7 +10,9 @@ import { ScrollProgress } from "@/components/scroll-progress";
 import { CommandMenu } from "@/components/command-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LogoMark } from "@/components/logo";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
+import { useMotion } from "@/hooks/use-motion";
+import { MOTION_EASE } from "@/lib/motion";
 
 /**
  * Fixed minimal header with a staggered page-load entrance.
@@ -20,14 +22,13 @@ export function Header() {
 	const { activeSection } = useActiveSection();
 	const headerRef = useRef<HTMLElement>(null);
 
-	useGSAP(
-		() => {
-			const mm = gsap.matchMedia();
-			// fromTo (not from): the CSS FOUC gate holds the header hidden in the SSR
-			// markup, so we state the visible end explicitly. clearProps:"transform"
-			// drops the inline translate but keeps the inline opacity:1 (which the
-			// fixed header needs so the gate never re-hides it).
-			mm.add("(prefers-reduced-motion: no-preference)", () => {
+	// fromTo (not from): the CSS FOUC gate holds the header hidden in the SSR
+	// markup, so we state the visible end explicitly. clearProps:"transform"
+	// drops the inline translate but keeps the inline opacity:1 (which the
+	// fixed header needs so the gate never re-hides it).
+	useMotion(
+		{
+			full: () => {
 				gsap.fromTo(
 					headerRef.current,
 					{ y: -56, opacity: 0 },
@@ -36,18 +37,18 @@ export function Header() {
 						opacity: 1,
 						duration: 0.5,
 						delay: 0.1,
-						ease: "power2.out",
+						ease: MOTION_EASE,
 						clearProps: "transform",
 					},
 				);
-			});
-			mm.add("(prefers-reduced-motion: reduce)", () => {
+			},
+			reduced: () => {
 				gsap.fromTo(
 					headerRef.current,
 					{ opacity: 0 },
 					{ opacity: 1, duration: 0.3 },
 				);
-			});
+			},
 		},
 		{ scope: headerRef },
 	);
