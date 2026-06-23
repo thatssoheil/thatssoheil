@@ -26,7 +26,7 @@ export function ManifestoSection() {
 
 					<h2
 						data-reveal
-						className="mt-3 text-4xl sm:text-5xl font-light tracking-tight text-foreground font-sans"
+						className="mt-3 text-fluid-36-48 font-light tracking-tight text-foreground font-sans"
 					>
 						{MANIFESTO.heading}
 					</h2>

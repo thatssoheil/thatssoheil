@@ -8,13 +8,17 @@ import {
 	Mail,
 	Copy,
 	Search,
+	Menu,
 	CornerDownLeft,
 } from "lucide-react";
 import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
+import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { jumpToSection } from "@/lib/section-navigation";
 
 const ITEM_CLASS =
-	"group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-accent data-[selected=true]:text-foreground";
+	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
+	// mobile nav); sm:py-2.5 keeps the compact desktop rows unchanged.
+	"group flex items-center gap-3 rounded-md px-3 py-3 sm:py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-accent data-[selected=true]:text-foreground";
 
 const ICON_CLASS =
 	"size-4 text-muted-foreground group-data-[selected=true]:text-brand";
@@ -22,6 +26,10 @@ const ICON_CLASS =
 export function CommandMenu() {
 	const [open, setOpen] = useState(false);
 	const [copied, setCopied] = useState(false);
+	// On touch devices the menu doubles as mobile nav, so the palette input must
+	// not autofocus — that would pop the on-screen keyboard over the section list
+	// the moment the menu opens.
+	const coarsePointer = useCoarsePointer();
 
 	useEffect(() => {
 		const onKey = (e: KeyboardEvent) => {
@@ -57,7 +65,7 @@ export function CommandMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-border px-2.5 text-xs text-muted-foreground transition-colors duration-150 hover:text-foreground hover:border-foreground/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-border px-2.5 text-xs text-muted-foreground transition-colors duration-150 hover:text-foreground hover:border-foreground/30 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 			>
 				<span className="font-sans">⌘</span>
 				<span>K</span>
@@ -68,9 +76,9 @@ export function CommandMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)] rounded-sm"
 			>
-				<Search className="size-5" strokeWidth={1.5} aria-hidden="true" />
+				<Menu className="size-5" strokeWidth={1.5} aria-hidden="true" />
 			</button>
 
 			<Dialog.Root open={open} onOpenChange={setOpen}>
@@ -78,7 +86,7 @@ export function CommandMenu() {
 					<Dialog.Overlay className="fixed inset-0 z-[var(--z-overlay)] bg-black/70 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
 					<Dialog.Content
 						aria-describedby={undefined}
-						className="fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-[var(--shadow-elevated)] outline-none data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-top-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0"
+						className="fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-[var(--shadow-elevated)] outline-none duration-200 [animation-timing-function:var(--ease-swift)] data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-top-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0"
 					>
 						<VisuallyHidden.Root>
 							<Dialog.Title>Command menu</Dialog.Title>
@@ -91,7 +99,7 @@ export function CommandMenu() {
 							<div className="flex items-center gap-2 border-b border-border px-4">
 								<Search className="size-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
 								<Command.Input
-									autoFocus
+									autoFocus={!coarsePointer}
 									placeholder="Jump to a section, open a link…"
 									className="w-full bg-transparent py-3.5 text-sm font-mono text-foreground outline-none placeholder:text-muted-foreground"
 								/>

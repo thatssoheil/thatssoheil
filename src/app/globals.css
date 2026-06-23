@@ -23,6 +23,16 @@
 	--text-6xl: 3.75rem;
 	--text-7xl: 4.5rem;
 
+	/* Fluid type — Geist-style clamp() ramps (source of truth: vercel.com/design.md).
+	   Interpolate smoothly between a 360px and 1280px viewport so headings scale
+	   with the page instead of stepping at breakpoints. Usable as text-fluid-*. */
+	--text-fluid-20-24: clamp(1.25rem, 1.15rem + 0.43vw, 1.5rem);
+	--text-fluid-24-32: clamp(1.5rem, 1.3rem + 0.87vw, 2rem);
+	--text-fluid-32-48: clamp(2rem, 1.61rem + 1.74vw, 3rem);
+	--text-fluid-36-48: clamp(2.25rem, 1.96rem + 1.3vw, 3rem);
+	--text-fluid-36-60: clamp(2.25rem, 1.66rem + 2.61vw, 3.75rem);
+	--text-fluid-48-72: clamp(3rem, 2.41rem + 2.61vw, 4.5rem);
+
 	/* Semantic palette */
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
@@ -46,6 +56,16 @@
 
 	/* Brand — the signal accent (legible, per-theme) */
 	--color-brand: var(--brand);
+
+	/* Alpha — translucent neutral ramp (hairlines, dividers, overlays).
+	   Geist's gray-alpha idea, retuned per theme below. Use border-alpha-300
+	   etc. for edges that must read over any surface. */
+	--color-alpha-100: var(--alpha-100);
+	--color-alpha-200: var(--alpha-200);
+	--color-alpha-300: var(--alpha-300);
+	--color-alpha-400: var(--alpha-400);
+	--color-alpha-500: var(--alpha-500);
+	--color-alpha-600: var(--alpha-600);
 
 	/* Radius */
 	--radius-sm: calc(var(--radius) - 4px);
@@ -122,10 +142,18 @@
 	/* Motion — one easing family, four duration steps */
 	--ease-signature: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 	--ease-snap: cubic-bezier(0.4, 0, 0.2, 1);
+	/* Swift — Geist's slight-overshoot curve for UI entrances (popovers, menus).
+	   Source of truth: vercel.com/design.md. */
+	--ease-swift: cubic-bezier(0.175, 0.885, 0.32, 1.1);
 	--dur-micro: 150ms;
 	--dur-ui: 300ms;
 	--dur-page: 500ms;
 	--dur-grand: 800ms;
+
+	/* Focus — Geist's two-layer ring: a 2px surface gap, then a 4px signal ring.
+	   Resolves per theme via --background/--ring (the brand accent, not Vercel
+	   blue). Apply to controls with shadow-[var(--ring-focus)]. */
+	--ring-focus: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
 
 	/* Z-index scale — keep stacking deliberate */
 	--z-sticky: 20;    /* in-page sticky bars (e.g. /ds nav) */
@@ -160,10 +188,23 @@
 	--destructive: oklch(0.55 0.2 25);
 	--destructive-foreground: oklch(0.97 0 0);
 
+	/* Translucent neutral ramp — black-on-transparent on paper. Borders source
+	   from it, so a hairline reads identically over card, muted, or accent. */
+	--alpha-100: oklch(0 0 0 / 4%);
+	--alpha-200: oklch(0 0 0 / 7%);
+	--alpha-300: oklch(0 0 0 / 10%);
+	--alpha-400: oklch(0 0 0 / 14%);
+	--alpha-500: oklch(0 0 0 / 22%);
+	--alpha-600: oklch(0 0 0 / 44%);
+
 	/* Borders — dark-on-light, soft; focus ring is the signal accent */
-	--border: oklch(0 0 0 / 10%);
-	--input: oklch(0 0 0 / 14%);
+	--border: var(--alpha-300); /* 10% (unchanged) */
+	--input: var(--alpha-400); /* 14% (unchanged) */
 	--ring: var(--signal-500);
+
+	/* Border-first elevation — a 1px translucent ring as inset shadow, so it
+	   separates a surface without taking a layout box (Geist's hairline). */
+	--shadow-border: inset 0 0 0 1px var(--alpha-300);
 
 	/* Accent-as-text — darker signal step for AA contrast on paper (≈ 5.4:1) */
 	--brand: var(--signal-700);
@@ -213,10 +254,21 @@
 	--destructive: oklch(0.62 0.2 25);
 	--destructive-foreground: var(--ink-50);
 
+	/* Translucent neutral ramp — white-on-transparent on the void. */
+	--alpha-100: oklch(1 0 0 / 4%);
+	--alpha-200: oklch(1 0 0 / 7%);
+	--alpha-300: oklch(1 0 0 / 10%);
+	--alpha-400: oklch(1 0 0 / 12%);
+	--alpha-500: oklch(1 0 0 / 24%);
+	--alpha-600: oklch(1 0 0 / 51%);
+
 	/* Borders — soft, low-contrast; focus ring is the signal accent */
-	--border: oklch(1 0 0 / 7%);
-	--input: oklch(1 0 0 / 12%);
+	--border: var(--alpha-200); /* 7% (unchanged) */
+	--input: var(--alpha-400); /* 12% (unchanged) */
 	--ring: var(--signal-500);
+
+	/* Border-first elevation — hairline ring, brighter on black */
+	--shadow-border: inset 0 0 0 1px var(--alpha-300);
 
 	/* Accent-as-text — brighter signal step for comfortable contrast on black (≈ 5.5:1) */
 	--brand: var(--signal-400);
@@ -284,6 +336,51 @@
 .js [data-header] {
 	opacity: 0;
 }
+
+/* ─── Composite type ramps ───
+   Geist's four named ramps (source of truth: vercel.com/design.md). Each
+   utility sets family + size + line-height + weight (+ tracking for headings)
+   in one class. One deliberate brand deviation: headings keep our signature
+   weight 300 — Geist sets them at 600. Tracking law preserved: ≤20px → -0.02em,
+   24–32px → -0.04em, ≥40px → -0.06em; the largest headings sit at line-height 1. */
+
+/* heading-* — Geist Sans, weight 300 (brand voice), negative tracking */
+@utility text-heading-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 300; letter-spacing: -0.02em; }
+@utility text-heading-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.5rem; font-weight: 300; letter-spacing: -0.02em; }
+@utility text-heading-20 { font-family: var(--font-sans); font-size: 1.25rem; line-height: 1.625rem; font-weight: 300; letter-spacing: -0.02em; }
+@utility text-heading-24 { font-family: var(--font-sans); font-size: 1.5rem; line-height: 2rem; font-weight: 300; letter-spacing: -0.04em; }
+@utility text-heading-32 { font-family: var(--font-sans); font-size: 2rem; line-height: 2.5rem; font-weight: 300; letter-spacing: -0.04em; }
+@utility text-heading-40 { font-family: var(--font-sans); font-size: 2.5rem; line-height: 3rem; font-weight: 300; letter-spacing: -0.06em; }
+@utility text-heading-48 { font-family: var(--font-sans); font-size: 3rem; line-height: 3.5rem; font-weight: 300; letter-spacing: -0.06em; }
+@utility text-heading-56 { font-family: var(--font-sans); font-size: 3.5rem; line-height: 1; font-weight: 300; letter-spacing: -0.06em; }
+@utility text-heading-64 { font-family: var(--font-sans); font-size: 4rem; line-height: 1; font-weight: 300; letter-spacing: -0.06em; }
+@utility text-heading-72 { font-family: var(--font-sans); font-size: 4.5rem; line-height: 1; font-weight: 300; letter-spacing: -0.06em; }
+
+/* copy-* — Geist Sans, weight 400 (body / prose); taller line-heights */
+@utility text-copy-13 { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1.125rem; font-weight: 400; }
+@utility text-copy-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
+@utility text-copy-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.5rem; font-weight: 400; }
+@utility text-copy-18 { font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.75rem; font-weight: 400; }
+@utility text-copy-20 { font-family: var(--font-sans); font-size: 1.25rem; line-height: 2.25rem; font-weight: 400; }
+@utility text-copy-24 { font-family: var(--font-sans); font-size: 1.5rem; line-height: 2.25rem; font-weight: 400; }
+@utility text-copy-13-mono { font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.125rem; font-weight: 400; }
+@utility text-copy-14-mono { font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
+
+/* label-* — Geist Sans, weight 400 (UI labels, tight line-height) */
+@utility text-label-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 400; }
+@utility text-label-13 { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1rem; font-weight: 400; }
+@utility text-label-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
+@utility text-label-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.25rem; font-weight: 400; }
+@utility text-label-18 { font-family: var(--font-sans); font-size: 1.125rem; line-height: 1.25rem; font-weight: 400; }
+@utility text-label-20 { font-family: var(--font-sans); font-size: 1.25rem; line-height: 2rem; font-weight: 400; }
+@utility text-label-12-mono { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1rem; font-weight: 400; }
+@utility text-label-13-mono { font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1rem; font-weight: 400; }
+@utility text-label-14-mono { font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
+
+/* button-* — Geist Sans, weight 500 (interactive labels) */
+@utility text-button-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 500; }
+@utility text-button-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; }
+@utility text-button-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.25rem; font-weight: 500; }
 
 /* ─── Custom Animations ─── */
 /* Scroll cue — a signal segment drips down a faint hairline */

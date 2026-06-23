@@ -20,6 +20,11 @@ export const SECTIONS = [
 
 export type SectionId = (typeof SECTIONS)[number]["id"];
 
+/** The `sm` breakpoint in px, matching Tailwind's default. Single source of
+    truth for JS-side width gates (e.g. GSAP `matchMedia`) so the "mobile vs.
+    desktop" boundary can't silently drift from the CSS `sm:` utilities. */
+export const SM_BREAKPOINT_PX = 640;
+
 /** Links shown in the header nav (hero excluded). */
 export const NAV_LINKS = SECTIONS.filter((s) => s.id !== "hero").map((s) => ({
 	label: s.label,

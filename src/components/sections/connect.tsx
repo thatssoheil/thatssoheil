@@ -26,7 +26,7 @@ export function ConnectSection() {
 
 					<h2
 						data-reveal
-						className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-foreground font-sans"
+						className="text-fluid-36-60 font-light tracking-tight text-foreground font-sans"
 					>
 						Say hello.
 					</h2>
