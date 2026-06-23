@@ -8,9 +8,11 @@ import {
 	Mail,
 	Copy,
 	Search,
+	Menu,
 	CornerDownLeft,
 } from "lucide-react";
 import { SECTIONS, SOCIALS, EMAIL, type SectionId } from "@/lib/constants";
+import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 
 const ITEM_CLASS =
 	"group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-accent data-[selected=true]:text-foreground";
@@ -28,6 +30,10 @@ function prefersReducedMotion() {
 export function CommandMenu() {
 	const [open, setOpen] = useState(false);
 	const [copied, setCopied] = useState(false);
+	// On touch devices the menu doubles as mobile nav, so the palette input must
+	// not autofocus — that would pop the on-screen keyboard over the section list
+	// the moment the menu opens.
+	const coarsePointer = useCoarsePointer();
 
 	useEffect(() => {
 		const onKey = (e: KeyboardEvent) => {
@@ -90,7 +96,7 @@ export function CommandMenu() {
 				aria-label="Open command menu"
 				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
 			>
-				<Search className="size-5" strokeWidth={1.5} aria-hidden="true" />
+				<Menu className="size-5" strokeWidth={1.5} aria-hidden="true" />
 			</button>
 
 			<Dialog.Root open={open} onOpenChange={setOpen}>
@@ -111,7 +117,7 @@ export function CommandMenu() {
 							<div className="flex items-center gap-2 border-b border-border px-4">
 								<Search className="size-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
 								<Command.Input
-									autoFocus
+									autoFocus={!coarsePointer}
 									placeholder="Jump to a section, open a link…"
 									className="w-full bg-transparent py-3.5 text-sm font-mono text-foreground outline-none placeholder:text-muted-foreground"
 								/>
