@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { SITE, NAV_LINKS } from "@/lib/constants";
 import type { SectionId } from "@/lib/constants";
 import { useActiveSection } from "@/hooks/use-active-section";
+import { jumpToSection } from "@/lib/section-navigation";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { CommandMenu } from "@/components/command-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -16,7 +17,7 @@ import { gsap, useGSAP } from "@/lib/gsap";
  * Name (left) — section links + theme toggle + command menu (right), monospace throughout.
  */
 export function Header() {
-	const { activeSection, scrollTo } = useActiveSection();
+	const { activeSection } = useActiveSection();
 	const headerRef = useRef<HTMLElement>(null);
 
 	useGSAP(
@@ -54,10 +55,9 @@ export function Header() {
 	const handleClick = useCallback(
 		(e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
 			e.preventDefault();
-			const id = href.replace("#", "") as SectionId;
-			scrollTo(id);
+			jumpToSection(href.replace("#", "") as SectionId);
 		},
-		[scrollTo],
+		[],
 	);
 
 	return (

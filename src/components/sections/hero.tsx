@@ -6,6 +6,7 @@ import { gsap } from "@/lib/gsap";
 import { useMotion } from "@/hooks/use-motion";
 import { MOTION_EASE } from "@/lib/motion";
 import type { SectionId } from "@/lib/constants";
+import { jumpToSection } from "@/lib/section-navigation";
 
 // ─── Ambient plane — a single asymmetric triangle behind the hero text ───
 // Deliberately subliminal: a faint neutral fill + faint neutral edges read as a
@@ -76,7 +77,7 @@ function HeroPlane() {
 
 function ScrollCue() {
 	const handleClick = () => {
-		document.getElementById("manifesto")?.scrollIntoView({ behavior: "smooth" });
+		jumpToSection("manifesto");
 	};
 
 	return (
