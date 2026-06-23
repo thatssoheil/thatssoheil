@@ -234,7 +234,7 @@ export function HeroSection() {
 					    left-aligned clamp() type inside the max-w-6xl column. */}
 					<h1
 						data-hero
-						className="mt-6 flex flex-col items-start font-mono font-light tracking-tight leading-[0.9] text-foreground text-[26vw] sm:text-[clamp(3.25rem,12vw,11rem)]"
+						className="mt-8 sm:mt-6 flex flex-col items-start font-mono font-light tracking-tight leading-[0.9] text-foreground text-[26vw] sm:text-[clamp(3.25rem,12vw,11rem)]"
 					>
 						<CipherText
 							text="Soheil"
@@ -250,7 +250,7 @@ export function HeroSection() {
 						/>
 					</h1>
 
-					<div data-hero className="mt-9 w-full max-w-md px-6 sm:px-0">
+					<div data-hero className="mt-11 sm:mt-9 w-full max-w-md px-6 sm:px-0">
 						{/* Faint full-width hairline, neutral, with a short signal lead-in
 						    at the left so it never reads as a hard dev-tool rule */}
 						<span aria-hidden="true" className="relative block h-px w-full bg-foreground/10">
