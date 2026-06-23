@@ -10,20 +10,14 @@ import {
 	Search,
 	CornerDownLeft,
 } from "lucide-react";
-import { SECTIONS, SOCIALS, EMAIL, type SectionId } from "@/lib/constants";
+import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
+import { jumpToSection } from "@/lib/section-navigation";
 
 const ITEM_CLASS =
 	"group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-accent data-[selected=true]:text-foreground";
 
 const ICON_CLASS =
 	"size-4 text-muted-foreground group-data-[selected=true]:text-brand";
-
-function prefersReducedMotion() {
-	return (
-		typeof window !== "undefined" &&
-		window.matchMedia("(prefers-reduced-motion: reduce)").matches
-	);
-}
 
 export function CommandMenu() {
 	const [open, setOpen] = useState(false);
@@ -38,20 +32,6 @@ export function CommandMenu() {
 		};
 		document.addEventListener("keydown", onKey);
 		return () => document.removeEventListener("keydown", onKey);
-	}, []);
-
-	const jumpTo = useCallback((id: SectionId) => {
-		setOpen(false);
-		const behavior = prefersReducedMotion() ? "auto" : "smooth";
-		// The hero is pinned (GSAP ScrollTrigger), so its element spans the whole
-		// pin range — scrollIntoView would land at the end of that range, where the
-		// exit transition has already played out and the screen reads blank. Scroll
-		// to the absolute top instead to land on the hero's start.
-		if (id === ("hero" satisfies SectionId)) {
-			window.scrollTo({ top: 0, behavior });
-			return;
-		}
-		document.getElementById(id)?.scrollIntoView({ behavior });
 	}, []);
 
 	const openLink = useCallback((href: string) => {
@@ -127,7 +107,7 @@ export function CommandMenu() {
 										<Command.Item
 											key={s.id}
 											value={`section ${s.label}`}
-											onSelect={() => jumpTo(s.id)}
+											onSelect={() => { setOpen(false); jumpToSection(s.id); }}
 											className={ITEM_CLASS}
 										>
 											<Hash className={ICON_CLASS} strokeWidth={1.5} />

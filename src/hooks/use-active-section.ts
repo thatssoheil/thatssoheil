@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { SECTIONS, type SectionId } from "@/lib/constants";
 
 /**
  * Tracks which section is currently in view using IntersectionObserver.
- * Returns the active section id and a manual setter (for click-based nav).
+ * Returns the active section id. Scrolling to a section is `jumpToSection`
+ * in `~/lib/section-navigation`.
  */
 export function useActiveSection() {
 	const [activeSection, setActiveSection] = useState<SectionId>("hero");
@@ -41,13 +42,5 @@ export function useActiveSection() {
 		};
 	}, []);
 
-	const scrollTo = useCallback((id: SectionId) => {
-		const el = document.getElementById(id);
-		if (el) {
-			el.scrollIntoView({ behavior: "smooth" });
-			setActiveSection(id);
-		}
-	}, []);
-
-	return { activeSection, setActiveSection, scrollTo };
+	return { activeSection };
 }
