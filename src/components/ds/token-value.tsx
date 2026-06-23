@@ -2,15 +2,31 @@
 
 import { useSyncExternalStore } from "react";
 
-// Re-read whenever the document's class/style changes (e.g. theme toggle), so
-// theme-dependent tokens stay accurate.
+// One MutationObserver shared across all TokenValue instances — they all watch
+// the same documentElement attributes (theme toggles). Listeners multiplex
+// through a Set; the observer connects on the first subscriber and disconnects
+// after the last, so N swatches cost one observer, not N.
+const listeners = new Set<() => void>();
+let observer: MutationObserver | null = null;
+
 function subscribe(callback: () => void) {
-	const observer = new MutationObserver(callback);
-	observer.observe(document.documentElement, {
-		attributes: true,
-		attributeFilter: ["class", "style"],
-	});
-	return () => observer.disconnect();
+	listeners.add(callback);
+	if (!observer) {
+		observer = new MutationObserver(() => {
+			for (const listener of listeners) listener();
+		});
+		observer.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ["class", "style"],
+		});
+	}
+	return () => {
+		listeners.delete(callback);
+		if (listeners.size === 0 && observer) {
+			observer.disconnect();
+			observer = null;
+		}
+	};
 }
 
 function readToken(name: string): string {
@@ -23,7 +39,7 @@ function readToken(name: string): string {
  * Renders a CSS custom property's resolved value, read live from the document
  * at runtime — so the /ds reference never drifts from `globals.css`. Uses
  * `useSyncExternalStore` (correct on first client render, re-reads on theme
- * change); SSR renders a blank placeholder.
+ * change via one shared observer); SSR renders a blank placeholder.
  */
 export function TokenValue({ name }: { name: string }) {
 	const value = useSyncExternalStore(
