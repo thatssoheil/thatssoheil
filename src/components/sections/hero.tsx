@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { CipherText } from "@/components/matrix/cipher-text";
 import { gsap, useGSAP } from "@/lib/gsap";
-import type { SectionId } from "@/lib/constants";
+import { SM_BREAKPOINT_PX, type SectionId } from "@/lib/constants";
 
 // ─── Ambient plane — a single asymmetric triangle behind the hero text ───
 // Deliberately subliminal: a faint neutral fill + faint neutral edges read as a
@@ -148,7 +148,7 @@ export function HeroSection() {
 			// (collapsing URL bar vs. 100dvh) makes a pinned trigger jump. On phones
 			// the hero just scrolls away naturally; the manifesto shares its
 			// background, so the seam stays invisible without the veil dip.
-			mm.add("(min-width: 640px) and (prefers-reduced-motion: no-preference)", () => {
+			mm.add(`(min-width: ${SM_BREAKPOINT_PX}px) and (prefers-reduced-motion: no-preference)`, () => {
 				const tl = gsap.timeline({
 					scrollTrigger: {
 						trigger: sectionRef.current,
