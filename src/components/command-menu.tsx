@@ -51,10 +51,11 @@ export function CommandMenu() {
 	const jumpTo = useCallback((id: SectionId) => {
 		setOpen(false);
 		const behavior = prefersReducedMotion() ? "auto" : "smooth";
-		// The hero is pinned (GSAP ScrollTrigger), so its element spans the whole
-		// pin range — scrollIntoView would land at the end of that range, where the
-		// exit transition has already played out and the screen reads blank. Scroll
-		// to the absolute top instead to land on the hero's start.
+		// On desktop the hero is pinned (GSAP ScrollTrigger), so its element spans
+		// the whole pin range — scrollIntoView would land at the end of that range,
+		// where the exit transition has already played out and the screen reads
+		// blank. Scrolling to the absolute top lands on the hero's start in both
+		// cases (mobile isn't pinned), so use it unconditionally.
 		if (id === ("hero" satisfies SectionId)) {
 			window.scrollTo({ top: 0, behavior });
 			return;
