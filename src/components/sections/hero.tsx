@@ -224,11 +224,20 @@ export function HeroSection() {
 						className="pointer-events-none absolute -left-[8%] top-1/2 -z-10 h-[34rem] w-[34rem] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--signal-500),transparent_70%)] opacity-[0.06] blur-[110px]"
 					/>
 
+					{/* Mobile: a quiet two-line kicker (a flex column can't mis-wrap),
+					    10px so the long caps string stops spanning the phone and out-
+					    shouting the full-bleed name. Desktop (sm+) reverts to the inline
+					    one-liner — the middot is the mobile line break (hidden < sm) and
+					    the inline separator at sm+ — so the desktop render is unchanged. */}
 					<p
 						data-hero
-						className="px-6 sm:px-0 font-mono text-xs sm:text-sm tracking-[0.3em] uppercase text-brand"
+						className="px-6 sm:px-0 flex flex-col gap-1 sm:block font-mono text-[10px] sm:text-sm font-medium sm:font-normal leading-[1.5] tracking-[0.22em] sm:tracking-[0.3em] uppercase text-brand"
 					>
-						Frontend Developer · Product Curator
+						<span>Frontend Developer</span>
+						<span>
+							<span className="hidden sm:inline">{" · "}</span>
+							Product Curator
+						</span>
 					</p>
 
 					{/* Mobile: name bleeds edge-to-edge. Each word is a full-width flex
@@ -255,13 +264,19 @@ export function HeroSection() {
 						/>
 					</h1>
 
-					<div data-hero className="mt-11 sm:mt-9 w-full max-w-md px-6 sm:px-0">
+					{/* Pulled up under the bleeding name on mobile (mt-8 vs sm:mt-9) so
+					    the tagline reads as bound to it, not floating. */}
+					<div data-hero className="mt-8 sm:mt-9 w-full max-w-md px-6 sm:px-0">
 						{/* Faint full-width hairline, neutral, with a short signal lead-in
-						    at the left so it never reads as a hard dev-tool rule */}
+						    at the left so it never reads as a hard dev-tool rule. The
+						    lead-in shrinks on mobile (w-10) to scale with the smaller label. */}
 						<span aria-hidden="true" className="relative block h-px w-full bg-foreground/10">
-							<span className="absolute inset-y-0 left-0 w-12 bg-[linear-gradient(to_right,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--signal-500))]" />
+							<span className="absolute inset-y-0 left-0 w-10 sm:w-12 bg-[linear-gradient(to_right,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--signal-500))]" />
 						</span>
-						<p className="mt-4 font-mono text-sm tracking-[0.2em] uppercase text-foreground/45">
+						{/* 11px / dimmer on mobile so it sits a clear tier below the 10px
+						    brand kicker (was text-sm — larger than the kicker). Desktop
+						    keeps text-sm / 0.2em / foreground-45 via sm: overrides. */}
+						<p className="mt-3.5 sm:mt-4 font-mono text-[11px] sm:text-sm tracking-[0.18em] sm:tracking-[0.2em] uppercase text-foreground/40 sm:text-foreground/45">
 							Coding vision into existence
 						</p>
 					</div>
