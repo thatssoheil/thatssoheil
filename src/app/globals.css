@@ -23,6 +23,16 @@
 	--text-6xl: 3.75rem;
 	--text-7xl: 4.5rem;
 
+	/* Fluid type — Geist-style clamp() ramps (source of truth: vercel.com/design.md).
+	   Interpolate smoothly between a 360px and 1280px viewport so headings scale
+	   with the page instead of stepping at breakpoints. Usable as text-fluid-*. */
+	--text-fluid-20-24: clamp(1.25rem, 1.15rem + 0.43vw, 1.5rem);
+	--text-fluid-24-32: clamp(1.5rem, 1.3rem + 0.87vw, 2rem);
+	--text-fluid-32-48: clamp(2rem, 1.61rem + 1.74vw, 3rem);
+	--text-fluid-36-48: clamp(2.25rem, 1.96rem + 1.3vw, 3rem);
+	--text-fluid-36-60: clamp(2.25rem, 1.66rem + 2.61vw, 3.75rem);
+	--text-fluid-48-72: clamp(3rem, 2.41rem + 2.61vw, 4.5rem);
+
 	/* Semantic palette */
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
