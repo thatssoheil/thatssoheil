@@ -25,7 +25,7 @@ The tools: TypeScript, React 19, Next.js 16, Tailwind, GSAP. Shipped on Cloudfla
 ## Open-source
 
 <!-- OSS:START -->
-**2 merged PRs** across **2 repos** · **1 open** in flight.
+**2 merged PRs** across **2 repos** · **2 open** in flight.
 
 → [Full dashboard](https://github.com/thatssoheil/oss-contributions)
 <!-- OSS:END -->
