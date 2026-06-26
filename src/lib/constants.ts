@@ -6,7 +6,7 @@ export const SITE = {
 	name: "Soheil Fakour",
 	title: "Soheil Fakour — Coding Vision into Existence",
 	description:
-		"Portfolio of Soheil Fakour — Frontend Web Developer and Product Curator.",
+		"Portfolio of Soheil Fakour — Frontend Engineer and Product Curator.",
 	url: "https://thatssoheil.com",
 	ogImage: "/og.png",
 } as const;
