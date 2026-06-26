@@ -1,4 +1,5 @@
 import type { ChatMessage } from "@/lib/ai-soheil/types";
+import { SoheilLabel } from "@/components/hero/soheil-label";
 
 /**
  * One transcript row. User turns are a soft, signal-tinted *outline* bubble on the
@@ -17,14 +18,7 @@ export function ChatMessageRow({ message }: { message: ChatMessage }) {
 	}
 	return (
 		<div className="flex flex-col gap-1.5">
-			<span className="flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-brand">
-				<span
-					aria-hidden
-					className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--signal-500)]"
-					style={{ filter: "drop-shadow(0 0 5px var(--signal-500))" }}
-				/>
-				soheil
-			</span>
+			<SoheilLabel />
 			<p className="max-w-[80%] text-[0.98rem] leading-relaxed text-foreground/90">
 				{message.content || " "}
 			</p>

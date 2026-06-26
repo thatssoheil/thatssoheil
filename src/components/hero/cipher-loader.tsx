@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { randomGlyph } from "@/components/matrix/cipher-engine";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { SoheilLabel } from "@/components/hero/soheil-label";
 
 const GLYPH_COUNT = 10;
 const TICK_MS = 45;
@@ -29,14 +30,7 @@ export function CipherLoader() {
 
 	return (
 		<div className="flex items-center gap-3" role="status" aria-label="Decoding reply">
-			<span className="flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-brand">
-				<span
-					aria-hidden
-					className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--signal-500)]"
-					style={{ filter: "drop-shadow(0 0 5px var(--signal-500))" }}
-				/>
-				soheil
-			</span>
+			<SoheilLabel />
 			{prefersReduced ? (
 				<span className="font-mono text-[0.8rem] tracking-wide text-brand/70">
 					decoding…

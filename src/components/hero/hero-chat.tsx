@@ -36,7 +36,7 @@ export function HeroChat() {
 
 	// Retry re-sends the most recent user turn (the assistant turn never landed).
 	const handleRetry = useCallback(() => {
-		const lastUser = [...messages].reverse().find((m) => m.role === "user");
+		const lastUser = messages.findLast((m) => m.role === "user");
 		if (lastUser) send(lastUser.content);
 	}, [messages, send]);
 
