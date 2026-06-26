@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
+import { createPortal } from "react-dom";
 import { useHeroChat } from "@/hooks/use-hero-chat";
 import { AskBar } from "@/components/hero/ask-bar";
 import { ChatOverlay } from "@/components/hero/chat-overlay";
@@ -39,20 +40,25 @@ export function HeroChat() {
 		if (lastUser) send(lastUser.content);
 	}, [messages, send]);
 
-	if (active) {
-		return (
-			<ChatOverlay
-				messages={messages}
-				status={status}
-				error={error}
-				value={value}
-				onChange={setValue}
-				onSend={handleSend}
-				onClose={handleClose}
-				onRetry={handleRetry}
-			/>
-		);
-	}
-
-	return <AskBar value={value} onChange={setValue} onSend={handleSend} />;
+	return (
+		<>
+			<AskBar value={value} onChange={setValue} onSend={handleSend} />
+			{/* Portal the overlay to <body> so its fixed positioning escapes the hero's
+			    `relative z-10` stacking context (otherwise the page header paints over it). */}
+			{active &&
+				createPortal(
+					<ChatOverlay
+						messages={messages}
+						status={status}
+						error={error}
+						value={value}
+						onChange={setValue}
+						onSend={handleSend}
+						onClose={handleClose}
+						onRetry={handleRetry}
+					/>,
+					document.body,
+				)}
+		</>
+	);
 }
