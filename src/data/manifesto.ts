@@ -11,7 +11,7 @@ export interface ManifestoParagraph {
 export const MANIFESTO = {
 	label: "About",
 	heading: "Manifesto",
-	subheading: "Frontend Web Developer and Product Curator · Tehran",
+	subheading: "Frontend Engineer and Product Curator · Tehran",
 	paragraphs: [
 		{
 			label: "On curation",
