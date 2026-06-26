@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Lexend } from "next/font/google";
+import { Lexend, Geist_Mono } from "next/font/google";
 import { SITE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
@@ -11,6 +11,16 @@ import "./globals.css";
 // --font-mono resolve to it, so the whole site speaks in a single font.
 const lexend = Lexend({
 	variable: "--font-lexend",
+	subsets: ["latin"],
+	display: "swap",
+});
+
+// Geist Mono — used in one place only: the hero's looping cipher name. A cipher
+// swaps every glyph against a mixed pool (letters, digits, symbols); a fixed
+// advance width is what stops the line from reflowing as it scrambles, and the
+// monospace grid reads as "encryption". Exposed as --font-cipher.
+const geistMono = Geist_Mono({
+	variable: "--font-cipher",
 	subsets: ["latin"],
 	display: "swap",
 });
@@ -108,7 +118,7 @@ export default function RootLayout({
 				<PersonJsonLd />
 			</head>
 			<body
-				className={`${lexend.variable} antialiased`}
+				className={`${lexend.variable} ${geistMono.variable} antialiased`}
 			>
 				<ThemeProvider
 					attribute="class"

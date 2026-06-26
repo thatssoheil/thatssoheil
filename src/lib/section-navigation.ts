@@ -1,18 +1,14 @@
 import type { SectionId } from "@/lib/constants";
-import { prefersReducedMotion } from "@/lib/motion";
 
 /**
- * Scroll to a section, honouring reduced motion. The hero is pinned (GSAP
- * ScrollTrigger), so its element spans the whole pin range — scrollIntoView
- * would land at the end of that range, where the exit transition has played
- * out and the screen reads blank. Scroll to the absolute top instead to land
- * on the hero's start.
+ * Jump to a section. The site is static (no smooth-scroll transition), so this
+ * lands instantly. The hero is a plain full-height section now, so scrolling to
+ * the absolute top lands on its start.
  */
 export function jumpToSection(id: SectionId) {
-	const behavior: ScrollBehavior = prefersReducedMotion() ? "auto" : "smooth";
 	if (id === ("hero" satisfies SectionId)) {
-		window.scrollTo({ top: 0, behavior });
+		window.scrollTo({ top: 0 });
 		return;
 	}
-	document.getElementById(id)?.scrollIntoView({ behavior });
+	document.getElementById(id)?.scrollIntoView();
 }
