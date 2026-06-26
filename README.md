@@ -22,14 +22,6 @@ I lean on agentic AI for the boilerplate so my attention stays where it matters 
 
 The tools: TypeScript, React 19, Next.js 16, Tailwind, GSAP. Shipped on Cloudflare Workers.
 
-## Open-source
-
-<!-- OSS:START -->
-**2 merged PRs** across **2 repos** · **2 open** in flight.
-
-→ [Full dashboard](https://github.com/thatssoheil/oss-contributions)
-<!-- OSS:END -->
-
 ## Elsewhere
 
 - **Site** — [thatssoheil.website](https://thatssoheil.website)
