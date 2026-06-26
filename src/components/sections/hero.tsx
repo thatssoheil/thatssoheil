@@ -1,6 +1,7 @@
 "use client";
 
 import { CipherText } from "@/components/matrix/cipher-text";
+import { HeroChat } from "@/components/hero/hero-chat";
 import { type SectionId } from "@/lib/constants";
 import { jumpToSection } from "@/lib/section-navigation";
 
@@ -116,6 +117,9 @@ export function HeroSection() {
 						Coding vision into existence
 					</p>
 				</div>
+
+				{/* Ask, don't scroll — resting ask-bar + chips; opens the chat takeover. */}
+				<HeroChat />
 			</div>
 
 			<ScrollCue />
