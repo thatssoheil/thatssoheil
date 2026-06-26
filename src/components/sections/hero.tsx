@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import { CipherText } from "@/components/matrix/cipher-text";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useMotion } from "@/hooks/use-motion";
 import { MOTION_EASE } from "@/lib/motion";
@@ -244,28 +243,17 @@ export function HeroSection() {
 						</span>
 					</p>
 
-					{/* Mobile: name bleeds edge-to-edge. Each word is a full-width flex
-					    row whose monospace chars spread via justify-between (first char
-					    flush left, last flush right — exact at any phone width, no
-					    font-metric math). ~26vw keeps glyphs large so the residual gaps
-					    read as light tracking. Desktop (sm+) reverts to the natural
-					    left-aligned clamp() type inside the max-w-6xl column. */}
+					{/* The name in Lexend — plain text, bleeding large on mobile (26vw) and
+					    clamping inside the column on desktop. (The monospace cipher-decode
+					    and the per-glyph justify-between spread were retired with the
+					    single-font switch; a smooth proportional entrance can return in
+					    the hero rework.) */}
 					<h1
 						data-hero
-						className="mt-8 sm:mt-6 flex flex-col items-start font-mono font-light tracking-tight leading-[0.9] text-foreground text-[26vw] sm:text-[clamp(3.25rem,12vw,11rem)]"
+						className="mt-8 sm:mt-6 flex flex-col items-start font-light tracking-tight leading-[0.9] text-foreground text-[26vw] sm:text-[clamp(3.25rem,12vw,11rem)]"
 					>
-						<CipherText
-							text="Soheil"
-							as="span"
-							ambient
-							className="flex w-full justify-between sm:block sm:w-auto"
-						/>
-						<CipherText
-							text="Fakour"
-							as="span"
-							ambient
-							className="flex w-full justify-between sm:block sm:w-auto"
-						/>
+						<span className="block">Soheil</span>
+						<span className="block">Fakour</span>
 					</h1>
 
 					{/* Pulled up under the bleeding name on mobile (mt-8 vs sm:mt-9) so

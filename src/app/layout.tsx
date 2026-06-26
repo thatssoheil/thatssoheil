@@ -1,19 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Lexend } from "next/font/google";
 import { SITE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-	display: "swap",
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
+// One typeface, app-wide: Lexend — tuned for low reading fatigue. Variable
+// (no `weight`), so the full 100–900 axis is available. Both --font-sans and
+// --font-mono resolve to it, so the whole site speaks in a single font.
+const lexend = Lexend({
+	variable: "--font-lexend",
 	subsets: ["latin"],
 	display: "swap",
 });
@@ -111,7 +108,7 @@ export default function RootLayout({
 				<PersonJsonLd />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={`${lexend.variable} antialiased`}
 			>
 				<ThemeProvider
 					attribute="class"
