@@ -11,7 +11,7 @@ export interface ManifestoParagraph {
 export const MANIFESTO = {
 	label: "About",
 	heading: "Manifesto",
-	subheading: "Frontend Web Developer and Product Curator · Tehran",
+	subheading: "Frontend Engineer and Product Curator · Tehran",
 	paragraphs: [
 		{
 			label: "On curation",
@@ -23,7 +23,7 @@ export const MANIFESTO = {
 		},
 		{
 			label: "On the medium",
-			body: "I started in backend, writing infrastructure no one would ever touch. I left because I wanted to shape what people actually see and feel. Frontend isn't decoration for me — it's the surface where every product decision either lands or doesn't. That's where I'd rather spend my attention.",
+			body: "I started in backend at a hospitality company, on the systems that keep hotels and travel agencies in sync. A year and a half of Node and message queues was long enough to know it wasn't for me. I left to shape what people actually see and feel. Frontend isn't decoration for me. It's the surface where every product decision either lands or doesn't. That's where I'd rather spend my attention.",
 		},
 	] satisfies readonly ManifestoParagraph[],
 } as const;

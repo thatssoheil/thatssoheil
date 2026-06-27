@@ -1,25 +1,27 @@
 "use client";
 
 import { CipherText } from "@/components/matrix/cipher-text";
+import { HeroChat } from "@/components/hero/hero-chat";
 import { type SectionId } from "@/lib/constants";
 import { jumpToSection } from "@/lib/section-navigation";
 
-// ─── Ambient plane — a centered, apex-up triangle behind the hero text ───
-// Static (no orbiting ray): a faint neutral fill + faint neutral edge read as a
-// tilted "plane", symmetric and centred on the same axis as the wordmark. A very
-// dim signal-tinted edge is the only colour. It must never compete with the name.
-// pathLength is irrelevant now — nothing animates along it.
+// ─── Ambient plane — a small, centered square behind the name ───
+// Static: a faint signal-tinted fill + faint neutral edge read as a flat "plane",
+// a perfect square (4-fold symmetric) centred on the wordmark's axis, spanning from
+// the eyebrow down through the ask-bar. A dim signal-tinted edge is the only colour.
+// Never competes with the name.
 
-const TRIANGLE = "M 720 80 L 1190 810 L 250 810 Z";
+// Square, centred in a 100×100 box.
+const SQUARE = { x: 6, y: 6, size: 88 } as const;
 
 function HeroPlane() {
 	return (
 		<svg
 			aria-hidden="true"
-			className="pointer-events-none absolute inset-0 h-full w-full"
-			viewBox="0 0 1440 900"
+			className="pointer-events-none absolute left-1/2 top-1/2 h-[72vmin] w-[72vmin] -translate-x-1/2 -translate-y-1/2"
+			viewBox="0 0 100 100"
 			fill="none"
-			preserveAspectRatio="xMidYMid slice"
+			preserveAspectRatio="xMidYMid meet"
 		>
 			<defs>
 				<linearGradient id="hero-plane-fill" x1="0" y1="0" x2="0" y2="1">
@@ -28,13 +30,22 @@ function HeroPlane() {
 				</linearGradient>
 			</defs>
 
-			{/* The plane — faint signal-tinted wash, brightest at the apex and fading
+			{/* The plane — faint signal-tinted wash, brightest at the top and fading
 			    into the void; reads as lit atmosphere rather than a flat smudge */}
-			<path d={TRIANGLE} fill="url(#hero-plane-fill)" />
+			<rect
+				x={SQUARE.x}
+				y={SQUARE.y}
+				width={SQUARE.size}
+				height={SQUARE.size}
+				fill="url(#hero-plane-fill)"
+			/>
 
 			{/* The edge — faint neutral wire */}
-			<path
-				d={TRIANGLE}
+			<rect
+				x={SQUARE.x}
+				y={SQUARE.y}
+				width={SQUARE.size}
+				height={SQUARE.size}
 				stroke="var(--foreground)"
 				strokeWidth={1.25}
 				strokeOpacity={0.08}
@@ -43,8 +54,11 @@ function HeroPlane() {
 			/>
 
 			{/* A single dim signal accent on the edge — a static whisper, no motion */}
-			<path
-				d={TRIANGLE}
+			<rect
+				x={SQUARE.x}
+				y={SQUARE.y}
+				width={SQUARE.size}
+				height={SQUARE.size}
 				stroke="var(--brand)"
 				strokeWidth={1.25}
 				strokeOpacity={0.22}
@@ -88,19 +102,27 @@ export function HeroSection() {
 					className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--signal-500),transparent_70%)] opacity-[0.06] blur-[110px]"
 				/>
 
-				{/* Eyebrow — one line, centred, never wraps (scales down on small screens
-				    instead of breaking to two lines). */}
-				<p className="whitespace-nowrap font-mono text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-brand">
-					Frontend Developer · Product Curator
+				{/* Eyebrow — "Frontend Engineer × Product Curator". The two roles recede
+				    to a quiet grey; the signal × is the lone accent — the fusion of the two
+				    disciplines. One line, centred, scales down on small screens. */}
+				<p className="flex items-center justify-center gap-[0.6em] whitespace-nowrap font-mono text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-foreground/45">
+					<span>Frontend Engineer</span>
+					<span
+						className="text-[1.2em] text-brand"
+						style={{ filter: "drop-shadow(0 0 5px var(--signal-500))" }}
+					>
+						×
+					</span>
+					<span>Product Curator</span>
 				</p>
 
-				{/* The name — one full-bleed line, perpetually re-ciphering. Monospace
-				    (--font-cipher) so the mixed glyph pool can't reflow the line and the
-				    decoder grid reads cleanly; the only motion left on the page. */}
+				{/* The name — decodes once on load, then rests. In the passive "ambient"
+				    state a single random glyph quietly re-ciphers and resolves every few
+				    seconds. Monospace (--font-cipher) so the glyph pool can't reflow the line. */}
 				<CipherText
 					text="Soheil Fakour"
 					as="h1"
-					loop
+					ambient
 					className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[clamp(2.5rem,12vw,12rem)] [font-family:var(--font-cipher)]"
 				/>
 
@@ -116,6 +138,9 @@ export function HeroSection() {
 						Coding vision into existence
 					</p>
 				</div>
+
+				{/* Ask, don't scroll — resting ask-bar + chips; opens the chat takeover. */}
+				<HeroChat />
 			</div>
 
 			<ScrollCue />
