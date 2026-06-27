@@ -3,7 +3,6 @@
 import { useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { SITE, NAV_LINKS } from "@/lib/constants";
-import type { SectionId } from "@/lib/constants";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { jumpToSection } from "@/lib/section-navigation";
 import { CommandMenu } from "@/components/command-menu";
@@ -20,7 +19,7 @@ export function Header() {
 	const handleClick = useCallback(
 		(e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
 			e.preventDefault();
-			jumpToSection(href.replace("#", "") as SectionId);
+			jumpToSection(href);
 		},
 		[],
 	);

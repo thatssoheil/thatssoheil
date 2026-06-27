@@ -115,7 +115,7 @@ export function CommandMenu() {
 										<Command.Item
 											key={s.id}
 											value={`section ${s.label}`}
-											onSelect={() => { setOpen(false); jumpToSection(s.id); }}
+											onSelect={() => { setOpen(false); jumpToSection(`#${s.id}`); }}
 											className={ITEM_CLASS}
 										>
 											<Hash className={ICON_CLASS} strokeWidth={1.5} />

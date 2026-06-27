@@ -1,12 +1,11 @@
-import type { SectionId } from "@/lib/constants";
-
 /**
- * Jump to a section. The site is static (no smooth-scroll transition), so this
- * lands instantly. The hero is a plain full-height section now, so scrolling to
- * the absolute top lands on its start.
+ * Jump to a section by href (e.g. "#manifesto") or bare id (e.g. "manifesto").
+ * The hero special-cases to window.scrollTo — more reliable than scrollIntoView
+ * on the first element. All other sections use scrollIntoView.
  */
-export function jumpToSection(id: SectionId) {
-	if (id === ("hero" satisfies SectionId)) {
+export function jumpToSection(href: string) {
+	const id = href.startsWith("#") ? href.slice(1) : href;
+	if (id === "hero") {
 		window.scrollTo({ top: 0 });
 		return;
 	}

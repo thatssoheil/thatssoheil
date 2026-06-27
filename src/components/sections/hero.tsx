@@ -61,7 +61,7 @@ function HeroPlane() {
 function ScrollCue() {
 	return (
 		<button
-			onClick={() => jumpToSection("manifesto")}
+			onClick={() => jumpToSection("#manifesto")}
 			aria-label="Scroll to content"
 			className="group absolute inset-x-0 bottom-10 z-10 mx-auto flex h-12 w-11 cursor-pointer items-center justify-center"
 		>
