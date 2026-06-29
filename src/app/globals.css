@@ -218,8 +218,10 @@
 	   --glass-bg (translucent) is used only behind the @supports/reduced-transparency
 	   gate in the .glass class. Applied to surfaces in P1. */
 	--glass-bg: color-mix(in oklch, var(--card) 70%, transparent);
+	--glass-bg-panel: color-mix(in oklch, var(--card) 88%, transparent);
 	--glass-bg-solid: var(--card);
 	--glass-blur: 16px;
+	--glass-blur-strong: 32px;
 	--glass-saturate: 140%;
 	--glass-rim: color-mix(in oklch, var(--foreground) 10%, transparent);
 	--glass-sheen: color-mix(in oklch, var(--foreground) 6%, transparent);
@@ -295,8 +297,10 @@
 
 	/* Glass — slightly more translucent + a stronger drop on the void (see :root) */
 	--glass-bg: color-mix(in oklch, var(--ink-900) 60%, transparent);
+	--glass-bg-panel: color-mix(in oklch, var(--ink-900) 86%, transparent);
 	--glass-bg-solid: var(--ink-900);
 	--glass-blur: 16px;
+	--glass-blur-strong: 32px;
 	--glass-saturate: 150%;
 	--glass-rim: color-mix(in oklch, var(--foreground) 14%, transparent);
 	--glass-sheen: color-mix(in oklch, var(--foreground) 8%, transparent);
@@ -400,15 +404,18 @@
 @utility text-button-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.25rem; font-weight: 500; }
 
 /* ─── Glass material ───
-   Solid + legible by DEFAULT. Real translucent glass only where backdrop-filter
-   is supported AND the user has not requested reduced transparency. `not (… reduce)`
-   means browsers without the query (Firefox) still get glass; only an explicit
-   reduce-transparency preference forces the solid fallback. Applied to surfaces in P1. */
+   Composable. Solid + legible by DEFAULT; real translucent glass only where
+   backdrop-filter is supported AND the user has not requested reduced transparency.
+   `not (… reduce)` means browsers without the query (Firefox) still get glass; only
+   an explicit reduce-transparency preference forces the solid fallback.
+
+   - .glass        — material base for chrome (bars, inputs, overlays). Translucent.
+   - .glass-panel  — near-solid material for reading content (legible over the field).
+   - .glass-edge   — rim border + sheen + soft drop, for floating panels (compose).
+   - .glass-strong — opt-in heavier blur for the chat takeover (compose with .glass). */
 @layer components {
 	.glass {
 		background-color: var(--glass-bg-solid);
-		border: 1px solid var(--glass-rim);
-		box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-sheen);
 
 		@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
 			@media not (prefers-reduced-transparency: reduce) {
@@ -417,6 +424,32 @@
 				backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
 			}
 		}
+	}
+
+	.glass-panel {
+		background-color: var(--glass-bg-solid);
+
+		@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+			@media not (prefers-reduced-transparency: reduce) {
+				background-color: var(--glass-bg-panel);
+				-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+				backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+			}
+		}
+	}
+
+	.glass-strong {
+		@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+			@media not (prefers-reduced-transparency: reduce) {
+				-webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+				backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+			}
+		}
+	}
+
+	.glass-edge {
+		border: 1px solid var(--glass-rim);
+		box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-sheen);
 	}
 }
 
