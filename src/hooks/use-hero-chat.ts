@@ -6,11 +6,18 @@ import type { ChatMessage } from "@/lib/ai-soheil/types";
 export type ChatStatus = "idle" | "decoding" | "streaming" | "error";
 export type ChatError = "signal_dropped" | "rate_limited" | null;
 
+/** A thread message plus a stable UI id, so React keys never reconcile a user
+ *  bubble into an assistant slot. The id is stripped before the wire request. */
+export interface UiMessage extends ChatMessage {
+	id: string;
+}
+
 export interface UseHeroChat {
-	messages: ChatMessage[];
+	messages: UiMessage[];
 	status: ChatStatus;
 	error: ChatError;
 	send: (text: string) => void;
+	retry: () => void;
 	reset: () => void;
 }
 
@@ -18,18 +25,22 @@ export interface UseHeroChat {
  * Drives the hero chat: POSTs to /api/chat, streams the OpenAI-style SSE, and
  * appends only `delta.content` (reasoning chunks are ignored). The thread lives
  * here — the page is stateless. A ref mirrors the messages so streaming updates
- * never read a stale closure.
+ * never read a stale closure. `retry()` re-runs the existing thread (which already
+ * ends with the failed user turn) WITHOUT appending a duplicate (audit #4).
  */
 export function useHeroChat(): UseHeroChat {
-	const [messages, setMessages] = useState<ChatMessage[]>([]);
+	const [messages, setMessages] = useState<UiMessage[]>([]);
 	const [status, setStatus] = useState<ChatStatus>("idle");
 	const [error, setError] = useState<ChatError>(null);
 
-	const messagesRef = useRef<ChatMessage[]>([]);
+	const messagesRef = useRef<UiMessage[]>([]);
 	const abortRef = useRef<AbortController | null>(null);
 	const busyRef = useRef(false);
+	const idRef = useRef(0);
 
-	const commit = useCallback((next: ChatMessage[]) => {
+	const nextId = () => `m${idRef.current++}`;
+
+	const commit = useCallback((next: UiMessage[]) => {
 		messagesRef.current = next;
 		setMessages(next);
 	}, []);
@@ -43,14 +54,10 @@ export function useHeroChat(): UseHeroChat {
 		setError(null);
 	}, [commit]);
 
-	const send = useCallback(
-		(text: string) => {
-			const content = text.trim();
-			if (!content || busyRef.current) return;
+	// Stream a reply for a thread that already ends with the user turn to answer.
+	const run = useCallback(
+		(thread: UiMessage[]) => {
 			busyRef.current = true;
-
-			const outgoing: ChatMessage[] = [...messagesRef.current, { role: "user", content }];
-			commit(outgoing);
 			setError(null);
 			setStatus("decoding");
 
@@ -62,7 +69,10 @@ export function useHeroChat(): UseHeroChat {
 					const res = await fetch("/api/chat", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({ messages: outgoing }),
+						// Strip UI ids — the wire shape is { role, content }.
+						body: JSON.stringify({
+							messages: thread.map(({ role, content }) => ({ role, content })),
+						}),
 						signal: controller.signal,
 					});
 
@@ -103,13 +113,16 @@ export function useHeroChat(): UseHeroChat {
 							if (!started) {
 								started = true;
 								setStatus("streaming");
-								commit([...messagesRef.current, { role: "assistant", content: delta }]);
+								commit([
+									...messagesRef.current,
+									{ id: nextId(), role: "assistant", content: delta },
+								]);
 							} else {
 								const cur = messagesRef.current;
 								const last = cur[cur.length - 1];
 								commit([
 									...cur.slice(0, -1),
-									{ role: "assistant", content: (last?.content ?? "") + delta },
+									{ ...last, content: (last?.content ?? "") + delta },
 								]);
 							}
 						}
@@ -136,5 +149,28 @@ export function useHeroChat(): UseHeroChat {
 		[commit],
 	);
 
-	return { messages, status, error, send, reset };
+	const send = useCallback(
+		(text: string) => {
+			const content = text.trim();
+			if (!content || busyRef.current) return;
+			const outgoing: UiMessage[] = [
+				...messagesRef.current,
+				{ id: nextId(), role: "user", content },
+			];
+			commit(outgoing);
+			run(outgoing);
+		},
+		[commit, run],
+	);
+
+	// Re-answer the existing thread (the failed user turn is already committed).
+	const retry = useCallback(() => {
+		if (busyRef.current) return;
+		const cur = messagesRef.current;
+		const last = cur[cur.length - 1];
+		if (!last || last.role !== "user") return;
+		run(cur);
+	}, [run]);
+
+	return { messages, status, error, send, retry, reset };
 }

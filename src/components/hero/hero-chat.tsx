@@ -13,7 +13,7 @@ import { ChatOverlay } from "@/components/hero/chat-overlay";
  * first message, then the overlay's own input drives the thread.
  */
 export function HeroChat() {
-	const { messages, status, error, send, reset } = useHeroChat();
+	const { messages, status, error, send, retry, reset } = useHeroChat();
 	const [active, setActive] = useState(false);
 	const [value, setValue] = useState("");
 
@@ -34,12 +34,6 @@ export function HeroChat() {
 		reset();
 	}, [reset]);
 
-	// Retry re-sends the most recent user turn (the assistant turn never landed).
-	const handleRetry = useCallback(() => {
-		const lastUser = messages.findLast((m) => m.role === "user");
-		if (lastUser) send(lastUser.content);
-	}, [messages, send]);
-
 	return (
 		<>
 			<AskBar value={value} onChange={setValue} onSend={handleSend} />
@@ -55,7 +49,7 @@ export function HeroChat() {
 						onChange={setValue}
 						onSend={handleSend}
 						onClose={handleClose}
-						onRetry={handleRetry}
+						onRetry={retry}
 					/>,
 					document.body,
 				)}

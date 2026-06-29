@@ -2,15 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
-import type { ChatMessage } from "@/lib/ai-soheil/types";
-import type { ChatError, ChatStatus } from "@/hooks/use-hero-chat";
+import type { ChatError, ChatStatus, UiMessage } from "@/hooks/use-hero-chat";
 import { useRefractionSupported } from "@/hooks/use-refraction-supported";
 import { ChatMessageRow } from "@/components/hero/chat-message";
 import { CipherLoader } from "@/components/hero/cipher-loader";
 import { SignalGlassFilter } from "@/components/signal-field/signal-glass-filter";
 
 interface ChatOverlayProps {
-	messages: ChatMessage[];
+	messages: UiMessage[];
 	status: ChatStatus;
 	error: ChatError;
 	value: string;
@@ -95,8 +94,8 @@ export function ChatOverlay({
 			{/* transcript */}
 			<div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-7 sm:px-8">
 				<div className="mx-auto flex max-w-[42rem] flex-col gap-7" aria-live="polite">
-					{messages.map((m, i) => (
-						<ChatMessageRow key={i} message={m} />
+					{messages.map((m) => (
+						<ChatMessageRow key={m.id} message={m} />
 					))}
 					{status === "decoding" && (
 						<div className="pl-0.5">
