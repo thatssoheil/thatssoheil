@@ -49,7 +49,12 @@ export function CipherText({
 
   return (
     <Component className={className}>
-      {display.map((d, i) => (
+      {/* Real text is the accessible name + the SSR/no-JS/crawler source of truth;
+          the scrambling glyph layer is decorative (audit #7 — a scrambled H1 was
+          serving "Soheil F@k0ur" to screen readers and search engines). */}
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {display.map((d, i) => (
         <span
           key={i}
           style={{
@@ -72,7 +77,8 @@ export function CipherText({
         >
           {d.char}
         </span>
-      ))}
+        ))}
+      </span>
     </Component>
   );
 }
