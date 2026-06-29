@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { cn } from "@/lib/utils";
 import type { ChatMessage } from "@/lib/ai-soheil/types";
 import type { ChatError, ChatStatus } from "@/hooks/use-hero-chat";
+import { useRefractionSupported } from "@/hooks/use-refraction-supported";
 import { ChatMessageRow } from "@/components/hero/chat-message";
 import { CipherLoader } from "@/components/hero/cipher-loader";
+import { SignalGlassFilter } from "@/components/signal-field/signal-glass-filter";
 
 interface ChatOverlayProps {
 	messages: ChatMessage[];
@@ -41,6 +44,7 @@ export function ChatOverlay({
 	const scrollRef = useRef<HTMLDivElement | null>(null);
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const busy = status === "decoding" || status === "streaming";
+	const refract = useRefractionSupported();
 
 	useEffect(() => {
 		inputRef.current?.focus();
@@ -59,7 +63,15 @@ export function ChatOverlay({
 	}, [messages, status]);
 
 	return (
-		<div className="glass glass-strong fixed inset-0 z-[var(--z-modal)] flex flex-col select-text">
+		<div
+			className={cn(
+				"glass fixed inset-0 z-[var(--z-modal)] flex flex-col select-text",
+				refract ? "glass-refract" : "glass-strong",
+			)}
+		>
+			{/* Chromium-only: the SVG filter that refracts the field behind the takeover. */}
+			{refract && <SignalGlassFilter />}
+
 			{/* header: shrunk cipher wordmark + close */}
 			<div className="flex items-center justify-between border-b border-border/60 px-5 py-4 sm:px-8">
 				<div className="flex flex-col">
