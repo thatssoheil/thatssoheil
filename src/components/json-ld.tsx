@@ -1,4 +1,4 @@
-import { SITE, SOCIALS } from "@/lib/constants";
+import { SITE, SOCIALS, ROLE_PROSE } from "@/lib/constants";
 
 /**
  * JSON-LD structured data for Person schema.
@@ -10,7 +10,7 @@ export function PersonJsonLd() {
 		"@type": "Person",
 		name: SITE.name,
 		url: SITE.url,
-		jobTitle: "Developer & Creative Technologist",
+		jobTitle: ROLE_PROSE,
 		description: SITE.description,
 		sameAs: SOCIALS.map((s) => s.href),
 		image: `${SITE.url}/og.png`,

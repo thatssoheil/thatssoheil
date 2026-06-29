@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Lexend, Geist_Mono } from "next/font/google";
-import { SITE } from "@/lib/constants";
+import { SITE, X_HANDLE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
 		title: SITE.title,
 		description: SITE.description,
 		images: [SITE.ogImage],
-		creator: "@soheilfakour",
+		creator: X_HANDLE,
 	},
 	icons: {
 		icon: [
@@ -82,10 +82,11 @@ export const metadata: Metadata = {
 	keywords: [
 		"Soheil Fakour",
 		"portfolio",
-		"developer",
-		"creative technologist",
-		"WebGPU",
+		"frontend engineer",
+		"product curator",
+		"React",
 		"Next.js",
+		"TypeScript",
 	],
 };
 
