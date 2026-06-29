@@ -6,10 +6,10 @@ import { type SectionId } from "@/lib/constants";
 import { jumpToSection } from "@/lib/section-navigation";
 
 // ─── Ambient plane — a small, centered square behind the name ───
-// Static: a faint signal-tinted fill + faint neutral edge read as a flat "plane",
+// Static: a faint white-toned fill + a lean white edge read as a flat "plane",
 // a perfect square (4-fold symmetric) centred on the wordmark's axis, spanning from
-// the eyebrow down through the ask-bar. A dim signal-tinted edge is the only colour.
-// Never competes with the name.
+// the eyebrow down through the ask-bar. Monochrome — white in the dark (active)
+// theme, neutral ink on paper. Never competes with the name.
 
 // Square, centred in a 100×100 box.
 const SQUARE = { x: 6, y: 6, size: 88 } as const;
@@ -30,7 +30,7 @@ function HeroPlane() {
 				</linearGradient>
 			</defs>
 
-			{/* The plane — faint signal-tinted wash, brightest at the top and fading
+			{/* The plane — faint white-toned wash, brightest at the top and fading
 			    into the void; reads as lit atmosphere rather than a flat smudge */}
 			<rect
 				x={SQUARE.x}
@@ -40,31 +40,18 @@ function HeroPlane() {
 				fill="url(#hero-plane-fill)"
 			/>
 
-			{/* The edge — faint neutral wire */}
+			{/* The edge — a lean white wire, gently feathered so it reads soft, not crisp */}
 			<rect
 				x={SQUARE.x}
 				y={SQUARE.y}
 				width={SQUARE.size}
 				height={SQUARE.size}
 				stroke="var(--foreground)"
-				strokeWidth={1.25}
-				strokeOpacity={0.08}
+				strokeWidth={0.75}
+				strokeOpacity={0.2}
 				strokeLinejoin="round"
 				vectorEffect="non-scaling-stroke"
-			/>
-
-			{/* A single dim signal accent on the edge — a static whisper, no motion */}
-			<rect
-				x={SQUARE.x}
-				y={SQUARE.y}
-				width={SQUARE.size}
-				height={SQUARE.size}
-				stroke="var(--brand)"
-				strokeWidth={1.25}
-				strokeOpacity={0.22}
-				strokeLinejoin="round"
-				vectorEffect="non-scaling-stroke"
-				style={{ filter: "drop-shadow(0 0 4px var(--signal-500))" }}
+				style={{ filter: "blur(0.4px)" }}
 			/>
 		</svg>
 	);

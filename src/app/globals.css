@@ -210,9 +210,9 @@
 	--brand: var(--signal-700);
 
 	/* Ambient plane tint — a faint signal wash (faded to transparent in the
-	   gradient) so the hero triangle reads as lit atmosphere, not a grey smudge.
-	   Tuned per theme; lower on paper where a cool tint shows more readily. */
-	--plane-tint: color-mix(in oklch, var(--signal-500) 6%, transparent);
+	   gradient) so the hero plane reads as lit atmosphere, not a grey smudge.
+	   White-toned (off --foreground); tuned per theme, lower on paper. */
+	--plane-tint: color-mix(in oklch, var(--foreground) 5%, transparent);
 
 	/* Light shadows — soft, low alpha; gradients — paper */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.08);
@@ -274,7 +274,7 @@
 	--brand: var(--signal-400);
 
 	/* Ambient plane tint — slightly stronger on the near-black void (see :root) */
-	--plane-tint: color-mix(in oklch, var(--signal-500) 9%, transparent);
+	--plane-tint: color-mix(in oklch, var(--foreground) 8%, transparent);
 
 	/* Dark shadows — deeper alpha for black-on-black; gradients — neutral near-black */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5);
