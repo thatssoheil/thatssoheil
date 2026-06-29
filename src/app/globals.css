@@ -6,9 +6,11 @@
 
 /* ─── Design Tokens ─── */
 @theme inline {
-	/* Fonts */
+	/* Fonts — sans is Lexend (UI + the eyebrow register); mono is the REAL Geist Mono
+	   (loaded as --font-cipher), so `font-mono` / code / the *-mono ramps are honestly
+	   monospace. The cipher wordmark uses --font-cipher directly. */
 	--font-sans: var(--font-lexend);
-	--font-mono: var(--font-lexend);
+	--font-mono: var(--font-cipher);
 
 	/* Typography scale */
 	--text-xs: 0.75rem;

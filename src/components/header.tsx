@@ -32,7 +32,7 @@ export function Header() {
 				"flex h-14 items-center justify-between",
 				"px-6 sm:px-8 md:px-12 lg:px-16",
 				"glass border-b border-[color:var(--glass-rim)]",
-				"font-mono text-sm",
+				"font-sans text-sm",
 			)}
 		>
 			{/* ── Branding ── */}

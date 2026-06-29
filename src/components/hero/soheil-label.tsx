@@ -5,7 +5,7 @@
  */
 export function SoheilLabel() {
 	return (
-		<span className="flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-brand">
+		<span className="flex items-center gap-2 font-sans text-[0.62rem] uppercase tracking-[0.24em] text-brand">
 			<span
 				aria-hidden
 				className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--signal-500)]"

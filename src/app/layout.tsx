@@ -7,9 +7,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { SignalField } from "@/components/signal-field/signal-field";
 import "./globals.css";
 
-// One typeface, app-wide: Lexend — tuned for low reading fatigue. Variable
-// (no `weight`), so the full 100–900 axis is available. Both --font-sans and
-// --font-mono resolve to it, so the whole site speaks in a single font.
+// Primary typeface: Lexend — tuned for low reading fatigue. Variable (no `weight`),
+// so the full 100–900 axis is available. --font-sans resolves to it (UI + the
+// uppercase eyebrow register); --font-mono resolves to the real Geist Mono below.
 const lexend = Lexend({
 	variable: "--font-lexend",
 	subsets: ["latin"],

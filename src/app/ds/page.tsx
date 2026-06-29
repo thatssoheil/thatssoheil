@@ -58,11 +58,11 @@ const SEMANTIC = [
 
 const TYPE_SCALE = [
 	{ label: "Display / Hero", cls: "text-6xl sm:text-7xl font-bold font-mono", note: "Geist Mono · bold — cipher hero only" },
-	{ label: "H1", cls: "text-5xl font-light font-sans", note: "Geist Sans · weight 300" },
-	{ label: "H2 — section heading", cls: "text-4xl font-light font-sans", note: "Geist Sans · weight 300" },
-	{ label: "H3", cls: "text-2xl font-light font-sans", note: "Geist Sans · weight 300" },
-	{ label: "Body", cls: "text-base font-normal font-sans", note: "Geist Sans · weight 400" },
-	{ label: "Small / caption", cls: "text-sm font-normal font-sans", note: "Geist Sans" },
+	{ label: "H1", cls: "text-5xl font-light font-sans", note: "Lexend · weight 300" },
+	{ label: "H2 — section heading", cls: "text-4xl font-light font-sans", note: "Lexend · weight 300" },
+	{ label: "H3", cls: "text-2xl font-light font-sans", note: "Lexend · weight 300" },
+	{ label: "Body", cls: "text-base font-normal font-sans", note: "Lexend · weight 400" },
+	{ label: "Small / caption", cls: "text-sm font-normal font-sans", note: "Lexend" },
 ] as const;
 
 // Geist's composite ramps (family+size+LH+weight+tracking in one class), retuned
@@ -182,7 +182,7 @@ const NAV = [
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
 	return (
-		<p className="font-mono text-xs tracking-[0.2em] uppercase text-brand">
+		<p className="font-sans text-xs tracking-[0.2em] uppercase text-brand">
 			{children}
 		</p>
 	);
@@ -333,7 +333,7 @@ export default function DesignSystemPage() {
 				</Block>
 
 				{/* ── Typography ── */}
-				<Block id="type" label="Type" title="Geist Sans + Geist Mono">
+				<Block id="type" label="Type" title="Lexend + Geist Mono">
 					<div className="flex flex-col gap-8">
 						{TYPE_SCALE.map((t) => (
 							<div
@@ -349,7 +349,7 @@ export default function DesignSystemPage() {
 						<div className="flex flex-col gap-2">
 							<SectionLabel>Section eyebrow</SectionLabel>
 							<span className="font-mono text-[10px] text-foreground/40">
-								Geist Mono · uppercase · tracking-[0.2em] · text-brand
+								Lexend · uppercase · tracking-[0.2em] · text-brand (eyebrow register)
 							</span>
 						</div>
 					</div>

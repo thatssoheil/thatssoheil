@@ -47,7 +47,7 @@ export function AskBar({ value, onChange, onSend }: AskBarProps) {
 						key={s}
 						type="button"
 						onClick={() => onSend(s)}
-						className="rounded-full border border-border px-3.5 py-1.5 font-mono text-[0.72rem] tracking-wide text-foreground/65 transition-colors hover:border-brand/40 hover:text-brand"
+						className="rounded-full border border-border px-3.5 py-1.5 font-sans text-[0.72rem] tracking-wide text-foreground/65 transition-colors hover:border-brand/40 hover:text-brand"
 					>
 						{s}
 					</button>

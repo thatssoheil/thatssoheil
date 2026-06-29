@@ -32,7 +32,7 @@ export function CipherLoader() {
 		<div className="flex items-center gap-3" role="status" aria-label="Decoding reply">
 			<SoheilLabel />
 			{prefersReduced ? (
-				<span className="font-mono text-[0.8rem] tracking-wide text-brand/70">
+				<span className="font-sans text-[0.8rem] tracking-wide text-brand/70">
 					decoding…
 				</span>
 			) : (

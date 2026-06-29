@@ -11,7 +11,7 @@ export function ConnectSection() {
 		>
 			<div className="flex items-center justify-center min-h-[80dvh] px-6 sm:px-8 md:px-12 lg:px-16 py-24">
 				<div className="glass-panel glass-edge mx-auto w-full max-w-3xl flex flex-col items-center text-center gap-8 rounded-3xl p-8 sm:p-12 md:p-16">
-					<p className="font-mono text-sm tracking-[0.2em] uppercase text-brand">
+					<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
 						Connect
 					</p>
 

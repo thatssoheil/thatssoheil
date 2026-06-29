@@ -77,7 +77,7 @@ export function ChatOverlay({
 					<span className="[font-family:var(--font-cipher)] text-[0.95rem] font-light tracking-wide text-foreground">
 						Soheil Fakour
 					</span>
-					<span className="font-mono text-[0.58rem] uppercase tracking-[0.24em] text-brand/80">
+					<span className="font-sans text-[0.58rem] uppercase tracking-[0.24em] text-brand/80">
 						ask · don&apos;t scroll
 					</span>
 				</div>
@@ -104,13 +104,13 @@ export function ChatOverlay({
 					)}
 					{status === "error" && error && (
 						<div className="flex items-center gap-3">
-							<span className="font-mono text-[0.8rem] tracking-wide text-destructive">
+							<span className="font-sans text-[0.8rem] tracking-wide text-destructive">
 								{ERROR_COPY[error]}
 							</span>
 							<button
 								type="button"
 								onClick={onRetry}
-								className="rounded-full border border-border px-3 py-1 font-mono text-[0.7rem] tracking-wide text-foreground/70 transition-colors hover:border-brand/40 hover:text-brand"
+								className="rounded-full border border-border px-3 py-1 font-sans text-[0.7rem] tracking-wide text-foreground/70 transition-colors hover:border-brand/40 hover:text-brand"
 							>
 								retry
 							</button>

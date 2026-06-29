@@ -24,7 +24,7 @@ export function Footer() {
 				<span className="absolute inset-y-0 left-0 w-24 bg-[linear-gradient(to_right,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--signal-500))]" />
 			</span>
 
-			<div className="flex w-full flex-col items-center gap-3 px-6 py-10 font-mono text-xs tracking-wide sm:flex-row sm:justify-between sm:px-8 md:px-12 lg:px-16">
+			<div className="flex w-full flex-col items-center gap-3 px-6 py-10 font-sans text-xs tracking-wide sm:flex-row sm:justify-between sm:px-8 md:px-12 lg:px-16">
 				<div className="flex items-center gap-2.5 text-foreground/50">
 					<LogoMark className="h-4" />
 					<span>

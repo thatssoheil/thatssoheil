@@ -12,7 +12,7 @@ export function ManifestoSection() {
 			<div className="flex items-center justify-center min-h-[100dvh] px-6 sm:px-8 md:px-12 lg:px-16 py-24">
 				<div className="glass-panel glass-edge mx-auto w-full max-w-3xl rounded-3xl p-8 sm:p-12 md:p-16">
 					{/* ── Heading ── */}
-					<p className="font-mono text-sm tracking-[0.2em] uppercase text-brand">
+					<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
 						{MANIFESTO.label}
 					</p>
 
@@ -20,7 +20,7 @@ export function ManifestoSection() {
 						{MANIFESTO.heading}
 					</h2>
 
-					<p className="mt-3 font-mono text-xs sm:text-sm tracking-wide text-text-muted">
+					<p className="mt-3 font-sans text-xs sm:text-sm tracking-wide text-text-muted">
 						{MANIFESTO.subheading}
 					</p>
 
@@ -28,7 +28,7 @@ export function ManifestoSection() {
 					<div className="mt-14 flex flex-col gap-10">
 						{MANIFESTO.paragraphs.map((p) => (
 							<div key={p.label} className="flex flex-col gap-3">
-								<p className="font-mono text-[10px] tracking-[0.22em] uppercase text-text-faint">
+								<p className="font-sans text-[10px] tracking-[0.22em] uppercase text-text-faint">
 									{p.label}
 								</p>
 								<p className="text-base sm:text-lg leading-relaxed text-foreground/70 font-light">
@@ -41,7 +41,7 @@ export function ManifestoSection() {
 					{/* ── Now — the concrete, hireable facts (availability, current work, stack) ── */}
 					<div className="mt-14 flex flex-col gap-6 border-t border-border pt-10">
 						<div className="flex flex-col gap-3">
-							<p className="font-mono text-[10px] tracking-[0.22em] uppercase text-text-faint">
+							<p className="font-sans text-[10px] tracking-[0.22em] uppercase text-text-faint">
 								Now
 							</p>
 							<p className="text-base sm:text-lg leading-relaxed text-foreground/80 font-light">
@@ -56,7 +56,7 @@ export function ManifestoSection() {
 							{NOW.stack.map((tool) => (
 								<span
 									key={tool}
-									className="rounded-full border border-border px-3 py-1 font-mono text-[0.72rem] tracking-wide text-text-muted"
+									className="rounded-full border border-border px-3 py-1 font-sans text-[0.72rem] tracking-wide text-text-muted"
 								>
 									{tool}
 								</span>
@@ -66,7 +66,7 @@ export function ManifestoSection() {
 						<div className="flex flex-col gap-4">
 							{NOW.past.map((p) => (
 								<div key={p.label} className="flex flex-col gap-1.5">
-									<p className="font-mono text-[10px] tracking-[0.22em] uppercase text-text-faint">
+									<p className="font-sans text-[10px] tracking-[0.22em] uppercase text-text-faint">
 										{p.label}
 									</p>
 									<p className="text-sm sm:text-base leading-relaxed text-text-muted font-light">
