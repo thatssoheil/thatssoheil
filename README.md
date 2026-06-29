@@ -2,7 +2,7 @@
 
 **Coding Vision into Existence**
 
-Frontend Web Developer and Product Curator. Tehran.
+Frontend Engineer and Product Curator. Tehran.
 
 ---
 
