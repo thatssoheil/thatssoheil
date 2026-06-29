@@ -15,6 +15,9 @@ const surfaceVariants = cva("", {
 			chrome: "glass",
 			panel: "glass-panel",
 			strong: "glass glass-strong",
+			// Chromium-only field refraction (gate on useRefractionSupported); falls
+			// back to `strong` everywhere else. Needs <SignalGlassFilter/> mounted.
+			refract: "glass glass-refract",
 		},
 		edge: {
 			true: "glass-edge",

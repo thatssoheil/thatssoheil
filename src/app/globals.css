@@ -167,6 +167,10 @@
 	--z-progress: 60;  /* scroll-progress bar, above header */
 	--z-overlay: 100;  /* modal backdrop, skip link */
 	--z-modal: 110;    /* modal content */
+
+	/* Interaction states (theme-independent) — the full states layer is ADR-pending;
+	   this is the disabled dimming, referenced by inputs/buttons. */
+	--disabled-opacity: 0.5;
 }
 
 /* ─── Light theme (default) — neutral paper + signal accent ─── */
