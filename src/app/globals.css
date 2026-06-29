@@ -214,6 +214,17 @@
 	   White-toned (off --foreground); tuned per theme, lower on paper. */
 	--plane-tint: color-mix(in oklch, var(--foreground) 5%, transparent);
 
+	/* Glass — Signal Glass material. Solid fill is the legible default;
+	   --glass-bg (translucent) is used only behind the @supports/reduced-transparency
+	   gate in the .glass class. Applied to surfaces in P1. */
+	--glass-bg: color-mix(in oklch, var(--card) 70%, transparent);
+	--glass-bg-solid: var(--card);
+	--glass-blur: 16px;
+	--glass-saturate: 140%;
+	--glass-rim: color-mix(in oklch, var(--foreground) 10%, transparent);
+	--glass-sheen: color-mix(in oklch, var(--foreground) 6%, transparent);
+	--glass-shadow: 0 8px 40px oklch(0 0 0 / 0.12);
+
 	/* Light shadows — soft, low alpha; gradients — paper */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.08);
 	--shadow-elevated: 0 8px 48px rgba(0, 0, 0, 0.12);
@@ -275,6 +286,15 @@
 
 	/* Ambient plane tint — slightly stronger on the near-black void (see :root) */
 	--plane-tint: color-mix(in oklch, var(--foreground) 8%, transparent);
+
+	/* Glass — slightly more translucent + a stronger drop on the void (see :root) */
+	--glass-bg: color-mix(in oklch, var(--ink-900) 60%, transparent);
+	--glass-bg-solid: var(--ink-900);
+	--glass-blur: 16px;
+	--glass-saturate: 150%;
+	--glass-rim: color-mix(in oklch, var(--foreground) 14%, transparent);
+	--glass-sheen: color-mix(in oklch, var(--foreground) 8%, transparent);
+	--glass-shadow: 0 8px 40px oklch(0 0 0 / 0.5);
 
 	/* Dark shadows — deeper alpha for black-on-black; gradients — neutral near-black */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5);
@@ -366,6 +386,27 @@
 @utility text-button-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 500; }
 @utility text-button-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; }
 @utility text-button-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.25rem; font-weight: 500; }
+
+/* ─── Glass material ───
+   Solid + legible by DEFAULT. Real translucent glass only where backdrop-filter
+   is supported AND the user has not requested reduced transparency. `not (… reduce)`
+   means browsers without the query (Firefox) still get glass; only an explicit
+   reduce-transparency preference forces the solid fallback. Applied to surfaces in P1. */
+@layer components {
+	.glass {
+		background-color: var(--glass-bg-solid);
+		border: 1px solid var(--glass-rim);
+		box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-sheen);
+
+		@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+			@media not (prefers-reduced-transparency: reduce) {
+				background-color: var(--glass-bg);
+				-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+				backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+			}
+		}
+	}
+}
 
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
