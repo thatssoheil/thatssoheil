@@ -14,6 +14,8 @@ import {
 import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { jumpToSection } from "@/lib/section-navigation";
+import { cn } from "@/lib/utils";
+import { surfaceVariants } from "@/components/ui/surface";
 
 const ITEM_CLASS =
 	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
@@ -86,7 +88,10 @@ export function CommandMenu() {
 					<Dialog.Overlay className="fixed inset-0 z-[var(--z-overlay)] bg-black/70 backdrop-blur-sm" />
 					<Dialog.Content
 						aria-describedby={undefined}
-						className="glass-panel glass-edge fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden rounded-xl text-popover-foreground outline-none"
+						className={cn(
+							surfaceVariants({ variant: "panel", radius: "sm" }),
+							"fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden text-popover-foreground outline-none",
+						)}
 					>
 						<VisuallyHidden.Root>
 							<Dialog.Title>Command menu</Dialog.Title>

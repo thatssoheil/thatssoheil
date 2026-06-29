@@ -8,6 +8,7 @@ import { jumpToSection } from "@/lib/section-navigation";
 import { CommandMenu } from "@/components/command-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LogoMark } from "@/components/logo";
+import { surfaceVariants } from "@/components/ui/surface";
 
 /**
  * Fixed minimal header (static — no entrance animation).
@@ -31,7 +32,8 @@ export function Header() {
 				"fixed inset-x-0 top-0 z-[var(--z-header)]",
 				"flex h-14 items-center justify-between",
 				"px-6 sm:px-8 md:px-12 lg:px-16",
-				"glass border-b border-[color:var(--glass-rim)]",
+				surfaceVariants({ variant: "chrome", edge: false, radius: "none" }),
+				"border-b border-[color:var(--glass-rim)]",
 				"font-sans text-sm",
 			)}
 		>

@@ -1,6 +1,7 @@
 import type { SectionId } from "@/lib/constants";
 import { MANIFESTO } from "@/data/manifesto";
 import { NOW } from "@/data/now";
+import { Surface } from "@/components/ui/surface";
 
 export function ManifestoSection() {
 	return (
@@ -10,7 +11,7 @@ export function ManifestoSection() {
 			aria-label="Manifesto"
 		>
 			<div className="flex items-center justify-center min-h-[100dvh] px-6 sm:px-8 md:px-12 lg:px-16 py-24">
-				<div className="glass-panel glass-edge mx-auto w-full max-w-3xl rounded-3xl p-8 sm:p-12 md:p-16">
+				<Surface variant="panel" radius="lg" className="mx-auto w-full max-w-3xl p-8 sm:p-12 md:p-16">
 					{/* ── Heading ── */}
 					<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
 						{MANIFESTO.label}
@@ -76,7 +77,7 @@ export function ManifestoSection() {
 							))}
 						</div>
 					</div>
-				</div>
+				</Surface>
 			</div>
 		</section>
 	);
