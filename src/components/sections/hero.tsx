@@ -11,8 +11,8 @@ import { jumpToSection } from "@/lib/section-navigation";
 // the eyebrow down through the ask-bar. Monochrome — white in the dark (active)
 // theme, neutral ink on paper. Never competes with the name.
 
-// Square, centred in a 100×100 box.
-const SQUARE = { x: 6, y: 6, size: 88 } as const;
+// Square, centred in a 100×100 box; a soft corner radius rounds the edges.
+const SQUARE = { x: 6, y: 6, size: 88, radius: 3 } as const;
 
 function HeroPlane() {
 	return (
@@ -22,6 +22,12 @@ function HeroPlane() {
 			viewBox="0 0 100 100"
 			fill="none"
 			preserveAspectRatio="xMidYMid meet"
+			style={{
+				// The whole plane hard-dissolves into the void by ~60% down — nothing
+				// (wash or wire) survives into the bottom of the square.
+				maskImage: "linear-gradient(to bottom, #000 0%, #000 28%, transparent 60%)",
+				WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 28%, transparent 60%)",
+			}}
 		>
 			<defs>
 				<linearGradient id="hero-plane-fill" x1="0" y1="0" x2="0" y2="1">
@@ -37,21 +43,24 @@ function HeroPlane() {
 				y={SQUARE.y}
 				width={SQUARE.size}
 				height={SQUARE.size}
+				rx={SQUARE.radius}
 				fill="url(#hero-plane-fill)"
 			/>
 
-			{/* The edge — a lean white wire, gently feathered so it reads soft, not crisp */}
+			{/* The edge — a crisp, lean white wire. No blur: the square's top edge stays
+			    sharp, and its dissolve into the void comes entirely from the plane-wide
+			    alpha mask above, which fades the lower sides out toward the bottom. */}
 			<rect
 				x={SQUARE.x}
 				y={SQUARE.y}
 				width={SQUARE.size}
 				height={SQUARE.size}
+				rx={SQUARE.radius}
 				stroke="var(--foreground)"
 				strokeWidth={0.75}
 				strokeOpacity={0.2}
 				strokeLinejoin="round"
 				vectorEffect="non-scaling-stroke"
-				style={{ filter: "blur(0.4px)" }}
 			/>
 		</svg>
 	);
