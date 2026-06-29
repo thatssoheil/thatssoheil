@@ -6,6 +6,9 @@ import type { ChatMessage } from "@/lib/ai-soheil/types";
 export type ChatStatus = "idle" | "decoding" | "streaming" | "error";
 export type ChatError = "signal_dropped" | "rate_limited" | null;
 
+/** Abort if no bytes arrive (connect or mid-stream) within this window. */
+const STALL_MS = 20_000;
+
 /** A thread message plus a stable UI id, so React keys never reconcile a user
  *  bubble into an assistant slot. The id is stripped before the wire request. */
 export interface UiMessage extends ChatMessage {
@@ -64,7 +67,20 @@ export function useHeroChat(): UseHeroChat {
 			const controller = new AbortController();
 			abortRef.current = controller;
 
+			// Inactivity watchdog: if no bytes arrive for STALL_MS (connect or mid-stream),
+			// surface signal_dropped and abort instead of spinning forever (audit #5).
+			let watchdog: ReturnType<typeof setTimeout> | undefined;
+			const bump = () => {
+				if (watchdog) clearTimeout(watchdog);
+				watchdog = setTimeout(() => {
+					setError("signal_dropped");
+					setStatus("error");
+					controller.abort();
+				}, STALL_MS);
+			};
+
 			void (async () => {
+				bump();
 				try {
 					const res = await fetch("/api/chat", {
 						method: "POST",
@@ -95,6 +111,7 @@ export function useHeroChat(): UseHeroChat {
 					for (;;) {
 						const { done, value } = await reader.read();
 						if (done) break;
+						bump();
 						buf += decoder.decode(value, { stream: true });
 						const lines = buf.split("\n");
 						buf = lines.pop() ?? "";
@@ -141,6 +158,7 @@ export function useHeroChat(): UseHeroChat {
 						setStatus("error");
 					}
 				} finally {
+					if (watchdog) clearTimeout(watchdog);
 					abortRef.current = null;
 					busyRef.current = false;
 				}

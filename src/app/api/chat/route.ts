@@ -9,8 +9,31 @@ const json = (data: unknown, status: number) =>
 		headers: { "Content-Type": "application/json" },
 	});
 
+// Block browser cross-origin abuse of the paid endpoint (audit #5). Trust the
+// Fetch-Metadata header when present; fall back to comparing Origin host to our
+// own. Absent both (e.g. a header-less client), allow and lean on the rate limit —
+// we never want to false-reject a legitimate same-origin request.
+function isCrossOrigin(req: Request): boolean {
+	const site = req.headers.get("sec-fetch-site");
+	if (site) return !(site === "same-origin" || site === "same-site");
+	const origin = req.headers.get("origin");
+	if (origin) {
+		try {
+			return new URL(origin).host !== new URL(req.url).host;
+		} catch {
+			return true;
+		}
+	}
+	return false;
+}
+
+// Backstop so a 200-then-stall upstream can't pin the worker indefinitely.
+const UPSTREAM_TIMEOUT_MS = 45_000;
+
 export async function POST(req: Request): Promise<Response> {
 	const { env } = getCloudflareContext();
+
+	if (isCrossOrigin(req)) return json({ error: "forbidden" }, 403);
 
 	const rl = await checkRateLimit(env.CHAT_RATELIMIT, clientKey(req));
 	if (!rl.allowed) return json({ error: "rate_limited" }, 429);
@@ -37,6 +60,7 @@ export async function POST(req: Request): Promise<Response> {
 				stream: true,
 				messages: [{ role: "system", content: buildSystemPrompt() }, ...messages],
 			}),
+			signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
 		});
 	} catch {
 		return json({ error: "signal_dropped" }, 502);
