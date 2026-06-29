@@ -1,5 +1,6 @@
 import type { SectionId } from "@/lib/constants";
 import { MANIFESTO } from "@/data/manifesto";
+import { NOW } from "@/data/now";
 
 export function ManifestoSection() {
 	return (
@@ -35,6 +36,45 @@ export function ManifestoSection() {
 								</p>
 							</div>
 						))}
+					</div>
+
+					{/* ── Now — the concrete, hireable facts (availability, current work, stack) ── */}
+					<div className="mt-14 flex flex-col gap-6 border-t border-border pt-10">
+						<div className="flex flex-col gap-3">
+							<p className="font-mono text-[10px] tracking-[0.22em] uppercase text-text-faint">
+								Now
+							</p>
+							<p className="text-base sm:text-lg leading-relaxed text-foreground/80 font-light">
+								{NOW.current}
+							</p>
+							<p className="text-sm sm:text-base text-brand font-light">
+								{NOW.status}
+							</p>
+						</div>
+
+						<div className="flex flex-wrap gap-2">
+							{NOW.stack.map((tool) => (
+								<span
+									key={tool}
+									className="rounded-full border border-border px-3 py-1 font-mono text-[0.72rem] tracking-wide text-text-muted"
+								>
+									{tool}
+								</span>
+							))}
+						</div>
+
+						<div className="flex flex-col gap-4">
+							{NOW.past.map((p) => (
+								<div key={p.label} className="flex flex-col gap-1.5">
+									<p className="font-mono text-[10px] tracking-[0.22em] uppercase text-text-faint">
+										{p.label}
+									</p>
+									<p className="text-sm sm:text-base leading-relaxed text-text-muted font-light">
+										{p.body}
+									</p>
+								</div>
+							))}
+						</div>
 					</div>
 				</div>
 			</div>
