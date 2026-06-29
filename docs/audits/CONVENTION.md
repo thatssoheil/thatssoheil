@@ -59,3 +59,7 @@ the prior audit's priorities were resolved — the folder is a ledger, not a gra
 - [2026-06-29 — Signal Glass website](./2026-06-29-signal-glass-council-audit.md) —
   overall **6.5/10**; craft is high, gated by a hollow content system (facts trapped
   in README) and a cluster of unfinished hardening (contrast, the chat takeover).
+- [2026-06-29 — Signal Glass **design system** gap analysis](./2026-06-29-design-system-gap-analysis.md) —
+  overall maturity **4.7/10**; "a beautiful theme, not yet a system" — the product is
+  built *beside* the system (≈0 product adoption of the type ramps / motion tokens /
+  Button / Card), with no lint gate to stop the drift.
