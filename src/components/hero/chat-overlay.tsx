@@ -126,7 +126,7 @@ export function ChatOverlay({
 						e.preventDefault();
 						onSend(value);
 					}}
-					className="mx-auto flex max-w-[42rem] items-center gap-2 rounded-2xl border border-input bg-card/40 px-4 py-3 transition-colors focus-within:border-brand/50 focus-within:shadow-[0_0_0_3px_color-mix(in_oklch,var(--signal-500)_18%,transparent)]"
+					className="mx-auto flex max-w-[42rem] items-center gap-2 rounded-2xl border border-input bg-card/40 px-4 py-3 transition-colors focus-within:border-brand/50 focus-within:shadow-[0_0_0_3px_color-mix(in_oklch,var(--ring)_18%,transparent)]"
 				>
 					<input
 						ref={inputRef}
@@ -141,7 +141,7 @@ export function ChatOverlay({
 						type="submit"
 						aria-label="Send"
 						disabled={busy || !value.trim()}
-						className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-[var(--signal-500)] text-[var(--ink-50)] transition-transform hover:scale-105 active:scale-95 disabled:opacity-40"
+						className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] transition-transform hover:scale-105 active:scale-95 disabled:opacity-40"
 					>
 						↑
 					</button>

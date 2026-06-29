@@ -63,7 +63,7 @@ export function CipherText({
             opacity: d.opacity,
             color:
               d.tint > 0.01
-                ? `color-mix(in oklch, var(--signal-400) ${(d.tint * 100).toFixed(0)}%, var(--foreground))`
+                ? `color-mix(in oklch, var(--brand) ${(d.tint * 100).toFixed(0)}%, var(--foreground))`
                 : undefined,
             filter:
               d.blur > 0.05 || d.brightness !== 1

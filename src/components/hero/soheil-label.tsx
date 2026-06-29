@@ -8,8 +8,8 @@ export function SoheilLabel() {
 		<span className="flex items-center gap-2 font-sans text-[0.62rem] uppercase tracking-[0.24em] text-brand">
 			<span
 				aria-hidden
-				className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--signal-500)]"
-				style={{ filter: "drop-shadow(0 0 5px var(--signal-500))" }}
+				className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--primary)]"
+				style={{ filter: "drop-shadow(0 0 5px var(--primary))" }}
 			/>
 			soheil
 		</span>

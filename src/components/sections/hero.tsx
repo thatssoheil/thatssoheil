@@ -95,7 +95,7 @@ export function HeroSection() {
 				{/* Faint signal haze behind the name — atmosphere, not a spotlight */}
 				<div
 					aria-hidden="true"
-					className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--signal-500),transparent_70%)] opacity-[0.06] blur-[110px]"
+					className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--primary),transparent_70%)] opacity-[0.06] blur-[110px]"
 				/>
 
 				{/* Eyebrow — "Frontend Engineer × Product Curator". The two roles recede
@@ -105,7 +105,7 @@ export function HeroSection() {
 					<span>Frontend Engineer</span>
 					<span
 						className="text-[1.2em] text-brand"
-						style={{ filter: "drop-shadow(0 0 5px var(--signal-500))" }}
+						style={{ filter: "drop-shadow(0 0 5px var(--primary))" }}
 					>
 						×
 					</span>
@@ -128,7 +128,7 @@ export function HeroSection() {
 						aria-hidden="true"
 						className="relative block h-px w-44 max-w-[70vw] bg-foreground/12"
 					>
-						<span className="absolute inset-y-0 left-1/2 w-12 -translate-x-1/2 bg-[linear-gradient(to_right,transparent,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--signal-500))]" />
+						<span className="absolute inset-y-0 left-1/2 w-12 -translate-x-1/2 bg-[linear-gradient(to_right,transparent,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--primary))]" />
 					</span>
 					<p className="mt-4 whitespace-nowrap font-sans text-[clamp(0.6rem,2.4vw,0.875rem)] leading-none tracking-[0.18em] sm:tracking-[0.2em] uppercase text-text-faint">
 						Coding vision into existence

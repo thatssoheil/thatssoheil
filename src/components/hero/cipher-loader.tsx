@@ -39,7 +39,7 @@ export function CipherLoader() {
 				<span
 					aria-hidden
 					className="[font-family:var(--font-cipher)] text-[0.95rem] font-light tracking-tighter text-brand select-none"
-					style={{ filter: "drop-shadow(0 0 8px var(--signal-500))" }}
+					style={{ filter: "drop-shadow(0 0 8px var(--primary))" }}
 				>
 					{glyphs.join("")}
 				</span>

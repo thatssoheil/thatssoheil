@@ -241,15 +241,18 @@
 	--glass-shadow: 0 8px 40px oklch(0 0 0 / 0.12);
 
 	/* Signal field — the living substrate. Faint on paper (restraint). */
+	/* The field's second hue — a deliberate teal companion to signal (named, not a
+	   stray literal, so the retheme contract holds). See ADR on the field palette. */
+	--field-accent: oklch(0.7 0.12 210);
 	--field-blob-a: var(--signal-500);
-	--field-blob-b: oklch(0.7 0.12 210);
+	--field-blob-b: var(--field-accent);
 	--field-blob-c: var(--signal-400);
 	--field-opacity: 0.1;
 
 	/* Light shadows — soft, low alpha; gradients — paper */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.08);
 	--shadow-elevated: 0 8px 48px rgba(0, 0, 0, 0.12);
-	--shadow-glow: 0 0 32px rgba(10, 132, 255, 0.22);
+	--shadow-glow: 0 0 32px color-mix(in oklch, var(--signal-500) 22%, transparent);
 	--gradient-hero: radial-gradient(
 		ellipse at 50% 38%,
 		oklch(0.99 0 0) 0%,
@@ -325,15 +328,16 @@
 	--glass-shadow: 0 8px 40px oklch(0 0 0 / 0.5);
 
 	/* Signal field — a dim signal aurora on the near-black void (the showpiece). */
+	--field-accent: oklch(0.64 0.16 210);
 	--field-blob-a: var(--signal-500);
-	--field-blob-b: oklch(0.64 0.16 210);
+	--field-blob-b: var(--field-accent);
 	--field-blob-c: var(--signal-700);
 	--field-opacity: 0.18;
 
 	/* Dark shadows — deeper alpha for black-on-black; gradients — neutral near-black */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5);
 	--shadow-elevated: 0 8px 48px rgba(0, 0, 0, 0.6);
-	--shadow-glow: 0 0 32px rgba(10, 132, 255, 0.2);
+	--shadow-glow: 0 0 32px color-mix(in oklch, var(--signal-500) 20%, transparent);
 	/* Deep "void" — near-pure-black field that darkens toward the edges,
 	   pulling focus inward. The hero layers a *faint* signal haze behind the
 	   name on top of this (see hero.tsx) — atmosphere, never a bright spotlight. */
