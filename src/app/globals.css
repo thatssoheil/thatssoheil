@@ -225,6 +225,12 @@
 	--glass-sheen: color-mix(in oklch, var(--foreground) 6%, transparent);
 	--glass-shadow: 0 8px 40px oklch(0 0 0 / 0.12);
 
+	/* Signal field — the living substrate. Faint on paper (restraint). */
+	--field-blob-a: var(--signal-500);
+	--field-blob-b: oklch(0.7 0.12 210);
+	--field-blob-c: var(--signal-400);
+	--field-opacity: 0.1;
+
 	/* Light shadows — soft, low alpha; gradients — paper */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.08);
 	--shadow-elevated: 0 8px 48px rgba(0, 0, 0, 0.12);
@@ -295,6 +301,12 @@
 	--glass-rim: color-mix(in oklch, var(--foreground) 14%, transparent);
 	--glass-sheen: color-mix(in oklch, var(--foreground) 8%, transparent);
 	--glass-shadow: 0 8px 40px oklch(0 0 0 / 0.5);
+
+	/* Signal field — a dim signal aurora on the near-black void (the showpiece). */
+	--field-blob-a: var(--signal-500);
+	--field-blob-b: oklch(0.64 0.16 210);
+	--field-blob-c: var(--signal-700);
+	--field-opacity: 0.18;
 
 	/* Dark shadows — deeper alpha for black-on-black; gradients — neutral near-black */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5);
@@ -406,6 +418,55 @@
 			}
 		}
 	}
+}
+
+/* ─── Signal field ───
+   A fixed, full-viewport living substrate: three slow-drifting signal-hued blobs
+   over the void, softly blurred. Transform-only animation (GPU-composited). The
+   drift keyframes are round-trips (0%==100%) so the global reduced-motion freeze
+   lands on the intended base composition. aria-hidden, pointer-events-none, -z. */
+.signal-field {
+	position: fixed;
+	inset: 0;
+	z-index: -10;
+	overflow: hidden;
+	pointer-events: none;
+}
+.signal-field__blob {
+	position: absolute;
+	border-radius: 9999px;
+	filter: blur(60px);
+	opacity: var(--field-opacity);
+}
+.signal-field__blob--a {
+	width: 60vmax; height: 60vmax;
+	top: -12vmax; left: -10vmax;
+	background: radial-gradient(circle, var(--field-blob-a), transparent 70%);
+	animation: signal-drift-a 38s ease-in-out infinite;
+}
+.signal-field__blob--b {
+	width: 52vmax; height: 52vmax;
+	bottom: -10vmax; right: -8vmax;
+	background: radial-gradient(circle, var(--field-blob-b), transparent 70%);
+	animation: signal-drift-b 46s ease-in-out infinite;
+}
+.signal-field__blob--c {
+	width: 44vmax; height: 44vmax;
+	top: 30%; left: 32%;
+	background: radial-gradient(circle, var(--field-blob-c), transparent 70%);
+	animation: signal-drift-c 54s ease-in-out infinite;
+}
+@keyframes signal-drift-a {
+	0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+	50%      { transform: translate3d(6vmax, 4vmax, 0) scale(1.1); }
+}
+@keyframes signal-drift-b {
+	0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+	50%      { transform: translate3d(-5vmax, -4vmax, 0) scale(1.08); }
+}
+@keyframes signal-drift-c {
+	0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+	50%      { transform: translate3d(4vmax, -6vmax, 0) scale(0.92); }
 }
 
 /* ─── Reduced Motion ─── */
