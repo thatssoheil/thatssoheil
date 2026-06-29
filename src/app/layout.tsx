@@ -4,6 +4,7 @@ import { SITE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SignalField } from "@/components/signal-field/signal-field";
 import "./globals.css";
 
 // One typeface, app-wide: Lexend — tuned for low reading fatigue. Variable
@@ -126,6 +127,7 @@ export default function RootLayout({
 					enableSystem={false}
 					disableTransitionOnChange
 				>
+					<SignalField />
 					<SkipToContent />
 					{children}
 				</ThemeProvider>

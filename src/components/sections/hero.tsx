@@ -77,7 +77,7 @@ export function HeroSection() {
 	return (
 		<section
 			id={"hero" satisfies SectionId}
-			className="relative w-full h-[100dvh] overflow-hidden bg-[image:var(--gradient-hero)]"
+			className="relative w-full h-[100dvh] overflow-hidden"
 			aria-label="Hero"
 		>
 			<HeroPlane />
