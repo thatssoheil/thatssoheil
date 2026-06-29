@@ -92,7 +92,7 @@ export function HeroSection() {
 				{/* Eyebrow — "Frontend Engineer × Product Curator". The two roles recede
 				    to a quiet grey; the signal × is the lone accent — the fusion of the two
 				    disciplines. One line, centred, scales down on small screens. */}
-				<p className="flex items-center justify-center gap-[0.6em] whitespace-nowrap font-mono text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-foreground/45">
+				<p className="flex items-center justify-center gap-[0.6em] whitespace-nowrap font-mono text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-text-faint">
 					<span>Frontend Engineer</span>
 					<span
 						className="text-[1.2em] text-brand"
@@ -121,7 +121,7 @@ export function HeroSection() {
 					>
 						<span className="absolute inset-y-0 left-1/2 w-12 -translate-x-1/2 bg-[linear-gradient(to_right,transparent,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--signal-500))]" />
 					</span>
-					<p className="mt-4 whitespace-nowrap font-mono text-[clamp(0.6rem,2.4vw,0.875rem)] leading-none tracking-[0.18em] sm:tracking-[0.2em] uppercase text-foreground/45">
+					<p className="mt-4 whitespace-nowrap font-mono text-[clamp(0.6rem,2.4vw,0.875rem)] leading-none tracking-[0.18em] sm:tracking-[0.2em] uppercase text-text-faint">
 						Coding vision into existence
 					</p>
 				</div>

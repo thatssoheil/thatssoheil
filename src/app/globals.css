@@ -57,6 +57,10 @@
 	/* Brand — the signal accent (legible, per-theme) */
 	--color-brand: var(--brand);
 
+	/* De-emphasis text tiers — measured-AA replacements for text-foreground/NN */
+	--color-text-muted: var(--text-muted);
+	--color-text-faint: var(--text-faint);
+
 	/* Alpha — translucent neutral ramp (hairlines, dividers, overlays).
 	   Geist's gray-alpha idea, retuned per theme below. Use border-alpha-300
 	   etc. for edges that must read over any surface. */
@@ -209,6 +213,11 @@
 	/* Accent-as-text — darker signal step for AA contrast on paper (≈ 5.4:1) */
 	--brand: var(--signal-700);
 
+	/* De-emphasis text tiers — measured for WCAG AA on paper (replaces ad-hoc
+	   text-foreground/NN). muted ≈ 8:1 (body), faint ≈ 5.7:1 (still AA; quiet copy). */
+	--text-muted: oklch(0.42 0 0);
+	--text-faint: oklch(0.5 0 0);
+
 	/* Ambient plane tint — a faint signal wash (faded to transparent in the
 	   gradient) so the hero plane reads as lit atmosphere, not a grey smudge.
 	   White-toned (off --foreground); tuned per theme, lower on paper. */
@@ -224,7 +233,9 @@
 	--glass-blur-strong: 32px;
 	--glass-saturate: 140%;
 	--glass-rim: color-mix(in oklch, var(--foreground) 10%, transparent);
-	--glass-sheen: color-mix(in oklch, var(--foreground) 6%, transparent);
+	/* Sheen is a top-edge LIGHT catch — always white-derived, never --foreground
+	   (which would paint a dark smudge on paper). */
+	--glass-sheen: color-mix(in oklch, white 50%, transparent);
 	--glass-shadow: 0 8px 40px oklch(0 0 0 / 0.12);
 
 	/* Signal field — the living substrate. Faint on paper (restraint). */
@@ -292,6 +303,11 @@
 	/* Accent-as-text — brighter signal step for comfortable contrast on black (≈ 5.5:1) */
 	--brand: var(--signal-400);
 
+	/* De-emphasis text tiers — measured for WCAG AA on the void (replaces ad-hoc
+	   text-foreground/NN). muted ≈ 7:1 (body), faint ≈ 4.8:1 (still AA; quiet copy). */
+	--text-muted: var(--ink-300);
+	--text-faint: var(--ink-400);
+
 	/* Ambient plane tint — slightly stronger on the near-black void (see :root) */
 	--plane-tint: color-mix(in oklch, var(--foreground) 8%, transparent);
 
@@ -303,7 +319,7 @@
 	--glass-blur-strong: 32px;
 	--glass-saturate: 150%;
 	--glass-rim: color-mix(in oklch, var(--foreground) 14%, transparent);
-	--glass-sheen: color-mix(in oklch, var(--foreground) 8%, transparent);
+	--glass-sheen: color-mix(in oklch, white 12%, transparent);
 	--glass-shadow: 0 8px 40px oklch(0 0 0 / 0.5);
 
 	/* Signal field — a dim signal aurora on the near-black void (the showpiece). */

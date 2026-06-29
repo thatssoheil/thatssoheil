@@ -19,7 +19,7 @@ export function ManifestoSection() {
 						{MANIFESTO.heading}
 					</h2>
 
-					<p className="mt-3 font-mono text-xs sm:text-sm tracking-wide text-foreground/40">
+					<p className="mt-3 font-mono text-xs sm:text-sm tracking-wide text-text-muted">
 						{MANIFESTO.subheading}
 					</p>
 
@@ -27,7 +27,7 @@ export function ManifestoSection() {
 					<div className="mt-14 flex flex-col gap-10">
 						{MANIFESTO.paragraphs.map((p) => (
 							<div key={p.label} className="flex flex-col gap-3">
-								<p className="font-mono text-[10px] tracking-[0.22em] uppercase text-foreground/30">
+								<p className="font-mono text-[10px] tracking-[0.22em] uppercase text-text-faint">
 									{p.label}
 								</p>
 								<p className="text-base sm:text-lg leading-relaxed text-foreground/70 font-light">
