@@ -86,7 +86,7 @@ export function CommandMenu() {
 					<Dialog.Overlay className="fixed inset-0 z-[var(--z-overlay)] bg-black/70 backdrop-blur-sm" />
 					<Dialog.Content
 						aria-describedby={undefined}
-						className="fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-[var(--shadow-elevated)] outline-none"
+						className="glass-panel glass-edge fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden rounded-xl text-popover-foreground outline-none"
 					>
 						<VisuallyHidden.Root>
 							<Dialog.Title>Command menu</Dialog.Title>

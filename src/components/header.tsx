@@ -31,8 +31,7 @@ export function Header() {
 				"fixed inset-x-0 top-0 z-[var(--z-header)]",
 				"flex h-14 items-center justify-between",
 				"px-6 sm:px-8 md:px-12 lg:px-16",
-				"bg-background/80 backdrop-blur-md",
-				"border-b border-border/40",
+				"glass border-b border-[color:var(--glass-rim)]",
 				"font-mono text-sm",
 			)}
 		>

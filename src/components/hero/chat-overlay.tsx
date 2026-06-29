@@ -59,7 +59,7 @@ export function ChatOverlay({
 	}, [messages, status]);
 
 	return (
-		<div className="fixed inset-0 z-[var(--z-modal)] flex flex-col bg-background/55 backdrop-blur-2xl select-text">
+		<div className="glass glass-strong fixed inset-0 z-[var(--z-modal)] flex flex-col select-text">
 			{/* header: shrunk cipher wordmark + close */}
 			<div className="flex items-center justify-between border-b border-border/60 px-5 py-4 sm:px-8">
 				<div className="flex flex-col">

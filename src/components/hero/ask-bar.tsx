@@ -23,7 +23,7 @@ export function AskBar({ value, onChange, onSend }: AskBarProps) {
 				}}
 				className="w-full"
 			>
-				<div className="flex items-center gap-2 rounded-2xl border border-input bg-card/40 px-4 py-3 backdrop-blur transition-colors focus-within:border-brand/50 focus-within:shadow-[0_0_0_3px_color-mix(in_oklch,var(--signal-500)_18%,transparent)]">
+				<div className="glass glass-edge flex items-center gap-2 rounded-2xl px-4 py-3 transition-colors focus-within:border-brand/50 focus-within:shadow-[0_0_0_3px_color-mix(in_oklch,var(--signal-500)_18%,transparent)]">
 					<input
 						value={value}
 						onChange={(e) => onChange(e.target.value)}
