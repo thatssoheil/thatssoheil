@@ -1,16 +1,17 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { createPortal } from "react-dom";
+import { Dialog } from "radix-ui";
 import { useHeroChat } from "@/hooks/use-hero-chat";
 import { AskBar } from "@/components/hero/ask-bar";
-import { ChatOverlay } from "@/components/hero/chat-overlay";
+import { ChatDialog } from "@/components/hero/chat-dialog";
 
 /**
- * Orchestrates the hero chat: owns the useHeroChat thread and a resting|active view
- * bit. Resting shows the AskBar beneath the tagline; the first send (typed or a
- * starter chip) opens the dimmed ChatOverlay. The resting input value seeds the
- * first message, then the overlay's own input drives the thread.
+ * Orchestrates the hero chat: owns the useHeroChat thread and the dialog open state.
+ * Resting shows the AskBar beneath the tagline; the first send (typed or a starter
+ * chip) opens the true-modal ChatDialog. The resting input value seeds the first
+ * message; thereafter the dialog's own composer drives the thread. Closing the dialog
+ * (Esc / ✕ / focus-return — all from Radix) resets the thread.
  */
 export function HeroChat() {
 	const { messages, status, error, send, retry, reset } = useHeroChat();
@@ -28,31 +29,31 @@ export function HeroChat() {
 		[send],
 	);
 
-	const handleClose = useCallback(() => {
-		setActive(false);
-		setValue("");
-		reset();
-	}, [reset]);
+	const handleOpenChange = useCallback(
+		(open: boolean) => {
+			if (!open) {
+				setActive(false);
+				setValue("");
+				reset();
+			}
+		},
+		[reset],
+	);
 
 	return (
 		<>
 			<AskBar value={value} onChange={setValue} onSend={handleSend} />
-			{/* Portal the overlay to <body> so its fixed positioning escapes the hero's
-			    `relative z-10` stacking context (otherwise the page header paints over it). */}
-			{active &&
-				createPortal(
-					<ChatOverlay
-						messages={messages}
-						status={status}
-						error={error}
-						value={value}
-						onChange={setValue}
-						onSend={handleSend}
-						onClose={handleClose}
-						onRetry={retry}
-					/>,
-					document.body,
-				)}
+			<Dialog.Root open={active} onOpenChange={handleOpenChange}>
+				<ChatDialog
+					messages={messages}
+					status={status}
+					error={error}
+					value={value}
+					onChange={setValue}
+					onSend={handleSend}
+					onRetry={retry}
+				/>
+			</Dialog.Root>
 		</>
 	);
 }
