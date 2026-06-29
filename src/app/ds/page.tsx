@@ -173,6 +173,7 @@ const NAV = [
 	{ id: "space", label: "Space" },
 	{ id: "motion", label: "Motion" },
 	{ id: "surface", label: "Surface" },
+	{ id: "glass", label: "Glass" },
 	{ id: "components", label: "Components" },
 	{ id: "voice", label: "Voice" },
 ] as const;
@@ -611,6 +612,58 @@ export default function DesignSystemPage() {
 							<span className="font-mono text-xs text-foreground/90">--gradient-surface</span>
 						</div>
 					</div>
+				</Block>
+
+				{/* ── Glass: the Signal Glass material ── */}
+				<Block id="glass" label="Glass" title="Glass — the Signal Glass material">
+					{/* Live demo over a signal-tinted bed so the material reads on this solid page. */}
+					<div className="relative overflow-hidden rounded-2xl border border-border p-8">
+						<div
+							aria-hidden="true"
+							className="pointer-events-none absolute inset-0"
+							style={{
+								background:
+									"radial-gradient(60% 80% at 25% 20%, var(--signal-500), transparent 70%), radial-gradient(50% 70% at 80% 80%, oklch(0.64 0.16 210), transparent 70%)",
+								opacity: 0.5,
+							}}
+						/>
+						<div className="relative grid grid-cols-1 gap-4 sm:grid-cols-2">
+							<div className="glass glass-edge rounded-xl p-5">
+								<p className="font-mono text-xs text-foreground/90">.glass · .glass-edge</p>
+								<p className="mt-2 text-sm font-light text-foreground/70">
+									Translucent chrome — bars, inputs, overlays. Refracts the field behind it.
+								</p>
+							</div>
+							<div className="glass-panel glass-edge rounded-xl p-5">
+								<p className="font-mono text-xs text-foreground/90">.glass-panel · .glass-edge</p>
+								<p className="mt-2 text-sm font-light text-foreground/70">
+									Near-solid backing for reading content — legible over the moving field.
+								</p>
+							</div>
+						</div>
+					</div>
+					<p className="max-w-2xl text-sm font-light text-foreground/45">
+						Glass is <strong className="font-normal text-foreground/70">solid by default</strong>{" "}
+						and translucent only as a progressive enhancement — gated on{" "}
+						<code className="text-brand">backdrop-filter</code> support and{" "}
+						<code className="text-brand">prefers-reduced-transparency</code>, so it stays
+						legible everywhere (Firefox keeps glass; an explicit reduce-transparency
+						preference forces the solid fill). Compose{" "}
+						<code className="text-brand">.glass</code> /{" "}
+						<code className="text-brand">.glass-panel</code> with{" "}
+						<code className="text-brand">.glass-edge</code> (rim + sheen + drop);{" "}
+						<code className="text-brand">.glass-strong</code> deepens the blur for the chat
+						takeover, where Chromium adds real{" "}
+						<code className="text-brand">feDisplacementMap</code> refraction over the signal
+						field. Tokens:{" "}
+						<code className="text-brand">--glass-bg</code>,{" "}
+						<code className="text-brand">--glass-bg-panel</code>,{" "}
+						<code className="text-brand">--glass-bg-solid</code>,{" "}
+						<code className="text-brand">--glass-blur</code>,{" "}
+						<code className="text-brand">--glass-rim</code>,{" "}
+						<code className="text-brand">--glass-sheen</code>,{" "}
+						<code className="text-brand">--glass-shadow</code>.
+					</p>
 				</Block>
 
 				{/* ── Components ── */}
