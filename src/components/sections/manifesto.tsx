@@ -5,11 +5,11 @@ export function ManifestoSection() {
 	return (
 		<section
 			id={"manifesto" satisfies SectionId}
-			className="relative w-full min-h-[100dvh] overflow-hidden bg-background"
+			className="relative w-full min-h-[100dvh] overflow-hidden"
 			aria-label="Manifesto"
 		>
-			<div className="flex items-center justify-center min-h-[100dvh] px-6 sm:px-8 md:px-12 lg:px-16">
-				<div className="mx-auto w-full max-w-3xl py-24">
+			<div className="flex items-center justify-center min-h-[100dvh] px-6 sm:px-8 md:px-12 lg:px-16 py-24">
+				<div className="glass-panel glass-edge mx-auto w-full max-w-3xl rounded-3xl p-8 sm:p-12 md:p-16">
 					{/* ── Heading ── */}
 					<p className="font-mono text-sm tracking-[0.2em] uppercase text-brand">
 						{MANIFESTO.label}
