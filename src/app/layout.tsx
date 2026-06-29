@@ -41,22 +41,14 @@ export const metadata: Metadata = {
 		title: SITE.title,
 		description: SITE.description,
 		siteName: SITE.name,
-		images: [
-			{
-				url: SITE.ogImage,
-				width: 1200,
-				height: 630,
-				alt: SITE.title,
-				type: "image/png",
-			},
-		],
+		// og:image is supplied by app/opengraph-image.tsx (file convention).
 	},
 	twitter: {
 		card: "summary_large_image",
 		title: SITE.title,
 		description: SITE.description,
-		images: [SITE.ogImage],
 		creator: X_HANDLE,
+		// twitter:image is supplied by app/opengraph-image.tsx (file convention).
 	},
 	icons: {
 		icon: [

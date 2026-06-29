@@ -13,7 +13,7 @@ export function PersonJsonLd() {
 		jobTitle: ROLE_PROSE,
 		description: SITE.description,
 		sameAs: SOCIALS.map((s) => s.href),
-		image: `${SITE.url}/og.png`,
+		image: `${SITE.url}${SITE.ogImage}`,
 	};
 
 	return (

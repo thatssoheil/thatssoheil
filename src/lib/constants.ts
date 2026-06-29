@@ -20,7 +20,7 @@ export const SITE = {
 	title: `Soheil Fakour — ${TAGLINE}`,
 	description: `Portfolio of Soheil Fakour — ${ROLE_PROSE}.`,
 	url: "https://thatssoheil.website",
-	ogImage: "/og.png",
+	ogImage: "/opengraph-image",
 } as const;
 
 /** All navigable sections — order matters for scroll tracking and homepage render order. */
