@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/thatssoheil-ovo-wide.png" alt="Soheil Fakour" width="100%" style="border-radius: 16px;" />
+  <img src="assets/thatssoheil-ovo-wide.png" alt="Soheil Fakour" width="100%" />
 </p>
 
 **Coding Vision into Existence**
