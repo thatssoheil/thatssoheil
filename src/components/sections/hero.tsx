@@ -135,7 +135,7 @@ export function HeroSection() {
 					</p>
 				</div>
 
-				{/* Ask, don't scroll — resting ask-bar + chips; opens the chat takeover. */}
+				{/* Ask, don't scroll — the prompt bar grows in place into the chat. */}
 				<HeroChat />
 			</div>
 
