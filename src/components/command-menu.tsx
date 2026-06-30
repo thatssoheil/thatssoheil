@@ -65,7 +65,7 @@ export function CommandMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-border px-2.5 text-xs text-muted-foreground transition-colors duration-150 hover:text-foreground hover:border-foreground/30 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-border px-2.5 text-xs text-muted-foreground hover:text-foreground hover:border-foreground/30 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 			>
 				<span className="font-sans">⌘</span>
 				<span>K</span>
@@ -76,17 +76,17 @@ export function CommandMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)] rounded-sm"
+				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)] rounded-sm"
 			>
 				<Menu className="size-5" strokeWidth={1.5} aria-hidden="true" />
 			</button>
 
 			<Dialog.Root open={open} onOpenChange={setOpen}>
 				<Dialog.Portal>
-					<Dialog.Overlay className="fixed inset-0 z-[var(--z-overlay)] bg-black/70 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
+					<Dialog.Overlay className="fixed inset-0 z-[var(--z-overlay)] bg-black/70 backdrop-blur-sm" />
 					<Dialog.Content
 						aria-describedby={undefined}
-						className="fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-[var(--shadow-elevated)] outline-none duration-200 [animation-timing-function:var(--ease-swift)] data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-top-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0"
+						className="fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-[var(--shadow-elevated)] outline-none"
 					>
 						<VisuallyHidden.Root>
 							<Dialog.Title>Command menu</Dialog.Title>
@@ -115,7 +115,7 @@ export function CommandMenu() {
 										<Command.Item
 											key={s.id}
 											value={`section ${s.label}`}
-											onSelect={() => { setOpen(false); jumpToSection(s.id); }}
+											onSelect={() => { setOpen(false); jumpToSection(`#${s.id}`); }}
 											className={ITEM_CLASS}
 										>
 											<Hash className={ICON_CLASS} strokeWidth={1.5} />

@@ -1,4 +1,6 @@
-# Soheil Fakour
+<p align="center">
+  <img src="assets/thatssoheil-ovo-wide.png" alt="Soheil Fakour" width="100%" />
+</p>
 
 **Coding Vision into Existence**
 

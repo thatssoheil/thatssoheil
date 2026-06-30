@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import {
   createCipherEngine,
@@ -54,6 +54,18 @@ export function useCipherAnimation(
     })),
   );
 
+  // Reduced motion: compute the settled display purely — no setState needed.
+  // When prefersReduced is true this is returned directly; all animation effects
+  // are already gated on `!prefersReduced` so they stay silent.
+  const reducedDisplay = useMemo<DisplayChar[]>(() => {
+    if (!prefersReduced) return [];
+    const engine = createCipherEngine(text, {
+      revealedHold, spinningHold, decelDuration, spinUpDuration,
+      loop, ambient, reducedMotion: true, tickMs: TICK_MS,
+    });
+    return engine.snapshot();
+  }, [prefersReduced, text, revealedHold, spinningHold, decelDuration, spinUpDuration, loop, ambient]);
+
   // ── Pre-trigger: fast spin ──
   useEffect(() => {
     if (prefersReduced || triggered) return;
@@ -75,21 +87,6 @@ export function useCipherAnimation(
     return () => clearInterval(id);
   }, [text, prefersReduced, triggered]);
 
-  // Reduced motion: sync to final state during render (avoids set-state-in-effect)
-  if (prefersReduced && !triggered) {
-    setTriggered(true);
-    setDisplay(
-      text.split("").map((ch) => ({
-        char: ch,
-        blur: 0,
-        brightness: 1,
-        scale: 1,
-        opacity: 1,
-        tint: 0,
-      })),
-    );
-  }
-
   // ── Trigger the one-time decode shortly after mount ──
   useEffect(() => {
     if (prefersReduced) return;
@@ -108,6 +105,7 @@ export function useCipherAnimation(
       spinUpDuration,
       loop,
       ambient,
+      reducedMotion: false,
       tickMs: TICK_MS,
     });
 
@@ -134,5 +132,5 @@ export function useCipherAnimation(
     ambient,
   ]);
 
-  return display;
+  return prefersReduced ? reducedDisplay : display;
 }

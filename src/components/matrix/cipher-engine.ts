@@ -25,6 +25,8 @@ export type CipherConfig = {
   loop: boolean;
   /** After a one-time decode, occasionally re-flicker a single locked char. */
   ambient: boolean;
+  /** Skip animation entirely — initialise settled so the first snapshot is clean. */
+  reducedMotion: boolean;
   /** Tick granularity in ms. */
   tickMs: number;
 };
@@ -97,6 +99,7 @@ export function createCipherEngine(
     spinUpDuration,
     loop,
     ambient,
+    reducedMotion,
     tickMs: TICK_MS,
   } = config;
 
@@ -156,6 +159,22 @@ export function createCipherEngine(
     if (chars[i] === " ") continue;
     cs[i].delay = stagger(nsIdx, decelDuration * 0.55);
     nsIdx++;
+  }
+
+  // Reduced motion: skip animation entirely — lock all chars to their targets
+  // immediately so the first snapshot() returns clean settled text.
+  if (reducedMotion) {
+    for (let i = 0; i < cs.length; i++) {
+      cs[i].char = chars[i];
+      cs[i].blur = 0;
+      cs[i].brightness = 1;
+      cs[i].scale = 1;
+      cs[i].opacity = 1;
+      cs[i].tint = 0;
+      cs[i].phase = "locked";
+    }
+    gPhase = "revealed";
+    done = true;
   }
 
   function resetForDecel() {

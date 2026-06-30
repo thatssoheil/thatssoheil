@@ -302,7 +302,7 @@
 		@apply border-border outline-ring/50;
 	}
 	html {
-		scroll-behavior: smooth;
+		scroll-behavior: auto;
 		-webkit-overflow-scrolling: touch;
 	}
 	body {
@@ -320,21 +320,6 @@
 	::selection {
 		@apply bg-brand/25 text-foreground;
 	}
-}
-
-/* ─── Entrance FOUC gate ───
-   The page-load entrances (header, hero) animate FROM a hidden state via GSAP.
-   Without this, the server-rendered markup paints fully visible, then GSAP
-   snaps it hidden on hydration and animates it back in — a jarring flash on
-   cold loads. Hiding the entrance targets in the SSR markup makes the first
-   paint already match GSAP's start state, so the fromTo() tweens reveal them
-   with no blink. Scoped to `.js` (set pre-paint by the inline script in
-   <head>) so visitors without JS still get visible content. (The below-the-fold
-   [data-reveal] scroll reveals are intentionally NOT gated — they're never in
-   the initial paint, and gsap.from() needs their visible state as its target.) */
-.js [data-hero],
-.js [data-header] {
-	opacity: 0;
 }
 
 /* ─── Composite type ramps ───
@@ -381,41 +366,6 @@
 @utility text-button-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 500; }
 @utility text-button-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; }
 @utility text-button-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.25rem; font-weight: 500; }
-
-/* ─── Custom Animations ─── */
-/* Scroll cue — a signal segment drips down a faint hairline */
-@keyframes scroll-cue {
-	0% {
-		transform: translateY(-100%);
-		opacity: 0;
-	}
-	25% {
-		opacity: 1;
-	}
-	75% {
-		opacity: 1;
-	}
-	100% {
-		transform: translateY(300%);
-		opacity: 0;
-	}
-}
-
-@utility animate-scroll-cue {
-	animation: scroll-cue 2.4s var(--ease-signature) infinite;
-}
-
-/* Triangle ray — a single glossy pulse orbiting the perimeter at constant
-   speed. The path is normalised to pathLength=1, so sweeping the dashoffset
-   one full period (1 → 0) loops seamlessly. */
-@keyframes triangle-ray {
-	from {
-		stroke-dashoffset: 1;
-	}
-	to {
-		stroke-dashoffset: 0;
-	}
-}
 
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
