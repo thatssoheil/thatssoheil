@@ -79,13 +79,51 @@ export function HeroChat() {
 						active ? "max-h-[27rem] shadow-[var(--shadow-elevated)]" : "max-h-[3.25rem]",
 					)}
 				>
-					{/* input row — the prompt bar; the top of the box in both states */}
+					{/* transcript — fills the box ABOVE the input; collapses to 0 when closed.
+					    Bottom-anchored (justify-end) so the latest sits just over the input. */}
+					<div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
+						<div className="flex min-h-full flex-col justify-end px-5 py-5 text-left">
+							<div
+								aria-live="polite"
+								className="mx-auto flex w-full max-w-[34rem] flex-col gap-6"
+							>
+								{messages.map((m) => (
+									<ChatMessageRow key={m.id} message={m} />
+								))}
+								{status === "decoding" && (
+									<div className="pl-0.5">
+										<CipherLoader />
+									</div>
+								)}
+								{status === "error" && error && (
+									<div className="flex items-center gap-3" role="alert">
+										<span className="font-sans text-[0.8rem] tracking-wide text-destructive">
+											{ERROR_COPY[error]}
+										</span>
+										<button
+											type="button"
+											onClick={retry}
+											className="rounded-full border border-border px-3 py-1 font-sans text-[0.7rem] tracking-wide text-text-muted transition-colors hover:border-brand/40 hover:text-brand"
+										>
+											retry
+										</button>
+									</div>
+								)}
+							</div>
+						</div>
+					</div>
+
+					{/* input row — the prompt bar, pinned to the BOTTOM of the box once open
+					    (new messages append above it). Closed, it's the whole box. */}
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
 							submit(value);
 						}}
-						className="flex shrink-0 items-center gap-2 px-4"
+						className={cn(
+							"flex shrink-0 items-center gap-2 px-4",
+							active && "border-t border-border/60",
+						)}
 						style={{ height: BAR_H }}
 					>
 						<Input
@@ -117,37 +155,6 @@ export function HeroChat() {
 							<ArrowUp />
 						</IconButton>
 					</form>
-
-					{/* transcript — revealed below the input as the box grows */}
-					<div
-						ref={scrollRef}
-						className="min-h-0 flex-1 overflow-y-auto border-t border-border/60 px-5 py-5 text-left"
-					>
-						<div aria-live="polite" className="mx-auto flex max-w-[34rem] flex-col gap-6">
-							{messages.map((m) => (
-								<ChatMessageRow key={m.id} message={m} />
-							))}
-							{status === "decoding" && (
-								<div className="pl-0.5">
-									<CipherLoader />
-								</div>
-							)}
-							{status === "error" && error && (
-								<div className="flex items-center gap-3" role="alert">
-									<span className="font-sans text-[0.8rem] tracking-wide text-destructive">
-										{ERROR_COPY[error]}
-									</span>
-									<button
-										type="button"
-										onClick={retry}
-										className="rounded-full border border-border px-3 py-1 font-sans text-[0.7rem] tracking-wide text-text-muted transition-colors hover:border-brand/40 hover:text-brand"
-									>
-										retry
-									</button>
-								</div>
-							)}
-						</div>
-					</div>
 				</div>
 			</div>
 
