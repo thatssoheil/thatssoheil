@@ -96,6 +96,16 @@ export function HeroChat() {
 		viewportRef.current?.scrollTo({ top: viewportRef.current.scrollHeight });
 	}, [messages, status]);
 
+	// Mark the document while expanded so the section below can recede (see globals.css).
+	useEffect(() => {
+		if (!active) return;
+		const root = document.documentElement;
+		root.setAttribute("data-chat-open", "");
+		return () => {
+			root.removeAttribute("data-chat-open");
+		};
+	}, [active]);
+
 	return (
 		<div className="mt-9 flex w-full max-w-2xl flex-col items-center select-text">
 			{/* Reserve the closed-bar height so the hero never shifts; the box overlays down. */}

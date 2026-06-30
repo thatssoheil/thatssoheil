@@ -7,7 +7,15 @@ export function ManifestoSection() {
 	return (
 		<section
 			id={"manifesto" satisfies SectionId}
-			className="relative w-full min-h-[100dvh] overflow-hidden"
+			// Generous breathing room after the hero — also gives the expanded hero
+			// chat (which overflows the fold) clear space before this section begins.
+			// While the chat is open (<html data-chat-open>), this section recedes so
+			// the conversation is the sole focus; it eases back when the chat closes.
+			className={[
+				"relative mt-[20vh] w-full min-h-[100dvh] overflow-hidden",
+				"transition-[opacity,filter] duration-500 ease-[var(--ease-signature)] motion-reduce:transition-none",
+				"[:root[data-chat-open]_&]:opacity-25 [:root[data-chat-open]_&]:blur-[2px] [:root[data-chat-open]_&]:pointer-events-none",
+			].join(" ")}
 			aria-label="Manifesto"
 		>
 			<div className="flex items-center justify-center min-h-[100dvh] px-6 sm:px-8 md:px-12 lg:px-16 py-24">
