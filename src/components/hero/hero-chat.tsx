@@ -8,6 +8,7 @@ import { useHeroChat } from "@/hooks/use-hero-chat";
 import { STARTERS } from "@/lib/ai-soheil/starters";
 import { Input } from "@/components/ui/input";
 import { IconButton } from "@/components/ui/icon-button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { surfaceVariants } from "@/components/ui/surface";
 import { ChatMessageRow } from "@/components/hero/chat-message";
 import { CipherLoader } from "@/components/hero/cipher-loader";
@@ -20,19 +21,23 @@ const ERROR_COPY: Record<NonNullable<ChatError>, string> = {
 
 // The resting prompt-bar height (also the input-row height, and the collapsed box height).
 const BAR_H = "3.25rem";
+// The fixed open height. The box settles here and the transcript scrolls inside it —
+// new messages never grow the box past this.
+const OPEN_H = "27rem";
 
 /**
  * The hero chat — one integrated box. Closed, it's just the prompt bar; on first send
- * the SAME container grows downward into the conversation (transcript below the same
- * persistent input), as a CSS max-height transition. The closed-bar footprint is
- * reserved so the hero never shifts; the box overlays the (fading) starter chips below.
+ * the SAME container grows downward to a fixed height (transcript above the same
+ * persistent input). The transcript is a scroll area pinned to the latest message, so
+ * the conversation scrolls inside the box rather than stretching it. The closed-bar
+ * footprint is reserved so the hero never shifts; the box overlays the fading chips.
  */
 export function HeroChat() {
 	const { messages, status, error, send, retry, reset } = useHeroChat();
 	const [active, setActive] = useState(false);
 	const [value, setValue] = useState("");
 	const inputRef = useRef<HTMLInputElement | null>(null);
-	const scrollRef = useRef<HTMLDivElement | null>(null);
+	const viewportRef = useRef<HTMLDivElement | null>(null);
 	const busy = status === "decoding" || status === "streaming";
 
 	const submit = (text: string) => {
@@ -62,7 +67,7 @@ export function HeroChat() {
 	}, [active]);
 
 	useEffect(() => {
-		scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
+		viewportRef.current?.scrollTo({ top: viewportRef.current.scrollHeight });
 	}, [messages, status]);
 
 	return (
@@ -74,15 +79,24 @@ export function HeroChat() {
 					aria-label="Chat with Soheil"
 					className={cn(
 						"absolute inset-x-0 top-0 z-20 flex flex-col overflow-hidden origin-top",
-						"transition-[max-height] duration-500 ease-[var(--ease-swift)] motion-reduce:transition-none",
+						"transition-[height] duration-500 ease-[var(--ease-swift)] motion-reduce:transition-none",
 						surfaceVariants({ variant: "panel", edge: true, radius: "md" }),
-						active ? "max-h-[27rem] shadow-[var(--shadow-elevated)]" : "max-h-[3.25rem]",
+						active && "shadow-[var(--shadow-elevated)]",
 					)}
+					style={{ height: active ? OPEN_H : BAR_H }}
 				>
-					{/* transcript — fills the box ABOVE the input; collapses to 0 when closed.
-					    Bottom-anchored (justify-end) so the latest sits just over the input. */}
-					<div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
-						<div className="flex min-h-full flex-col justify-end px-5 py-5 text-left">
+					{/* transcript — a fixed-height scroll area above the input; collapses to 0
+					    when closed. Radix's viewport content wrapper is forced (via its stable
+					    data attr) to a full-height flex column so the conversation bottom-anchors
+					    just over the input; the scroll effect keeps the latest in view. */}
+					<ScrollArea
+						viewportRef={viewportRef}
+						className={cn(
+							"min-h-0 flex-1",
+							"[&_[data-radix-scroll-area-viewport]>div]:!flex [&_[data-radix-scroll-area-viewport]>div]:!min-h-full [&_[data-radix-scroll-area-viewport]>div]:!flex-col [&_[data-radix-scroll-area-viewport]>div]:!justify-end",
+						)}
+					>
+						<div className="px-5 py-5 text-left">
 							<div
 								aria-live="polite"
 								className="mx-auto flex w-full max-w-[34rem] flex-col gap-6"
@@ -111,7 +125,7 @@ export function HeroChat() {
 								)}
 							</div>
 						</div>
-					</div>
+					</ScrollArea>
 
 					{/* input row — the prompt bar, pinned to the BOTTOM of the box once open
 					    (new messages append above it). Closed, it's the whole box. */}
