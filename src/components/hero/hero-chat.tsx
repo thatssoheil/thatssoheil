@@ -67,6 +67,10 @@ export function HeroChat() {
 		}
 		setValue("");
 		send(content);
+		// Keep the cursor in the composer so the next message can be typed straight away
+		// (sending via a chip moves focus to the chip; Enter would otherwise blur on a
+		// transient disable). The input stays enabled — only the submit button gates.
+		inputRef.current?.focus();
 	};
 
 	const close = () => {
@@ -168,7 +172,6 @@ export function HeroChat() {
 							onChange={(e) => setValue(e.target.value)}
 							placeholder={busy ? "…" : active ? "reply…" : "ask me anything — no resume here"}
 							aria-label={active ? "Reply to Soheil" : "Ask Soheil anything"}
-							disabled={busy}
 						/>
 						{active && (
 							<IconButton
