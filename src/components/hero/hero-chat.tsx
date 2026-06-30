@@ -38,12 +38,33 @@ export function HeroChat() {
 	const [value, setValue] = useState("");
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const viewportRef = useRef<HTMLDivElement | null>(null);
+	const boxWrapRef = useRef<HTMLDivElement | null>(null);
 	const busy = status === "decoding" || status === "streaming";
+
+	const smooth = (): ScrollBehavior =>
+		window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
+	// Center the *expanded* box in the viewport. The wrapper's position is stable
+	// (the box overlays it), so we can aim at the final height before it paints.
+	const scrollBoxToCenter = () => {
+		const el = boxWrapRef.current;
+		if (!el) return;
+		const openPx = parseFloat(OPEN_H) * 16;
+		const boxTop = el.getBoundingClientRect().top + window.scrollY;
+		const target = boxTop + openPx / 2 - window.innerHeight / 2;
+		window.scrollTo({ top: Math.max(0, target), behavior: smooth() });
+	};
+
+	// Close settles the page back to the full hero (the first section, at the top).
+	const scrollToHero = () => window.scrollTo({ top: 0, behavior: smooth() });
 
 	const submit = (text: string) => {
 		const content = text.trim();
 		if (!content) return;
-		if (!active) setActive(true);
+		if (!active) {
+			setActive(true);
+			scrollBoxToCenter();
+		}
 		setValue("");
 		send(content);
 	};
@@ -52,6 +73,7 @@ export function HeroChat() {
 		setActive(false);
 		setValue("");
 		reset();
+		scrollToHero();
 	};
 
 	// Esc settles it back; focus the input on open; keep the transcript pinned to latest.
@@ -73,7 +95,7 @@ export function HeroChat() {
 	return (
 		<div className="mt-9 flex w-full max-w-2xl flex-col items-center select-text">
 			{/* Reserve the closed-bar height so the hero never shifts; the box overlays down. */}
-			<div className="relative w-full" style={{ height: BAR_H }}>
+			<div ref={boxWrapRef} className="relative w-full" style={{ height: BAR_H }}>
 				<div
 					role="region"
 					aria-label="Chat with Soheil"
