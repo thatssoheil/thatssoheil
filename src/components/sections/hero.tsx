@@ -5,12 +5,6 @@ import { HeroChat } from "@/components/hero/hero-chat";
 import { type SectionId } from "@/lib/constants";
 import { jumpToSection } from "@/lib/section-navigation";
 
-// ─── Ambient plane — a small, centered square behind the name ───
-// Static: a faint white-toned fill + a lean white edge read as a flat "plane",
-// a perfect square (4-fold symmetric) centred on the wordmark's axis, spanning from
-// the eyebrow down through the ask-bar. Monochrome — white in the dark (active)
-// theme, neutral ink on paper. Never competes with the name.
-
 // Square, centred in a 100×100 box; a soft corner radius rounds the edges.
 const SQUARE = { x: 6, y: 6, size: 88, radius: 3 } as const;
 
@@ -18,13 +12,11 @@ function HeroPlane() {
 	return (
 		<svg
 			aria-hidden="true"
-			className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[72vmin] w-[72vmin] -translate-x-1/2 -translate-y-1/2"
+			className="pointer-events-none absolute inset-0 h-full w-full"
 			viewBox="0 0 100 100"
 			fill="none"
 			preserveAspectRatio="xMidYMid meet"
 			style={{
-				// The whole plane hard-dissolves into the void by ~60% down — nothing
-				// (wash or wire) survives into the bottom of the square.
 				maskImage: "linear-gradient(to bottom, #000 0%, #000 28%, transparent 60%)",
 				WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 28%, transparent 60%)",
 			}}
@@ -61,7 +53,7 @@ function HeroPlane() {
 	);
 }
 
-// ─── Scroll cue — a static signal hairline (no drip) ───
+// ─── Scroll cue ───
 
 function ScrollCue() {
 	return (
@@ -84,45 +76,46 @@ export function HeroSection() {
 			className="relative w-full h-[100dvh] overflow-x-clip"
 			aria-label="Hero"
 		>
-			{/* Content column — plane lives inside so it's locked to the text, not the viewport. */}
 			<div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center select-none">
-				{/* Ambient plane — behind everything, centred with the text block */}
-				<HeroPlane />
-
-				{/* Faint signal haze behind the name — atmosphere, not a spotlight */}
+				{/* Haze behind everything */}
 				<div
 					aria-hidden="true"
 					className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--primary),transparent_70%)] opacity-[0.06] blur-[110px]"
 				/>
 
-				<p className="flex items-center justify-center gap-[0.6em] whitespace-nowrap font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-text-faint">
-					<span>Frontend Engineer</span>
-					<span
-						className="text-[1.2em] text-brand"
-						style={{ filter: "drop-shadow(0 0 5px var(--primary))" }}
-					>
-						×
-					</span>
-					<span>Product Curator</span>
-				</p>
+				{/* Text block — relative anchor so the plane sits locked to this group, not the viewport */}
+				<div className="relative flex flex-col items-center">
+					<HeroPlane />
 
-				<CipherText
-					text="Soheil Fakour"
-					as="h1"
-					ambient
-					className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[clamp(2.5rem,12vw,12rem)] [font-family:var(--font-cipher)]"
-				/>
-
-				<div className="mt-8 flex w-full flex-col items-center">
-					<span
-						aria-hidden="true"
-						className="relative block h-px w-44 max-w-[70vw] bg-foreground/12"
-					>
-						<span className="absolute inset-y-0 left-1/2 w-12 -translate-x-1/2 bg-[linear-gradient(to_right,transparent,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--primary))]" />
-					</span>
-					<p className="mt-4 whitespace-nowrap font-sans text-[clamp(0.6rem,2.4vw,0.875rem)] leading-none tracking-[0.18em] sm:tracking-[0.2em] uppercase text-text-faint">
-						Coding vision into existence
+					<p className="flex items-center justify-center gap-[0.6em] whitespace-nowrap font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-text-faint">
+						<span>Frontend Engineer</span>
+						<span
+							className="text-[1.2em] text-brand"
+							style={{ filter: "drop-shadow(0 0 5px var(--primary))" }}
+						>
+							×
+						</span>
+						<span>Product Curator</span>
 					</p>
+
+					<CipherText
+						text="Soheil Fakour"
+						as="h1"
+						ambient
+						className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[clamp(2.5rem,12vw,12rem)] [font-family:var(--font-cipher)]"
+					/>
+
+					<div className="mt-8 flex w-full flex-col items-center">
+						<span
+							aria-hidden="true"
+							className="relative block h-px w-44 max-w-[70vw] bg-foreground/12"
+						>
+							<span className="absolute inset-y-0 left-1/2 w-12 -translate-x-1/2 bg-[linear-gradient(to_right,transparent,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--primary))]" />
+						</span>
+						<p className="mt-4 whitespace-nowrap font-sans text-[clamp(0.6rem,2.4vw,0.875rem)] leading-none tracking-[0.18em] sm:tracking-[0.2em] uppercase text-text-faint">
+							Coding vision into existence
+						</p>
+					</div>
 				</div>
 
 				{process.env.NEXT_PUBLIC_ENABLE_CHAT === "true" && <HeroChat />}
