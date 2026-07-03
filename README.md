@@ -30,6 +30,39 @@ The tools: TypeScript, React 19, Next.js 16, Tailwind, GSAP. Shipped on Cloudfla
 → [Full dashboard](https://github.com/thatssoheil/oss-contributions)
 <!-- OSS:END -->
 
+## Feature Flags
+
+### Chat (AI Soheil hero chat)
+
+The AI-powered hero chat is feature-flagged. To ship without it, set both flags to `"false"`.
+
+| Flag | Where | Purpose |
+|------|-------|---------|
+| `ENABLE_CHAT` | `wrangler.jsonc` → `vars` | Runtime gate — `/api/chat` returns 404 when `"false"` |
+| `NEXT_PUBLIC_ENABLE_CHAT` | Build env var | Build-time gate — chat UI is hidden when not `"true"` |
+
+**Ship without chat:**
+```bash
+NEXT_PUBLIC_ENABLE_CHAT=false pnpm deploy
+```
+Ensure `wrangler.jsonc` has `"ENABLE_CHAT": "false"` (default).
+
+**Ship with chat:**
+```bash
+NEXT_PUBLIC_ENABLE_CHAT=true pnpm deploy
+```
+Set `"ENABLE_CHAT": "true"` in `wrangler.jsonc`.
+
+**GitHub canonical variable:** The canonical source of truth lives at
+**GitHub → Settings → Secrets and variables → Actions → Variables → `ENABLE_CHAT`**.
+Future CI/CD should read this variable and pass it to both build and deploy steps.
+
+**Local dev (chat enabled):**
+Copy `.dev.vars.example` to `.dev.vars`, set `ENABLE_CHAT=true`, and run:
+```bash
+pnpm dev
+```
+
 ## Elsewhere
 
 - **Site** — [thatssoheil.website](https://thatssoheil.website)
