@@ -7,7 +7,7 @@ interface __BaseEnv_CloudflareEnv {
 	ASSETS: Fetcher;
 	AI_SOHEIL_API_URL: "https://agent.thatssoheil.website/v1";
 	AI_SOHEIL_API_KEY: string;
-	ENABLE_CHAT: "false";
+	ENABLE_CHAT: string;
 	WORKER_SELF_REFERENCE: Fetcher /* thatssoheil */;
 }
 declare namespace Cloudflare {

@@ -33,6 +33,11 @@ const UPSTREAM_TIMEOUT_MS = 45_000;
 export async function POST(req: Request): Promise<Response> {
 	const { env } = getCloudflareContext();
 
+	// Feature flag — ship without chat until the feature is ready.
+	if (env.ENABLE_CHAT !== "true") {
+		return new Response("Not Found", { status: 404 });
+	}
+
 	if (isCrossOrigin(req)) return json({ error: "forbidden" }, 403);
 
 	const rl = await checkRateLimit(env.CHAT_RATELIMIT, clientKey(req));
@@ -49,11 +54,11 @@ export async function POST(req: Request): Promise<Response> {
 
 	let upstream: Response;
 	try {
-		upstream = await fetch(`${env.FREELLMAPI_URL}/chat/completions`, {
+		upstream = await fetch(`${env.AI_SOHEIL_API_URL}/chat/completions`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${env.FREELLMAPI_KEY}`,
+				Authorization: `Bearer ${env.AI_SOHEIL_API_KEY}`,
 			},
 			body: JSON.stringify({
 				model: "auto",
