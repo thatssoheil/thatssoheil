@@ -138,8 +138,9 @@ export function HeroSection() {
 					</p>
 				</div>
 
-				{/* Ask, don't scroll — the prompt bar grows in place into the chat. */}
-				<HeroChat />
+				{/* Ask, don't scroll — the prompt bar grows in place into the chat.
+				                    Feature-flagged: ship without chat by setting NEXT_PUBLIC_ENABLE_CHAT=false. */}
+				                {process.env.NEXT_PUBLIC_ENABLE_CHAT === "true" && <HeroChat />}
 			</div>
 
 			<ScrollCue />
