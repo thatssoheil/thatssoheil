@@ -12,10 +12,10 @@ function HeroPlane() {
 	return (
 		<svg
 			aria-hidden="true"
-			className="pointer-events-none absolute left-1/2 top-0 -z-10 h-full aspect-square -translate-x-1/2"
+			className="pointer-events-none absolute left-1/2 top-0 -z-10 h-full w-[150%] -translate-x-1/2"
 			viewBox="0 0 100 100"
 			fill="none"
-			preserveAspectRatio="xMidYMid meet"
+			preserveAspectRatio="none"
 			style={{
 				maskImage: "linear-gradient(to bottom, #000 0%, #000 28%, transparent 60%)",
 				WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 28%, transparent 60%)",
