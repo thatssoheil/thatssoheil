@@ -1,0 +1,57 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      enable_chat:
+        description: "Enable AI Soheil hero chat (overrides GitHub variable)"
+        type: boolean
+        default: false
+
+env:
+  # Canonical: GitHub variable. Manual dispatch input overrides it.
+  NEXT_PUBLIC_ENABLE_CHAT: ${{ github.event.inputs.enable_chat || vars.NEXT_PUBLIC_ENABLE_CHAT || 'false' }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Inject runtime flag into wrangler.jsonc
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = 'wrangler.jsonc';
+            let raw = fs.readFileSync(path, 'utf8');
+            const value = process.env.GH_ENABLE_CHAT || 'false';
+            raw = raw.replace(
+              /(\"ENABLE_CHAT\"\s*:\s*)\"[^\"]*\"/,
+              '\$1\"' + value + '\"'
+            );
+            fs.writeFileSync(path, raw);
+            console.log('ENABLE_CHAT set to:', value);
+          "
+        env:
+          GH_ENABLE_CHAT: ${{ github.event.inputs.enable_chat || vars.ENABLE_CHAT || 'false' }}
+
+      - name: Build and deploy
+        run: pnpm deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
