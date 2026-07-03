@@ -55,7 +55,12 @@ Set `"ENABLE_CHAT": "true"` in `wrangler.jsonc`.
 
 **GitHub canonical variable:** The canonical source of truth lives at
 **GitHub → Settings → Secrets and variables → Actions → Variables → `ENABLE_CHAT`**.
-Future CI/CD should read this variable and pass it to both build and deploy steps.
+The deploy workflow reads this variable and injects it into `wrangler.jsonc` at build time.
+Manual dispatch accepts an `enable_chat` boolean input to override.
+
+**Required secrets** (set at Settings → Secrets and variables → Actions → Secrets):
+- `CLOUDFLARE_API_TOKEN` — Cloudflare API token with Workers deploy permissions
+- `CLOUDFLARE_ACCOUNT_ID` — Your Cloudflare account ID
 
 **Local dev (chat enabled):**
 Copy `.dev.vars.example` to `.dev.vars`, set `ENABLE_CHAT=true`, and run:
