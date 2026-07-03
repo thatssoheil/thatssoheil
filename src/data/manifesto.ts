@@ -23,7 +23,7 @@ export const MANIFESTO = {
 		},
 		{
 			label: "On the medium",
-			body: "I started in backend at a hospitality company, on the systems that keep hotels and travel agencies in sync. A year and a half of Node and message queues was long enough to know it wasn't for me. I left to shape what people actually see and feel. Frontend isn't decoration for me. It's the surface where every product decision either lands or doesn't. That's where I'd rather spend my attention.",
+			body: "I started in backend, writing infrastructure that kept hotel inventory and travel agencies in sync. No one ever saw it. No one ever felt it. After a year I left to build what people actually touch. Frontend isn't decoration for me — it's the surface where every product decision either lands or doesn't. That's where the work matters.",
 		},
 	] satisfies readonly ManifestoParagraph[],
 } as const;
