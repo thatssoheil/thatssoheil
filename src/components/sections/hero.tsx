@@ -12,7 +12,7 @@ function HeroPlane() {
 	return (
 		<svg
 			aria-hidden="true"
-			className="pointer-events-none absolute inset-0 h-full w-full"
+			className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[72vmin] w-[72vmin] -translate-x-1/2 -translate-y-1/2"
 			viewBox="0 0 100 100"
 			fill="none"
 			preserveAspectRatio="xMidYMid meet"
