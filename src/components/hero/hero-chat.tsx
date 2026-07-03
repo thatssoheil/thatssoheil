@@ -15,8 +15,8 @@ import { CipherLoader } from "@/components/hero/cipher-loader";
 import type { ChatError } from "@/hooks/use-hero-chat";
 
 const ERROR_COPY: Record<NonNullable<ChatError>, string> = {
-	signal_dropped: "signal dropped — try again.",
-	rate_limited: "too many — give it a moment.",
+	signal_dropped: "signal dropped. try again.",
+	rate_limited: "too many. give it a moment.",
 };
 
 // The resting prompt-bar height (also the input-row height, and the collapsed box height).
@@ -180,7 +180,7 @@ export function HeroChat() {
 							ref={inputRef}
 							value={value}
 							onChange={(e) => setValue(e.target.value)}
-							placeholder={busy ? "…" : active ? "reply…" : "ask me anything — no resume here"}
+							placeholder={busy ? "…" : active ? "reply…" : "ask me anything. no resume here"}
 							aria-label={active ? "Reply to Soheil" : "Ask Soheil anything"}
 						/>
 						{active && (

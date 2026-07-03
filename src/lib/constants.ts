@@ -17,8 +17,8 @@ export const X_HANDLE = "@Thatssoheil";
 
 export const SITE = {
 	name: "Soheil Fakour",
-	title: `Soheil Fakour — ${TAGLINE}`,
-	description: `Portfolio of Soheil Fakour — ${ROLE_PROSE}.`,
+	title: `Soheil Fakour, ${TAGLINE}`,
+	description: `Portfolio of Soheil Fakour. ${ROLE_PROSE}.`,
 	url: "https://thatssoheil.website",
 	ogImage: "/opengraph-image",
 } as const;

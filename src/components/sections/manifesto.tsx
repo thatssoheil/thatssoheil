@@ -39,7 +39,7 @@ export function ManifestoSection() {
 								<p className="font-sans text-[10px] tracking-[0.22em] uppercase text-text-faint">
 									{p.label}
 								</p>
-								<p className="text-base sm:text-lg leading-relaxed text-foreground/70 font-light">
+								<p className="text-base sm:text-lg leading-relaxed text-justify text-foreground/70 font-light">
 									{p.body}
 								</p>
 							</div>

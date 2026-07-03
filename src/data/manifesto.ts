@@ -15,7 +15,7 @@ export const MANIFESTO = {
 	paragraphs: [
 		{
 			label: "On curation",
-			body: "I stopped chasing perfection a while ago. Reality moves too fast for finished work. What I chase now is curation — choosing what stays and what gets cut, building from the pieces that hold up. A product isn't great because it has everything. It's great because someone decided what to leave out.",
+			body: "I stopped chasing perfection a while ago. Reality moves too fast for finished work. What I chase now is curation, choosing what stays and what gets cut, building from the pieces that hold up. A product isn't great because it has everything. It's great because someone decided what to leave out.",
 		},
 		{
 			label: "On working",
@@ -23,7 +23,7 @@ export const MANIFESTO = {
 		},
 		{
 			label: "On the medium",
-			body: "I started in backend, writing infrastructure that kept hotel inventory and travel agencies in sync. No one ever saw it. No one ever felt it. After a year I left to build what people actually touch. Frontend isn't decoration for me — it's the surface where every product decision either lands or doesn't. That's where the work matters.",
+			body: "I started in backend, writing infrastructure that kept hotel inventory and travel agencies in sync. No one ever saw it. No one ever felt it. After a year I left to build what people actually touch. Frontend isn't decoration for me. It's the surface where every product decision either lands or doesn't. That's where the work matters.",
 		},
 	] satisfies readonly ManifestoParagraph[],
 } as const;
