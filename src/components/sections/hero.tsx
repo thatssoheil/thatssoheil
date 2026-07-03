@@ -12,7 +12,7 @@ function HeroPlane() {
 	return (
 		<svg
 			aria-hidden="true"
-			className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[72vmin] w-[72vmin] -translate-x-1/2 -translate-y-1/2"
+			className="pointer-events-none absolute left-1/2 top-0 -z-10 h-full aspect-square -translate-x-1/2"
 			viewBox="0 0 100 100"
 			fill="none"
 			preserveAspectRatio="xMidYMid meet"
@@ -83,8 +83,9 @@ export function HeroSection() {
 					className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--primary),transparent_70%)] opacity-[0.06] blur-[110px]"
 				/>
 
-				{/* Text block — relative anchor so the plane sits locked to this group, not the viewport */}
-				<div className="relative flex flex-col items-center">
+				{/* Square box — padded container. The plane fills it. Padding scales with
+				    the text via clamp so the square stays proportional to the content. */}
+				<div className="relative flex flex-col items-center px-[clamp(2.5rem,12vw,8rem)] pt-[clamp(2rem,8vw,6rem)] pb-0">
 					<HeroPlane />
 
 					<p className="flex items-center justify-center gap-[0.6em] whitespace-nowrap font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-text-faint">
@@ -98,24 +99,27 @@ export function HeroSection() {
 						<span>Product Curator</span>
 					</p>
 
+					{/* Name — mt-6 puts it inside the square. The bottom of the square
+					    (pb-0 on the wrapper) lets the name protrude below, crossing the edge. */}
 					<CipherText
 						text="Soheil Fakour"
 						as="h1"
 						ambient
 						className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[clamp(2.5rem,12vw,12rem)] [font-family:var(--font-cipher)]"
 					/>
+				</div>
 
-					<div className="mt-8 flex w-full flex-col items-center">
-						<span
-							aria-hidden="true"
-							className="relative block h-px w-44 max-w-[70vw] bg-foreground/12"
-						>
-							<span className="absolute inset-y-0 left-1/2 w-12 -translate-x-1/2 bg-[linear-gradient(to_right,transparent,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--primary))]" />
-						</span>
-						<p className="mt-4 whitespace-nowrap font-sans text-[clamp(0.6rem,2.4vw,0.875rem)] leading-none tracking-[0.18em] sm:tracking-[0.2em] uppercase text-text-faint">
-							Coding vision into existence
-						</p>
-					</div>
+				{/* Tagline — outside the square, naturally below */}
+				<div className="mt-8 flex w-full flex-col items-center">
+					<span
+						aria-hidden="true"
+						className="relative block h-px w-44 max-w-[70vw] bg-foreground/12"
+					>
+						<span className="absolute inset-y-0 left-1/2 w-12 -translate-x-1/2 bg-[linear-gradient(to_right,transparent,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--primary))]" />
+					</span>
+					<p className="mt-4 whitespace-nowrap font-sans text-[clamp(0.6rem,2.4vw,0.875rem)] leading-none tracking-[0.18em] sm:tracking-[0.2em] uppercase text-text-faint">
+						Coding vision into existence
+					</p>
 				</div>
 
 				{process.env.NEXT_PUBLIC_ENABLE_CHAT === "true" && <HeroChat />}
