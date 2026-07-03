@@ -1,0 +1,13 @@
+# Dev vars for thatssoheil — copy to .dev.vars and fill in secrets.
+# wrangler.jsonc provides defaults for non-secret vars; .dev.vars
+# overrides them for `wrangler dev` / `next dev` (OpenNext dev mode).
+
+# Required: your AI Soheil API key (get from agent.thatssoheil.website admin)
+AI_SOHEIL_API_KEY=your-key-here
+
+# Optional overrides (defaults in wrangler.jsonc):
+# AI_SOHEIL_API_URL=https://agent.thatssoheil.website/v1
+
+# Feature flag — set "true" for local dev (chat enabled), "false" to test
+# the chat-disabled ship.
+ENABLE_CHAT=true
