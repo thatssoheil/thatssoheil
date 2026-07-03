@@ -18,7 +18,7 @@ function HeroPlane() {
 	return (
 		<svg
 			aria-hidden="true"
-			className="pointer-events-none absolute left-1/2 top-1/2 h-[72vmin] w-[72vmin] -translate-x-1/2 -translate-y-1/2"
+			className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[72vmin] w-[72vmin] -translate-x-1/2 -translate-y-1/2"
 			viewBox="0 0 100 100"
 			fill="none"
 			preserveAspectRatio="xMidYMid meet"
@@ -36,8 +36,6 @@ function HeroPlane() {
 				</linearGradient>
 			</defs>
 
-			{/* The plane — faint white-toned wash, brightest at the top and fading
-			    into the void; reads as lit atmosphere rather than a flat smudge */}
 			<rect
 				x={SQUARE.x}
 				y={SQUARE.y}
@@ -47,9 +45,6 @@ function HeroPlane() {
 				fill="url(#hero-plane-fill)"
 			/>
 
-			{/* The edge — a crisp, lean white wire. No blur: the square's top edge stays
-			    sharp, and its dissolve into the void comes entirely from the plane-wide
-			    alpha mask above, which fades the lower sides out toward the bottom. */}
 			<rect
 				x={SQUARE.x}
 				y={SQUARE.y}
@@ -80,30 +75,26 @@ function ScrollCue() {
 	);
 }
 
-// ─── Hero Section (fully static; the only motion is the name's cipher loop) ───
+// ─── Hero Section ───
 
 export function HeroSection() {
 	return (
 		<section
 			id={"hero" satisfies SectionId}
-			// `overflow-x-clip` keeps the ambient plane from bleeding sideways (no
-			// horizontal scrollbar) while still letting the hero chat box overflow
-			// DOWNWARD past the fold when it expands — so it's never clipped at the seam.
 			className="relative w-full h-[100dvh] overflow-x-clip"
 			aria-label="Hero"
 		>
-			<HeroPlane />
-
+			{/* Content column — plane lives inside so it's locked to the text, not the viewport. */}
 			<div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center select-none">
+				{/* Ambient plane — behind everything, centred with the text block */}
+				<HeroPlane />
+
 				{/* Faint signal haze behind the name — atmosphere, not a spotlight */}
 				<div
 					aria-hidden="true"
 					className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--primary),transparent_70%)] opacity-[0.06] blur-[110px]"
 				/>
 
-				{/* Eyebrow — "Frontend Engineer × Product Curator". The two roles recede
-				    to a quiet grey; the signal × is the lone accent — the fusion of the two
-				    disciplines. One line, centred, scales down on small screens. */}
 				<p className="flex items-center justify-center gap-[0.6em] whitespace-nowrap font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-text-faint">
 					<span>Frontend Engineer</span>
 					<span
@@ -115,9 +106,6 @@ export function HeroSection() {
 					<span>Product Curator</span>
 				</p>
 
-				{/* The name — decodes once on load, then rests. In the passive "ambient"
-				    state a single random glyph quietly re-ciphers and resolves every few
-				    seconds. Monospace (--font-cipher) so the glyph pool can't reflow the line. */}
 				<CipherText
 					text="Soheil Fakour"
 					as="h1"
@@ -125,7 +113,6 @@ export function HeroSection() {
 					className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[clamp(2.5rem,12vw,12rem)] [font-family:var(--font-cipher)]"
 				/>
 
-				{/* Tagline under a centred hairline with a centred signal lead. */}
 				<div className="mt-8 flex w-full flex-col items-center">
 					<span
 						aria-hidden="true"
@@ -138,9 +125,7 @@ export function HeroSection() {
 					</p>
 				</div>
 
-				{/* Ask, don't scroll — the prompt bar grows in place into the chat.
-				                    Feature-flagged: ship without chat by setting NEXT_PUBLIC_ENABLE_CHAT=false. */}
-				                {process.env.NEXT_PUBLIC_ENABLE_CHAT === "true" && <HeroChat />}
+				{process.env.NEXT_PUBLIC_ENABLE_CHAT === "true" && <HeroChat />}
 			</div>
 
 			<ScrollCue />
