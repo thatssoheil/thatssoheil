@@ -9,22 +9,22 @@ import { jumpToSection } from "@/lib/section-navigation";
 // Static: a faint white-toned fill reads as atmosphere rather than a backplate,
 // centred on the wordmark's axis and dissolving before it becomes a hard panel.
 
-// Square, centred in a 100×100 box; a soft corner radius rounds the edges.
-const SQUARE = { x: 6, y: 6, size: 88, radius: 3 } as const;
+// Wide field, centred in a 160×100 box; a soft corner radius rounds the edges.
+const PLANE = { x: 6, y: 6, width: 148, height: 88, radius: 3 } as const;
 
 function HeroPlane() {
 	return (
 		<svg
 			aria-hidden="true"
-			className="pointer-events-none absolute left-1/2 top-[calc(50%+clamp(2.5rem,12vw,12rem)*0.75)] -z-10 h-[calc(clamp(2.5rem,12vw,12rem)*3.75)] w-[calc(clamp(2.5rem,12vw,12rem)*4.55)] -translate-x-1/2 -translate-y-1/2"
-			viewBox="0 0 100 100"
+			className="pointer-events-none absolute left-1/2 top-[calc(50%+clamp(2.5rem,12vw,12rem)*0.75)] -z-10 h-[calc(clamp(2.5rem,12vw,12rem)*3.75)] w-[calc(100vw-2.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2"
+			viewBox="0 0 160 100"
 			fill="none"
-			preserveAspectRatio="xMidYMid meet"
+			preserveAspectRatio="none"
 			style={{
-				// The whole plane hard-dissolves into the void by ~60% down — nothing
-				// (wash or wire) survives into the bottom of the square.
-				maskImage: "linear-gradient(to bottom, #000 0%, #000 28%, transparent 60%)",
-				WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 28%, transparent 60%)",
+				// Elliptical dissolve lets the plane align with the section glass width
+				// without exposing a straight rectangular edge.
+				maskImage: "radial-gradient(ellipse 74% 54% at 50% 32%, #000 0%, #000 38%, transparent 78%)",
+				WebkitMaskImage: "radial-gradient(ellipse 74% 54% at 50% 32%, #000 0%, #000 38%, transparent 78%)",
 			}}
 		>
 			<defs>
@@ -42,19 +42,19 @@ function HeroPlane() {
 			{/* The plane — faint white-toned wash, brightest at the top and fading
 			    into the void; reads as lit atmosphere rather than a flat smudge */}
 			<rect
-				x={SQUARE.x}
-				y={SQUARE.y}
-				width={SQUARE.size}
-				height={SQUARE.size}
-				rx={SQUARE.radius}
+				x={PLANE.x}
+				y={PLANE.y}
+				width={PLANE.width}
+				height={PLANE.height}
+				rx={PLANE.radius}
 				fill="url(#hero-plane-glow)"
 			/>
 			<rect
-				x={SQUARE.x}
-				y={SQUARE.y}
-				width={SQUARE.size}
-				height={SQUARE.size}
-				rx={SQUARE.radius}
+				x={PLANE.x}
+				y={PLANE.y}
+				width={PLANE.width}
+				height={PLANE.height}
+				rx={PLANE.radius}
 				fill="url(#hero-plane-fill)"
 			/>
 		</svg>
