@@ -35,7 +35,7 @@ export function ConnectSection() {
 						</p>
 					</div>
 
-					<div className="relative z-10 flex flex-col items-start gap-5 rounded-2xl border border-alpha-300 bg-alpha-100 p-3 shadow-[inset_0_1px_0_var(--glass-sheen)] md:items-end">
+					<div className="relative z-10 flex flex-col items-start gap-5 rounded-2xl border border-alpha-200 bg-alpha-100/60 p-3 shadow-[inset_0_1px_0_var(--glass-sheen)] md:items-end">
 						<Button
 							asChild
 							size="lg"
@@ -56,7 +56,7 @@ export function ConnectSection() {
 									rel="noopener noreferrer"
 									aria-label={label}
 									title={label}
-									className="group flex items-center justify-center rounded-xl border border-alpha-300 bg-alpha-100 p-3 text-text-faint transition-colors hover:border-alpha-500 hover:bg-alpha-200 hover:text-foreground"
+									className="group flex items-center justify-center rounded-xl border border-alpha-300 bg-alpha-100/60 p-3 text-text-faint transition-colors hover:border-alpha-500 hover:bg-alpha-200 hover:text-foreground"
 								>
 									<Icon className="size-5" />
 								</a>

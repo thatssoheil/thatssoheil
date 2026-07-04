@@ -35,7 +35,7 @@ export function ManifestoSection() {
 					<div className="relative z-10 isolate flex flex-col gap-4 md:pt-1">
 						<span
 							aria-hidden="true"
-							className="absolute -inset-x-3 -inset-y-4 -z-10 rounded-2xl bg-[linear-gradient(180deg,var(--alpha-100),transparent)] shadow-[inset_1px_0_0_var(--alpha-300)]"
+							className="absolute -left-3 top-0 -z-10 h-28 w-24 rounded-2xl bg-[linear-gradient(180deg,var(--alpha-100),transparent)] shadow-[inset_1px_0_0_var(--alpha-300)]"
 						/>
 						<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
 							{MANIFESTO.label}
