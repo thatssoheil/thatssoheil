@@ -5,11 +5,9 @@ import { HeroChat } from "@/components/hero/hero-chat";
 import { type SectionId } from "@/lib/constants";
 import { jumpToSection } from "@/lib/section-navigation";
 
-// ─── Ambient plane — a small, centered square behind the name ───
-// Static: a faint white-toned fill reads as a flat atmospheric "plane",
-// a perfect square (4-fold symmetric) centred on the wordmark's axis, spanning from
-// the eyebrow down through the ask-bar. Monochrome — white in the dark (active)
-// theme, neutral ink on paper. Never competes with the name.
+// ─── Ambient plane — a wide, centered field behind the name ───
+// Static: a faint white-toned fill reads as atmosphere rather than a backplate,
+// centred on the wordmark's axis and dissolving before it becomes a hard panel.
 
 // Square, centred in a 100×100 box; a soft corner radius rounds the edges.
 const SQUARE = { x: 6, y: 6, size: 88, radius: 3 } as const;
@@ -90,12 +88,6 @@ export function HeroSection() {
 			aria-label="Hero"
 		>
 			<div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center select-none">
-				{/* Faint signal haze behind the name — atmosphere, not a spotlight */}
-				<div
-					aria-hidden="true"
-					className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--primary),transparent_70%)] opacity-[0.06] blur-[110px]"
-				/>
-
 				<div className="relative isolate flex flex-col items-center">
 					<HeroPlane />
 

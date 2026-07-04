@@ -7,18 +7,18 @@ export function ConnectSection() {
 	return (
 		<section
 			id={"connect" satisfies SectionId}
-			className="relative w-full min-h-[80dvh] overflow-hidden"
+			className="relative min-h-[100dvh] w-full overflow-hidden"
 			aria-label="Connect"
 		>
-			<div className="flex items-center justify-center min-h-[80dvh] px-6 sm:px-8 md:px-12 lg:px-16 py-24">
+			<div className="flex min-h-[100dvh] items-start justify-center px-5 pb-16 pt-32 sm:px-8 md:items-center md:px-12 md:py-24 lg:px-16">
 				<Surface
 					variant="panel"
 					radius="lg"
-					className="relative isolate mx-auto grid w-full max-w-4xl gap-8 overflow-hidden border-alpha-300/70 p-8 text-left sm:p-12 md:grid-cols-[1fr_auto] md:items-end md:p-16"
+					className="relative isolate mx-auto grid w-full max-w-4xl gap-8 overflow-hidden p-6 text-left sm:p-12 md:grid-cols-[1fr_auto] md:items-end md:p-16"
 				>
 					<div
 						aria-hidden="true"
-						className="pointer-events-none absolute inset-0 bg-[radial-gradient(58%_72%_at_78%_54%,color-mix(in_oklch,var(--primary)_12%,transparent),transparent_70%),radial-gradient(48%_52%_at_18%_20%,var(--alpha-200),transparent_64%)]"
+						className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_72%_at_78%_54%,color-mix(in_oklch,var(--primary)_10%,transparent),transparent_72%)]"
 					/>
 
 					<div className="relative z-10">
@@ -35,15 +35,15 @@ export function ConnectSection() {
 						</p>
 					</div>
 
-					<div className="relative z-10 flex flex-col items-start gap-5 rounded-2xl border border-alpha-200 bg-alpha-100/60 p-3 shadow-[inset_0_1px_0_var(--glass-sheen)] md:items-end">
+					<div className="relative z-10 flex w-full flex-col items-start gap-4 md:w-auto md:items-end">
 						<Button
 							asChild
 							size="lg"
-							className="h-12 gap-2 border border-alpha-300 bg-primary text-base shadow-[0_0_28px_color-mix(in_oklch,var(--primary)_24%,transparent)] hover:bg-primary/90"
+							className="h-12 w-full min-w-0 justify-center gap-2 border border-alpha-300 bg-primary text-sm shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_18%,transparent)] hover:bg-primary/90 sm:w-auto sm:text-base"
 						>
-							<a href={`mailto:${EMAIL}`}>
-								<Mail className="size-5" />
-								{EMAIL}
+							<a href={`mailto:${EMAIL}`} className="min-w-0">
+								<Mail className="size-5 shrink-0" />
+								<span className="min-w-0 truncate">{EMAIL}</span>
 							</a>
 						</Button>
 
@@ -56,7 +56,7 @@ export function ConnectSection() {
 									rel="noopener noreferrer"
 									aria-label={label}
 									title={label}
-									className="group flex items-center justify-center rounded-xl border border-alpha-300 bg-alpha-100/60 p-3 text-text-faint transition-colors hover:border-alpha-500 hover:bg-alpha-200 hover:text-foreground"
+									className="group flex size-11 items-center justify-center rounded-xl border border-transparent text-text-faint transition-colors hover:border-alpha-300 hover:bg-alpha-100 hover:text-foreground"
 								>
 									<Icon className="size-5" />
 								</a>

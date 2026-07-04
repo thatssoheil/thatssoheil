@@ -17,19 +17,15 @@ export function ManifestoSection() {
 			].join(" ")}
 			aria-label="Manifesto"
 		>
-			<div className="flex items-center justify-center min-h-[100dvh] px-6 sm:px-8 md:px-12 lg:px-16 py-24">
+			<div className="flex min-h-[100dvh] items-center justify-center px-5 py-20 sm:px-8 sm:py-24 md:px-12 lg:px-16">
 				<Surface
 					variant="panel"
 					radius="lg"
-					className="relative isolate mx-auto grid w-full max-w-4xl gap-10 overflow-hidden border-alpha-300/70 p-8 sm:p-12 md:grid-cols-[10rem_1fr] md:p-16"
+					className="relative isolate mx-auto grid w-full max-w-4xl gap-8 overflow-hidden p-6 sm:gap-10 sm:p-12 md:grid-cols-[10rem_1fr] md:p-16"
 				>
 					<div
 						aria-hidden="true"
-						className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_55%_at_18%_24%,var(--alpha-200),transparent_62%),radial-gradient(56%_46%_at_82%_72%,color-mix(in_oklch,var(--primary)_10%,transparent),transparent_70%)]"
-					/>
-					<div
-						aria-hidden="true"
-						className="pointer-events-none absolute inset-x-8 top-1/2 h-px bg-[linear-gradient(to_right,transparent,var(--alpha-400),transparent)] opacity-60"
+						className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_58%_at_22%_24%,color-mix(in_oklch,var(--primary)_8%,transparent),transparent_68%)]"
 					/>
 
 					<div className="relative z-10 isolate flex flex-col gap-4 md:pt-1">
@@ -50,7 +46,7 @@ export function ManifestoSection() {
 							{MANIFESTO.heading}
 						</h2>
 
-						<div className="mt-14 flex flex-col gap-10">
+						<div className="mt-10 flex flex-col gap-8 sm:mt-14 sm:gap-10">
 							{MANIFESTO.paragraphs.map((p, index) => (
 								<div
 									key={p.label}
@@ -62,10 +58,10 @@ export function ManifestoSection() {
 											className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,var(--alpha-300),transparent)]"
 										/>
 									) : null}
-									<p className="font-sans text-[10px] tracking-[0.22em] uppercase text-text-faint">
+									<p className="pt-[0.35em] font-sans text-[11px] tracking-[0.16em] uppercase text-text-faint">
 										{p.label}
 									</p>
-									<p className="text-base sm:text-lg leading-relaxed text-left text-text-muted font-light">
+									<p className="text-left text-base leading-relaxed text-foreground/75 sm:text-lg">
 										{p.body}
 									</p>
 								</div>
