@@ -36,15 +36,15 @@ export function HeroSection() {
 					{/* Eyebrow — "Frontend Engineer × Product Curator". The two roles recede
 					    to a quiet grey; the signal × is the lone accent — the fusion of the two
 					    disciplines. One line, centred, scales down on small screens. */}
-					<p className="flex items-center justify-center gap-[0.6em] whitespace-nowrap font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-text-faint">
-						<span>Frontend Engineer</span>
+					<p className="grid w-[min(100%,31rem)] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-[0.6em] whitespace-nowrap font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium leading-none tracking-[0.22em] text-text-faint uppercase sm:font-normal sm:tracking-[0.3em]">
+						<span className="justify-self-end">Frontend Engineer</span>
 						<span
 							className="text-[1.2em] text-brand"
 							style={{ filter: "drop-shadow(0 0 5px var(--primary))" }}
 						>
 							×
 						</span>
-						<span>Product Curator</span>
+						<span className="justify-self-start">Product Curator</span>
 					</p>
 
 					{/* The name — decodes once on load, then rests. Monospace
