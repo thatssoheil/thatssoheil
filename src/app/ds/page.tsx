@@ -300,11 +300,13 @@ export default function DesignSystemPage() {
 
 				{/* ── Ink ramp ── */}
 				<Block id="color" label="Color" title="Ink — neutral shades of black">
-					<div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 md:grid-cols-4">
-						{INK.map((c) => (
-							<Swatch key={c.name} name={c.name} role={c.role} />
-						))}
-					</div>
+					<Pane>
+						<div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 lg:grid-cols-4">
+							{INK.map((c) => (
+								<Swatch key={c.name} name={c.name} role={c.role} />
+							))}
+						</div>
+					</Pane>
 					<p className="max-w-2xl text-sm font-light text-foreground/45">
 						Chroma is <code className="text-brand">0</code> across the ramp — no hue
 						tint at all. Roles shown are the <strong className="font-normal text-foreground/70">dark</strong>{" "}
@@ -316,11 +318,13 @@ export default function DesignSystemPage() {
 
 				{/* ── Signal ramp ── */}
 				<Block label="Color" title="Signal — the accent (iMessage blue)">
-					<div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 md:grid-cols-6">
-						{SIGNAL.map((c) => (
-							<Swatch key={c.name} name={c.name} role={c.role} />
-						))}
-					</div>
+					<Pane>
+						<div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
+							{SIGNAL.map((c) => (
+								<Swatch key={c.name} name={c.name} role={c.role} />
+							))}
+						</div>
+					</Pane>
 					<p className="max-w-2xl text-sm font-light text-foreground/45">
 						<strong className="font-normal text-foreground/70">Fills</strong> (CTA,
 						focus ring, glow) use <code className="text-brand">signal-500</code> via{" "}
@@ -336,34 +340,37 @@ export default function DesignSystemPage() {
 
 				{/* ── Semantic tokens ── */}
 				<Block label="Color" title="Semantic tokens">
-					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-						{SEMANTIC.map((s) => (
-							<div
-								key={s.token}
-								className="flex items-center justify-between rounded-lg border border-border p-4"
-								style={{ background: `var(--${s.token})` }}
-							>
-								<span className="font-mono text-sm" style={{ color: `var(--${s.fg})` }}>
-									--{s.token}
-								</span>
-								<span
-									className="font-mono text-[10px] opacity-70"
-									style={{ color: `var(--${s.fg})` }}
+					<Pane>
+						<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+							{SEMANTIC.map((s) => (
+								<div
+									key={s.token}
+									className="flex items-center justify-between rounded-xl border border-alpha-300 p-4"
+									style={{ background: `var(--${s.token})` }}
 								>
-									{s.role}
-								</span>
-							</div>
-						))}
-					</div>
+									<span className="font-mono text-sm" style={{ color: `var(--${s.fg})` }}>
+										--{s.token}
+									</span>
+									<span
+										className="font-mono text-[10px] opacity-70"
+										style={{ color: `var(--${s.fg})` }}
+									>
+										{s.role}
+									</span>
+								</div>
+							))}
+						</div>
+					</Pane>
 				</Block>
 
 				{/* ── Typography ── */}
 				<Block id="type" label="Type" title="Lexend + Geist Mono">
+					<Pane className="p-6">
 					<div className="flex flex-col gap-8">
 						{TYPE_SCALE.map((t) => (
 							<div
 								key={t.label}
-								className="flex flex-col gap-2 border-b border-border/60 pb-6 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
+								className="flex flex-col gap-2 border-b border-alpha-300 pb-6 last:border-b-0 last:pb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
 							>
 								<span className={`${t.cls} tracking-tight`}>{t.label}</span>
 								<span className="shrink-0 font-mono text-[10px] text-foreground/40">
@@ -378,6 +385,7 @@ export default function DesignSystemPage() {
 							</span>
 						</div>
 					</div>
+					</Pane>
 
 					{/* Composite ramps — Geist's named type system, brand weights */}
 					<div className="flex flex-col gap-5 border-t border-border/60 pt-10">
@@ -436,25 +444,29 @@ export default function DesignSystemPage() {
 				{/* ── Space: layout, radius, borders, spacing, z-index, focus ── */}
 				<Block id="space" label="Space" title="Layout, spacing, radius & stacking">
 					{/* Layout scale */}
+					<Pane>
 					<div className="flex flex-col gap-3">
 						{LAYOUT.map((l) => (
-							<div key={l.name} className="flex items-baseline justify-between gap-4 border-b border-border/60 pb-3">
+							<div key={l.name} className="flex items-baseline justify-between gap-4 border-b border-alpha-300 pb-3 last:border-b-0 last:pb-0">
 								<span className="text-sm text-foreground/80">{l.name}</span>
 								<span className="font-mono text-xs text-foreground/50">{l.value}</span>
 							</div>
 						))}
 					</div>
+					</Pane>
 
 					{/* Radius */}
-					<div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
-						{RADIUS.map((r) => (
-							<div key={r.name} className="flex flex-col gap-2">
-								<div className={`h-16 w-full border border-border bg-card ${r.cls}`} />
-								<span className="font-mono text-xs text-foreground/90">{r.name}</span>
-								<span className="font-mono text-[10px] text-foreground/40">{r.note}</span>
-							</div>
-						))}
-					</div>
+					<Pane>
+						<div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+							{RADIUS.map((r) => (
+								<div key={r.name} className="flex flex-col gap-2">
+									<div className={`h-16 w-full border border-alpha-300 bg-card ${r.cls}`} />
+									<span className="font-mono text-xs text-foreground/90">{r.name}</span>
+									<span className="font-mono text-[10px] text-foreground/40">{r.note}</span>
+								</div>
+							))}
+						</div>
+					</Pane>
 
 					{/* Alpha ramp — translucent neutrals, border-first hairlines */}
 					<div className="flex flex-col gap-3">
@@ -466,48 +478,52 @@ export default function DesignSystemPage() {
 							<code className="text-brand">--shadow-border</code> when you want a 1px ring that
 							takes no layout box. Shown over a checker to reveal the transparency.
 						</p>
-						<div className="grid grid-cols-3 gap-x-5 gap-y-6 sm:grid-cols-6">
-							{ALPHA.map((a) => (
-								<div key={a.name} className="flex flex-col gap-2">
-									<div
-										className="h-14 w-full overflow-hidden rounded-lg border border-border"
-										style={{
-											backgroundImage:
-												"repeating-conic-gradient(var(--muted) 0 25%, transparent 0 50%)",
-											backgroundSize: "14px 14px",
-										}}
-									>
+						<Pane>
+							<div className="grid grid-cols-3 gap-x-5 gap-y-6 sm:grid-cols-6">
+								{ALPHA.map((a) => (
+									<div key={a.name} className="flex flex-col gap-2">
 										<div
-											className="h-full w-full"
-											style={{ background: `var(--${a.name})` }}
-										/>
+											className="h-14 w-full overflow-hidden rounded-xl border border-alpha-300"
+											style={{
+												backgroundImage:
+													"repeating-conic-gradient(var(--muted) 0 25%, transparent 0 50%)",
+												backgroundSize: "14px 14px",
+											}}
+										>
+											<div
+												className="h-full w-full"
+												style={{ background: `var(--${a.name})` }}
+											/>
+										</div>
+										<span className="font-mono text-xs text-foreground/90">{a.name}</span>
+										{a.role !== "—" && (
+											<span className="font-mono text-[10px] text-foreground/40">{a.role}</span>
+										)}
 									</div>
-									<span className="font-mono text-xs text-foreground/90">{a.name}</span>
-									{a.role !== "—" && (
-										<span className="font-mono text-[10px] text-foreground/40">{a.role}</span>
-									)}
-								</div>
-							))}
-						</div>
+								))}
+							</div>
+						</Pane>
 					</div>
 
 					{/* Borders — live per-theme; values shown for both themes */}
-					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-						{BORDERS.map((b) => (
-							<div
-								key={b.name}
-								className="rounded-lg p-4"
-								style={{ border: `1px solid var(${b.name})` }}
-							>
-								<span className="font-mono text-xs text-foreground/90">{b.name}</span>
-								<p className="mt-1 font-mono text-[10px] text-foreground/40">
-									light <span className="text-foreground/60">{b.light}</span> · dark{" "}
-									<span className="text-foreground/60">{b.dark}</span>
-								</p>
-								<p className="mt-0.5 font-mono text-[10px] text-foreground/40">{b.role}</p>
-							</div>
-						))}
-					</div>
+					<Pane>
+						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+							{BORDERS.map((b) => (
+								<div
+									key={b.name}
+									className="rounded-xl bg-card/70 p-4"
+									style={{ border: `1px solid var(${b.name})` }}
+								>
+									<span className="font-mono text-xs text-foreground/90">{b.name}</span>
+									<p className="mt-1 font-mono text-[10px] text-foreground/40">
+										light <span className="text-foreground/60">{b.light}</span> · dark{" "}
+										<span className="text-foreground/60">{b.dark}</span>
+									</p>
+									<p className="mt-0.5 font-mono text-[10px] text-foreground/40">{b.role}</p>
+								</div>
+							))}
+						</div>
+					</Pane>
 
 					{/* Spacing scale */}
 					<div className="flex flex-col gap-3">
