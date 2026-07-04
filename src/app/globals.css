@@ -574,8 +574,8 @@
 }
 .structure-grid__rails {
 	background-image:
-		linear-gradient(to right, transparent calc(50% - min(44rem, calc(100vw - 2.5rem)) / 2), var(--grid-rail) 0 calc(50% - min(44rem, calc(100vw - 2.5rem)) / 2 + 1px), transparent 0),
-		linear-gradient(to right, transparent calc(50% + min(44rem, calc(100vw - 2.5rem)) / 2 - 1px), var(--grid-rail) 0 calc(50% + min(44rem, calc(100vw - 2.5rem)) / 2), transparent 0),
+		linear-gradient(to right, transparent calc(50% - min(56rem, calc(100vw - 2.5rem)) / 2), var(--grid-rail) 0 calc(50% - min(56rem, calc(100vw - 2.5rem)) / 2 + 1px), transparent 0),
+		linear-gradient(to right, transparent calc(50% + min(56rem, calc(100vw - 2.5rem)) / 2 - 1px), var(--grid-rail) 0 calc(50% + min(56rem, calc(100vw - 2.5rem)) / 2), transparent 0),
 		linear-gradient(to right, transparent calc(50% - 0.5px), var(--grid-center) 0 calc(50% + 0.5px), transparent 0);
 }
 .structure-grid__rhythm {
