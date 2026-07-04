@@ -21,6 +21,7 @@ Use **Dissolved Reading Glass**: keep the prose and actions easy to read, while 
 - Treat Manifesto paragraph rows as suspended reading bands with subtle separators, not bordered items.
 - Make Connect feel like a closing instrument panel: copy on the left, action dock on the right.
 - Make the email CTA the primary luminous control and social links smaller glass tiles.
+- Widen the hero glass plane so the atmospheric glass covers more of the wordmark area without reintroducing a hard rectangular border.
 - Preserve current content, section order, accessibility, and responsive readability.
 
 ## Non-Goals
@@ -41,11 +42,15 @@ The section keeps its two-column reading structure on desktop and stacks on mobi
 
 The section keeps a compact two-zone structure. The left zone carries the label, heading, and short copy. The right zone becomes an action dock: one primary email control plus social tiles. The dock may have a slightly stronger inner glow than Manifesto because it is interactive.
 
+### Hero Continuity
+
+The hero plane remains borderless and radial, but its width should increase so the liquid-glass atmosphere covers more of the wordmark and surrounding title cluster. The change must preserve the recent fix: no harsh top edge, no obvious rectangular card, and the visible name must settle to `Soheil Fakour`.
+
 ## Visual QA
 
+- Dark hero: wider glass atmosphere covers more of the wordmark without becoming a bordered box.
 - Dark Manifesto: surface feels suspended and liquid, not like a plain card.
 - Light Manifesto: prose remains comfortable and the rail does not become a visible decorative strip.
 - Dark Connect: email/social actions read as a cohesive glass control group.
 - Mobile: sections stack cleanly; no text or controls overflow; no nested-card feeling.
 - Both themes: section readability remains stronger than the hero plane because these sections carry prose.
-
