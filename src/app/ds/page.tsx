@@ -631,28 +631,32 @@ export default function DesignSystemPage() {
 
 				{/* ── Surface: shadows + gradients ── */}
 				<Block id="surface" label="Surface" title="Shadows & gradients">
-					<div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-						{SHADOWS.map((s) => (
-							<div key={s.name} className="flex flex-col gap-3">
-								<div
-									className="h-24 rounded-xl border border-border bg-card"
-									style={{ boxShadow: `var(${s.name})` }}
-								/>
-								<span className="font-mono text-xs text-foreground/90">{s.name}</span>
-								<span className="font-mono text-[10px] text-foreground/40">{s.use}</span>
+					<Pane>
+						<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+							{SHADOWS.map((s) => (
+								<div key={s.name} className="flex flex-col gap-3">
+									<div
+										className="h-24 rounded-xl border border-alpha-300 bg-card"
+										style={{ boxShadow: `var(${s.name})` }}
+									/>
+									<span className="font-mono text-xs text-foreground/90">{s.name}</span>
+									<span className="font-mono text-[10px] text-foreground/40">{s.use}</span>
+								</div>
+							))}
+						</div>
+					</Pane>
+					<Pane>
+						<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+							<div className="flex flex-col gap-3">
+								<div className="h-32 rounded-xl border border-alpha-300" style={{ backgroundImage: "var(--gradient-hero)" }} />
+								<span className="font-mono text-xs text-foreground/90">--gradient-hero</span>
 							</div>
-						))}
-					</div>
-					<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-						<div className="flex flex-col gap-3">
-							<div className="h-32 rounded-xl border border-border" style={{ backgroundImage: "var(--gradient-hero)" }} />
-							<span className="font-mono text-xs text-foreground/90">--gradient-hero</span>
+							<div className="flex flex-col gap-3">
+								<div className="h-32 rounded-xl border border-alpha-300" style={{ backgroundImage: "var(--gradient-surface)" }} />
+								<span className="font-mono text-xs text-foreground/90">--gradient-surface</span>
+							</div>
 						</div>
-						<div className="flex flex-col gap-3">
-							<div className="h-32 rounded-xl border border-border" style={{ backgroundImage: "var(--gradient-surface)" }} />
-							<span className="font-mono text-xs text-foreground/90">--gradient-surface</span>
-						</div>
-					</div>
+					</Pane>
 				</Block>
 
 				{/* ── Glass: the Signal Glass material ── */}
@@ -709,36 +713,48 @@ export default function DesignSystemPage() {
 
 				{/* ── Components ── */}
 				<Block id="components" label="Components" title="Primitives in context">
-					<div className="flex flex-wrap items-center gap-4">
-						<Button>Primary CTA</Button>
-						<Button variant="secondary">Secondary</Button>
-						<Button variant="outline">Outline</Button>
-						<Button variant="ghost">Ghost</Button>
-						<Button variant="link">Link</Button>
-					</div>
-					<div className="flex flex-wrap items-center gap-3">
-						<Badge>Default</Badge>
-						<Badge variant="secondary">Secondary</Badge>
-						<Badge variant="outline">Outline</Badge>
-						<Badge variant="destructive">Destructive</Badge>
-					</div>
-					<Card className="max-w-sm gap-3 py-6 transition-all duration-300 hover:border-brand/30 hover:shadow-[var(--shadow-glow)]">
-						<CardHeader>
-							<CardTitle className="text-lg font-light tracking-tight">
-								Card surface
-							</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<p className="text-sm font-light leading-relaxed text-foreground/55">
-								The <code className="text-brand">{"<Card>"}</code> primitive on{" "}
-								<code className="text-brand">bg-card</code> with a soft border. Hover
-								lifts a blue glow — accent on interaction, not at rest.
-							</p>
-						</CardContent>
-					</Card>
+					<Pane className="p-6">
+						<div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+							<div className="flex flex-col gap-6">
+								<div className="flex flex-col gap-3">
+									<SectionLabel>Buttons</SectionLabel>
+									<div className="flex flex-wrap items-center gap-3">
+										<Button>Primary CTA</Button>
+										<Button variant="secondary">Secondary</Button>
+										<Button variant="outline">Outline</Button>
+										<Button variant="ghost">Ghost</Button>
+										<Button variant="link">Link</Button>
+									</div>
+								</div>
+								<div className="flex flex-col gap-3">
+									<SectionLabel>Badges</SectionLabel>
+									<div className="flex flex-wrap items-center gap-3">
+										<Badge>Default</Badge>
+										<Badge variant="secondary">Secondary</Badge>
+										<Badge variant="outline">Outline</Badge>
+										<Badge variant="destructive">Destructive</Badge>
+									</div>
+								</div>
+							</div>
+							<Card className="gap-3 py-6 transition-all duration-300 hover:border-brand/30 hover:shadow-[var(--shadow-glow)]">
+								<CardHeader>
+									<CardTitle className="text-lg font-light tracking-tight">
+										Card surface
+									</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<p className="text-sm font-light leading-relaxed text-foreground/55">
+										The <code className="text-brand">{"<Card>"}</code> primitive on{" "}
+										<code className="text-brand">bg-card</code> with a soft border. Hover
+										lifts a blue glow — accent on interaction, not at rest.
+									</p>
+								</CardContent>
+							</Card>
+						</div>
+					</Pane>
 
 					{/* Separator */}
-					<div className="flex flex-col gap-3 border-t border-border/60 pt-6">
+					<Pane>
 						<SectionLabel>Separator</SectionLabel>
 						<p className="text-sm font-light text-foreground/45">
 							<code className="text-brand">{"<Separator>"}</code> — a 1px{" "}
@@ -752,10 +768,10 @@ export default function DesignSystemPage() {
 							<Separator orientation="vertical" />
 							<span>Changelog</span>
 						</div>
-					</div>
+					</Pane>
 
 					{/* Iconography */}
-					<div className="flex flex-col gap-3 border-t border-border/60 pt-6">
+					<Pane>
 						<SectionLabel>Iconography</SectionLabel>
 						<p className="text-sm font-light text-foreground/45">
 							<code className="text-brand">lucide-react</code>, stroke width{" "}
@@ -768,7 +784,7 @@ export default function DesignSystemPage() {
 								<Icon key={i} className="size-5" strokeWidth={1.5} aria-hidden="true" />
 							))}
 						</div>
-					</div>
+					</Pane>
 				</Block>
 
 				{/* ── Voice ── */}
