@@ -5,7 +5,7 @@ import { CipherText } from "@/components/matrix/cipher-text";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { TAGLINE } from "@/lib/constants";
 
-const MOTTO_SWAP_MS = 9000;
+const MOTTO_SWAP_MS = 6000;
 const MOTTO_WORDS = ["Coding", "Prompting"] as const;
 const MOTTO_REST = TAGLINE.replace(/^Coding\s+/, "");
 
@@ -35,9 +35,9 @@ export function HeroMotto() {
 				as="span"
 				initialState={hasSwapped ? "scrambled" : "settled"}
 				ambient={!prefersReduced}
-				revealedHold={2600}
-				decelDuration={900}
-				spinUpDuration={500}
+				revealedHold={1600}
+				decelDuration={650}
+				spinUpDuration={360}
 				intensity="display"
 				className="motto-ai-word inline-block"
 			/>
