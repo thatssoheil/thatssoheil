@@ -41,7 +41,6 @@ export function HeroSection() {
 						<span className="justify-self-end">Frontend Engineer</span>
 						<span
 							className="text-[1.2em] tracking-normal text-brand"
-							style={{ filter: "drop-shadow(0 0 5px var(--primary))" }}
 						>
 							×
 						</span>
