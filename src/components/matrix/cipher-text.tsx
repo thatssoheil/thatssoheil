@@ -23,6 +23,8 @@ export interface CipherTextProps {
   ambient?: boolean;
   /** Visual intensity for large display use; display lowers blur/opacity severity. */
   intensity?: "normal" | "display";
+  /** Start readable and only run ambient pulses. Default preserves hero-name scramble. */
+  initialState?: "scrambled" | "settled";
   /** Wrapper element type. */
   as?: React.ElementType;
 }
@@ -39,6 +41,7 @@ export function CipherText({
   loop = false,
   ambient = false,
   intensity = "normal",
+  initialState = "scrambled",
   as: Component = "h1",
 }: CipherTextProps) {
   const display = useCipherAnimation(text, {
@@ -49,6 +52,7 @@ export function CipherText({
     loop,
     ambient,
     intensity,
+    initialState,
   });
 
   return (
