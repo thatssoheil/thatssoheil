@@ -6,7 +6,10 @@
 export function StructureGrid() {
 	return (
 		<div className="structure-grid" aria-hidden="true">
-			<div className="structure-grid__rails" />
+			<div className="structure-grid__frame">
+				<div className="structure-grid__envelope" />
+			</div>
+			<div className="structure-grid__center" />
 			<div className="structure-grid__rhythm" />
 		</div>
 	);
