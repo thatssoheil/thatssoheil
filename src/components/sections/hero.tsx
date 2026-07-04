@@ -5,59 +5,17 @@ import { HeroChat } from "@/components/hero/hero-chat";
 import { type SectionId } from "@/lib/constants";
 import { jumpToSection } from "@/lib/section-navigation";
 
-// ─── Ambient plane — a wide, centered field behind the name ───
-// Static: a faint white-toned fill reads as atmosphere rather than a backplate,
-// centred on the wordmark's axis and dissolving before it becomes a hard panel.
-
-// Wide field, centred in a 160×100 box; a soft corner radius rounds the edges.
-const PLANE = { x: 6, y: 6, width: 148, height: 88, radius: 3 } as const;
+// ─── Ambient plane — exact section-width glass behind the name ───
+// Static: the element itself owns the shared max width so the visible glass
+// aligns with the header and content sections without SVG inset math.
 
 function HeroPlane() {
 	return (
-		<svg
+		<div
 			aria-hidden="true"
-			className="pointer-events-none absolute left-1/2 top-[calc(50%+clamp(2.5rem,12vw,12rem)*0.75)] -z-10 h-[calc(clamp(2.5rem,12vw,12rem)*3.75)] w-[calc(100vw-2.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2"
-			viewBox="0 0 160 100"
-			fill="none"
-			preserveAspectRatio="none"
-			style={{
-				// Elliptical dissolve lets the plane align with the section glass width
-				// without exposing a straight rectangular edge.
-				maskImage: "radial-gradient(ellipse 74% 54% at 50% 32%, #000 0%, #000 38%, transparent 78%)",
-				WebkitMaskImage: "radial-gradient(ellipse 74% 54% at 50% 32%, #000 0%, #000 38%, transparent 78%)",
-			}}
-		>
-			<defs>
-				<radialGradient id="hero-plane-fill" cx="50%" cy="28%" r="72%">
-					<stop offset="0%" stopColor="var(--plane-sheen)" />
-					<stop offset="42%" stopColor="var(--plane-tint)" />
-					<stop offset="100%" stopColor="transparent" />
-				</radialGradient>
-				<radialGradient id="hero-plane-glow" cx="50%" cy="24%" r="62%">
-					<stop offset="0%" stopColor="var(--plane-glow)" />
-					<stop offset="100%" stopColor="transparent" />
-				</radialGradient>
-			</defs>
-
-			{/* The plane — faint white-toned wash, brightest at the top and fading
-			    into the void; reads as lit atmosphere rather than a flat smudge */}
-			<rect
-				x={PLANE.x}
-				y={PLANE.y}
-				width={PLANE.width}
-				height={PLANE.height}
-				rx={PLANE.radius}
-				fill="url(#hero-plane-glow)"
-			/>
-			<rect
-				x={PLANE.x}
-				y={PLANE.y}
-				width={PLANE.width}
-				height={PLANE.height}
-				rx={PLANE.radius}
-				fill="url(#hero-plane-fill)"
-			/>
-		</svg>
+			data-hero-plane=""
+			className="pointer-events-none absolute left-1/2 top-[calc(50%+clamp(2.35rem,10.8vw,10.8rem)*0.72)] -z-10 h-[calc(clamp(2.35rem,10.8vw,10.8rem)*3.35)] w-[calc(100vw-2.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-alpha-300/70 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--foreground)_9%,transparent),color-mix(in_oklch,var(--foreground)_4%,transparent)),radial-gradient(70%_85%_at_50%_28%,var(--plane-sheen),transparent_72%),radial-gradient(72%_95%_at_50%_72%,var(--plane-glow),transparent_80%)] shadow-[inset_0_1px_0_var(--glass-sheen),inset_0_-1px_0_color-mix(in_oklch,var(--foreground)_7%,transparent),0_18px_70px_color-mix(in_oklch,var(--background)_70%,transparent)] backdrop-blur-md"
+		/>
 	);
 }
 

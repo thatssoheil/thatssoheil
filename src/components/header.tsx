@@ -28,7 +28,7 @@ export function Header() {
 	return (
 		<header
 			role="banner"
-			className="pointer-events-none fixed inset-x-0 top-[calc(env(safe-area-inset-top)+0.75rem)] z-[var(--z-header)] px-3 sm:px-6 md:px-8"
+			className="pointer-events-none fixed inset-x-0 top-[calc(env(safe-area-inset-top)+0.75rem)] z-[var(--z-header)] px-5 sm:px-6 md:px-8"
 		>
 			<Surface
 				variant="chrome"
