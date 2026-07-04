@@ -7,6 +7,23 @@ export const alt = SITE.ogImageAlt;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+const GRID = {
+	frameInset: 32,
+	railLeft: 152,
+	railRight: 1048,
+	center: 600,
+	rhythmOffset: 76,
+	rhythm: 128,
+} as const;
+
+const HORIZONTAL_RAILS = [
+	GRID.rhythmOffset,
+	GRID.rhythmOffset + GRID.rhythm,
+	GRID.rhythmOffset + GRID.rhythm * 2,
+	GRID.rhythmOffset + GRID.rhythm * 3,
+	GRID.rhythmOffset + GRID.rhythm * 4,
+] as const;
+
 const ICON_PATHS = {
 	github:
 		"M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12",
@@ -83,7 +100,8 @@ export default function OpengraphImage() {
 					width: "100%",
 					display: "flex",
 					position: "relative",
-					background: "#050608",
+					background:
+						"radial-gradient(ellipse 135% 120% at 50% 46%, #0b0e13 0%, #06080b 48%, #030405 100%)",
 					color: "#f5f7fb",
 					fontFamily: "sans-serif",
 					overflow: "hidden",
@@ -94,25 +112,93 @@ export default function OpengraphImage() {
 						position: "absolute",
 						inset: 0,
 						background:
-							"radial-gradient(circle at 18% 38%, rgba(34, 122, 255, 0.26), transparent 34%), radial-gradient(circle at 78% 78%, rgba(0, 207, 190, 0.16), transparent 36%), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.045) 1px, transparent 1px)",
-						backgroundSize: "auto, auto, 300px 100%, 100% 157px",
+							"radial-gradient(circle at 8% 8%, rgba(47,140,255,0.22), transparent 38%), radial-gradient(circle at 82% 92%, rgba(0,207,190,0.14), transparent 38%), radial-gradient(circle at 38% 62%, rgba(26,76,150,0.12), transparent 42%)",
+					}}
+				/>
+				{HORIZONTAL_RAILS.map((top) => (
+					<div
+						key={top}
+						style={{
+							position: "absolute",
+							left: GRID.frameInset,
+							right: GRID.frameInset,
+							top,
+							height: 1,
+							background: "rgba(245,247,251,0.082)",
+						}}
+					/>
+				))}
+				<div
+					style={{
+						position: "absolute",
+						inset: 0,
+						background:
+							"linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.048) 18%, rgba(255,255,255,0.048) 82%, transparent 100%)",
+						maskImage:
+							"linear-gradient(to bottom, transparent 0%, #000 12%, #000 84%, transparent 100%)",
 					}}
 				/>
 				<div
 					style={{
 						position: "absolute",
-						inset: 32,
-						border: "1px solid rgba(255,255,255,0.08)",
+						inset: 0,
+						backgroundImage:
+							"linear-gradient(to bottom, rgba(245,247,251,0.082) 1px, transparent 1px)",
+						backgroundSize: `100% ${GRID.rhythm}px`,
+						backgroundPosition: `0 ${GRID.rhythmOffset}px`,
+						maskImage:
+							"linear-gradient(to bottom, transparent 0%, #000 12%, #000 84%, transparent 100%)",
 					}}
 				/>
 				<div
 					style={{
 						position: "absolute",
-						left: 600,
-						top: 32,
-						bottom: 32,
+						left: GRID.railLeft,
+						top: 0,
+						bottom: 0,
 						width: 1,
-						background: "rgba(255,255,255,0.08)",
+						background: "rgba(245,247,251,0.13)",
+					}}
+				/>
+				<div
+					style={{
+						position: "absolute",
+						left: GRID.railRight,
+						top: 0,
+						bottom: 0,
+						width: 1,
+						background: "rgba(245,247,251,0.13)",
+					}}
+				/>
+				<div
+					style={{
+						position: "absolute",
+						left: GRID.center,
+						top: 0,
+						bottom: 0,
+						width: 1,
+						background: "rgba(245,247,251,0.13)",
+					}}
+				/>
+				<div
+					style={{
+						position: "absolute",
+						inset: GRID.frameInset,
+						border: "1px solid rgba(245,247,251,0.17)",
+						borderRadius: 28,
+						background:
+							"linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.022) 32%, rgba(255,255,255,0.04) 68%, rgba(255,255,255,0.014))",
+						boxShadow:
+							"inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(255,255,255,0.06), 0 28px 90px rgba(0,0,0,0.46)",
+					}}
+				/>
+				<div
+					style={{
+						position: "absolute",
+						inset: GRID.frameInset,
+						borderRadius: 28,
+						background:
+							"radial-gradient(80% 52% at 24% 12%, rgba(255,255,255,0.12), transparent 58%), radial-gradient(64% 46% at 86% 88%, rgba(47,140,255,0.095), transparent 64%), linear-gradient(180deg, rgba(255,255,255,0.04), transparent 44%, rgba(255,255,255,0.022))",
 					}}
 				/>
 				<div
