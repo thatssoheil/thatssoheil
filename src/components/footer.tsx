@@ -17,8 +17,8 @@ export function Footer() {
 		>
 			<Surface
 				variant="chrome"
-				radius="lg"
-				className="relative mx-auto flex w-full max-w-6xl flex-col items-center gap-3 overflow-hidden px-4 py-5 font-sans text-xs tracking-wide sm:flex-row sm:justify-between sm:px-5"
+				radius="md"
+				className="relative mx-auto flex min-h-14 w-full max-w-4xl flex-col items-center justify-center gap-2 overflow-hidden px-4 py-3 font-sans text-xs tracking-wide sm:flex-row sm:justify-between sm:px-5 sm:py-0"
 			>
 				{/* Signal lead-in — the hero rule motif, contained to the island edge. */}
 				<span

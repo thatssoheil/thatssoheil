@@ -8,8 +8,8 @@ export default function Loading() {
 			<div className="fixed inset-x-0 top-[calc(env(safe-area-inset-top)+0.75rem)] z-[var(--z-header)] px-3 sm:px-6 md:px-8">
 				<Surface
 					variant="chrome"
-					radius="lg"
-					className="mx-auto flex min-h-14 w-full max-w-6xl items-center justify-between px-4 sm:px-5"
+					radius="md"
+					className="mx-auto flex min-h-14 w-full max-w-4xl items-center justify-between px-4 sm:px-5"
 				>
 					<div className="h-4 w-28 rounded bg-alpha-300" />
 					<div className="hidden sm:flex items-center gap-6">

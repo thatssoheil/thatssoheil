@@ -32,8 +32,8 @@ export function Header() {
 		>
 			<Surface
 				variant="chrome"
-				radius="lg"
-				className="pointer-events-auto mx-auto flex min-h-14 w-full max-w-6xl items-center justify-between px-4 font-sans text-sm sm:px-5"
+				radius="md"
+				className="pointer-events-auto mx-auto flex min-h-14 w-full max-w-4xl items-center justify-between px-4 font-sans text-sm sm:px-5"
 			>
 				{/* ── Branding ── */}
 				<a
