@@ -47,8 +47,8 @@ export function HeroSection() {
 						<span className="justify-self-start">Product Curator</span>
 					</p>
 
-					{/* The name — decodes once on load, then rests. Monospace
-					    (--font-cipher) so the glyph pool can't reflow the line. */}
+					{/* The name decodes once on load, then rests. Geist Mono keeps the
+					    scrambled glyph pool stable while it resolves. */}
 					<CipherText
 						text="Soheil Fakour"
 						as="h1"

@@ -58,7 +58,7 @@ const SEMANTIC = [
 ] as const;
 
 const TYPE_SCALE = [
-	{ label: "Display / Hero", cls: "text-6xl sm:text-7xl font-bold font-mono", note: "Geist Mono · bold — cipher hero only" },
+	{ label: "Display / Hero", cls: "text-6xl sm:text-7xl font-light [font-family:var(--font-cipher)]", note: "Geist Mono · cipher wordmark only" },
 	{ label: "H1", cls: "text-5xl font-light font-sans", note: "Lexend · weight 300" },
 	{ label: "H2 — section heading", cls: "text-4xl font-light font-sans", note: "Lexend · weight 300" },
 	{ label: "H3", cls: "text-2xl font-light font-sans", note: "Lexend · weight 300" },
@@ -66,8 +66,8 @@ const TYPE_SCALE = [
 	{ label: "Small / caption", cls: "text-sm font-normal font-sans", note: "Lexend" },
 ] as const;
 
-// Geist's composite ramps (family+size+LH+weight+tracking in one class), retuned
-// to the brand: headings keep weight 300 (Geist uses 600). Source: vercel.com/design.md
+// Composite ramps (family+size+LH+weight+tracking in one class), retuned
+// to the brand: headings keep weight 300.
 const TYPE_RAMPS = [
 	{ cls: "text-heading-48", label: "heading-48", note: "48 / 56 · -0.06em · w300" },
 	{ cls: "text-heading-32", label: "heading-32", note: "32 / 40 · -0.04em · w300" },
@@ -77,7 +77,7 @@ const TYPE_RAMPS = [
 	{ cls: "text-copy-16", label: "copy-16", note: "16 / 24 · w400 — body" },
 	{ cls: "text-label-14", label: "label-14", note: "14 / 20 · w400 — UI label" },
 	{ cls: "text-button-14", label: "button-14", note: "14 / 20 · w500 — controls" },
-	{ cls: "text-label-13-mono", label: "label-13-mono", note: "13 / 16 · Geist Mono" },
+	{ cls: "text-label-13-mono", label: "label-13-mono", note: "13 / 16 · system mono" },
 ] as const;
 
 const FLUID = [
@@ -398,7 +398,7 @@ export default function DesignSystemPage() {
 				</Block>
 
 				{/* ── Typography ── */}
-				<Block id="type" label="Type" title="Lexend + Geist Mono">
+				<Block id="type" label="Type" title="Lexend + Cipher Mono">
 					<Pane className="p-6">
 						<div className="flex flex-col gap-8">
 							{TYPE_SCALE.map((t) => (
@@ -421,16 +421,16 @@ export default function DesignSystemPage() {
 						</div>
 					</Pane>
 
-					{/* Composite ramps — Geist's named type system, brand weights */}
+					{/* Composite ramps — named type system, brand weights */}
 					<div className="flex flex-col gap-5 border-t border-alpha-300 pt-10">
 						<SectionLabel>Composite ramps</SectionLabel>
 						<p className="max-w-2xl text-sm font-light text-foreground/45">
-							Geist&rsquo;s four named ramps —{" "}
+							The named ramps{" "}
 							<code className="text-brand">text-heading/copy/label/button-*</code> — each set
-							family + size + line-height + weight + tracking in one class. One brand deviation:
+							family + size + line-height + weight + tracking in one class. Brand voice:
 							headings keep our{" "}
-							<strong className="font-normal text-foreground/70">weight 300</strong> (Geist sets
-							600). Tracking law preserved: ≤20px → -0.02em, 24–32 → -0.04em, ≥40 → -0.06em.
+							<strong className="font-normal text-foreground/70">weight 300</strong>.
+							Tracking law preserved: ≤20px → -0.02em, 24–32 → -0.04em, ≥40 → -0.06em.
 						</p>
 						<div className="flex flex-col gap-4">
 							{TYPE_RAMPS.map((t) => (

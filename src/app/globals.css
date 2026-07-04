@@ -6,11 +6,10 @@
 
 /* ─── Design Tokens ─── */
 @theme inline {
-	/* Fonts — sans is Lexend (UI + the eyebrow register); mono is the REAL Geist Mono
-	   (loaded as --font-cipher), so `font-mono` / code / the *-mono ramps are honestly
-	   monospace. The cipher wordmark uses --font-cipher directly. */
+	/* Fonts — Lexend carries UI/prose. Geist Mono is exposed only as
+	   --font-cipher for cipher moments; generic mono labels use the local stack. */
 	--font-sans: var(--font-lexend);
-	--font-mono: var(--font-cipher);
+	--font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 
 	/* Typography scale */
 	--text-xs: 0.75rem;
@@ -25,7 +24,7 @@
 	--text-6xl: 3.75rem;
 	--text-7xl: 4.5rem;
 
-	/* Fluid type — Geist-style clamp() ramps (source of truth: vercel.com/design.md).
+	/* Fluid type — clamp() ramps.
 	   Interpolate smoothly between a 360px and 1280px viewport so headings scale
 	   with the page instead of stepping at breakpoints. Usable as text-fluid-*. */
 	--text-fluid-20-24: clamp(1.25rem, 1.15rem + 0.43vw, 1.5rem);
@@ -409,13 +408,12 @@
 }
 
 /* ─── Composite type ramps ───
-   Geist's four named ramps (source of truth: vercel.com/design.md). Each
-   utility sets family + size + line-height + weight (+ tracking for headings)
-   in one class. One deliberate brand deviation: headings keep our signature
-   weight 300 — Geist sets them at 600. Tracking law preserved: ≤20px → -0.02em,
-   24–32px → -0.04em, ≥40px → -0.06em; the largest headings sit at line-height 1. */
+   Each utility sets family + size + line-height + weight (+ tracking for headings)
+   in one class. Headings keep our signature weight 300. Tracking law preserved:
+   <=20px -> -0.02em, 24-32px -> -0.04em, >=40px -> -0.06em; the largest
+   headings sit at line-height 1. */
 
-/* heading-* — Geist Sans, weight 300 (brand voice), negative tracking */
+/* heading-* — Lexend, weight 300 (brand voice), negative tracking */
 @utility text-heading-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 300; letter-spacing: -0.02em; }
 @utility text-heading-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.5rem; font-weight: 300; letter-spacing: -0.02em; }
 @utility text-heading-20 { font-family: var(--font-sans); font-size: 1.25rem; line-height: 1.625rem; font-weight: 300; letter-spacing: -0.02em; }
@@ -427,7 +425,7 @@
 @utility text-heading-64 { font-family: var(--font-sans); font-size: 4rem; line-height: 1; font-weight: 300; letter-spacing: -0.06em; }
 @utility text-heading-72 { font-family: var(--font-sans); font-size: 4.5rem; line-height: 1; font-weight: 300; letter-spacing: -0.06em; }
 
-/* copy-* — Geist Sans, weight 400 (body / prose); taller line-heights */
+/* copy-* — Lexend, weight 400 (body / prose); taller line-heights */
 @utility text-copy-13 { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1.125rem; font-weight: 400; }
 @utility text-copy-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
 @utility text-copy-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.5rem; font-weight: 400; }
@@ -437,7 +435,7 @@
 @utility text-copy-13-mono { font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.125rem; font-weight: 400; }
 @utility text-copy-14-mono { font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
 
-/* label-* — Geist Sans, weight 400 (UI labels, tight line-height) */
+/* label-* — Lexend, weight 400 (UI labels, tight line-height) */
 @utility text-label-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 400; }
 @utility text-label-13 { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1rem; font-weight: 400; }
 @utility text-label-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
@@ -448,7 +446,7 @@
 @utility text-label-13-mono { font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1rem; font-weight: 400; }
 @utility text-label-14-mono { font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
 
-/* button-* — Geist Sans, weight 500 (interactive labels) */
+/* button-* — Lexend, weight 500 (interactive labels) */
 @utility text-button-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 500; }
 @utility text-button-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; }
 @utility text-button-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.25rem; font-weight: 500; }

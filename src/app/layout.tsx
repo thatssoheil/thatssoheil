@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Lexend, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Lexend } from "next/font/google";
 import { SITE, X_HANDLE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
@@ -9,18 +9,17 @@ import { StructureGrid } from "@/components/signal-field/structure-grid";
 import "./globals.css";
 
 // Primary typeface: Lexend — tuned for low reading fatigue. Variable (no `weight`),
-// so the full 100–900 axis is available. --font-sans resolves to it (UI + the
-// uppercase eyebrow register); --font-mono resolves to the real Geist Mono below.
+// so the full 100–900 axis is available. --font-sans resolves to it across the
+// site's UI and prose.
 const lexend = Lexend({
 	variable: "--font-lexend",
 	subsets: ["latin"],
 	display: "swap",
 });
 
-// Geist Mono — used in one place only: the hero's looping cipher name. A cipher
-// swaps every glyph against a mixed pool (letters, digits, symbols); a fixed
-// advance width is what stops the line from reflowing as it scrambles, and the
-// monospace grid reads as "encryption". Exposed as --font-cipher.
+// Geist Mono is intentionally narrow-scoped to cipher moments. The fixed advance
+// width keeps scrambled glyphs from reflowing and gives the hero wordmark its
+// code-like pulse without pulling the whole interface into a monospace voice.
 const geistMono = Geist_Mono({
 	variable: "--font-cipher",
 	subsets: ["latin"],
