@@ -18,34 +18,34 @@ export function ManifestoSection() {
 			aria-label="Manifesto"
 		>
 			<div className="flex items-center justify-center min-h-[100dvh] px-6 sm:px-8 md:px-12 lg:px-16 py-24">
-				<Surface variant="panel" radius="lg" className="mx-auto w-full max-w-3xl p-8 sm:p-12 md:p-16">
-					{/* ── Heading ── */}
-					<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
-						{MANIFESTO.label}
-					</p>
-
-					<h2 className="mt-3 text-fluid-36-48 font-light tracking-tight text-foreground font-sans">
-						{MANIFESTO.heading}
-					</h2>
-
-					<p className="mt-3 font-sans text-xs sm:text-sm tracking-wide text-text-muted">
-						{MANIFESTO.subheading}
-					</p>
-
-					{/* ── Paragraphs ── */}
-					<div className="mt-14 flex flex-col gap-10">
-						{MANIFESTO.paragraphs.map((p) => (
-							<div key={p.label} className="flex flex-col gap-3">
-								<p className="font-sans text-[10px] tracking-[0.22em] uppercase text-text-faint">
-									{p.label}
-								</p>
-								<p className="text-base sm:text-lg leading-relaxed text-justify text-foreground/70 font-light">
-									{p.body}
-								</p>
-							</div>
-						))}
+				<Surface variant="panel" radius="lg" className="mx-auto grid w-full max-w-4xl gap-10 p-8 sm:p-12 md:grid-cols-[10rem_1fr] md:p-16">
+					<div className="flex flex-col gap-4 md:pt-1">
+						<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
+							{MANIFESTO.label}
+						</p>
+						<p className="font-sans text-xs leading-relaxed tracking-wide text-text-muted">
+							{MANIFESTO.subheading}
+						</p>
 					</div>
 
+					<div>
+						<h2 className="text-fluid-36-48 font-light tracking-tight text-foreground font-sans">
+							{MANIFESTO.heading}
+						</h2>
+
+							<div className="mt-14 flex flex-col gap-10">
+								{MANIFESTO.paragraphs.map((p) => (
+									<div key={p.label} className="grid gap-3 sm:grid-cols-[7rem_1fr]">
+										<p className="font-sans text-[10px] tracking-[0.22em] uppercase text-text-faint">
+											{p.label}
+										</p>
+										<p className="text-base sm:text-lg leading-relaxed text-left text-text-muted font-light">
+											{p.body}
+										</p>
+									</div>
+								))}
+							</div>
+					</div>
 				</Surface>
 			</div>
 		</section>

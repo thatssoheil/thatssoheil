@@ -11,42 +11,44 @@ export function ConnectSection() {
 			aria-label="Connect"
 		>
 			<div className="flex items-center justify-center min-h-[80dvh] px-6 sm:px-8 md:px-12 lg:px-16 py-24">
-				<Surface variant="panel" radius="lg" className="mx-auto w-full max-w-3xl flex flex-col items-center text-center gap-8 p-8 sm:p-12 md:p-16">
-					<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
-						Connect
-					</p>
-
-					<h2 className="text-fluid-36-60 font-light tracking-tight text-foreground font-sans">
-						Say hello.
-					</h2>
-
-					<p className="text-lg text-text-muted max-w-xl leading-relaxed font-light">
-						Email first. Catch me on X. Everything else, eventually.
-					</p>
-
+				<Surface variant="panel" radius="lg" className="mx-auto grid w-full max-w-4xl gap-8 p-8 text-left sm:p-12 md:grid-cols-[1fr_auto] md:items-end md:p-16">
 					<div>
+						<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
+							Connect
+						</p>
+
+						<h2 className="mt-3 text-fluid-36-60 font-light tracking-tight text-foreground font-sans">
+							Say hello.
+						</h2>
+
+						<p className="mt-5 max-w-xl text-lg text-text-muted leading-relaxed font-light">
+							Email first. Catch me on X. Everything else, eventually.
+						</p>
+					</div>
+
+					<div className="flex flex-col items-start gap-5 md:items-end">
 						<Button asChild size="lg" className="gap-2 text-base h-12">
 							<a href={`mailto:${EMAIL}`}>
 								<Mail className="size-5" />
 								{EMAIL}
 							</a>
 						</Button>
-					</div>
 
-					<div className="flex flex-wrap items-center justify-center gap-3 pt-4">
-						{SOCIALS.map(({ label, href, icon: Icon }) => (
-							<a
-								key={label}
-								href={href}
-								target="_blank"
-								rel="noopener noreferrer"
-								aria-label={label}
-								title={label}
-								className="group flex items-center justify-center rounded-full border border-foreground/10 p-3.5 text-text-faint hover:border-foreground/30 hover:text-foreground hover:bg-foreground/5"
-							>
-								<Icon className="size-5" />
-							</a>
-						))}
+						<div className="flex flex-wrap items-center gap-3">
+							{SOCIALS.map(({ label, href, icon: Icon }) => (
+								<a
+									key={label}
+									href={href}
+									target="_blank"
+									rel="noopener noreferrer"
+									aria-label={label}
+									title={label}
+									className="group flex items-center justify-center rounded-full border border-alpha-300 p-3.5 text-text-faint hover:border-alpha-500 hover:text-foreground hover:bg-alpha-100"
+								>
+									<Icon className="size-5" />
+								</a>
+							))}
+						</div>
 					</div>
 				</Surface>
 			</div>
