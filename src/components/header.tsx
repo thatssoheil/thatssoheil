@@ -62,14 +62,14 @@ export function Header() {
 										"relative rounded-sm py-1 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
 										isActive
 											? "text-foreground"
-											: "text-muted-foreground hover:text-foreground/80",
+											: "text-text-faint hover:text-foreground",
 									)}
 								>
 									{label}
 									<span
 										aria-hidden="true"
 										className={cn(
-											"absolute inset-x-0 -bottom-px h-px bg-foreground",
+											"absolute inset-x-0 -bottom-px h-px bg-[linear-gradient(to_right,transparent,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--primary))]",
 											isActive ? "opacity-100" : "opacity-0",
 										)}
 									/>

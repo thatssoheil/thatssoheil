@@ -67,7 +67,7 @@ export function CommandMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-border px-2.5 text-xs text-muted-foreground hover:text-foreground hover:border-foreground/30 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-alpha-300 px-2.5 text-xs text-text-faint hover:text-foreground hover:border-alpha-500 hover:bg-alpha-100 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 			>
 				<span className="font-sans">⌘</span>
 				<span>K</span>
@@ -78,7 +78,7 @@ export function CommandMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)] rounded-sm"
+				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 rounded-sm text-text-faint hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 			>
 				<Menu className="size-5" strokeWidth={1.5} aria-hidden="true" />
 			</button>
