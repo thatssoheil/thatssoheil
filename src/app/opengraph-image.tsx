@@ -10,18 +10,7 @@ export const contentType = "image/png";
 const GRID = {
 	frameInset: 32,
 	railLeft: 152,
-	railRight: 1048,
-	rhythmOffset: 76,
-	rhythm: 128,
 } as const;
-
-const HORIZONTAL_RAILS = [
-	GRID.rhythmOffset,
-	GRID.rhythmOffset + GRID.rhythm,
-	GRID.rhythmOffset + GRID.rhythm * 2,
-	GRID.rhythmOffset + GRID.rhythm * 3,
-	GRID.rhythmOffset + GRID.rhythm * 4,
-] as const;
 
 const ICON_PATHS = {
 	github:
@@ -103,19 +92,6 @@ export default function OpengraphImage() {
 							"radial-gradient(circle at 8% 8%, rgba(47,140,255,0.22), transparent 38%), radial-gradient(circle at 82% 92%, rgba(0,207,190,0.14), transparent 38%), radial-gradient(circle at 38% 62%, rgba(26,76,150,0.12), transparent 42%)",
 					}}
 				/>
-				{HORIZONTAL_RAILS.map((top) => (
-					<div
-						key={top}
-						style={{
-							position: "absolute",
-							left: GRID.frameInset,
-							right: GRID.frameInset,
-							top,
-							height: 1,
-							background: "rgba(245,247,251,0.058)",
-						}}
-					/>
-				))}
 				<div
 					style={{
 						position: "absolute",
@@ -124,26 +100,6 @@ export default function OpengraphImage() {
 							"linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.048) 18%, rgba(255,255,255,0.048) 82%, transparent 100%)",
 						maskImage:
 							"linear-gradient(to bottom, transparent 0%, #000 12%, #000 84%, transparent 100%)",
-					}}
-				/>
-				<div
-					style={{
-						position: "absolute",
-						left: GRID.railLeft,
-						top: 0,
-						bottom: 0,
-						width: 1,
-						background: "rgba(245,247,251,0.09)",
-					}}
-				/>
-				<div
-					style={{
-						position: "absolute",
-						left: GRID.railRight,
-						top: 0,
-						bottom: 0,
-						width: 1,
-						background: "rgba(245,247,251,0.09)",
 					}}
 				/>
 				<div
@@ -225,7 +181,6 @@ export default function OpengraphImage() {
 						style={{
 							display: "flex",
 							alignItems: "center",
-							gap: 16,
 							fontSize: 24,
 							color: "rgba(245,247,251,0.62)",
 							letterSpacing: "0.1em",
@@ -233,7 +188,6 @@ export default function OpengraphImage() {
 							marginTop: 30,
 						}}
 					>
-						<span style={{ color: "#2f8cff" }}>{"//"}</span>
 						<span>{TAGLINE}</span>
 					</div>
 				</div>
