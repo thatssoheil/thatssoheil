@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { EMAIL, SITE, TAGLINE } from "@/lib/constants";
+import { EMAIL, SITE, TAGLINE, X_HANDLE } from "@/lib/constants";
 
 // The social-share card. Generated at the edge so every unfurl resolves (audit #6 —
 // the old static /og.png was referenced everywhere but never existed).
@@ -18,7 +18,7 @@ const ICON_PATHS = {
 const CONTACT_ITEMS = [
 	{ kind: "site", label: "thatssoheil.website" },
 	{ kind: "mail", label: EMAIL },
-	{ kind: "x", label: "@Thatssoheil" },
+	{ kind: "x", label: X_HANDLE },
 	{ kind: "github", label: "github.com/thatssoheil" },
 	{ kind: "linkedin", label: "in/soheilfakour" },
 ] as const;

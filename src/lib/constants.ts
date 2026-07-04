@@ -10,8 +10,8 @@ export const ROLE = "Frontend Engineer × Product Curator";
 export const ROLE_PROSE = "Frontend Engineer and Product Curator";
 /** The motto, canonical casing (sentence case). */
 export const TAGLINE = "Coding vision into existence";
-/** X / Twitter handle — must match the SOCIALS X href (/Thatssoheil). */
-export const X_HANDLE = "@Thatssoheil";
+/** X / Twitter handle — display casing for social cards and metadata. */
+export const X_HANDLE = "@thatssoheil";
 
 // ─── Site Constants ───
 
