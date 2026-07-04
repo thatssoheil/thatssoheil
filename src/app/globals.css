@@ -646,8 +646,37 @@
 	50%      { transform: translate3d(4vmax, -6vmax, 0) scale(0.92); }
 }
 
+.motto-ai-flow > span[aria-hidden="true"] > span {
+	animation: motto-ai-flow 13s ease-in-out infinite;
+}
+
+@keyframes motto-ai-flow {
+	0%, 68%, 100% {
+		color: var(--text-faint);
+		text-shadow: none;
+	}
+	74% {
+		color: color-mix(in oklch, var(--signal-400) 18%, var(--text-faint));
+		text-shadow: 0 0 10px color-mix(in oklch, var(--signal-400) 14%, transparent);
+	}
+	80% {
+		color: color-mix(in oklch, oklch(0.78 0.11 310) 16%, var(--text-faint));
+		text-shadow: 0 0 10px color-mix(in oklch, oklch(0.78 0.11 310) 12%, transparent);
+	}
+	86% {
+		color: color-mix(in oklch, var(--field-accent) 16%, var(--text-faint));
+		text-shadow: 0 0 10px color-mix(in oklch, var(--field-accent) 12%, transparent);
+	}
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
+	.motto-ai-flow > span[aria-hidden="true"] > span {
+		animation: none;
+		color: var(--text-faint);
+		text-shadow: none;
+	}
+
 	*,
 	*::before,
 	*::after {

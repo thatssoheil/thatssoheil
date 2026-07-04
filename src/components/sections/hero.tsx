@@ -2,6 +2,7 @@
 
 import { CipherText } from "@/components/matrix/cipher-text";
 import { HeroChat } from "@/components/hero/hero-chat";
+import { HeroMotto } from "@/components/hero/hero-motto";
 import { type SectionId } from "@/lib/constants";
 import { jumpToSection } from "@/lib/section-navigation";
 
@@ -56,15 +57,13 @@ export function HeroSection() {
 						className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[length:clamp(2.35rem,10.8vw,10.8rem)] [font-family:var(--font-cipher)]"
 					/>
 
-					{/* Tagline — quiet support, tucked into the name lockup. */}
-					<p className="mt-10 whitespace-nowrap font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] leading-none tracking-[0.16em] text-text-faint uppercase sm:mt-12 sm:tracking-[0.18em] md:mt-14">
-						Coding vision into existence
-					</p>
 				</div>
 
 				{/* Ask, don't scroll — the prompt bar grows in place into the chat.
 				                    Feature-flagged: ship without chat by setting NEXT_PUBLIC_ENABLE_CHAT=false. */}
 				{process.env.NEXT_PUBLIC_ENABLE_CHAT === "true" && <HeroChat />}
+
+				<HeroMotto />
 			</div>
 
 			<ScrollCue />
