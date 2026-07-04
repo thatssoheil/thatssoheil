@@ -57,7 +57,7 @@ export function HeroSection() {
 					/>
 
 					{/* Tagline — quiet support, tucked into the name lockup. */}
-					<p className="mt-4 whitespace-nowrap font-sans text-[clamp(0.56rem,2.1vw,0.8125rem)] leading-none tracking-[0.16em] sm:tracking-[0.18em] uppercase text-text-faint">
+					<p className="mt-4 whitespace-nowrap font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] leading-none tracking-[0.16em] sm:tracking-[0.18em] uppercase text-text-faint">
 						Coding vision into existence
 					</p>
 				</div>
