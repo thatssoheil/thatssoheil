@@ -168,6 +168,18 @@ const SHADOWS = [
 
 const ICONS = [Terminal, CommandIcon, ArrowUpRight, Mail, Hash, Search] as const;
 
+const SURFACE_MARKUP = [
+	'<Surface variant="panel" radius="lg">',
+	'  <h2>Readable glass panel</h2>',
+	'  <p>Near-solid backing over the signal field.</p>',
+	"</Surface>",
+	"",
+	'<Surface variant="chrome" radius="lg">',
+	"  <ThemeToggle />",
+	"  <CommandMenu />",
+	"</Surface>",
+] as const;
+
 const NAV = [
 	{ id: "color", label: "Color" },
 	{ id: "type", label: "Type" },
@@ -233,6 +245,28 @@ function Pane({
 		>
 			<div className="relative">{children}</div>
 		</div>
+	);
+}
+
+function CodePane({ lines }: { lines: readonly string[] }) {
+	return (
+		<Pane className="bg-popover/80 p-0">
+			<div className="border-b border-alpha-300 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-text-faint">
+				HTML / JSX pane
+			</div>
+			<pre className="overflow-x-auto px-4 py-4 text-copy-13-mono text-text-muted">
+				<code className="grid min-w-max grid-cols-[2.5rem_1fr] gap-x-4">
+					{lines.map((line, index) => (
+						<span key={`${index}-${line}`} className="contents">
+							<span className="select-none text-right text-text-faint">
+								{String(index + 1).padStart(2, "0")}
+							</span>
+							<span className="text-foreground/80">{line || " "}</span>
+						</span>
+					))}
+				</code>
+			</pre>
+		</Pane>
 	);
 }
 
@@ -687,6 +721,7 @@ export default function DesignSystemPage() {
 							</div>
 						</div>
 					</Pane>
+					<CodePane lines={SURFACE_MARKUP} />
 					<p className="max-w-2xl text-sm font-light text-foreground/45">
 						Glass is <strong className="font-normal text-foreground/70">solid by default</strong>{" "}
 						and translucent only as a progressive enhancement — gated on{" "}
