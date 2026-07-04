@@ -111,13 +111,13 @@ export function HeroSection() {
 						text="Soheil Fakour"
 						as="h1"
 						intensity="display"
-						className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[length:clamp(2.5rem,12vw,12rem)] [font-family:var(--font-cipher)]"
+						className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[length:clamp(2.35rem,10.8vw,10.8rem)] [font-family:var(--font-cipher)]"
 					/>
 				</div>
 
 				{/* Tagline — quiet support, no extra rule chrome. */}
 				<div className="mt-8 flex w-full flex-col items-center">
-					<p className="whitespace-nowrap font-sans text-[clamp(0.6rem,2.4vw,0.875rem)] leading-none tracking-[0.18em] sm:tracking-[0.2em] uppercase text-text-faint">
+					<p className="whitespace-nowrap font-sans text-[clamp(0.56rem,2.1vw,0.8125rem)] leading-none tracking-[0.16em] sm:tracking-[0.18em] uppercase text-text-faint">
 						Coding vision into existence
 					</p>
 				</div>
