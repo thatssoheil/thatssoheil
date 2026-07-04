@@ -272,12 +272,12 @@
 
 /* ─── Dark Mode — neutral black + signal accent (the active theme) ─── */
 .dark {
-	/* Surfaces — neutral shades of black, never pure #000 */
-	--background: var(--ink-950);
+	/* Surfaces — neutral-black with faint optical depth, never pure #000 */
+	--background: oklch(0.145 0.006 245);
 	--foreground: var(--ink-50);
-	--card: var(--ink-900);
+	--card: oklch(0.18 0.006 245);
 	--card-foreground: var(--ink-50);
-	--popover: var(--ink-900);
+	--popover: oklch(0.18 0.006 245);
 	--popover-foreground: var(--ink-50);
 
 	/* Primary — signal accent (CTAs, key accents) with light text (iMessage-style) */
@@ -294,12 +294,12 @@
 	--destructive-foreground: var(--ink-50);
 
 	/* Translucent neutral ramp — white-on-transparent on the void. */
-	--alpha-100: oklch(1 0 0 / 4%);
-	--alpha-200: oklch(1 0 0 / 7%);
-	--alpha-300: oklch(1 0 0 / 10%);
-	--alpha-400: oklch(1 0 0 / 12%);
-	--alpha-500: oklch(1 0 0 / 24%);
-	--alpha-600: oklch(1 0 0 / 51%);
+	--alpha-100: oklch(1 0 0 / 5%);
+	--alpha-200: oklch(1 0 0 / 8%);
+	--alpha-300: oklch(1 0 0 / 12%);
+	--alpha-400: oklch(1 0 0 / 16%);
+	--alpha-500: oklch(1 0 0 / 28%);
+	--alpha-600: oklch(1 0 0 / 56%);
 
 	/* Borders — soft, low-contrast; focus ring is the signal accent */
 	--border: var(--alpha-200); /* 7% (unchanged) */
@@ -320,41 +320,41 @@
 	/* Ambient plane tint — slightly stronger on the near-black void (see :root) */
 	--plane-tint: color-mix(in oklch, var(--foreground) 8%, transparent);
 
-	/* Glass — slightly more translucent + a stronger drop on the void (see :root) */
-	--glass-bg: color-mix(in oklch, var(--ink-900) 60%, transparent);
-	--glass-bg-panel: color-mix(in oklch, var(--ink-900) 86%, transparent);
-	--glass-bg-solid: var(--ink-900);
+	/* Glass — slightly more luminous + a stronger drop on the void (see :root) */
+	--glass-bg: color-mix(in oklch, var(--card) 66%, transparent);
+	--glass-bg-panel: color-mix(in oklch, var(--card) 89%, transparent);
+	--glass-bg-solid: var(--card);
 	--glass-blur: 16px;
 	--glass-blur-strong: 32px;
 	--glass-saturate: 150%;
-	--glass-rim: color-mix(in oklch, var(--foreground) 14%, transparent);
-	--glass-sheen: color-mix(in oklch, white 12%, transparent);
-	--glass-shadow: 0 8px 40px oklch(0 0 0 / 0.5);
+	--glass-rim: color-mix(in oklch, var(--foreground) 18%, transparent);
+	--glass-sheen: color-mix(in oklch, white 18%, transparent);
+	--glass-shadow: 0 16px 56px oklch(0 0 0 / 0.58);
 
 	/* Signal field — a dim signal aurora on the near-black void (the showpiece). */
 	--field-accent: oklch(0.64 0.16 210);
 	--field-blob-a: var(--signal-500);
 	--field-blob-b: var(--field-accent);
 	--field-blob-c: var(--signal-700);
-	--field-opacity: 0.18;
+	--field-opacity: 0.24;
 
 	/* Dark shadows — deeper alpha for black-on-black; gradients — neutral near-black */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5);
 	--shadow-elevated: 0 8px 48px rgba(0, 0, 0, 0.6);
 	--shadow-glow: 0 0 32px color-mix(in oklch, var(--signal-500) 20%, transparent);
-	/* Deep "void" — near-pure-black field that darkens toward the edges,
+	/* Deep "void" — neutral-black field that darkens toward the edges,
 	   pulling focus inward. The hero layers a *faint* signal haze behind the
 	   name on top of this (see hero.tsx) — atmosphere, never a bright spotlight. */
 	--gradient-hero: radial-gradient(
-		ellipse 135% 120% at 50% 50%,
-		oklch(0.075 0 0) 0%,
-		oklch(0.06 0 0) 50%,
-		oklch(0.03 0 0) 100%
+		ellipse 135% 120% at 50% 46%,
+		oklch(0.16 0.018 245) 0%,
+		oklch(0.105 0.012 240) 48%,
+		oklch(0.045 0.006 245) 100%
 	);
 	--gradient-surface: linear-gradient(
 		180deg,
-		oklch(0.16 0 0) 0%,
-		oklch(0.13 0 0) 100%
+		oklch(0.18 0.006 245) 0%,
+		oklch(0.135 0.004 245) 100%
 	);
 }
 
