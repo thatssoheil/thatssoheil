@@ -142,6 +142,7 @@ export function HeroSection() {
 						text="Soheil Fakour"
 						as="h1"
 						ambient
+						intensity="display"
 						className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[length:clamp(2.5rem,12vw,12rem)] [font-family:var(--font-cipher)]"
 					/>
 				</div>

@@ -18,6 +18,7 @@ export type CipherAnimationConfig = {
   spinUpDuration: number;
   loop: boolean;
   ambient: boolean;
+  intensity: "normal" | "display";
 };
 
 /**
@@ -36,8 +37,11 @@ export function useCipherAnimation(
     spinUpDuration,
     loop,
     ambient,
+    intensity,
   } = config;
 
+  const scrambleBlur = intensity === "display" ? 1.15 : 2;
+  const scrambleOpacity = intensity === "display" ? 0.62 : 0.45;
   const prefersReduced = useReducedMotion();
   const [triggered, setTriggered] = useState(false);
 
@@ -46,10 +50,10 @@ export function useCipherAnimation(
   const [display, setDisplay] = useState<DisplayChar[]>(() =>
     text.split("").map((ch, i) => ({
       char: ch === " " ? " " : seededChar(i),
-      blur: ch === " " ? 0 : 2,
+      blur: ch === " " ? 0 : scrambleBlur,
       brightness: 1,
       scale: 1,
-      opacity: ch === " " ? 1 : 0.45,
+      opacity: ch === " " ? 1 : scrambleOpacity,
       tint: 0,
     })),
   );
@@ -75,17 +79,17 @@ export function useCipherAnimation(
       setDisplay(
         chars.map((ch) => ({
           char: ch === " " ? " " : randomGlyph(),
-          blur: ch === " " ? 0 : 2,
+          blur: ch === " " ? 0 : scrambleBlur,
           brightness: 1,
           scale: 1,
-          opacity: ch === " " ? 1 : 0.45,
+          opacity: ch === " " ? 1 : scrambleOpacity,
           tint: 0,
         })),
       );
     }, TICK_MS);
 
     return () => clearInterval(id);
-  }, [text, prefersReduced, triggered]);
+  }, [text, prefersReduced, triggered, scrambleBlur, scrambleOpacity]);
 
   // ── Trigger the one-time decode shortly after mount ──
   useEffect(() => {
@@ -130,6 +134,7 @@ export function useCipherAnimation(
     spinUpDuration,
     loop,
     ambient,
+    intensity,
   ]);
 
   return prefersReduced ? reducedDisplay : display;

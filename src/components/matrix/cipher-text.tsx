@@ -21,6 +21,8 @@ export interface CipherTextProps {
   loop?: boolean;
   /** After the one-time decode, occasionally re-flicker a single locked char (subtle "alive" pulse). Ignored when `loop`. */
   ambient?: boolean;
+  /** Visual intensity for large display use; display lowers blur/opacity severity. */
+  intensity?: "normal" | "display";
   /** Wrapper element type. */
   as?: React.ElementType;
 }
@@ -36,6 +38,7 @@ export function CipherText({
   spinUpDuration = 900,
   loop = false,
   ambient = false,
+  intensity = "normal",
   as: Component = "h1",
 }: CipherTextProps) {
   const display = useCipherAnimation(text, {
@@ -45,6 +48,7 @@ export function CipherText({
     spinUpDuration,
     loop,
     ambient,
+    intensity,
   });
 
   return (
