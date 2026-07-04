@@ -32,6 +32,7 @@ export const metadata: Metadata = {
 	title: SITE.title,
 	description: SITE.description,
 	metadataBase: new URL(SITE.url),
+	applicationName: SITE.name,
 	alternates: {
 		canonical: "/",
 	},
@@ -42,14 +43,29 @@ export const metadata: Metadata = {
 		title: SITE.title,
 		description: SITE.description,
 		siteName: SITE.name,
-		// og:image is supplied by app/opengraph-image.tsx (file convention).
+		images: [
+			{
+				url: SITE.ogImage,
+				width: 1200,
+				height: 630,
+				alt: SITE.ogImageAlt,
+				type: "image/png",
+			},
+		],
 	},
 	twitter: {
 		card: "summary_large_image",
 		title: SITE.title,
 		description: SITE.description,
 		creator: X_HANDLE,
-		// twitter:image is supplied by app/opengraph-image.tsx (file convention).
+		images: [
+			{
+				url: SITE.ogImage,
+				alt: SITE.ogImageAlt,
+				width: 1200,
+				height: 630,
+			},
+		],
 	},
 	icons: {
 		icon: [
@@ -76,11 +92,16 @@ export const metadata: Metadata = {
 		"Soheil Fakour",
 		"portfolio",
 		"frontend engineer",
+		"product engineer",
 		"product curator",
+		"AI product interfaces",
+		"agentic AI",
 		"React",
 		"Next.js",
 		"TypeScript",
+		"Cloudflare Workers",
 	],
+	category: "portfolio",
 };
 
 export const viewport: Viewport = {

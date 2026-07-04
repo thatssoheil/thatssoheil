@@ -17,10 +17,13 @@ export const X_HANDLE = "@Thatssoheil";
 
 export const SITE = {
 	name: "Soheil Fakour",
-	title: `Soheil Fakour, ${TAGLINE}`,
-	description: `Portfolio of Soheil Fakour. ${ROLE_PROSE}.`,
+	title: `Soheil Fakour — ${TAGLINE}`,
+	description:
+		"Soheil Fakour is a frontend engineer and product curator building refined, AI-aware product interfaces with React, Next.js, TypeScript, and Cloudflare.",
 	url: "https://thatssoheil.website",
 	ogImage: "/opengraph-image",
+	ogImageAlt:
+		"Soheil Fakour, frontend engineer and product curator, coding vision into existence.",
 } as const;
 
 /** All navigable sections — order matters for scroll tracking and homepage render order. */
