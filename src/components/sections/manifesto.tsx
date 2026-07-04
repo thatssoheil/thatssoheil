@@ -21,28 +21,29 @@ export function ManifestoSection() {
 				<Surface
 					variant="panel"
 					radius="lg"
-					className="relative isolate mx-auto grid w-full max-w-4xl gap-8 overflow-hidden p-6 sm:gap-10 sm:p-12 md:grid-cols-[10rem_1fr] md:p-16"
+					className="relative isolate mx-auto grid w-full max-w-4xl gap-10 overflow-hidden p-6 sm:p-12 md:p-16"
 				>
 					<div
 						aria-hidden="true"
 						className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_58%_at_22%_24%,color-mix(in_oklch,var(--primary)_8%,transparent),transparent_68%)]"
 					/>
 
-					<div className="relative z-10 flex flex-col gap-4 md:pt-1">
+					<div className="relative z-10">
 						<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
 							{MANIFESTO.label}
 						</p>
-						<p className="font-sans text-xs leading-relaxed tracking-wide text-text-muted">
+
+						<h2 className="mt-3 text-fluid-36-48 font-light tracking-tight text-foreground font-sans">
+							{MANIFESTO.heading}
+						</h2>
+
+						<p className="mt-5 max-w-xl font-sans text-sm leading-relaxed tracking-wide text-text-muted sm:text-base">
 							{MANIFESTO.subheading}
 						</p>
 					</div>
 
 					<div className="relative z-10">
-						<h2 className="text-fluid-36-48 font-light tracking-tight text-foreground font-sans">
-							{MANIFESTO.heading}
-						</h2>
-
-						<div className="mt-10 flex flex-col gap-8 sm:mt-14 sm:gap-10">
+						<div className="flex flex-col gap-8 sm:gap-10">
 							{MANIFESTO.paragraphs.map((p, index) => (
 								<div
 									key={p.label}
