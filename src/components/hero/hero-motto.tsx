@@ -39,8 +39,8 @@ export function HeroMotto() {
 			revealedHold={2600}
 			decelDuration={900}
 			spinUpDuration={500}
-			intensity="normal"
-			className="motto-ai-flow pointer-events-none absolute inset-x-6 bottom-28 mx-auto whitespace-nowrap text-center font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] leading-none tracking-[0.16em] text-text-faint uppercase sm:tracking-[0.18em]"
+			intensity="display"
+			className="motto-ai-flow pointer-events-none absolute inset-x-6 bottom-28 mx-auto whitespace-nowrap text-center font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium leading-none tracking-[0.22em] text-text-faint uppercase sm:font-normal sm:tracking-[0.3em]"
 		/>
 	);
 }
