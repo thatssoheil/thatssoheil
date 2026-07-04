@@ -254,6 +254,17 @@
 	--field-blob-b: var(--field-accent);
 	--field-blob-c: var(--signal-400);
 	--field-opacity: 0.1;
+	/* Structural grid — faint architectural guides on paper. */
+	--grid-rail: color-mix(in oklch, var(--foreground) 8%, transparent);
+	--grid-rhythm: color-mix(in oklch, var(--foreground) 5%, transparent);
+	--grid-center: color-mix(in oklch, var(--brand) 8%, transparent);
+	--grid-fade: linear-gradient(
+		to bottom,
+		transparent 0%,
+		#000 14%,
+		#000 82%,
+		transparent 100%
+	);
 
 	/* Light shadows — soft, low alpha; gradients — paper */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.08);
@@ -341,6 +352,17 @@
 	--field-blob-b: var(--field-accent);
 	--field-blob-c: var(--signal-700);
 	--field-opacity: 0.18;
+	/* Structural grid — visible but quiet on the deep void. */
+	--grid-rail: color-mix(in oklch, var(--foreground) 11%, transparent);
+	--grid-rhythm: color-mix(in oklch, var(--foreground) 6%, transparent);
+	--grid-center: color-mix(in oklch, var(--brand) 12%, transparent);
+	--grid-fade: linear-gradient(
+		to bottom,
+		transparent 0%,
+		#000 12%,
+		#000 84%,
+		transparent 100%
+	);
 
 	/* Dark shadows — deeper alpha for black-on-black; gradients — neutral near-black */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5);
@@ -531,6 +553,36 @@
 	top: 30%; left: 32%;
 	background: radial-gradient(circle, var(--field-blob-c), transparent 70%);
 	animation: signal-drift-c 54s ease-in-out infinite;
+}
+/* ─── Structural grid ───
+   A fixed architectural substrate aligned to the site's shared content width.
+   It sits above the signal field and below all content, so it gives the void
+   structure without becoming a component-level decoration. */
+.structure-grid {
+	position: fixed;
+	inset: 0;
+	z-index: -9;
+	overflow: hidden;
+	pointer-events: none;
+	mask-image: var(--grid-fade);
+	-webkit-mask-image: var(--grid-fade);
+}
+.structure-grid__rails,
+.structure-grid__rhythm {
+	position: absolute;
+	inset: 0;
+}
+.structure-grid__rails {
+	background-image:
+		linear-gradient(to right, transparent calc(50% - min(44rem, calc(100vw - 2.5rem)) / 2), var(--grid-rail) 0 calc(50% - min(44rem, calc(100vw - 2.5rem)) / 2 + 1px), transparent 0),
+		linear-gradient(to right, transparent calc(50% + min(44rem, calc(100vw - 2.5rem)) / 2 - 1px), var(--grid-rail) 0 calc(50% + min(44rem, calc(100vw - 2.5rem)) / 2), transparent 0),
+		linear-gradient(to right, transparent calc(50% - 0.5px), var(--grid-center) 0 calc(50% + 0.5px), transparent 0);
+}
+.structure-grid__rhythm {
+	background-image:
+		linear-gradient(to bottom, var(--grid-rhythm) 1px, transparent 1px);
+	background-size: 100% 8rem;
+	background-position: 0 calc(env(safe-area-inset-top) + 0.75rem);
 }
 @keyframes signal-drift-a {
 	0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
