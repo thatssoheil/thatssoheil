@@ -646,7 +646,7 @@
 	50%      { transform: translate3d(4vmax, -6vmax, 0) scale(0.92); }
 }
 
-.motto-ai-flow > span[aria-hidden="true"] > span {
+.motto-ai-word span[aria-hidden="true"] > span {
 	animation: motto-ai-flow 13s ease-in-out infinite;
 }
 
@@ -671,7 +671,7 @@
 
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
-	.motto-ai-flow > span[aria-hidden="true"] > span {
+	.motto-ai-word span[aria-hidden="true"] > span {
 		animation: none;
 		color: var(--text-faint);
 		text-shadow: none;
