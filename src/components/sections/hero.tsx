@@ -5,16 +5,22 @@ import { HeroChat } from "@/components/hero/hero-chat";
 import { type SectionId } from "@/lib/constants";
 import { jumpToSection } from "@/lib/section-navigation";
 
-// ─── Ambient plane — exact section-width glass behind the name ───
-// Static: the element itself owns the shared max width so the visible glass
-// aligns with the header and content sections without SVG inset math.
+// ─── Ambient plane — exact section-width, ultra-thin glass behind the name ───
+// Static: a faint sheet that keeps the shared width but dissolves as it reaches
+// the lower edge, so it reads as atmosphere instead of a heavy panel.
 
 function HeroPlane() {
 	return (
 		<div
 			aria-hidden="true"
 			data-hero-plane=""
-			className="pointer-events-none absolute left-1/2 top-[calc(50%+clamp(2.35rem,10.8vw,10.8rem)*0.72)] -z-10 h-[calc(clamp(2.35rem,10.8vw,10.8rem)*3.35)] w-[calc(100vw-2.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-alpha-300/70 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--foreground)_9%,transparent),color-mix(in_oklch,var(--foreground)_4%,transparent)),radial-gradient(70%_85%_at_50%_28%,var(--plane-sheen),transparent_72%),radial-gradient(72%_95%_at_50%_72%,var(--plane-glow),transparent_80%)] shadow-[inset_0_1px_0_var(--glass-sheen),inset_0_-1px_0_color-mix(in_oklch,var(--foreground)_7%,transparent),0_18px_70px_color-mix(in_oklch,var(--background)_70%,transparent)] backdrop-blur-md"
+			className="pointer-events-none absolute left-1/2 top-[calc(50%+clamp(2.35rem,10.8vw,10.8rem)*0.72)] -z-10 h-[calc(clamp(2.35rem,10.8vw,10.8rem)*3.35)] w-[calc(100vw-2.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-alpha-300/35 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--foreground)_5%,transparent),color-mix(in_oklch,var(--foreground)_1.5%,transparent)),radial-gradient(70%_78%_at_50%_26%,color-mix(in_oklch,var(--foreground)_10%,transparent),transparent_74%),radial-gradient(72%_95%_at_50%_72%,color-mix(in_oklch,var(--primary)_10%,transparent),transparent_82%)] shadow-[inset_0_1px_0_color-mix(in_oklch,var(--foreground)_12%,transparent),0_16px_55px_color-mix(in_oklch,var(--background)_48%,transparent)] backdrop-blur-[6px]"
+			style={{
+				maskImage:
+					"linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%)",
+				WebkitMaskImage:
+					"linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%)",
+			}}
 		/>
 	);
 }
