@@ -13,7 +13,7 @@ const iconButtonVariants = cva(
 			variant: {
 				send: "rounded-xl bg-primary text-primary-foreground hover:scale-105 active:scale-95",
 				ghost:
-					"rounded-full border border-border text-muted-foreground hover:border-brand/40 hover:text-brand",
+					"rounded-xl border border-alpha-300 text-text-faint hover:border-alpha-500 hover:bg-alpha-100 hover:text-foreground",
 			},
 			size: {
 				sm: "size-8 [&_svg]:size-4",

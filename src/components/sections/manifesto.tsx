@@ -33,18 +33,18 @@ export function ManifestoSection() {
 							{MANIFESTO.heading}
 						</h2>
 
-							<div className="mt-14 flex flex-col gap-10">
-								{MANIFESTO.paragraphs.map((p) => (
-									<div key={p.label} className="grid gap-3 sm:grid-cols-[7rem_1fr]">
-										<p className="font-sans text-[10px] tracking-[0.22em] uppercase text-text-faint">
-											{p.label}
-										</p>
-										<p className="text-base sm:text-lg leading-relaxed text-left text-text-muted font-light">
-											{p.body}
-										</p>
-									</div>
-								))}
-							</div>
+						<div className="mt-14 flex flex-col gap-10">
+							{MANIFESTO.paragraphs.map((p) => (
+								<div key={p.label} className="grid gap-3 sm:grid-cols-[7rem_1fr]">
+									<p className="font-sans text-[10px] tracking-[0.22em] uppercase text-text-faint">
+										{p.label}
+									</p>
+									<p className="text-base sm:text-lg leading-relaxed text-left text-text-muted font-light">
+										{p.body}
+									</p>
+								</div>
+							))}
+						</div>
 					</div>
 				</Surface>
 			</div>

@@ -153,7 +153,7 @@ export function HeroChat() {
 										<button
 											type="button"
 											onClick={retry}
-											className="rounded-full border border-border px-3 py-1 font-sans text-[0.7rem] tracking-wide text-text-muted transition-colors hover:border-brand/40 hover:text-brand"
+											className="rounded-xl border border-alpha-300 px-3 py-1 font-sans text-[0.7rem] tracking-wide text-text-faint transition-colors hover:border-alpha-500 hover:bg-alpha-100 hover:text-foreground"
 										>
 											retry
 										</button>
@@ -219,7 +219,7 @@ export function HeroChat() {
 						key={s}
 						type="button"
 						onClick={() => submit(s)}
-						className="rounded-full border border-border px-3.5 py-1.5 font-sans text-[0.72rem] tracking-wide text-foreground/65 transition-colors hover:border-brand/40 hover:text-brand"
+						className="rounded-xl border border-alpha-300 px-3.5 py-1.5 font-sans text-[0.72rem] tracking-wide text-text-faint transition-colors hover:border-alpha-500 hover:bg-alpha-100 hover:text-foreground"
 					>
 						{s}
 					</button>

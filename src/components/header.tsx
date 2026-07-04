@@ -40,7 +40,7 @@ export function Header() {
 					href="#hero"
 					onClick={(e) => handleClick(e, "#hero")}
 					aria-label={`${SITE.name}, home`}
-					className="flex min-h-11 items-center gap-2.5 rounded-sm tracking-tight text-foreground hover:text-foreground/80 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+					className="flex min-h-11 items-center gap-2.5 rounded-lg tracking-tight text-foreground hover:text-foreground/80 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 				>
 					<LogoMark className="h-[18px]" />
 					{SITE.name}
@@ -59,7 +59,7 @@ export function Header() {
 									onClick={(e) => handleClick(e, href)}
 									aria-current={isActive ? "true" : undefined}
 									className={cn(
-										"relative rounded-sm py-1 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
+										"relative rounded-lg py-1 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
 										isActive
 											? "text-foreground"
 											: "text-text-faint hover:text-foreground",

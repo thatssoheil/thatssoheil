@@ -20,7 +20,7 @@ import { surfaceVariants } from "@/components/ui/surface";
 const ITEM_CLASS =
 	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
 	// mobile nav); sm:py-2.5 keeps the compact desktop rows unchanged.
-	"group flex items-center gap-3 rounded-md px-3 py-3 sm:py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-accent data-[selected=true]:text-foreground";
+	"group flex items-center gap-3 rounded-xl px-3 py-3 sm:py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-alpha-100 data-[selected=true]:text-foreground";
 
 const ICON_CLASS =
 	"size-4 text-muted-foreground group-data-[selected=true]:text-brand";
@@ -67,7 +67,7 @@ export function CommandMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-alpha-300 px-2.5 text-xs text-text-faint hover:text-foreground hover:border-alpha-500 hover:bg-alpha-100 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-xl border border-alpha-300 px-2.5 text-xs text-text-faint hover:text-foreground hover:border-alpha-500 hover:bg-alpha-100 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 			>
 				<span className="font-sans">⌘</span>
 				<span>K</span>
@@ -78,7 +78,7 @@ export function CommandMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 rounded-sm text-text-faint hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 rounded-xl text-text-faint hover:bg-alpha-100 hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 			>
 				<Menu className="size-5" strokeWidth={1.5} aria-hidden="true" />
 			</button>
