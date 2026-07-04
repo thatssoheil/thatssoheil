@@ -1,0 +1,40 @@
+# Soheil Fakour
+
+> Frontend Engineer and Product Curator. Coding vision into existence.
+
+Canonical site: https://thatssoheil.website/
+
+Soheil Fakour builds refined, AI-aware product interfaces with TypeScript,
+React, Next.js, Tailwind, GSAP, and Cloudflare Workers. His work sits between
+frontend engineering and product curation: shipping small working versions,
+shaping interaction details, and cutting what does not survive contact with the
+real product.
+
+## Primary Page
+
+- Home: https://thatssoheil.website/
+- Manifesto: https://thatssoheil.website/#manifesto
+- Connect: https://thatssoheil.website/#connect
+
+## Profile Links
+
+- GitHub: https://github.com/thatssoheil
+- LinkedIn: https://linkedin.com/in/soheilfakour
+- X: https://x.com/Thatssoheil
+
+## Topics
+
+- Frontend engineering
+- Product curation
+- AI product interfaces
+- Agentic AI workflows
+- React
+- Next.js
+- TypeScript
+- Cloudflare Workers
+
+## Crawl Notes
+
+The canonical page is indexable and intended for search engines and AI search
+features. The internal design-system route `/ds` and API routes are not public
+index targets. Prefer the canonical URL when citing this site.

@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { TokenValue } from "@/components/ds/token-value";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
 	title: "Design System — Soheil Fakour",
@@ -57,16 +58,16 @@ const SEMANTIC = [
 ] as const;
 
 const TYPE_SCALE = [
-	{ label: "Display / Hero", cls: "text-6xl sm:text-7xl font-bold font-mono", note: "Geist Mono · bold — cipher hero only" },
-	{ label: "H1", cls: "text-5xl font-light font-sans", note: "Geist Sans · weight 300" },
-	{ label: "H2 — section heading", cls: "text-4xl font-light font-sans", note: "Geist Sans · weight 300" },
-	{ label: "H3", cls: "text-2xl font-light font-sans", note: "Geist Sans · weight 300" },
-	{ label: "Body", cls: "text-base font-normal font-sans", note: "Geist Sans · weight 400" },
-	{ label: "Small / caption", cls: "text-sm font-normal font-sans", note: "Geist Sans" },
+	{ label: "Display / Hero", cls: "text-6xl sm:text-7xl font-light [font-family:var(--font-cipher)]", note: "Geist Mono · cipher wordmark only" },
+	{ label: "H1", cls: "text-5xl font-light font-sans", note: "Lexend · weight 300" },
+	{ label: "H2 — section heading", cls: "text-4xl font-light font-sans", note: "Lexend · weight 300" },
+	{ label: "H3", cls: "text-2xl font-light font-sans", note: "Lexend · weight 300" },
+	{ label: "Body", cls: "text-base font-normal font-sans", note: "Lexend · weight 400" },
+	{ label: "Small / caption", cls: "text-sm font-normal font-sans", note: "Lexend" },
 ] as const;
 
-// Geist's composite ramps (family+size+LH+weight+tracking in one class), retuned
-// to the brand: headings keep weight 300 (Geist uses 600). Source: vercel.com/design.md
+// Composite ramps (family+size+LH+weight+tracking in one class), retuned
+// to the brand: headings keep weight 300.
 const TYPE_RAMPS = [
 	{ cls: "text-heading-48", label: "heading-48", note: "48 / 56 · -0.06em · w300" },
 	{ cls: "text-heading-32", label: "heading-32", note: "32 / 40 · -0.04em · w300" },
@@ -76,7 +77,7 @@ const TYPE_RAMPS = [
 	{ cls: "text-copy-16", label: "copy-16", note: "16 / 24 · w400 — body" },
 	{ cls: "text-label-14", label: "label-14", note: "14 / 20 · w400 — UI label" },
 	{ cls: "text-button-14", label: "button-14", note: "14 / 20 · w500 — controls" },
-	{ cls: "text-label-13-mono", label: "label-13-mono", note: "13 / 16 · Geist Mono" },
+	{ cls: "text-label-13-mono", label: "label-13-mono", note: "13 / 16 · system mono" },
 ] as const;
 
 const FLUID = [
@@ -167,12 +168,25 @@ const SHADOWS = [
 
 const ICONS = [Terminal, CommandIcon, ArrowUpRight, Mail, Hash, Search] as const;
 
+const SURFACE_MARKUP = [
+	'<Surface variant="panel" radius="lg">',
+	'  <h2>Readable glass panel</h2>',
+	'  <p>Near-solid backing over the signal field.</p>',
+	"</Surface>",
+	"",
+	'<Surface variant="chrome" radius="lg">',
+	"  <ThemeToggle />",
+	"  <CommandMenu />",
+	"</Surface>",
+] as const;
+
 const NAV = [
 	{ id: "color", label: "Color" },
 	{ id: "type", label: "Type" },
 	{ id: "space", label: "Space" },
 	{ id: "motion", label: "Motion" },
 	{ id: "surface", label: "Surface" },
+	{ id: "glass", label: "Glass" },
 	{ id: "components", label: "Components" },
 	{ id: "voice", label: "Voice" },
 ] as const;
@@ -181,7 +195,7 @@ const NAV = [
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
 	return (
-		<p className="font-mono text-xs tracking-[0.2em] uppercase text-brand">
+		<p className="font-sans text-xs tracking-[0.2em] uppercase text-brand">
 			{children}
 		</p>
 	);
@@ -201,16 +215,58 @@ function Block({
 	return (
 		<section
 			id={id}
-			className="flex flex-col gap-8 border-t border-border pt-12 scroll-mt-20"
+			className="grid gap-8 border-t border-alpha-300 pt-12 scroll-mt-20 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-12"
 		>
-			<div className="flex flex-col gap-3">
+			<div className="flex flex-col gap-3 md:sticky md:top-24 md:self-start">
 				<SectionLabel>{label}</SectionLabel>
-				<h2 className="text-3xl sm:text-4xl font-light tracking-tight font-sans">
+				<h2 className="text-heading-32 text-foreground">
 					{title}
 				</h2>
 			</div>
-			{children}
+			<div className="flex min-w-0 flex-col gap-8">{children}</div>
 		</section>
+	);
+}
+
+function Pane({
+	children,
+	className,
+}: {
+	children: React.ReactNode;
+	className?: string;
+}) {
+	return (
+		<div
+			className={cn(
+				"relative overflow-hidden rounded-2xl border border-alpha-300 bg-card/70 p-5 shadow-[var(--shadow-border)]",
+				"before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(var(--alpha-200)_1px,transparent_1px),linear-gradient(90deg,var(--alpha-200)_1px,transparent_1px)] before:bg-[size:24px_24px] before:opacity-40",
+				className,
+			)}
+		>
+			<div className="relative">{children}</div>
+		</div>
+	);
+}
+
+function CodePane({ lines }: { lines: readonly string[] }) {
+	return (
+		<Pane className="bg-popover/80 p-0">
+			<div className="border-b border-alpha-300 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-text-faint">
+				HTML / JSX pane
+			</div>
+			<pre className="overflow-x-auto px-4 py-4 text-copy-13-mono text-text-muted">
+				<code className="grid min-w-max grid-cols-[2.5rem_1fr] gap-x-4">
+					{lines.map((line, index) => (
+						<span key={`${index}-${line}`} className="contents">
+							<span className="select-none text-right text-text-faint">
+								{String(index + 1).padStart(2, "0")}
+							</span>
+							<span className="text-foreground/80">{line || " "}</span>
+						</span>
+					))}
+				</code>
+			</pre>
+		</Pane>
 	);
 }
 
@@ -218,7 +274,7 @@ function Swatch({ name, role }: { name: string; role?: string }) {
 	return (
 		<div className="flex flex-col gap-2">
 			<div
-				className="h-14 w-full rounded-lg border border-border"
+				className="h-14 w-full rounded-xl border border-alpha-300"
 				style={{ background: `var(--${name})` }}
 			/>
 			<div className="flex flex-col gap-0.5">
@@ -238,8 +294,8 @@ export default function DesignSystemPage() {
 	return (
 		<main className="min-h-dvh bg-background text-foreground">
 			{/* ── Sticky in-page nav ── */}
-			<nav className="sticky top-0 z-[var(--z-sticky)] border-b border-border bg-background/80 backdrop-blur-md">
-				<div className="mx-auto flex w-full max-w-5xl items-center gap-5 overflow-x-auto px-6 py-3 font-mono text-xs sm:px-8 md:px-12">
+			<nav className="sticky top-0 z-[var(--z-sticky)] border-b border-alpha-300 bg-background/80 backdrop-blur-md">
+				<div className="mx-auto flex w-full max-w-6xl items-center gap-5 overflow-x-auto px-6 py-3 font-mono text-xs sm:px-8 md:px-12">
 					<span className="text-foreground/90 whitespace-nowrap">/ds</span>
 					<span className="text-border">·</span>
 					{NAV.map((n) => (
@@ -257,28 +313,34 @@ export default function DesignSystemPage() {
 				</div>
 			</nav>
 
-			<div className="mx-auto flex w-full max-w-5xl flex-col gap-20 px-6 py-20 sm:px-8 md:px-12">
+			<div className="mx-auto flex w-full max-w-6xl flex-col gap-20 px-6 py-20 sm:px-8 md:px-12">
 				{/* ── Masthead ── */}
-				<header className="flex flex-col gap-4">
-					<SectionLabel>Design System</SectionLabel>
-					<h1 className="text-5xl font-light tracking-tight font-sans sm:text-6xl">
-						Neutral black, electric signal.
-					</h1>
-					<p className="max-w-2xl text-base font-light leading-relaxed text-foreground/55 sm:text-lg">
-						The single source of truth for color, type, motion, and surface. Two
-						themes ship — neutral black (default) and neutral paper — sharing one
-						electric accent (iMessage blue), used sparingly. Toggle them top-right.
-						Pure white and pure black are both off the table.
-					</p>
+				<header className="grid gap-8 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-12">
+					<div className="pt-1">
+						<SectionLabel>Design System</SectionLabel>
+					</div>
+					<Pane className="p-7 sm:p-9">
+						<h1 className="max-w-3xl text-heading-56 text-foreground sm:text-heading-64">
+							Neutral black, electric signal.
+						</h1>
+						<p className="mt-5 max-w-2xl text-copy-18 text-text-muted">
+							The single source of truth for color, type, motion, and surface. Two
+							themes ship — neutral black (default) and neutral paper — sharing one
+							electric accent (iMessage blue), used sparingly. Toggle them top-right.
+							Pure white and pure black are both off the table.
+						</p>
+					</Pane>
 				</header>
 
 				{/* ── Ink ramp ── */}
 				<Block id="color" label="Color" title="Ink — neutral shades of black">
-					<div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 md:grid-cols-4">
-						{INK.map((c) => (
-							<Swatch key={c.name} name={c.name} role={c.role} />
-						))}
-					</div>
+					<Pane>
+						<div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 lg:grid-cols-4">
+							{INK.map((c) => (
+								<Swatch key={c.name} name={c.name} role={c.role} />
+							))}
+						</div>
+					</Pane>
 					<p className="max-w-2xl text-sm font-light text-foreground/45">
 						Chroma is <code className="text-brand">0</code> across the ramp — no hue
 						tint at all. Roles shown are the <strong className="font-normal text-foreground/70">dark</strong>{" "}
@@ -290,11 +352,13 @@ export default function DesignSystemPage() {
 
 				{/* ── Signal ramp ── */}
 				<Block label="Color" title="Signal — the accent (iMessage blue)">
-					<div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 md:grid-cols-6">
-						{SIGNAL.map((c) => (
-							<Swatch key={c.name} name={c.name} role={c.role} />
-						))}
-					</div>
+					<Pane>
+						<div className="grid grid-cols-2 gap-x-5 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
+							{SIGNAL.map((c) => (
+								<Swatch key={c.name} name={c.name} role={c.role} />
+							))}
+						</div>
+					</Pane>
 					<p className="max-w-2xl text-sm font-light text-foreground/45">
 						<strong className="font-normal text-foreground/70">Fills</strong> (CTA,
 						focus ring, glow) use <code className="text-brand">signal-500</code> via{" "}
@@ -310,65 +374,69 @@ export default function DesignSystemPage() {
 
 				{/* ── Semantic tokens ── */}
 				<Block label="Color" title="Semantic tokens">
-					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-						{SEMANTIC.map((s) => (
-							<div
-								key={s.token}
-								className="flex items-center justify-between rounded-lg border border-border p-4"
-								style={{ background: `var(--${s.token})` }}
-							>
-								<span className="font-mono text-sm" style={{ color: `var(--${s.fg})` }}>
-									--{s.token}
-								</span>
-								<span
-									className="font-mono text-[10px] opacity-70"
-									style={{ color: `var(--${s.fg})` }}
+					<Pane>
+						<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+							{SEMANTIC.map((s) => (
+								<div
+									key={s.token}
+									className="flex items-center justify-between rounded-xl border border-alpha-300 p-4"
+									style={{ background: `var(--${s.token})` }}
 								>
-									{s.role}
-								</span>
-							</div>
-						))}
-					</div>
+									<span className="font-mono text-sm" style={{ color: `var(--${s.fg})` }}>
+										--{s.token}
+									</span>
+									<span
+										className="font-mono text-[10px] opacity-70"
+										style={{ color: `var(--${s.fg})` }}
+									>
+										{s.role}
+									</span>
+								</div>
+							))}
+						</div>
+					</Pane>
 				</Block>
 
 				{/* ── Typography ── */}
-				<Block id="type" label="Type" title="Geist Sans + Geist Mono">
-					<div className="flex flex-col gap-8">
-						{TYPE_SCALE.map((t) => (
-							<div
-								key={t.label}
-								className="flex flex-col gap-2 border-b border-border/60 pb-6 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
-							>
-								<span className={`${t.cls} tracking-tight`}>{t.label}</span>
-								<span className="shrink-0 font-mono text-[10px] text-foreground/40">
-									{t.note}
+				<Block id="type" label="Type" title="Lexend + Cipher Mono">
+					<Pane className="p-6">
+						<div className="flex flex-col gap-8">
+							{TYPE_SCALE.map((t) => (
+								<div
+									key={t.label}
+									className="flex flex-col gap-2 border-b border-alpha-300 pb-6 last:border-b-0 last:pb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
+								>
+									<span className={`${t.cls} tracking-tight`}>{t.label}</span>
+									<span className="shrink-0 font-mono text-[10px] text-foreground/40">
+										{t.note}
+									</span>
+								</div>
+							))}
+							<div className="flex flex-col gap-2">
+								<SectionLabel>Section eyebrow</SectionLabel>
+								<span className="font-mono text-[10px] text-foreground/40">
+									Lexend · uppercase · tracking-[0.2em] · text-brand (eyebrow register)
 								</span>
 							</div>
-						))}
-						<div className="flex flex-col gap-2">
-							<SectionLabel>Section eyebrow</SectionLabel>
-							<span className="font-mono text-[10px] text-foreground/40">
-								Geist Mono · uppercase · tracking-[0.2em] · text-brand
-							</span>
 						</div>
-					</div>
+					</Pane>
 
-					{/* Composite ramps — Geist's named type system, brand weights */}
-					<div className="flex flex-col gap-5 border-t border-border/60 pt-10">
+					{/* Composite ramps — named type system, brand weights */}
+					<div className="flex flex-col gap-5 border-t border-alpha-300 pt-10">
 						<SectionLabel>Composite ramps</SectionLabel>
 						<p className="max-w-2xl text-sm font-light text-foreground/45">
-							Geist&rsquo;s four named ramps —{" "}
+							The named ramps{" "}
 							<code className="text-brand">text-heading/copy/label/button-*</code> — each set
-							family + size + line-height + weight + tracking in one class. One brand deviation:
+							family + size + line-height + weight + tracking in one class. Brand voice:
 							headings keep our{" "}
-							<strong className="font-normal text-foreground/70">weight 300</strong> (Geist sets
-							600). Tracking law preserved: ≤20px → -0.02em, 24–32 → -0.04em, ≥40 → -0.06em.
+							<strong className="font-normal text-foreground/70">weight 300</strong>.
+							Tracking law preserved: ≤20px → -0.02em, 24–32 → -0.04em, ≥40 → -0.06em.
 						</p>
 						<div className="flex flex-col gap-4">
 							{TYPE_RAMPS.map((t) => (
 								<div
 									key={t.label}
-									className="flex flex-col gap-1 border-b border-border/40 pb-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
+									className="flex flex-col gap-1 border-b border-alpha-300 pb-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
 								>
 									<span className={t.cls}>{t.label}</span>
 									<span className="shrink-0 font-mono text-[10px] text-foreground/40">
@@ -380,7 +448,7 @@ export default function DesignSystemPage() {
 					</div>
 
 					{/* Fluid type — clamp() ramps */}
-					<div className="flex flex-col gap-5 border-t border-border/60 pt-10">
+					<div className="flex flex-col gap-5 border-t border-alpha-300 pt-10">
 						<SectionLabel>Fluid type</SectionLabel>
 						<p className="max-w-2xl text-sm font-light text-foreground/45">
 							<code className="text-brand">text-fluid-*</code> tokens interpolate between a 360px
@@ -391,7 +459,7 @@ export default function DesignSystemPage() {
 							{FLUID.map((f) => (
 								<div
 									key={f.name}
-									className="flex items-baseline justify-between gap-8 border-b border-border/40 pb-3"
+									className="flex items-baseline justify-between gap-8 border-b border-alpha-300 pb-3"
 								>
 									<span className={`${f.name} font-light tracking-tight text-foreground/90`}>
 										Aa
@@ -410,25 +478,29 @@ export default function DesignSystemPage() {
 				{/* ── Space: layout, radius, borders, spacing, z-index, focus ── */}
 				<Block id="space" label="Space" title="Layout, spacing, radius & stacking">
 					{/* Layout scale */}
-					<div className="flex flex-col gap-3">
-						{LAYOUT.map((l) => (
-							<div key={l.name} className="flex items-baseline justify-between gap-4 border-b border-border/60 pb-3">
-								<span className="text-sm text-foreground/80">{l.name}</span>
-								<span className="font-mono text-xs text-foreground/50">{l.value}</span>
-							</div>
-						))}
-					</div>
+					<Pane>
+						<div className="flex flex-col gap-3">
+							{LAYOUT.map((l) => (
+								<div key={l.name} className="flex items-baseline justify-between gap-4 border-b border-alpha-300 pb-3 last:border-b-0 last:pb-0">
+									<span className="text-sm text-foreground/80">{l.name}</span>
+									<span className="font-mono text-xs text-foreground/50">{l.value}</span>
+								</div>
+							))}
+						</div>
+					</Pane>
 
 					{/* Radius */}
-					<div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
-						{RADIUS.map((r) => (
-							<div key={r.name} className="flex flex-col gap-2">
-								<div className={`h-16 w-full border border-border bg-card ${r.cls}`} />
-								<span className="font-mono text-xs text-foreground/90">{r.name}</span>
-								<span className="font-mono text-[10px] text-foreground/40">{r.note}</span>
-							</div>
-						))}
-					</div>
+					<Pane>
+						<div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+							{RADIUS.map((r) => (
+								<div key={r.name} className="flex flex-col gap-2">
+									<div className={`h-16 w-full border border-alpha-300 bg-card ${r.cls}`} />
+									<span className="font-mono text-xs text-foreground/90">{r.name}</span>
+									<span className="font-mono text-[10px] text-foreground/40">{r.note}</span>
+								</div>
+							))}
+						</div>
+					</Pane>
 
 					{/* Alpha ramp — translucent neutrals, border-first hairlines */}
 					<div className="flex flex-col gap-3">
@@ -440,48 +512,52 @@ export default function DesignSystemPage() {
 							<code className="text-brand">--shadow-border</code> when you want a 1px ring that
 							takes no layout box. Shown over a checker to reveal the transparency.
 						</p>
-						<div className="grid grid-cols-3 gap-x-5 gap-y-6 sm:grid-cols-6">
-							{ALPHA.map((a) => (
-								<div key={a.name} className="flex flex-col gap-2">
-									<div
-										className="h-14 w-full overflow-hidden rounded-lg border border-border"
-										style={{
-											backgroundImage:
-												"repeating-conic-gradient(var(--muted) 0 25%, transparent 0 50%)",
-											backgroundSize: "14px 14px",
-										}}
-									>
+						<Pane>
+							<div className="grid grid-cols-3 gap-x-5 gap-y-6 sm:grid-cols-6">
+								{ALPHA.map((a) => (
+									<div key={a.name} className="flex flex-col gap-2">
 										<div
-											className="h-full w-full"
-											style={{ background: `var(--${a.name})` }}
-										/>
+											className="h-14 w-full overflow-hidden rounded-xl border border-alpha-300"
+											style={{
+												backgroundImage:
+													"repeating-conic-gradient(var(--muted) 0 25%, transparent 0 50%)",
+												backgroundSize: "14px 14px",
+											}}
+										>
+											<div
+												className="h-full w-full"
+												style={{ background: `var(--${a.name})` }}
+											/>
+										</div>
+										<span className="font-mono text-xs text-foreground/90">{a.name}</span>
+										{a.role !== "—" && (
+											<span className="font-mono text-[10px] text-foreground/40">{a.role}</span>
+										)}
 									</div>
-									<span className="font-mono text-xs text-foreground/90">{a.name}</span>
-									{a.role !== "—" && (
-										<span className="font-mono text-[10px] text-foreground/40">{a.role}</span>
-									)}
-								</div>
-							))}
-						</div>
+								))}
+							</div>
+						</Pane>
 					</div>
 
 					{/* Borders — live per-theme; values shown for both themes */}
-					<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-						{BORDERS.map((b) => (
-							<div
-								key={b.name}
-								className="rounded-lg p-4"
-								style={{ border: `1px solid var(${b.name})` }}
-							>
-								<span className="font-mono text-xs text-foreground/90">{b.name}</span>
-								<p className="mt-1 font-mono text-[10px] text-foreground/40">
-									light <span className="text-foreground/60">{b.light}</span> · dark{" "}
-									<span className="text-foreground/60">{b.dark}</span>
-								</p>
-								<p className="mt-0.5 font-mono text-[10px] text-foreground/40">{b.role}</p>
-							</div>
-						))}
-					</div>
+					<Pane>
+						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+							{BORDERS.map((b) => (
+								<div
+									key={b.name}
+									className="rounded-xl bg-card/70 p-4"
+									style={{ border: `1px solid var(${b.name})` }}
+								>
+									<span className="font-mono text-xs text-foreground/90">{b.name}</span>
+									<p className="mt-1 font-mono text-[10px] text-foreground/40">
+										light <span className="text-foreground/60">{b.light}</span> · dark{" "}
+										<span className="text-foreground/60">{b.dark}</span>
+									</p>
+									<p className="mt-0.5 font-mono text-[10px] text-foreground/40">{b.role}</p>
+								</div>
+							))}
+						</div>
+					</Pane>
 
 					{/* Spacing scale */}
 					<div className="flex flex-col gap-3">
@@ -518,7 +594,7 @@ export default function DesignSystemPage() {
 							{Z_INDEX.map((z) => (
 								<div
 									key={z.name}
-									className="flex flex-col gap-1 border-b border-border/60 pb-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
+									className="flex flex-col gap-1 border-b border-alpha-300 pb-3 last:border-b-0 last:pb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
 								>
 									<span className="font-mono text-sm text-foreground/90">{z.name}</span>
 									<span className="font-mono text-xs text-foreground/50">{z.value}</span>
@@ -541,14 +617,14 @@ export default function DesignSystemPage() {
 						<div className="flex flex-wrap items-center gap-4">
 							<button
 								type="button"
-								className="rounded-md border border-border px-4 py-2 text-sm text-foreground/80 transition-colors hover:border-foreground/30 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+								className="rounded-xl border border-alpha-300 px-4 py-2 text-sm text-text-muted transition-colors hover:border-alpha-500 hover:bg-alpha-100 hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 							>
 								Focusable button
 							</button>
 							<input
 								type="text"
 								placeholder="Focusable input"
-								className="rounded-md border border-input bg-card px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:shadow-[var(--ring-focus)]"
+								className="rounded-xl border border-alpha-400 bg-card px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:shadow-[var(--ring-focus)]"
 							/>
 						</div>
 					</div>
@@ -589,62 +665,131 @@ export default function DesignSystemPage() {
 
 				{/* ── Surface: shadows + gradients ── */}
 				<Block id="surface" label="Surface" title="Shadows & gradients">
-					<div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-						{SHADOWS.map((s) => (
-							<div key={s.name} className="flex flex-col gap-3">
-								<div
-									className="h-24 rounded-xl border border-border bg-card"
-									style={{ boxShadow: `var(${s.name})` }}
-								/>
-								<span className="font-mono text-xs text-foreground/90">{s.name}</span>
-								<span className="font-mono text-[10px] text-foreground/40">{s.use}</span>
+					<Pane>
+						<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+							{SHADOWS.map((s) => (
+								<div key={s.name} className="flex flex-col gap-3">
+									<div
+										className="h-24 rounded-xl border border-alpha-300 bg-card"
+										style={{ boxShadow: `var(${s.name})` }}
+									/>
+									<span className="font-mono text-xs text-foreground/90">{s.name}</span>
+									<span className="font-mono text-[10px] text-foreground/40">{s.use}</span>
+								</div>
+							))}
+						</div>
+					</Pane>
+					<Pane>
+						<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+							<div className="flex flex-col gap-3">
+								<div className="h-32 rounded-xl border border-alpha-300" style={{ backgroundImage: "var(--gradient-hero)" }} />
+								<span className="font-mono text-xs text-foreground/90">--gradient-hero</span>
 							</div>
-						))}
-					</div>
-					<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-						<div className="flex flex-col gap-3">
-							<div className="h-32 rounded-xl border border-border" style={{ backgroundImage: "var(--gradient-hero)" }} />
-							<span className="font-mono text-xs text-foreground/90">--gradient-hero</span>
+							<div className="flex flex-col gap-3">
+								<div className="h-32 rounded-xl border border-alpha-300" style={{ backgroundImage: "var(--gradient-surface)" }} />
+								<span className="font-mono text-xs text-foreground/90">--gradient-surface</span>
+							</div>
 						</div>
-						<div className="flex flex-col gap-3">
-							<div className="h-32 rounded-xl border border-border" style={{ backgroundImage: "var(--gradient-surface)" }} />
-							<span className="font-mono text-xs text-foreground/90">--gradient-surface</span>
+					</Pane>
+				</Block>
+
+				{/* ── Glass: the Signal Glass material ── */}
+				<Block id="glass" label="Glass" title="Glass — the Signal Glass material">
+					{/* Live demo over a signal-tinted bed so the material reads on this solid page. */}
+					<Pane className="p-8">
+						<div
+							aria-hidden="true"
+							className="pointer-events-none absolute inset-0"
+							style={{
+								background:
+									"radial-gradient(60% 80% at 25% 20%, var(--signal-500), transparent 70%), radial-gradient(50% 70% at 80% 80%, oklch(0.64 0.16 210), transparent 70%)",
+								opacity: 0.5,
+							}}
+						/>
+						<div className="relative grid grid-cols-1 gap-4 sm:grid-cols-2">
+							<div className="glass glass-edge rounded-xl p-5">
+								<p className="font-mono text-xs text-foreground/90">.glass · .glass-edge</p>
+								<p className="mt-2 text-sm font-light text-foreground/70">
+									Translucent chrome — bars, inputs, overlays. Refracts the field behind it.
+								</p>
+							</div>
+							<div className="glass-panel glass-edge rounded-xl p-5">
+								<p className="font-mono text-xs text-foreground/90">.glass-panel · .glass-edge</p>
+								<p className="mt-2 text-sm font-light text-foreground/70">
+									Near-solid backing for reading content — legible over the moving field.
+								</p>
+							</div>
 						</div>
-					</div>
+					</Pane>
+					<CodePane lines={SURFACE_MARKUP} />
+					<p className="max-w-2xl text-sm font-light text-foreground/45">
+						Glass is <strong className="font-normal text-foreground/70">solid by default</strong>{" "}
+						and translucent only as a progressive enhancement — gated on{" "}
+						<code className="text-brand">backdrop-filter</code> support and{" "}
+						<code className="text-brand">prefers-reduced-transparency</code>, so it stays
+						legible everywhere (Firefox keeps glass; an explicit reduce-transparency
+						preference forces the solid fill). Compose{" "}
+						<code className="text-brand">.glass</code> /{" "}
+						<code className="text-brand">.glass-panel</code> with{" "}
+						<code className="text-brand">.glass-edge</code> (rim + sheen + drop);{" "}
+						<code className="text-brand">.glass-strong</code> deepens the blur for the chat
+						takeover, where Chromium adds real{" "}
+						<code className="text-brand">feDisplacementMap</code> refraction over the signal
+						field. Tokens:{" "}
+						<code className="text-brand">--glass-bg</code>,{" "}
+						<code className="text-brand">--glass-bg-panel</code>,{" "}
+						<code className="text-brand">--glass-bg-solid</code>,{" "}
+						<code className="text-brand">--glass-blur</code>,{" "}
+						<code className="text-brand">--glass-rim</code>,{" "}
+						<code className="text-brand">--glass-sheen</code>,{" "}
+						<code className="text-brand">--glass-shadow</code>.
+					</p>
 				</Block>
 
 				{/* ── Components ── */}
 				<Block id="components" label="Components" title="Primitives in context">
-					<div className="flex flex-wrap items-center gap-4">
-						<Button>Primary CTA</Button>
-						<Button variant="secondary">Secondary</Button>
-						<Button variant="outline">Outline</Button>
-						<Button variant="ghost">Ghost</Button>
-						<Button variant="link">Link</Button>
-					</div>
-					<div className="flex flex-wrap items-center gap-3">
-						<Badge>Default</Badge>
-						<Badge variant="secondary">Secondary</Badge>
-						<Badge variant="outline">Outline</Badge>
-						<Badge variant="destructive">Destructive</Badge>
-					</div>
-					<Card className="max-w-sm gap-3 py-6 transition-all duration-300 hover:border-brand/30 hover:shadow-[var(--shadow-glow)]">
-						<CardHeader>
-							<CardTitle className="text-lg font-light tracking-tight">
-								Card surface
-							</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<p className="text-sm font-light leading-relaxed text-foreground/55">
-								The <code className="text-brand">{"<Card>"}</code> primitive on{" "}
-								<code className="text-brand">bg-card</code> with a soft border. Hover
-								lifts a blue glow — accent on interaction, not at rest.
-							</p>
-						</CardContent>
-					</Card>
+					<Pane className="p-6">
+						<div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+							<div className="flex flex-col gap-6">
+								<div className="flex flex-col gap-3">
+									<SectionLabel>Buttons</SectionLabel>
+									<div className="flex flex-wrap items-center gap-3">
+										<Button>Primary CTA</Button>
+										<Button variant="secondary">Secondary</Button>
+										<Button variant="outline">Outline</Button>
+										<Button variant="ghost">Ghost</Button>
+										<Button variant="link">Link</Button>
+									</div>
+								</div>
+								<div className="flex flex-col gap-3">
+									<SectionLabel>Badges</SectionLabel>
+									<div className="flex flex-wrap items-center gap-3">
+										<Badge>Default</Badge>
+										<Badge variant="secondary">Secondary</Badge>
+										<Badge variant="outline">Outline</Badge>
+										<Badge variant="destructive">Destructive</Badge>
+									</div>
+								</div>
+							</div>
+							<Card className="gap-3 py-6 transition-all duration-300 hover:border-brand/30 hover:shadow-[var(--shadow-glow)]">
+								<CardHeader>
+									<CardTitle className="text-lg font-light tracking-tight">
+										Card surface
+									</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<p className="text-sm font-light leading-relaxed text-foreground/55">
+										The <code className="text-brand">{"<Card>"}</code> primitive on{" "}
+										<code className="text-brand">bg-card</code> with a soft border. Hover
+										lifts a blue glow — accent on interaction, not at rest.
+									</p>
+								</CardContent>
+							</Card>
+						</div>
+					</Pane>
 
 					{/* Separator */}
-					<div className="flex flex-col gap-3 border-t border-border/60 pt-6">
+					<Pane>
 						<SectionLabel>Separator</SectionLabel>
 						<p className="text-sm font-light text-foreground/45">
 							<code className="text-brand">{"<Separator>"}</code> — a 1px{" "}
@@ -658,10 +803,10 @@ export default function DesignSystemPage() {
 							<Separator orientation="vertical" />
 							<span>Changelog</span>
 						</div>
-					</div>
+					</Pane>
 
 					{/* Iconography */}
-					<div className="flex flex-col gap-3 border-t border-border/60 pt-6">
+					<Pane>
 						<SectionLabel>Iconography</SectionLabel>
 						<p className="text-sm font-light text-foreground/45">
 							<code className="text-brand">lucide-react</code>, stroke width{" "}
@@ -674,35 +819,37 @@ export default function DesignSystemPage() {
 								<Icon key={i} className="size-5" strokeWidth={1.5} aria-hidden="true" />
 							))}
 						</div>
-					</div>
+					</Pane>
 				</Block>
 
 				{/* ── Voice ── */}
 				<Block id="voice" label="Voice" title="Plain, grounded, sharp">
-					<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-						<div className="flex flex-col gap-3 rounded-xl border border-border p-6">
-							<span className="font-mono text-[10px] uppercase tracking-widest text-brand">Yes</span>
-							<p className="text-sm font-light leading-relaxed text-foreground/70">
-								&ldquo;I&rsquo;d rather show you the thing than argue about the thing.&rdquo;
-							</p>
-							<p className="text-sm font-light leading-relaxed text-foreground/70">
-								&ldquo;I stopped chasing perfection a while ago — reality moves too fast for finished work.&rdquo;
-							</p>
+					<Pane>
+						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+							<div className="flex flex-col gap-3 rounded-xl border border-alpha-300 bg-card/70 p-6">
+								<span className="font-mono text-[10px] uppercase tracking-widest text-brand">Yes</span>
+								<p className="text-sm font-light leading-relaxed text-foreground/70">
+									&ldquo;I&rsquo;d rather show you the thing than argue about the thing.&rdquo;
+								</p>
+								<p className="text-sm font-light leading-relaxed text-foreground/70">
+									&ldquo;I stopped chasing perfection a while ago — reality moves too fast for finished work.&rdquo;
+								</p>
+							</div>
+							<div className="flex flex-col gap-3 rounded-xl border border-alpha-300 bg-card/40 p-6">
+								<span className="font-mono text-[10px] uppercase tracking-widest text-text-faint">No</span>
+								<p className="text-sm font-light leading-relaxed text-text-faint line-through decoration-foreground/20">
+									&ldquo;My system flags inefficient drains on my timeline.&rdquo;
+								</p>
+								<p className="text-sm font-light leading-relaxed text-text-faint line-through decoration-foreground/20">
+									&ldquo;Passionate developer delivering high-quality solutions.&rdquo;
+								</p>
+							</div>
 						</div>
-						<div className="flex flex-col gap-3 rounded-xl border border-border p-6">
-							<span className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">No</span>
-							<p className="text-sm font-light leading-relaxed text-foreground/40 line-through decoration-foreground/20">
-								&ldquo;My system flags inefficient drains on my timeline.&rdquo;
-							</p>
-							<p className="text-sm font-light leading-relaxed text-foreground/40 line-through decoration-foreground/20">
-								&ldquo;Passionate developer delivering high-quality solutions.&rdquo;
-							</p>
-						</div>
-					</div>
+					</Pane>
 				</Block>
 
 				{/* ── Source of truth ── */}
-				<footer className="flex flex-col gap-3 border-t border-border pt-12 text-sm font-light text-foreground/45">
+				<footer className="flex flex-col gap-3 border-t border-alpha-300 pt-12 text-sm font-light text-foreground/45">
 					<SectionLabel>Reference</SectionLabel>
 					<p className="max-w-2xl leading-relaxed">
 						Structure adopted from Vercel&rsquo;s Geist — the composite type ramps, the alpha ramp

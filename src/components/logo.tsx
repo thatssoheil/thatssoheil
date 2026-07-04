@@ -31,7 +31,7 @@ export function LogoMark({
 			/>
 			<path
 				d="M11.6 17.5 L15.2 4.5"
-				stroke="var(--signal-500)"
+				stroke="var(--primary)"
 				strokeWidth="3.2"
 				strokeLinecap="round"
 			/>

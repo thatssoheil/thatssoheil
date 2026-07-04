@@ -1,40 +1,77 @@
 # Soheil Fakour
 
-**Coding Vision into Existence**
+**Coding vision into existence**
 
-Frontend Web Developer and Product Curator. Tehran.
+Frontend Engineer × Product Curator
 
 ---
 
-I stopped chasing perfection a while ago. Reality moves too fast for finished work. What I chase now is curation — choosing what stays and what gets cut, building from the pieces that hold up. A product isn't great because it has everything. It's great because someone decided what to leave out.
+## Manifesto
 
-I'd rather show you the thing than argue about the thing. If an idea matters, I'll build a small working version of it before the next meeting.
+Frontend Engineer and Product Curator
 
-I started in backend, writing infrastructure no one would ever touch. I left because I wanted to shape what people actually see and feel. Frontend isn't decoration for me — it's the surface where every product decision either lands or doesn't.
+### On curation
 
-## Now
+I stopped chasing perfection a while ago. Reality moves too fast for finished work. What I chase now is curation, choosing what stays and what gets cut, building from the pieces that hold up. A product isn't great because it has everything. It's great because someone decided what to leave out.
 
-Anchoring frontend and product on a small team building a medical AI tool that helps clinicians navigate patient data. Heading into Oman next.
+### On working
 
-Before this: travel and hotel channel-management infrastructure, then a deliberate move to the frontend. Several products since, B2C and B2B, including remote work with teams in Dallas and Toronto.
+I'd rather show you the thing than argue about the thing. If an idea matters, I'll build a small working version of it before the next meeting. If it doesn't survive contact with the real product, I'll remove it without ceremony. The work wins the room. Words rarely do.
 
-I lean on agentic AI for the boilerplate so my attention stays where it matters — feature ideation, systems design, and the small mechanics of how a thing feels to use. Then I cut what doesn't survive contact with the real product.
+### On the medium
 
-The tools: TypeScript, React 19, Next.js 16, Tailwind, GSAP. Shipped on Cloudflare Workers.
+I started in backend, writing infrastructure that kept hotel inventory and travel agencies in sync. No one ever saw it. No one ever felt it. After a year I left to build what people actually touch. Frontend isn't decoration for me. It's the surface where every product decision either lands or doesn't. That's where the work matters.
 
-## Open-source
+## Connect
 
-<!-- OSS:START -->
-**2 merged PRs** across **2 repos** · **2 open** in flight.
+Say hello.
 
-→ [Full dashboard](https://github.com/thatssoheil/oss-contributions)
-<!-- OSS:END -->
+Email first. Catch me on X. Everything else, eventually.
 
-## Elsewhere
+- **Email:** [soheil.fakour@gmail.com](mailto:soheil.fakour@gmail.com)
+- **GitHub:** [github.com/thatssoheil](https://github.com/thatssoheil)
+- **LinkedIn:** [linkedin.com/in/soheilfakour](https://linkedin.com/in/soheilfakour)
+- **X / Twitter:** [@Thatssoheil](https://x.com/Thatssoheil)
+- **Site:** [thatssoheil.website](https://thatssoheil.website)
 
-- **Site** — [thatssoheil.website](https://thatssoheil.website)
-- **LinkedIn** — [in/soheilfakour](https://linkedin.com/in/soheilfakour)
-- **X** — [@Thatssoheil](https://x.com/Thatssoheil)
-- **Email** — [soheil.fakour@gmail.com](mailto:soheil.fakour@gmail.com)
+---
 
-<sub>Bass-heavy techno for focus. Crypto markets as a macro puzzle.</sub>
+## Project Notes
+
+### Feature Flags
+
+#### Chat (AI Soheil hero chat)
+
+The AI-powered hero chat is feature-flagged. To ship without it, set both flags to `"false"`.
+
+| Flag | Where | Purpose |
+|------|-------|---------|
+| `ENABLE_CHAT` | `wrangler.jsonc` → `vars` | Runtime gate: `/api/chat` returns 404 when `"false"` |
+| `NEXT_PUBLIC_ENABLE_CHAT` | Build env var | Build-time gate: chat UI is hidden when not `"true"` |
+
+**Ship without chat:**
+```bash
+NEXT_PUBLIC_ENABLE_CHAT=false pnpm deploy
+```
+Ensure `wrangler.jsonc` has `"ENABLE_CHAT": "false"` (default).
+
+**Ship with chat:**
+```bash
+NEXT_PUBLIC_ENABLE_CHAT=true pnpm deploy
+```
+Set `"ENABLE_CHAT": "true"` in `wrangler.jsonc`.
+
+**GitHub canonical variable:** The canonical source of truth lives at
+**GitHub → Settings → Secrets and variables → Actions → Variables → `ENABLE_CHAT`**.
+The deploy workflow reads this variable and injects it into `wrangler.jsonc` at build time.
+Manual dispatch accepts an `enable_chat` boolean input to override.
+
+**Required secrets** (set at Settings → Secrets and variables → Actions → Secrets):
+- `CLOUDFLARE_API_TOKEN`: Cloudflare API token with Workers deploy permissions
+- `CLOUDFLARE_ACCOUNT_ID`: Your Cloudflare account ID
+
+**Local dev (chat enabled):**
+Copy `.dev.vars.example` to `.dev.vars`, set `ENABLE_CHAT=true`, and run:
+```bash
+pnpm dev
+```

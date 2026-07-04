@@ -36,21 +36,19 @@
 		"enabled": true
 	},
 	"vars": {
-		"FREELLMAPI_URL": "https://agent.thatssoheil.website/v1"
+		"AI_SOHEIL_API_URL": "https://agent.thatssoheil.website/v1",
+		"ENABLE_CHAT": "false"
 	},
 	// Per-IP rate limit for the AI Soheil chat proxy. period must be 10 or 60s.
-	// FREELLMAPI_KEY is a secret — set via `wrangler secret put FREELLMAPI_KEY`
+	// AI_SOHEIL_API_KEY is a secret — set via `wrangler secret put AI_SOHEIL_API_KEY`
 	// (prod) and .dev.vars (local). Never put the key in this file.
-	"unsafe": {
-		"bindings": [
-			{
-				"name": "CHAT_RATELIMIT",
-				"type": "ratelimit",
-				"namespace_id": "1001",
-				"simple": { "limit": 10, "period": 60 }
-			}
-		]
-	}
+	"ratelimits": [
+		{
+			"name": "CHAT_RATELIMIT",
+			"namespace_id": "1001",
+			"simple": { "limit": 10, "period": 60 }
+		}
+	],
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

@@ -1,24 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Lexend, Geist_Mono } from "next/font/google";
-import { SITE } from "@/lib/constants";
+import { Geist_Mono, Lexend } from "next/font/google";
+import { SITE, X_HANDLE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SignalField } from "@/components/signal-field/signal-field";
+import { StructureGrid } from "@/components/signal-field/structure-grid";
 import "./globals.css";
 
-// One typeface, app-wide: Lexend — tuned for low reading fatigue. Variable
-// (no `weight`), so the full 100–900 axis is available. Both --font-sans and
-// --font-mono resolve to it, so the whole site speaks in a single font.
+// Primary typeface: Lexend — tuned for low reading fatigue. Variable (no `weight`),
+// so the full 100–900 axis is available. --font-sans resolves to it across the
+// site's UI and prose.
 const lexend = Lexend({
 	variable: "--font-lexend",
 	subsets: ["latin"],
 	display: "swap",
 });
 
-// Geist Mono — used in one place only: the hero's looping cipher name. A cipher
-// swaps every glyph against a mixed pool (letters, digits, symbols); a fixed
-// advance width is what stops the line from reflowing as it scrambles, and the
-// monospace grid reads as "encryption". Exposed as --font-cipher.
+// Geist Mono is intentionally narrow-scoped to cipher moments. The fixed advance
+// width keeps scrambled glyphs from reflowing and gives the hero wordmark its
+// code-like pulse without pulling the whole interface into a monospace voice.
 const geistMono = Geist_Mono({
 	variable: "--font-cipher",
 	subsets: ["latin"],
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
 	title: SITE.title,
 	description: SITE.description,
 	metadataBase: new URL(SITE.url),
+	applicationName: SITE.name,
 	alternates: {
 		canonical: "/",
 	},
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
 				url: SITE.ogImage,
 				width: 1200,
 				height: 630,
-				alt: SITE.title,
+				alt: SITE.ogImageAlt,
 				type: "image/png",
 			},
 		],
@@ -54,8 +56,15 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: SITE.title,
 		description: SITE.description,
-		images: [SITE.ogImage],
-		creator: "@soheilfakour",
+		creator: X_HANDLE,
+		images: [
+			{
+				url: SITE.ogImage,
+				alt: SITE.ogImageAlt,
+				width: 1200,
+				height: 630,
+			},
+		],
 	},
 	icons: {
 		icon: [
@@ -81,16 +90,22 @@ export const metadata: Metadata = {
 	keywords: [
 		"Soheil Fakour",
 		"portfolio",
-		"developer",
-		"creative technologist",
-		"WebGPU",
+		"frontend engineer",
+		"product engineer",
+		"product curator",
+		"AI product interfaces",
+		"agentic AI",
+		"React",
 		"Next.js",
+		"TypeScript",
+		"Cloudflare Workers",
 	],
+	category: "portfolio",
 };
 
 export const viewport: Viewport = {
 	themeColor: [
-		{ media: "(prefers-color-scheme: dark)", color: "#1c1c1c" },
+		{ media: "(prefers-color-scheme: dark)", color: "#08090b" },
 		{ media: "(prefers-color-scheme: light)", color: "#f7f7f7" },
 	],
 	width: "device-width",
@@ -126,6 +141,8 @@ export default function RootLayout({
 					enableSystem={false}
 					disableTransitionOnChange
 				>
+					<SignalField />
+					<StructureGrid />
 					<SkipToContent />
 					{children}
 				</ThemeProvider>

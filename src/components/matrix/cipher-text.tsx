@@ -21,6 +21,10 @@ export interface CipherTextProps {
   loop?: boolean;
   /** After the one-time decode, occasionally re-flicker a single locked char (subtle "alive" pulse). Ignored when `loop`. */
   ambient?: boolean;
+  /** Visual intensity for large display use; display lowers blur/opacity severity. */
+  intensity?: "normal" | "display";
+  /** Start readable and only run ambient pulses. Default preserves hero-name scramble. */
+  initialState?: "scrambled" | "settled";
   /** Wrapper element type. */
   as?: React.ElementType;
 }
@@ -36,6 +40,8 @@ export function CipherText({
   spinUpDuration = 900,
   loop = false,
   ambient = false,
+  intensity = "normal",
+  initialState = "scrambled",
   as: Component = "h1",
 }: CipherTextProps) {
   const display = useCipherAnimation(text, {
@@ -45,11 +51,18 @@ export function CipherText({
     spinUpDuration,
     loop,
     ambient,
+    intensity,
+    initialState,
   });
 
   return (
     <Component className={className}>
-      {display.map((d, i) => (
+      {/* Real text is the accessible name + the SSR/no-JS/crawler source of truth;
+          the scrambling glyph layer is decorative (audit #7 — a scrambled H1 was
+          serving "Soheil F@k0ur" to screen readers and search engines). */}
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {display.map((d, i) => (
         <span
           key={i}
           style={{
@@ -58,7 +71,7 @@ export function CipherText({
             opacity: d.opacity,
             color:
               d.tint > 0.01
-                ? `color-mix(in oklch, var(--signal-400) ${(d.tint * 100).toFixed(0)}%, var(--foreground))`
+                ? `color-mix(in oklch, var(--brand) ${(d.tint * 100).toFixed(0)}%, var(--foreground))`
                 : undefined,
             filter:
               d.blur > 0.05 || d.brightness !== 1
@@ -72,7 +85,8 @@ export function CipherText({
         >
           {d.char}
         </span>
-      ))}
+        ))}
+      </span>
     </Component>
   );
 }
