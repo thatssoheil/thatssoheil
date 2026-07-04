@@ -31,9 +31,14 @@ function HeroPlane() {
 		>
 			<defs>
 				<linearGradient id="hero-plane-fill" x1="0" y1="0" x2="0" y2="1">
-					<stop offset="0%" stopColor="var(--plane-tint)" />
+					<stop offset="0%" stopColor="var(--plane-sheen)" />
+					<stop offset="34%" stopColor="var(--plane-tint)" />
 					<stop offset="100%" stopColor="transparent" />
 				</linearGradient>
+				<radialGradient id="hero-plane-glow" cx="50%" cy="24%" r="62%">
+					<stop offset="0%" stopColor="var(--plane-glow)" />
+					<stop offset="100%" stopColor="transparent" />
+				</radialGradient>
 			</defs>
 
 			{/* The plane — faint white-toned wash, brightest at the top and fading
@@ -44,7 +49,22 @@ function HeroPlane() {
 				width={SQUARE.size}
 				height={SQUARE.size}
 				rx={SQUARE.radius}
+				fill="url(#hero-plane-glow)"
+			/>
+			<rect
+				x={SQUARE.x}
+				y={SQUARE.y}
+				width={SQUARE.size}
+				height={SQUARE.size}
+				rx={SQUARE.radius}
 				fill="url(#hero-plane-fill)"
+			/>
+			<path
+				d={`M ${SQUARE.x + SQUARE.radius} ${SQUARE.y} H ${SQUARE.x + SQUARE.size - SQUARE.radius}`}
+				stroke="var(--plane-rim-strong)"
+				strokeWidth={0.9}
+				strokeLinecap="round"
+				vectorEffect="non-scaling-stroke"
 			/>
 
 			{/* The edge — a crisp, lean white wire. No blur: the square's top edge stays
@@ -56,9 +76,8 @@ function HeroPlane() {
 				width={SQUARE.size}
 				height={SQUARE.size}
 				rx={SQUARE.radius}
-				stroke="var(--foreground)"
+				stroke="var(--plane-rim)"
 				strokeWidth={0.75}
-				strokeOpacity={0.2}
 				strokeLinejoin="round"
 				vectorEffect="non-scaling-stroke"
 			/>
