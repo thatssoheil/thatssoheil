@@ -115,15 +115,9 @@ export function HeroSection() {
 					/>
 				</div>
 
-				{/* Tagline under a centred hairline with a centred signal lead. */}
+				{/* Tagline — quiet support, no extra rule chrome. */}
 				<div className="mt-8 flex w-full flex-col items-center">
-					<span
-						aria-hidden="true"
-						className="relative block h-px w-44 max-w-[70vw] bg-foreground/12"
-					>
-						<span className="absolute inset-y-0 left-1/2 w-12 -translate-x-1/2 bg-[linear-gradient(to_right,transparent,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--primary))]" />
-					</span>
-					<p className="mt-4 whitespace-nowrap font-sans text-[clamp(0.6rem,2.4vw,0.875rem)] leading-none tracking-[0.18em] sm:tracking-[0.2em] uppercase text-text-faint">
+					<p className="whitespace-nowrap font-sans text-[clamp(0.6rem,2.4vw,0.875rem)] leading-none tracking-[0.18em] sm:tracking-[0.2em] uppercase text-text-faint">
 						Coding vision into existence
 					</p>
 				</div>

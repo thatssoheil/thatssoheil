@@ -20,14 +20,6 @@ export function Footer() {
 				radius="md"
 				className="relative mx-auto flex min-h-14 w-full max-w-4xl flex-col items-center justify-center gap-2 overflow-hidden px-4 py-3 font-sans text-xs tracking-wide sm:flex-row sm:justify-between sm:px-5 sm:py-0"
 			>
-				{/* Signal lead-in — the hero rule motif, contained to the island edge. */}
-				<span
-					aria-hidden="true"
-					className="absolute inset-x-4 top-0 block h-px bg-alpha-300 sm:inset-x-5"
-				>
-					<span className="absolute inset-y-0 left-0 w-24 bg-[linear-gradient(to_right,var(--brand),transparent)] [filter:drop-shadow(0_0_4px_var(--primary))]" />
-				</span>
-
 				<div className="flex min-h-8 items-center gap-2.5 text-text-muted">
 					<LogoMark className="h-4" />
 					<span>
