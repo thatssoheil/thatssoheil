@@ -272,14 +272,14 @@
 	);
 }
 
-/* ─── Dark Mode — neutral black + signal accent (the active theme) ─── */
+/* ─── Dark Mode — deep neutral-black + signal accent (the active theme) ─── */
 .dark {
-	/* Surfaces — neutral-black with faint optical depth, never pure #000 */
-	--background: oklch(0.145 0.006 245);
+	/* Surfaces — cinematic black void with lifted panels, still not pure #000 */
+	--background: oklch(0.075 0.004 245);
 	--foreground: var(--ink-50);
-	--card: oklch(0.18 0.006 245);
+	--card: oklch(0.145 0.005 245);
 	--card-foreground: var(--ink-50);
-	--popover: oklch(0.18 0.006 245);
+	--popover: oklch(0.145 0.005 245);
 	--popover-foreground: var(--ink-50);
 
 	/* Primary — signal accent (CTAs, key accents) with light text (iMessage-style) */
@@ -335,30 +335,30 @@
 	--glass-sheen: color-mix(in oklch, white 18%, transparent);
 	--glass-shadow: 0 16px 56px oklch(0 0 0 / 0.58);
 
-	/* Signal field — a dim signal aurora on the near-black void (the showpiece). */
+	/* Signal field — a restrained signal aurora on the deeper black void. */
 	--field-accent: oklch(0.64 0.16 210);
 	--field-blob-a: var(--signal-500);
 	--field-blob-b: var(--field-accent);
 	--field-blob-c: var(--signal-700);
-	--field-opacity: 0.24;
+	--field-opacity: 0.18;
 
 	/* Dark shadows — deeper alpha for black-on-black; gradients — neutral near-black */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5);
 	--shadow-elevated: 0 8px 48px rgba(0, 0, 0, 0.6);
 	--shadow-glow: 0 0 32px color-mix(in oklch, var(--signal-500) 20%, transparent);
-	/* Deep "void" — neutral-black field that darkens toward the edges,
+	/* Deep "void" — near-black field that darkens toward the edges,
 	   pulling focus inward. The hero layers a *faint* signal haze behind the
 	   name on top of this (see hero.tsx) — atmosphere, never a bright spotlight. */
 	--gradient-hero: radial-gradient(
 		ellipse 135% 120% at 50% 46%,
-		oklch(0.16 0.018 245) 0%,
-		oklch(0.105 0.012 240) 48%,
-		oklch(0.045 0.006 245) 100%
+		oklch(0.105 0.014 245) 0%,
+		oklch(0.07 0.009 240) 48%,
+		oklch(0.032 0.004 245) 100%
 	);
 	--gradient-surface: linear-gradient(
 		180deg,
-		oklch(0.18 0.006 245) 0%,
-		oklch(0.135 0.004 245) 100%
+		oklch(0.115 0.005 245) 0%,
+		oklch(0.07 0.004 245) 100%
 	);
 }
 
