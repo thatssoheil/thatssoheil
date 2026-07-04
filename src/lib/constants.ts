@@ -1,14 +1,29 @@
 import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/brand-icons";
 
+// ─── Identity — the single source of truth for who Soheil is ───
+// Every surface (hero, metadata, JSON-LD, the AI persona) derives from these, so
+// the role / tagline / handle / domain can never drift apart again (audit #9).
+
+/** Role, styled form — the visual hero treatment (the × is the signal accent). */
+export const ROLE = "Frontend Engineer × Product Curator";
+/** Role, prose form — for meta descriptions, schema.org jobTitle, alt text. */
+export const ROLE_PROSE = "Frontend Engineer and Product Curator";
+/** The motto, canonical casing (sentence case). */
+export const TAGLINE = "Coding vision into existence";
+/** X / Twitter handle — display casing for social cards and metadata. */
+export const X_HANDLE = "@thatssoheil";
+
 // ─── Site Constants ───
 
 export const SITE = {
 	name: "Soheil Fakour",
-	title: "Soheil Fakour — Coding Vision into Existence",
+	title: `Soheil Fakour — ${TAGLINE}`,
 	description:
-		"Portfolio of Soheil Fakour — Frontend Web Developer and Product Curator.",
-	url: "https://thatssoheil.com",
-	ogImage: "/og.png",
+		"Soheil Fakour is a frontend engineer and product curator building refined, AI-aware product interfaces with React, Next.js, TypeScript, and Cloudflare.",
+	url: "https://thatssoheil.website",
+	ogImage: "/opengraph-image",
+	ogImageAlt:
+		"Soheil Fakour, frontend engineer and product curator, coding vision into existence.",
 } as const;
 
 /** All navigable sections — order matters for scroll tracking and homepage render order. */

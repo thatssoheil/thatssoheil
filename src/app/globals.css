@@ -6,9 +6,10 @@
 
 /* ─── Design Tokens ─── */
 @theme inline {
-	/* Fonts */
+	/* Fonts — Lexend carries UI/prose. Geist Mono is exposed only as
+	   --font-cipher for cipher moments; generic mono labels use the local stack. */
 	--font-sans: var(--font-lexend);
-	--font-mono: var(--font-lexend);
+	--font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 
 	/* Typography scale */
 	--text-xs: 0.75rem;
@@ -23,7 +24,7 @@
 	--text-6xl: 3.75rem;
 	--text-7xl: 4.5rem;
 
-	/* Fluid type — Geist-style clamp() ramps (source of truth: vercel.com/design.md).
+	/* Fluid type — clamp() ramps.
 	   Interpolate smoothly between a 360px and 1280px viewport so headings scale
 	   with the page instead of stepping at breakpoints. Usable as text-fluid-*. */
 	--text-fluid-20-24: clamp(1.25rem, 1.15rem + 0.43vw, 1.5rem);
@@ -56,6 +57,10 @@
 
 	/* Brand — the signal accent (legible, per-theme) */
 	--color-brand: var(--brand);
+
+	/* De-emphasis text tiers — measured-AA replacements for text-foreground/NN */
+	--color-text-muted: var(--text-muted);
+	--color-text-faint: var(--text-faint);
 
 	/* Alpha — translucent neutral ramp (hairlines, dividers, overlays).
 	   Geist's gray-alpha idea, retuned per theme below. Use border-alpha-300
@@ -161,6 +166,10 @@
 	--z-progress: 60;  /* scroll-progress bar, above header */
 	--z-overlay: 100;  /* modal backdrop, skip link */
 	--z-modal: 110;    /* modal content */
+
+	/* Interaction states (theme-independent) — the full states layer is ADR-pending;
+	   this is the disabled dimming, referenced by inputs/buttons. */
+	--disabled-opacity: 0.5;
 }
 
 /* ─── Light theme (default) — neutral paper + signal accent ─── */
@@ -209,15 +218,56 @@
 	/* Accent-as-text — darker signal step for AA contrast on paper (≈ 5.4:1) */
 	--brand: var(--signal-700);
 
+	/* De-emphasis text tiers — measured for WCAG AA on paper (replaces ad-hoc
+	   text-foreground/NN). muted ≈ 8:1 (body), faint ≈ 5.7:1 (still AA; quiet copy). */
+	--text-muted: oklch(0.42 0 0);
+	--text-faint: oklch(0.5 0 0);
+
 	/* Ambient plane tint — a faint signal wash (faded to transparent in the
-	   gradient) so the hero triangle reads as lit atmosphere, not a grey smudge.
-	   Tuned per theme; lower on paper where a cool tint shows more readily. */
-	--plane-tint: color-mix(in oklch, var(--signal-500) 6%, transparent);
+	   gradient) so the hero plane reads as lit atmosphere, not a grey smudge.
+	   White-toned (off --foreground); tuned per theme, lower on paper. */
+	--plane-tint: color-mix(in oklch, var(--foreground) 5%, transparent);
+	--plane-sheen: color-mix(in oklch, white 36%, transparent);
+	--plane-glow: color-mix(in oklch, var(--primary) 12%, transparent);
+
+	/* Glass — Signal Glass material. Solid fill is the legible default;
+	   --glass-bg (translucent) is used only behind the @supports/reduced-transparency
+	   gate in the .glass class. Applied to surfaces in P1. */
+	--glass-bg: color-mix(in oklch, var(--card) 70%, transparent);
+	--glass-bg-panel: color-mix(in oklch, var(--card) 88%, transparent);
+	--glass-bg-solid: var(--card);
+	--glass-blur: 16px;
+	--glass-blur-strong: 32px;
+	--glass-saturate: 140%;
+	--glass-rim: color-mix(in oklch, var(--foreground) 10%, transparent);
+	/* Sheen is a top-edge LIGHT catch — always white-derived, never --foreground
+	   (which would paint a dark smudge on paper). */
+	--glass-sheen: color-mix(in oklch, white 50%, transparent);
+	--glass-shadow: 0 8px 40px oklch(0 0 0 / 0.12);
+
+	/* Signal field — the living substrate. Faint on paper (restraint). */
+	/* The field's second hue — a deliberate teal companion to signal (named, not a
+	   stray literal, so the retheme contract holds). See ADR on the field palette. */
+	--field-accent: oklch(0.7 0.12 210);
+	--field-blob-a: var(--signal-500);
+	--field-blob-b: var(--field-accent);
+	--field-blob-c: var(--signal-400);
+	--field-opacity: 0.1;
+	/* Structural grid — faint architectural guides on paper. */
+	--grid-rail: color-mix(in oklch, var(--foreground) 8%, transparent);
+	--grid-rhythm: color-mix(in oklch, var(--foreground) 5%, transparent);
+	--grid-fade: linear-gradient(
+		to bottom,
+		transparent 0%,
+		#000 14%,
+		#000 82%,
+		transparent 100%
+	);
 
 	/* Light shadows — soft, low alpha; gradients — paper */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.08);
 	--shadow-elevated: 0 8px 48px rgba(0, 0, 0, 0.12);
-	--shadow-glow: 0 0 32px rgba(10, 132, 255, 0.22);
+	--shadow-glow: 0 0 32px color-mix(in oklch, var(--signal-500) 22%, transparent);
 	--gradient-hero: radial-gradient(
 		ellipse at 50% 38%,
 		oklch(0.99 0 0) 0%,
@@ -231,14 +281,14 @@
 	);
 }
 
-/* ─── Dark Mode — neutral black + signal accent (the active theme) ─── */
+/* ─── Dark Mode — deep neutral-black + signal accent (the active theme) ─── */
 .dark {
-	/* Surfaces — neutral shades of black, never pure #000 */
-	--background: var(--ink-950);
+	/* Surfaces — cinematic black void with lifted panels, still not pure #000 */
+	--background: oklch(0.075 0.004 245);
 	--foreground: var(--ink-50);
-	--card: var(--ink-900);
+	--card: oklch(0.145 0.005 245);
 	--card-foreground: var(--ink-50);
-	--popover: var(--ink-900);
+	--popover: oklch(0.145 0.005 245);
 	--popover-foreground: var(--ink-50);
 
 	/* Primary — signal accent (CTAs, key accents) with light text (iMessage-style) */
@@ -255,12 +305,12 @@
 	--destructive-foreground: var(--ink-50);
 
 	/* Translucent neutral ramp — white-on-transparent on the void. */
-	--alpha-100: oklch(1 0 0 / 4%);
-	--alpha-200: oklch(1 0 0 / 7%);
-	--alpha-300: oklch(1 0 0 / 10%);
-	--alpha-400: oklch(1 0 0 / 12%);
-	--alpha-500: oklch(1 0 0 / 24%);
-	--alpha-600: oklch(1 0 0 / 51%);
+	--alpha-100: oklch(1 0 0 / 5%);
+	--alpha-200: oklch(1 0 0 / 8%);
+	--alpha-300: oklch(1 0 0 / 12%);
+	--alpha-400: oklch(1 0 0 / 16%);
+	--alpha-500: oklch(1 0 0 / 28%);
+	--alpha-600: oklch(1 0 0 / 56%);
 
 	/* Borders — soft, low-contrast; focus ring is the signal accent */
 	--border: var(--alpha-200); /* 7% (unchanged) */
@@ -273,26 +323,61 @@
 	/* Accent-as-text — brighter signal step for comfortable contrast on black (≈ 5.5:1) */
 	--brand: var(--signal-400);
 
+	/* De-emphasis text tiers — measured for WCAG AA on the void (replaces ad-hoc
+	   text-foreground/NN). muted ≈ 7:1 (body), faint ≈ 4.8:1 (still AA; quiet copy). */
+	--text-muted: var(--ink-300);
+	--text-faint: var(--ink-400);
+
 	/* Ambient plane tint — slightly stronger on the near-black void (see :root) */
-	--plane-tint: color-mix(in oklch, var(--signal-500) 9%, transparent);
+	--plane-tint: color-mix(in oklch, var(--foreground) 10%, transparent);
+	--plane-sheen: color-mix(in oklch, white 18%, transparent);
+	--plane-glow: color-mix(in oklch, var(--primary) 18%, transparent);
+
+	/* Glass — slightly more luminous + a stronger drop on the void (see :root) */
+	--glass-bg: color-mix(in oklch, var(--card) 66%, transparent);
+	--glass-bg-panel: color-mix(in oklch, var(--card) 89%, transparent);
+	--glass-bg-solid: var(--card);
+	--glass-blur: 16px;
+	--glass-blur-strong: 32px;
+	--glass-saturate: 150%;
+	--glass-rim: color-mix(in oklch, var(--foreground) 18%, transparent);
+	--glass-sheen: color-mix(in oklch, white 18%, transparent);
+	--glass-shadow: 0 16px 56px oklch(0 0 0 / 0.58);
+
+	/* Signal field — a restrained signal aurora on the deeper black void. */
+	--field-accent: oklch(0.64 0.16 210);
+	--field-blob-a: var(--signal-500);
+	--field-blob-b: var(--field-accent);
+	--field-blob-c: var(--signal-700);
+	--field-opacity: 0.18;
+	/* Structural grid — visible but quiet on the deep void. */
+	--grid-rail: color-mix(in oklch, var(--foreground) 11%, transparent);
+	--grid-rhythm: color-mix(in oklch, var(--foreground) 6%, transparent);
+	--grid-fade: linear-gradient(
+		to bottom,
+		transparent 0%,
+		#000 12%,
+		#000 84%,
+		transparent 100%
+	);
 
 	/* Dark shadows — deeper alpha for black-on-black; gradients — neutral near-black */
 	--shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5);
 	--shadow-elevated: 0 8px 48px rgba(0, 0, 0, 0.6);
-	--shadow-glow: 0 0 32px rgba(10, 132, 255, 0.2);
-	/* Deep "void" — near-pure-black field that darkens toward the edges,
+	--shadow-glow: 0 0 32px color-mix(in oklch, var(--signal-500) 20%, transparent);
+	/* Deep "void" — near-black field that darkens toward the edges,
 	   pulling focus inward. The hero layers a *faint* signal haze behind the
 	   name on top of this (see hero.tsx) — atmosphere, never a bright spotlight. */
 	--gradient-hero: radial-gradient(
-		ellipse 135% 120% at 50% 50%,
-		oklch(0.075 0 0) 0%,
-		oklch(0.06 0 0) 50%,
-		oklch(0.03 0 0) 100%
+		ellipse 135% 120% at 50% 46%,
+		oklch(0.105 0.014 245) 0%,
+		oklch(0.07 0.009 240) 48%,
+		oklch(0.032 0.004 245) 100%
 	);
 	--gradient-surface: linear-gradient(
 		180deg,
-		oklch(0.16 0 0) 0%,
-		oklch(0.13 0 0) 100%
+		oklch(0.115 0.005 245) 0%,
+		oklch(0.07 0.004 245) 100%
 	);
 }
 
@@ -323,13 +408,12 @@
 }
 
 /* ─── Composite type ramps ───
-   Geist's four named ramps (source of truth: vercel.com/design.md). Each
-   utility sets family + size + line-height + weight (+ tracking for headings)
-   in one class. One deliberate brand deviation: headings keep our signature
-   weight 300 — Geist sets them at 600. Tracking law preserved: ≤20px → -0.02em,
-   24–32px → -0.04em, ≥40px → -0.06em; the largest headings sit at line-height 1. */
+   Each utility sets family + size + line-height + weight (+ tracking for headings)
+   in one class. Headings keep our signature weight 300. Tracking law preserved:
+   <=20px -> -0.02em, 24-32px -> -0.04em, >=40px -> -0.06em; the largest
+   headings sit at line-height 1. */
 
-/* heading-* — Geist Sans, weight 300 (brand voice), negative tracking */
+/* heading-* — Lexend, weight 300 (brand voice), negative tracking */
 @utility text-heading-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 300; letter-spacing: -0.02em; }
 @utility text-heading-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.5rem; font-weight: 300; letter-spacing: -0.02em; }
 @utility text-heading-20 { font-family: var(--font-sans); font-size: 1.25rem; line-height: 1.625rem; font-weight: 300; letter-spacing: -0.02em; }
@@ -341,7 +425,7 @@
 @utility text-heading-64 { font-family: var(--font-sans); font-size: 4rem; line-height: 1; font-weight: 300; letter-spacing: -0.06em; }
 @utility text-heading-72 { font-family: var(--font-sans); font-size: 4.5rem; line-height: 1; font-weight: 300; letter-spacing: -0.06em; }
 
-/* copy-* — Geist Sans, weight 400 (body / prose); taller line-heights */
+/* copy-* — Lexend, weight 400 (body / prose); taller line-heights */
 @utility text-copy-13 { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1.125rem; font-weight: 400; }
 @utility text-copy-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
 @utility text-copy-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.5rem; font-weight: 400; }
@@ -351,7 +435,7 @@
 @utility text-copy-13-mono { font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.125rem; font-weight: 400; }
 @utility text-copy-14-mono { font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
 
-/* label-* — Geist Sans, weight 400 (UI labels, tight line-height) */
+/* label-* — Lexend, weight 400 (UI labels, tight line-height) */
 @utility text-label-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 400; }
 @utility text-label-13 { font-family: var(--font-sans); font-size: 0.8125rem; line-height: 1rem; font-weight: 400; }
 @utility text-label-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
@@ -362,13 +446,235 @@
 @utility text-label-13-mono { font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1rem; font-weight: 400; }
 @utility text-label-14-mono { font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.25rem; font-weight: 400; }
 
-/* button-* — Geist Sans, weight 500 (interactive labels) */
+/* button-* — Lexend, weight 500 (interactive labels) */
 @utility text-button-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 500; }
 @utility text-button-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; }
 @utility text-button-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.25rem; font-weight: 500; }
 
+/* ─── Glass material ───
+   Composable. Solid + legible by DEFAULT; real translucent glass only where
+   backdrop-filter is supported AND the user has not requested reduced transparency.
+   `not (… reduce)` means browsers without the query (Firefox) still get glass; only
+   an explicit reduce-transparency preference forces the solid fallback.
+
+   - .glass        — material base for chrome (bars, inputs, overlays). Translucent.
+   - .glass-panel  — near-solid material for reading content (legible over the field).
+   - .glass-edge   — rim border + sheen + soft drop, for floating panels (compose).
+   - .glass-strong — opt-in heavier blur for the chat takeover (compose with .glass). */
+@layer components {
+	.glass {
+		background-color: var(--glass-bg-solid);
+
+		@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+			@media not (prefers-reduced-transparency: reduce) {
+				background-color: var(--glass-bg);
+				-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+				backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+			}
+		}
+	}
+
+	.glass-panel {
+		background-color: var(--glass-bg-solid);
+
+		@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+			@media not (prefers-reduced-transparency: reduce) {
+				background-color: var(--glass-bg-panel);
+				-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+				backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+			}
+		}
+	}
+
+	.glass-strong {
+		@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+			@media not (prefers-reduced-transparency: reduce) {
+				-webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+				backdrop-filter: blur(var(--glass-blur-strong)) saturate(var(--glass-saturate));
+			}
+		}
+	}
+
+	.glass-edge {
+		border: 1px solid var(--glass-rim);
+		box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-sheen);
+	}
+
+	/* Refraction — the chat-takeover "wow". Only applied (via JS engine-detect) in
+	   Chromium with no reduced-motion/transparency; replaces the plain blur with the
+	   displacement filter, which blurs + warps the field behind the overlay. Compose
+	   with .glass (keeps the translucent fill). See SignalGlassFilter + useRefractionSupported. */
+	.glass-refract {
+		@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+			@media not (prefers-reduced-transparency: reduce) {
+				-webkit-backdrop-filter: url(#signal-glass-refract);
+				backdrop-filter: url(#signal-glass-refract);
+			}
+		}
+	}
+}
+
+/* ─── Signal field ───
+   A fixed, full-viewport living substrate: three slow-drifting signal-hued blobs
+   over the void, softly blurred. Transform-only animation (GPU-composited). The
+   drift keyframes are round-trips (0%==100%) so the global reduced-motion freeze
+   lands on the intended base composition. aria-hidden, pointer-events-none, -z. */
+.signal-field {
+	position: fixed;
+	inset: 0;
+	z-index: -10;
+	overflow: hidden;
+	pointer-events: none;
+}
+.signal-field__blob {
+	position: absolute;
+	border-radius: 9999px;
+	filter: blur(60px);
+	opacity: var(--field-opacity);
+}
+.signal-field__blob--a {
+	width: 60vmax; height: 60vmax;
+	top: -12vmax; left: -10vmax;
+	background: radial-gradient(circle, var(--field-blob-a), transparent 70%);
+	animation: signal-drift-a 38s ease-in-out infinite;
+}
+.signal-field__blob--b {
+	width: 52vmax; height: 52vmax;
+	bottom: -10vmax; right: -8vmax;
+	background: radial-gradient(circle, var(--field-blob-b), transparent 70%);
+	animation: signal-drift-b 46s ease-in-out infinite;
+}
+.signal-field__blob--c {
+	width: 44vmax; height: 44vmax;
+	top: 30%; left: 32%;
+	background: radial-gradient(circle, var(--field-blob-c), transparent 70%);
+	animation: signal-drift-c 54s ease-in-out infinite;
+}
+/* ─── Structural grid ───
+   A fixed architectural substrate aligned to the site's shared content width.
+   It sits above the signal field and below all content, so it gives the void
+   structure without becoming a component-level decoration. */
+.structure-grid {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: -9;
+	overflow: hidden;
+	pointer-events: none;
+	mask-image: var(--grid-fade);
+	-webkit-mask-image: var(--grid-fade);
+}
+.structure-grid__frame,
+.structure-grid__center,
+.structure-grid__rhythm {
+	position: absolute;
+	inset: 0;
+}
+.structure-grid__frame {
+	padding-inline: 1.25rem;
+}
+.structure-grid__envelope {
+	position: relative;
+	width: 100%;
+	max-width: 56rem;
+	height: 100%;
+	margin-inline: auto;
+}
+.structure-grid__envelope::before,
+.structure-grid__envelope::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 1px;
+	background: var(--grid-rail);
+}
+.structure-grid__envelope::before {
+	left: 0;
+}
+.structure-grid__envelope::after {
+	right: 0;
+}
+.structure-grid__center {
+	z-index: 1;
+}
+.structure-grid__center::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 50%;
+	width: 1px;
+	transform: translateX(-0.5px);
+	background: var(--grid-rail);
+}
+.structure-grid__rhythm {
+	background-image:
+		linear-gradient(to bottom, var(--grid-rhythm) 1px, transparent 1px);
+	background-size: 100% 8rem;
+	background-position: 0 calc(env(safe-area-inset-top) + 0.75rem);
+}
+@media (min-width: 40rem) {
+	.structure-grid__frame {
+		padding-inline: 2rem;
+	}
+}
+@media (min-width: 48rem) {
+	.structure-grid__frame {
+		padding-inline: 3rem;
+	}
+}
+@media (min-width: 64rem) {
+	.structure-grid__frame {
+		padding-inline: 4rem;
+	}
+}
+@keyframes signal-drift-a {
+	0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+	50%      { transform: translate3d(6vmax, 4vmax, 0) scale(1.1); }
+}
+@keyframes signal-drift-b {
+	0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+	50%      { transform: translate3d(-5vmax, -4vmax, 0) scale(1.08); }
+}
+@keyframes signal-drift-c {
+	0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+	50%      { transform: translate3d(4vmax, -6vmax, 0) scale(0.92); }
+}
+
+.motto-ai-word span[aria-hidden="true"] > span {
+	animation: motto-ai-flow 13s ease-in-out infinite;
+}
+
+@keyframes motto-ai-flow {
+	0%, 68%, 100% {
+		color: var(--text-faint);
+		text-shadow: none;
+	}
+	74% {
+		color: color-mix(in oklch, var(--signal-400) 18%, var(--text-faint));
+		text-shadow: 0 0 10px color-mix(in oklch, var(--signal-400) 14%, transparent);
+	}
+	80% {
+		color: color-mix(in oklch, oklch(0.78 0.11 310) 16%, var(--text-faint));
+		text-shadow: 0 0 10px color-mix(in oklch, oklch(0.78 0.11 310) 12%, transparent);
+	}
+	86% {
+		color: color-mix(in oklch, var(--field-accent) 16%, var(--text-faint));
+		text-shadow: 0 0 10px color-mix(in oklch, var(--field-accent) 12%, transparent);
+	}
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
+	.motto-ai-word span[aria-hidden="true"] > span {
+		animation: none;
+		color: var(--text-faint);
+		text-shadow: none;
+	}
+
 	*,
 	*::before,
 	*::after {

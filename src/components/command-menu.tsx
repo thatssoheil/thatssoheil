@@ -14,11 +14,13 @@ import {
 import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { jumpToSection } from "@/lib/section-navigation";
+import { cn } from "@/lib/utils";
+import { surfaceVariants } from "@/components/ui/surface";
 
 const ITEM_CLASS =
 	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
 	// mobile nav); sm:py-2.5 keeps the compact desktop rows unchanged.
-	"group flex items-center gap-3 rounded-md px-3 py-3 sm:py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-accent data-[selected=true]:text-foreground";
+	"group flex items-center gap-3 rounded-xl px-3 py-3 sm:py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-alpha-100 data-[selected=true]:text-foreground";
 
 const ICON_CLASS =
 	"size-4 text-muted-foreground group-data-[selected=true]:text-brand";
@@ -65,7 +67,7 @@ export function CommandMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-border px-2.5 text-xs text-muted-foreground hover:text-foreground hover:border-foreground/30 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-xl border border-alpha-300 px-2.5 text-xs text-text-faint hover:text-foreground hover:border-alpha-500 hover:bg-alpha-100 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 			>
 				<span className="font-sans">⌘</span>
 				<span>K</span>
@@ -76,7 +78,7 @@ export function CommandMenu() {
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)] rounded-sm"
+				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 rounded-xl text-text-faint hover:bg-alpha-100 hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 			>
 				<Menu className="size-5" strokeWidth={1.5} aria-hidden="true" />
 			</button>
@@ -86,7 +88,10 @@ export function CommandMenu() {
 					<Dialog.Overlay className="fixed inset-0 z-[var(--z-overlay)] bg-black/70 backdrop-blur-sm" />
 					<Dialog.Content
 						aria-describedby={undefined}
-						className="fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-[var(--shadow-elevated)] outline-none"
+						className={cn(
+							surfaceVariants({ variant: "panel", radius: "sm" }),
+							"fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden text-popover-foreground outline-none",
+						)}
 					>
 						<VisuallyHidden.Root>
 							<Dialog.Title>Command menu</Dialog.Title>
@@ -94,14 +99,14 @@ export function CommandMenu() {
 
 						<Command
 							label="Command menu"
-							className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-[0.18em] [&_[cmdk-group-heading]]:text-muted-foreground"
+							className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:font-sans [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-[0.18em] [&_[cmdk-group-heading]]:text-muted-foreground"
 						>
 							<div className="flex items-center gap-2 border-b border-border px-4">
 								<Search className="size-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
 								<Command.Input
 									autoFocus={!coarsePointer}
 									placeholder="Jump to a section, open a link…"
-									className="w-full bg-transparent py-3.5 text-sm font-mono text-foreground outline-none placeholder:text-muted-foreground"
+									className="w-full bg-transparent py-3.5 text-sm font-sans text-foreground outline-none placeholder:text-muted-foreground"
 								/>
 							</div>
 
@@ -147,7 +152,7 @@ export function CommandMenu() {
 									>
 										<Mail className={ICON_CLASS} strokeWidth={1.5} />
 										<span>Email me</span>
-										<span className="ml-auto font-mono text-[10px] text-muted-foreground">{EMAIL}</span>
+										<span className="ml-auto font-sans text-[10px] text-muted-foreground">{EMAIL}</span>
 									</Command.Item>
 									<Command.Item
 										value="copy email address clipboard"

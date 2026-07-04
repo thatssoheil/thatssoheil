@@ -2,12 +2,19 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+function Card({
+  className,
+  glass,
+  ...props
+}: React.ComponentProps<"div"> & { glass?: boolean }) {
   return (
     <div
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+        "text-card-foreground flex flex-col gap-6 rounded-xl py-6",
+        // Glass variant floats over the signal field (solid-by-default, see globals.css);
+        // the default stays a solid card for dense/critical content.
+        glass ? "glass glass-edge" : "bg-card border shadow-sm",
         className
       )}
       {...props}

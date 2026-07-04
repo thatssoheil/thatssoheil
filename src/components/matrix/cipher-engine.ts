@@ -29,6 +29,8 @@ export type CipherConfig = {
   reducedMotion: boolean;
   /** Tick granularity in ms. */
   tickMs: number;
+  /** Initial visual state. "settled" starts readable and only runs ambient pulses. */
+  initialState?: "scrambled" | "settled";
 };
 
 export const CHAR_POOL =
@@ -101,6 +103,7 @@ export function createCipherEngine(
     ambient,
     reducedMotion,
     tickMs: TICK_MS,
+    initialState = "scrambled",
   } = config;
 
   const randomChar = () => randomGlyph(rng);
@@ -153,6 +156,21 @@ export function createCipherEngine(
   let done = false;
 
   const cs: CharState[] = chars.map((_, i) => makeCharState(i, "spinning"));
+  if (initialState === "settled" && !reducedMotion) {
+    for (let i = 0; i < cs.length; i++) {
+      cs[i].char = chars[i];
+      cs[i].blur = 0;
+      cs[i].brightness = 1;
+      cs[i].scale = 1;
+      cs[i].opacity = 1;
+      cs[i].tint = 0;
+      cs[i].phase = "locked";
+    }
+    gPhase = ambientActive ? "ambient" : "revealed";
+    gElapsed = 0;
+    ambientCountdown = nextAmbientDelay();
+    done = !ambientActive;
+  }
   // Set stagger delays for initial deceleration
   let nsIdx = 0;
   for (let i = 0; i < cs.length; i++) {
