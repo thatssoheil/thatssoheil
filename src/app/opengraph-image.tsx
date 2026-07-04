@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { EMAIL, SITE, TAGLINE, X_HANDLE } from "@/lib/constants";
+import { SITE, TAGLINE, X_HANDLE } from "@/lib/constants";
 
 // The social-share card. Generated at the edge so every unfurl resolves (audit #6 —
 // the old static /og.png was referenced everywhere but never existed).
@@ -11,7 +11,6 @@ const GRID = {
 	frameInset: 32,
 	railLeft: 152,
 	railRight: 1048,
-	center: 600,
 	rhythmOffset: 76,
 	rhythm: 128,
 } as const;
@@ -34,10 +33,8 @@ const ICON_PATHS = {
 
 const CONTACT_ITEMS = [
 	{ kind: "site", label: "thatssoheil.website" },
-	{ kind: "mail", label: EMAIL },
 	{ kind: "x", label: X_HANDLE },
 	{ kind: "github", label: "github.com/thatssoheil" },
-	{ kind: "linkedin", label: "in/soheilfakour" },
 ] as const;
 
 function BrandMark() {
@@ -71,15 +68,6 @@ function ContactIcon({ kind }: { kind: (typeof CONTACT_ITEMS)[number]["kind"] })
 					strokeLinecap="round"
 					strokeLinejoin="round"
 				/>
-			</svg>
-		);
-	}
-
-	if (kind === "mail") {
-		return (
-			<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-				<rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" strokeWidth="2" />
-				<path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 			</svg>
 		);
 	}
@@ -124,7 +112,7 @@ export default function OpengraphImage() {
 							right: GRID.frameInset,
 							top,
 							height: 1,
-							background: "rgba(245,247,251,0.082)",
+							background: "rgba(245,247,251,0.058)",
 						}}
 					/>
 				))}
@@ -141,23 +129,11 @@ export default function OpengraphImage() {
 				<div
 					style={{
 						position: "absolute",
-						inset: 0,
-						backgroundImage:
-							"linear-gradient(to bottom, rgba(245,247,251,0.082) 1px, transparent 1px)",
-						backgroundSize: `100% ${GRID.rhythm}px`,
-						backgroundPosition: `0 ${GRID.rhythmOffset}px`,
-						maskImage:
-							"linear-gradient(to bottom, transparent 0%, #000 12%, #000 84%, transparent 100%)",
-					}}
-				/>
-				<div
-					style={{
-						position: "absolute",
 						left: GRID.railLeft,
 						top: 0,
 						bottom: 0,
 						width: 1,
-						background: "rgba(245,247,251,0.13)",
+						background: "rgba(245,247,251,0.09)",
 					}}
 				/>
 				<div
@@ -167,17 +143,7 @@ export default function OpengraphImage() {
 						top: 0,
 						bottom: 0,
 						width: 1,
-						background: "rgba(245,247,251,0.13)",
-					}}
-				/>
-				<div
-					style={{
-						position: "absolute",
-						left: GRID.center,
-						top: 0,
-						bottom: 0,
-						width: 1,
-						background: "rgba(245,247,251,0.13)",
+						background: "rgba(245,247,251,0.09)",
 					}}
 				/>
 				<div
@@ -204,7 +170,7 @@ export default function OpengraphImage() {
 				<div
 					style={{
 						position: "absolute",
-						left: 104,
+						left: GRID.railLeft,
 						top: 66,
 						display: "flex",
 						alignItems: "center",
@@ -220,8 +186,8 @@ export default function OpengraphImage() {
 				<div
 					style={{
 						position: "absolute",
-						left: 104,
-						right: 104,
+						left: GRID.railLeft,
+						right: GRID.railLeft,
 						top: 104,
 						bottom: 104,
 						display: "flex",
@@ -234,11 +200,11 @@ export default function OpengraphImage() {
 							display: "flex",
 							alignItems: "center",
 							gap: 14,
-							fontSize: 24,
+							fontSize: 22,
 							color: "#7cb4ff",
 							letterSpacing: "0.18em",
 							textTransform: "uppercase",
-							marginBottom: 34,
+							marginBottom: 26,
 						}}
 					>
 						<span>Frontend Engineer</span>
@@ -247,7 +213,7 @@ export default function OpengraphImage() {
 					</div>
 					<div
 						style={{
-							fontSize: 134,
+							fontSize: 142,
 							fontWeight: 300,
 							letterSpacing: "-0.06em",
 							lineHeight: 0.9,
@@ -260,11 +226,11 @@ export default function OpengraphImage() {
 							display: "flex",
 							alignItems: "center",
 							gap: 16,
-							fontSize: 28,
+							fontSize: 24,
 							color: "rgba(245,247,251,0.62)",
 							letterSpacing: "0.1em",
 							textTransform: "uppercase",
-							marginTop: 42,
+							marginTop: 30,
 						}}
 					>
 						<span style={{ color: "#2f8cff" }}>{"//"}</span>
@@ -274,13 +240,13 @@ export default function OpengraphImage() {
 				<div
 					style={{
 						position: "absolute",
-						left: 104,
+						left: GRID.railLeft,
 						bottom: 64,
-						right: 104,
+						right: GRID.railLeft,
 						display: "flex",
 						alignItems: "center",
-						justifyContent: "space-between",
-						color: "rgba(245,247,251,0.48)",
+						gap: 34,
+						color: "rgba(245,247,251,0.42)",
 						fontSize: 16,
 						letterSpacing: "0.04em",
 					}}
@@ -300,7 +266,7 @@ export default function OpengraphImage() {
 									display: "flex",
 									alignItems: "center",
 									justifyContent: "center",
-									color: "#66a9ff",
+									color: "rgba(102,169,255,0.74)",
 								}}
 							>
 								<ContactIcon kind={item.kind} />
