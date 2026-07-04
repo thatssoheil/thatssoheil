@@ -257,8 +257,6 @@
 	/* Structural grid — faint architectural guides on paper. */
 	--grid-rail: color-mix(in oklch, var(--foreground) 8%, transparent);
 	--grid-rhythm: color-mix(in oklch, var(--foreground) 5%, transparent);
-	--grid-center: color-mix(in oklch, var(--brand) 24%, transparent);
-	--grid-center-glow: color-mix(in oklch, var(--brand) 14%, transparent);
 	--grid-fade: linear-gradient(
 		to bottom,
 		transparent 0%,
@@ -356,8 +354,6 @@
 	/* Structural grid — visible but quiet on the deep void. */
 	--grid-rail: color-mix(in oklch, var(--foreground) 11%, transparent);
 	--grid-rhythm: color-mix(in oklch, var(--foreground) 6%, transparent);
-	--grid-center: color-mix(in oklch, var(--brand) 40%, transparent);
-	--grid-center-glow: color-mix(in oklch, var(--brand) 24%, transparent);
 	--grid-fade: linear-gradient(
 		to bottom,
 		transparent 0%,
@@ -614,8 +610,7 @@
 	left: 50%;
 	width: 1px;
 	transform: translateX(-0.5px);
-	background: var(--grid-center);
-	box-shadow: 0 0 14px var(--grid-center-glow);
+	background: var(--grid-rail);
 }
 .structure-grid__rhythm {
 	background-image:
@@ -629,16 +624,6 @@
 	}
 }
 @media (min-width: 48rem) {
-	:root {
-		--grid-center: color-mix(in oklch, var(--brand) 30%, transparent);
-		--grid-center-glow: color-mix(in oklch, var(--brand) 18%, transparent);
-	}
-
-	.dark {
-		--grid-center: color-mix(in oklch, var(--brand) 52%, transparent);
-		--grid-center-glow: color-mix(in oklch, var(--brand) 30%, transparent);
-	}
-
 	.structure-grid__frame {
 		padding-inline: 3rem;
 	}
