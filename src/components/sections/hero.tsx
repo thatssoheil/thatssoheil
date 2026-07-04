@@ -18,7 +18,7 @@ function HeroPlane() {
 	return (
 		<svg
 			aria-hidden="true"
-			className="pointer-events-none absolute left-1/2 top-1/2 h-[72vmin] w-[72vmin] -translate-x-1/2 -translate-y-1/2"
+			className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[calc(clamp(2.5rem,12vw,12rem)*3.75)] w-[calc(clamp(2.5rem,12vw,12rem)*3.75)] -translate-x-1/2 -translate-y-1/2"
 			viewBox="0 0 100 100"
 			fill="none"
 			preserveAspectRatio="xMidYMid meet"
@@ -92,8 +92,6 @@ export function HeroSection() {
 			className="relative w-full h-[100dvh] overflow-x-clip"
 			aria-label="Hero"
 		>
-			<HeroPlane />
-
 			<div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center select-none">
 				{/* Faint signal haze behind the name — atmosphere, not a spotlight */}
 				<div
@@ -101,29 +99,33 @@ export function HeroSection() {
 					className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--primary),transparent_70%)] opacity-[0.06] blur-[110px]"
 				/>
 
-				{/* Eyebrow — "Frontend Engineer × Product Curator". The two roles recede
-				    to a quiet grey; the signal × is the lone accent — the fusion of the two
-				    disciplines. One line, centred, scales down on small screens. */}
-				<p className="flex items-center justify-center gap-[0.6em] whitespace-nowrap font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-text-faint">
-					<span>Frontend Engineer</span>
-					<span
-						className="text-[1.2em] text-brand"
-						style={{ filter: "drop-shadow(0 0 5px var(--primary))" }}
-					>
-						×
-					</span>
-					<span>Product Curator</span>
-				</p>
+				<div className="relative isolate flex flex-col items-center">
+					<HeroPlane />
 
-				{/* The name — decodes once on load, then rests. In the passive "ambient"
-				    state a single random glyph quietly re-ciphers and resolves every few
-				    seconds. Monospace (--font-cipher) so the glyph pool can't reflow the line. */}
-				<CipherText
-					text="Soheil Fakour"
-					as="h1"
-					ambient
-					className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[clamp(2.5rem,12vw,12rem)] [font-family:var(--font-cipher)]"
-				/>
+					{/* Eyebrow — "Frontend Engineer × Product Curator". The two roles recede
+					    to a quiet grey; the signal × is the lone accent — the fusion of the two
+					    disciplines. One line, centred, scales down on small screens. */}
+					<p className="flex items-center justify-center gap-[0.6em] whitespace-nowrap font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium sm:font-normal leading-none tracking-[0.22em] sm:tracking-[0.3em] uppercase text-text-faint">
+						<span>Frontend Engineer</span>
+						<span
+							className="text-[1.2em] text-brand"
+							style={{ filter: "drop-shadow(0 0 5px var(--primary))" }}
+						>
+							×
+						</span>
+						<span>Product Curator</span>
+					</p>
+
+					{/* The name — decodes once on load, then rests. In the passive "ambient"
+					    state a single random glyph quietly re-ciphers and resolves every few
+					    seconds. Monospace (--font-cipher) so the glyph pool can't reflow the line. */}
+					<CipherText
+						text="Soheil Fakour"
+						as="h1"
+						ambient
+						className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[length:clamp(2.5rem,12vw,12rem)] [font-family:var(--font-cipher)]"
+					/>
+				</div>
 
 				{/* Tagline under a centred hairline with a centred signal lead. */}
 				<div className="mt-8 flex w-full flex-col items-center">
@@ -140,7 +142,7 @@ export function HeroSection() {
 
 				{/* Ask, don't scroll — the prompt bar grows in place into the chat.
 				                    Feature-flagged: ship without chat by setting NEXT_PUBLIC_ENABLE_CHAT=false. */}
-				                {process.env.NEXT_PUBLIC_ENABLE_CHAT === "true" && <HeroChat />}
+				{process.env.NEXT_PUBLIC_ENABLE_CHAT === "true" && <HeroChat />}
 			</div>
 
 			<ScrollCue />
