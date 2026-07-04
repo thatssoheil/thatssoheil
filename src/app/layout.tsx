@@ -5,6 +5,7 @@ import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SignalField } from "@/components/signal-field/signal-field";
+import { StructureGrid } from "@/components/signal-field/structure-grid";
 import "./globals.css";
 
 // Primary typeface: Lexend — tuned for low reading fatigue. Variable (no `weight`),
@@ -121,6 +122,7 @@ export default function RootLayout({
 					disableTransitionOnChange
 				>
 					<SignalField />
+					<StructureGrid />
 					<SkipToContent />
 					{children}
 				</ThemeProvider>
