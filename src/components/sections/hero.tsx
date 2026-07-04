@@ -59,17 +59,9 @@ function HeroPlane() {
 				rx={SQUARE.radius}
 				fill="url(#hero-plane-fill)"
 			/>
-			<path
-				d={`M ${SQUARE.x + SQUARE.radius} ${SQUARE.y} H ${SQUARE.x + SQUARE.size - SQUARE.radius}`}
-				stroke="var(--plane-rim-strong)"
-				strokeWidth={0.9}
-				strokeLinecap="round"
-				vectorEffect="non-scaling-stroke"
-			/>
-
-			{/* The edge — a crisp, lean white wire. No blur: the square's top edge stays
-			    sharp, and its dissolve into the void comes entirely from the plane-wide
-			    alpha mask above, which fades the lower sides out toward the bottom. */}
+			{/* The edge — a lean, even wire. No extra top highlight: the square should
+			    read as atmosphere, not a bordered panel. Its dissolve into the void comes
+			    entirely from the plane-wide alpha mask above. */}
 			<rect
 				x={SQUARE.x}
 				y={SQUARE.y}
