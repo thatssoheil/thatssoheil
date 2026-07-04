@@ -12,7 +12,7 @@ Frontend Engineer and Product Curator
 
 ### On curation
 
-I stopped chasing perfection a while ago. Reality moves too fast for finished work. What I chase now is curation — choosing what stays and what gets cut, building from the pieces that hold up. A product isn't great because it has everything. It's great because someone decided what to leave out.
+I stopped chasing perfection a while ago. Reality moves too fast for finished work. What I chase now is curation, choosing what stays and what gets cut, building from the pieces that hold up. A product isn't great because it has everything. It's great because someone decided what to leave out.
 
 ### On working
 
@@ -28,11 +28,11 @@ Say hello.
 
 Email first. Catch me on X. Everything else, eventually.
 
-- **Email** — [soheil.fakour@gmail.com](mailto:soheil.fakour@gmail.com)
-- **GitHub** — [github.com/thatssoheil](https://github.com/thatssoheil)
-- **LinkedIn** — [linkedin.com/in/soheilfakour](https://linkedin.com/in/soheilfakour)
-- **X / Twitter** — [@Thatssoheil](https://x.com/Thatssoheil)
-- **Site** — [thatssoheil.website](https://thatssoheil.website)
+- **Email:** [soheil.fakour@gmail.com](mailto:soheil.fakour@gmail.com)
+- **GitHub:** [github.com/thatssoheil](https://github.com/thatssoheil)
+- **LinkedIn:** [linkedin.com/in/soheilfakour](https://linkedin.com/in/soheilfakour)
+- **X / Twitter:** [@Thatssoheil](https://x.com/Thatssoheil)
+- **Site:** [thatssoheil.website](https://thatssoheil.website)
 
 ---
 
@@ -46,8 +46,8 @@ The AI-powered hero chat is feature-flagged. To ship without it, set both flags 
 
 | Flag | Where | Purpose |
 |------|-------|---------|
-| `ENABLE_CHAT` | `wrangler.jsonc` → `vars` | Runtime gate — `/api/chat` returns 404 when `"false"` |
-| `NEXT_PUBLIC_ENABLE_CHAT` | Build env var | Build-time gate — chat UI is hidden when not `"true"` |
+| `ENABLE_CHAT` | `wrangler.jsonc` → `vars` | Runtime gate: `/api/chat` returns 404 when `"false"` |
+| `NEXT_PUBLIC_ENABLE_CHAT` | Build env var | Build-time gate: chat UI is hidden when not `"true"` |
 
 **Ship without chat:**
 ```bash
@@ -67,8 +67,8 @@ The deploy workflow reads this variable and injects it into `wrangler.jsonc` at 
 Manual dispatch accepts an `enable_chat` boolean input to override.
 
 **Required secrets** (set at Settings → Secrets and variables → Actions → Secrets):
-- `CLOUDFLARE_API_TOKEN` — Cloudflare API token with Workers deploy permissions
-- `CLOUDFLARE_ACCOUNT_ID` — Your Cloudflare account ID
+- `CLOUDFLARE_API_TOKEN`: Cloudflare API token with Workers deploy permissions
+- `CLOUDFLARE_ACCOUNT_ID`: Your Cloudflare account ID
 
 **Local dev (chat enabled):**
 Copy `.dev.vars.example` to `.dev.vars`, set `ENABLE_CHAT=true`, and run:
