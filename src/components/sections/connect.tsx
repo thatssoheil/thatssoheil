@@ -14,7 +14,7 @@ export function ConnectSection() {
 				<Surface
 					variant="panel"
 					radius="lg"
-					className="relative isolate mx-auto grid w-full max-w-4xl gap-8 overflow-hidden p-6 text-left sm:p-12 md:grid-cols-[1fr_auto] md:items-end md:p-16"
+					className="relative isolate mx-auto grid w-full max-w-4xl gap-10 overflow-hidden p-6 text-left sm:p-12 md:p-16"
 				>
 					<div
 						aria-hidden="true"
@@ -35,11 +35,11 @@ export function ConnectSection() {
 						</p>
 					</div>
 
-					<div className="relative z-10 flex w-full flex-col items-start gap-4 md:w-auto md:items-end">
+					<div className="relative z-10 flex w-full flex-col items-stretch gap-4 sm:flex-row sm:items-center">
 						<Button
 							asChild
 							size="lg"
-							className="h-12 w-full min-w-0 justify-center gap-2 border border-alpha-300 bg-primary text-sm shadow-[0_0_20px_color-mix(in_oklch,var(--primary)_18%,transparent)] hover:bg-primary/90 sm:w-auto sm:text-base"
+							className="h-12 w-full min-w-0 justify-center gap-2 border border-alpha-300 bg-primary text-sm shadow-[0_0_16px_color-mix(in_oklch,var(--primary)_14%,transparent)] hover:bg-primary/90 sm:w-auto sm:text-base"
 						>
 							<a href={`mailto:${EMAIL}`} className="min-w-0">
 								<Mail className="size-5 shrink-0" />
@@ -47,7 +47,7 @@ export function ConnectSection() {
 							</a>
 						</Button>
 
-						<div className="flex flex-wrap items-center gap-3">
+						<div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
 							{SOCIALS.map(({ label, href, icon: Icon }) => (
 								<a
 									key={label}
