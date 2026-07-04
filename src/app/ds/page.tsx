@@ -274,7 +274,7 @@ function Swatch({ name, role }: { name: string; role?: string }) {
 	return (
 		<div className="flex flex-col gap-2">
 			<div
-				className="h-14 w-full rounded-lg border border-border"
+				className="h-14 w-full rounded-xl border border-alpha-300"
 				style={{ background: `var(--${name})` }}
 			/>
 			<div className="flex flex-col gap-0.5">
@@ -294,8 +294,8 @@ export default function DesignSystemPage() {
 	return (
 		<main className="min-h-dvh bg-background text-foreground">
 			{/* ── Sticky in-page nav ── */}
-			<nav className="sticky top-0 z-[var(--z-sticky)] border-b border-border bg-background/80 backdrop-blur-md">
-				<div className="mx-auto flex w-full max-w-5xl items-center gap-5 overflow-x-auto px-6 py-3 font-mono text-xs sm:px-8 md:px-12">
+			<nav className="sticky top-0 z-[var(--z-sticky)] border-b border-alpha-300 bg-background/80 backdrop-blur-md">
+				<div className="mx-auto flex w-full max-w-6xl items-center gap-5 overflow-x-auto px-6 py-3 font-mono text-xs sm:px-8 md:px-12">
 					<span className="text-foreground/90 whitespace-nowrap">/ds</span>
 					<span className="text-border">·</span>
 					{NAV.map((n) => (
@@ -400,29 +400,29 @@ export default function DesignSystemPage() {
 				{/* ── Typography ── */}
 				<Block id="type" label="Type" title="Lexend + Geist Mono">
 					<Pane className="p-6">
-					<div className="flex flex-col gap-8">
-						{TYPE_SCALE.map((t) => (
-							<div
-								key={t.label}
-								className="flex flex-col gap-2 border-b border-alpha-300 pb-6 last:border-b-0 last:pb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
-							>
-								<span className={`${t.cls} tracking-tight`}>{t.label}</span>
-								<span className="shrink-0 font-mono text-[10px] text-foreground/40">
-									{t.note}
+						<div className="flex flex-col gap-8">
+							{TYPE_SCALE.map((t) => (
+								<div
+									key={t.label}
+									className="flex flex-col gap-2 border-b border-alpha-300 pb-6 last:border-b-0 last:pb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
+								>
+									<span className={`${t.cls} tracking-tight`}>{t.label}</span>
+									<span className="shrink-0 font-mono text-[10px] text-foreground/40">
+										{t.note}
+									</span>
+								</div>
+							))}
+							<div className="flex flex-col gap-2">
+								<SectionLabel>Section eyebrow</SectionLabel>
+								<span className="font-mono text-[10px] text-foreground/40">
+									Lexend · uppercase · tracking-[0.2em] · text-brand (eyebrow register)
 								</span>
 							</div>
-						))}
-						<div className="flex flex-col gap-2">
-							<SectionLabel>Section eyebrow</SectionLabel>
-							<span className="font-mono text-[10px] text-foreground/40">
-								Lexend · uppercase · tracking-[0.2em] · text-brand (eyebrow register)
-							</span>
 						</div>
-					</div>
 					</Pane>
 
 					{/* Composite ramps — Geist's named type system, brand weights */}
-					<div className="flex flex-col gap-5 border-t border-border/60 pt-10">
+					<div className="flex flex-col gap-5 border-t border-alpha-300 pt-10">
 						<SectionLabel>Composite ramps</SectionLabel>
 						<p className="max-w-2xl text-sm font-light text-foreground/45">
 							Geist&rsquo;s four named ramps —{" "}
@@ -436,7 +436,7 @@ export default function DesignSystemPage() {
 							{TYPE_RAMPS.map((t) => (
 								<div
 									key={t.label}
-									className="flex flex-col gap-1 border-b border-border/40 pb-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
+									className="flex flex-col gap-1 border-b border-alpha-300 pb-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
 								>
 									<span className={t.cls}>{t.label}</span>
 									<span className="shrink-0 font-mono text-[10px] text-foreground/40">
@@ -448,7 +448,7 @@ export default function DesignSystemPage() {
 					</div>
 
 					{/* Fluid type — clamp() ramps */}
-					<div className="flex flex-col gap-5 border-t border-border/60 pt-10">
+					<div className="flex flex-col gap-5 border-t border-alpha-300 pt-10">
 						<SectionLabel>Fluid type</SectionLabel>
 						<p className="max-w-2xl text-sm font-light text-foreground/45">
 							<code className="text-brand">text-fluid-*</code> tokens interpolate between a 360px
@@ -459,7 +459,7 @@ export default function DesignSystemPage() {
 							{FLUID.map((f) => (
 								<div
 									key={f.name}
-									className="flex items-baseline justify-between gap-8 border-b border-border/40 pb-3"
+									className="flex items-baseline justify-between gap-8 border-b border-alpha-300 pb-3"
 								>
 									<span className={`${f.name} font-light tracking-tight text-foreground/90`}>
 										Aa
@@ -479,14 +479,14 @@ export default function DesignSystemPage() {
 				<Block id="space" label="Space" title="Layout, spacing, radius & stacking">
 					{/* Layout scale */}
 					<Pane>
-					<div className="flex flex-col gap-3">
-						{LAYOUT.map((l) => (
-							<div key={l.name} className="flex items-baseline justify-between gap-4 border-b border-alpha-300 pb-3 last:border-b-0 last:pb-0">
-								<span className="text-sm text-foreground/80">{l.name}</span>
-								<span className="font-mono text-xs text-foreground/50">{l.value}</span>
-							</div>
-						))}
-					</div>
+						<div className="flex flex-col gap-3">
+							{LAYOUT.map((l) => (
+								<div key={l.name} className="flex items-baseline justify-between gap-4 border-b border-alpha-300 pb-3 last:border-b-0 last:pb-0">
+									<span className="text-sm text-foreground/80">{l.name}</span>
+									<span className="font-mono text-xs text-foreground/50">{l.value}</span>
+								</div>
+							))}
+						</div>
 					</Pane>
 
 					{/* Radius */}
@@ -594,7 +594,7 @@ export default function DesignSystemPage() {
 							{Z_INDEX.map((z) => (
 								<div
 									key={z.name}
-									className="flex flex-col gap-1 border-b border-border/60 pb-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
+									className="flex flex-col gap-1 border-b border-alpha-300 pb-3 last:border-b-0 last:pb-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
 								>
 									<span className="font-mono text-sm text-foreground/90">{z.name}</span>
 									<span className="font-mono text-xs text-foreground/50">{z.value}</span>
@@ -617,14 +617,14 @@ export default function DesignSystemPage() {
 						<div className="flex flex-wrap items-center gap-4">
 							<button
 								type="button"
-								className="rounded-md border border-border px-4 py-2 text-sm text-foreground/80 transition-colors hover:border-foreground/30 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+								className="rounded-xl border border-alpha-300 px-4 py-2 text-sm text-text-muted transition-colors hover:border-alpha-500 hover:bg-alpha-100 hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 							>
 								Focusable button
 							</button>
 							<input
 								type="text"
 								placeholder="Focusable input"
-								className="rounded-md border border-input bg-card px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:shadow-[var(--ring-focus)]"
+								className="rounded-xl border border-alpha-400 bg-card px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted-foreground focus-visible:shadow-[var(--ring-focus)]"
 							/>
 						</div>
 					</div>
@@ -824,30 +824,32 @@ export default function DesignSystemPage() {
 
 				{/* ── Voice ── */}
 				<Block id="voice" label="Voice" title="Plain, grounded, sharp">
-					<div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-						<div className="flex flex-col gap-3 rounded-xl border border-border p-6">
-							<span className="font-mono text-[10px] uppercase tracking-widest text-brand">Yes</span>
-							<p className="text-sm font-light leading-relaxed text-foreground/70">
-								&ldquo;I&rsquo;d rather show you the thing than argue about the thing.&rdquo;
-							</p>
-							<p className="text-sm font-light leading-relaxed text-foreground/70">
-								&ldquo;I stopped chasing perfection a while ago — reality moves too fast for finished work.&rdquo;
-							</p>
+					<Pane>
+						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+							<div className="flex flex-col gap-3 rounded-xl border border-alpha-300 bg-card/70 p-6">
+								<span className="font-mono text-[10px] uppercase tracking-widest text-brand">Yes</span>
+								<p className="text-sm font-light leading-relaxed text-foreground/70">
+									&ldquo;I&rsquo;d rather show you the thing than argue about the thing.&rdquo;
+								</p>
+								<p className="text-sm font-light leading-relaxed text-foreground/70">
+									&ldquo;I stopped chasing perfection a while ago — reality moves too fast for finished work.&rdquo;
+								</p>
+							</div>
+							<div className="flex flex-col gap-3 rounded-xl border border-alpha-300 bg-card/40 p-6">
+								<span className="font-mono text-[10px] uppercase tracking-widest text-text-faint">No</span>
+								<p className="text-sm font-light leading-relaxed text-text-faint line-through decoration-foreground/20">
+									&ldquo;My system flags inefficient drains on my timeline.&rdquo;
+								</p>
+								<p className="text-sm font-light leading-relaxed text-text-faint line-through decoration-foreground/20">
+									&ldquo;Passionate developer delivering high-quality solutions.&rdquo;
+								</p>
+							</div>
 						</div>
-						<div className="flex flex-col gap-3 rounded-xl border border-border p-6">
-							<span className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">No</span>
-							<p className="text-sm font-light leading-relaxed text-foreground/40 line-through decoration-foreground/20">
-								&ldquo;My system flags inefficient drains on my timeline.&rdquo;
-							</p>
-							<p className="text-sm font-light leading-relaxed text-foreground/40 line-through decoration-foreground/20">
-								&ldquo;Passionate developer delivering high-quality solutions.&rdquo;
-							</p>
-						</div>
-					</div>
+					</Pane>
 				</Block>
 
 				{/* ── Source of truth ── */}
-				<footer className="flex flex-col gap-3 border-t border-border pt-12 text-sm font-light text-foreground/45">
+				<footer className="flex flex-col gap-3 border-t border-alpha-300 pt-12 text-sm font-light text-foreground/45">
 					<SectionLabel>Reference</SectionLabel>
 					<p className="max-w-2xl leading-relaxed">
 						Structure adopted from Vercel&rsquo;s Geist — the composite type ramps, the alpha ramp
