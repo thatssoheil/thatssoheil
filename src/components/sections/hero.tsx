@@ -14,7 +14,7 @@ function HeroPlane() {
 		<div
 			aria-hidden="true"
 			data-hero-plane=""
-			className="pointer-events-none absolute left-1/2 top-[calc(50%+clamp(2.35rem,10.8vw,10.8rem)*0.46)] -z-10 h-[calc(clamp(2.35rem,10.8vw,10.8rem)*2.25)] w-[calc(100vw-2.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-alpha-300/35 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--foreground)_5%,transparent),color-mix(in_oklch,var(--foreground)_1.5%,transparent)),radial-gradient(70%_78%_at_50%_24%,color-mix(in_oklch,var(--foreground)_10%,transparent),transparent_74%),radial-gradient(72%_95%_at_50%_66%,color-mix(in_oklch,var(--primary)_10%,transparent),transparent_82%)] shadow-[inset_0_1px_0_color-mix(in_oklch,var(--foreground)_12%,transparent),0_14px_45px_color-mix(in_oklch,var(--background)_42%,transparent)] backdrop-blur-[6px]"
+			className="pointer-events-none absolute left-1/2 top-1/2 sm:top-[calc(50%+clamp(2.35rem,10.8vw,10.8rem)*0.34)] -z-10 h-[calc(clamp(2.35rem,10.8vw,10.8rem)*3.15)] sm:h-[calc(clamp(2.35rem,10.8vw,10.8rem)*2.45)] w-[calc(100vw-2.5rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-alpha-300/35 bg-[linear-gradient(180deg,color-mix(in_oklch,var(--foreground)_5%,transparent),color-mix(in_oklch,var(--foreground)_1.5%,transparent)),radial-gradient(70%_78%_at_50%_24%,color-mix(in_oklch,var(--foreground)_10%,transparent),transparent_74%),radial-gradient(72%_95%_at_50%_66%,color-mix(in_oklch,var(--primary)_10%,transparent),transparent_82%)] shadow-[inset_0_1px_0_color-mix(in_oklch,var(--foreground)_12%,transparent),0_14px_45px_color-mix(in_oklch,var(--background)_42%,transparent)] backdrop-blur-[6px]"
 			style={{
 				maskImage:
 					"linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%)",
