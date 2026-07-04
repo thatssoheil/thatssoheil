@@ -5,7 +5,7 @@ export default function Loading() {
 	return (
 		<div className="min-h-screen bg-background flex flex-col" role="status" aria-label="Loading page">
 			{/* Header skeleton */}
-			<div className="fixed inset-x-0 top-[calc(env(safe-area-inset-top)+0.75rem)] z-[var(--z-header)] px-5 sm:px-6 md:px-8">
+			<div className="fixed inset-x-0 top-[calc(env(safe-area-inset-top)+0.75rem)] z-[var(--z-header)] px-5 sm:px-8 md:px-12 lg:px-16">
 				<Surface
 					variant="chrome"
 					radius="md"

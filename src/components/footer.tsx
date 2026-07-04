@@ -13,7 +13,7 @@ export function Footer() {
 	return (
 		<footer
 			role="contentinfo"
-			className="relative z-10 w-full px-5 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-16 sm:px-6 md:px-8"
+			className="relative z-10 w-full px-5 pb-[calc(env(safe-area-inset-bottom)+1rem)] pt-16 sm:px-8 md:px-12 lg:px-16"
 		>
 			<Surface
 				variant="chrome"
