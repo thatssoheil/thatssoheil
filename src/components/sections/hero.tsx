@@ -6,7 +6,7 @@ import { type SectionId } from "@/lib/constants";
 import { jumpToSection } from "@/lib/section-navigation";
 
 // ─── Ambient plane — a small, centered square behind the name ───
-// Static: a faint white-toned fill + a lean white edge read as a flat "plane",
+// Static: a faint white-toned fill reads as a flat atmospheric "plane",
 // a perfect square (4-fold symmetric) centred on the wordmark's axis, spanning from
 // the eyebrow down through the ask-bar. Monochrome — white in the dark (active)
 // theme, neutral ink on paper. Never competes with the name.
@@ -30,11 +30,11 @@ function HeroPlane() {
 			}}
 		>
 			<defs>
-				<linearGradient id="hero-plane-fill" x1="0" y1="0" x2="0" y2="1">
+				<radialGradient id="hero-plane-fill" cx="50%" cy="28%" r="72%">
 					<stop offset="0%" stopColor="var(--plane-sheen)" />
-					<stop offset="34%" stopColor="var(--plane-tint)" />
+					<stop offset="42%" stopColor="var(--plane-tint)" />
 					<stop offset="100%" stopColor="transparent" />
-				</linearGradient>
+				</radialGradient>
 				<radialGradient id="hero-plane-glow" cx="50%" cy="24%" r="62%">
 					<stop offset="0%" stopColor="var(--plane-glow)" />
 					<stop offset="100%" stopColor="transparent" />
@@ -58,20 +58,6 @@ function HeroPlane() {
 				height={SQUARE.size}
 				rx={SQUARE.radius}
 				fill="url(#hero-plane-fill)"
-			/>
-			{/* The edge — a lean, even wire. No extra top highlight: the square should
-			    read as atmosphere, not a bordered panel. Its dissolve into the void comes
-			    entirely from the plane-wide alpha mask above. */}
-			<rect
-				x={SQUARE.x}
-				y={SQUARE.y}
-				width={SQUARE.size}
-				height={SQUARE.size}
-				rx={SQUARE.radius}
-				stroke="var(--plane-rim)"
-				strokeWidth={0.75}
-				strokeLinejoin="round"
-				vectorEffect="non-scaling-stroke"
 			/>
 		</svg>
 	);
@@ -127,13 +113,11 @@ export function HeroSection() {
 						<span>Product Curator</span>
 					</p>
 
-					{/* The name — decodes once on load, then rests. In the passive "ambient"
-					    state a single random glyph quietly re-ciphers and resolves every few
-					    seconds. Monospace (--font-cipher) so the glyph pool can't reflow the line. */}
+					{/* The name — decodes once on load, then rests. Monospace
+					    (--font-cipher) so the glyph pool can't reflow the line. */}
 					<CipherText
 						text="Soheil Fakour"
 						as="h1"
-						ambient
 						intensity="display"
 						className="mt-6 whitespace-nowrap font-light leading-[0.95] text-foreground text-[length:clamp(2.5rem,12vw,12rem)] [font-family:var(--font-cipher)]"
 					/>

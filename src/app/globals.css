@@ -228,8 +228,6 @@
 	   gradient) so the hero plane reads as lit atmosphere, not a grey smudge.
 	   White-toned (off --foreground); tuned per theme, lower on paper. */
 	--plane-tint: color-mix(in oklch, var(--foreground) 5%, transparent);
-	--plane-rim: color-mix(in oklch, var(--foreground) 20%, transparent);
-	--plane-rim-strong: color-mix(in oklch, var(--foreground) 28%, transparent);
 	--plane-sheen: color-mix(in oklch, white 36%, transparent);
 	--plane-glow: color-mix(in oklch, var(--primary) 12%, transparent);
 
@@ -323,8 +321,6 @@
 
 	/* Ambient plane tint — slightly stronger on the near-black void (see :root) */
 	--plane-tint: color-mix(in oklch, var(--foreground) 10%, transparent);
-	--plane-rim: color-mix(in oklch, var(--foreground) 26%, transparent);
-	--plane-rim-strong: color-mix(in oklch, white 34%, transparent);
 	--plane-sheen: color-mix(in oklch, white 18%, transparent);
 	--plane-glow: color-mix(in oklch, var(--primary) 18%, transparent);
 

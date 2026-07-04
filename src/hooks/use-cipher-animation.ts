@@ -115,12 +115,12 @@ export function useCipherAnimation(
 
     const id = setInterval(() => {
       const snap = engine.tick();
+      setDisplay(snap);
       // Decode-once settled: leave the final frame in place and stop.
       if (engine.done) {
         clearInterval(id);
         return;
       }
-      setDisplay(snap);
     }, TICK_MS);
 
     return () => clearInterval(id);
