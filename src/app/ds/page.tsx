@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { TokenValue } from "@/components/ds/token-value";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
 	title: "Design System — Soheil Fakour",
@@ -202,16 +203,36 @@ function Block({
 	return (
 		<section
 			id={id}
-			className="flex flex-col gap-8 border-t border-border pt-12 scroll-mt-20"
+			className="grid gap-8 border-t border-alpha-300 pt-12 scroll-mt-20 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-12"
 		>
-			<div className="flex flex-col gap-3">
+			<div className="flex flex-col gap-3 md:sticky md:top-24 md:self-start">
 				<SectionLabel>{label}</SectionLabel>
-				<h2 className="text-3xl sm:text-4xl font-light tracking-tight font-sans">
+				<h2 className="text-heading-32 text-foreground">
 					{title}
 				</h2>
 			</div>
-			{children}
+			<div className="flex min-w-0 flex-col gap-8">{children}</div>
 		</section>
+	);
+}
+
+function Pane({
+	children,
+	className,
+}: {
+	children: React.ReactNode;
+	className?: string;
+}) {
+	return (
+		<div
+			className={cn(
+				"relative overflow-hidden rounded-2xl border border-alpha-300 bg-card/70 p-5 shadow-[var(--shadow-border)]",
+				"before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(var(--alpha-200)_1px,transparent_1px),linear-gradient(90deg,var(--alpha-200)_1px,transparent_1px)] before:bg-[size:24px_24px] before:opacity-40",
+				className,
+			)}
+		>
+			<div className="relative">{children}</div>
+		</div>
 	);
 }
 
@@ -258,19 +279,23 @@ export default function DesignSystemPage() {
 				</div>
 			</nav>
 
-			<div className="mx-auto flex w-full max-w-5xl flex-col gap-20 px-6 py-20 sm:px-8 md:px-12">
+			<div className="mx-auto flex w-full max-w-6xl flex-col gap-20 px-6 py-20 sm:px-8 md:px-12">
 				{/* ── Masthead ── */}
-				<header className="flex flex-col gap-4">
-					<SectionLabel>Design System</SectionLabel>
-					<h1 className="text-5xl font-light tracking-tight font-sans sm:text-6xl">
-						Neutral black, electric signal.
-					</h1>
-					<p className="max-w-2xl text-base font-light leading-relaxed text-foreground/55 sm:text-lg">
-						The single source of truth for color, type, motion, and surface. Two
-						themes ship — neutral black (default) and neutral paper — sharing one
-						electric accent (iMessage blue), used sparingly. Toggle them top-right.
-						Pure white and pure black are both off the table.
-					</p>
+				<header className="grid gap-8 md:grid-cols-[9rem_minmax(0,1fr)] md:gap-12">
+					<div className="pt-1">
+						<SectionLabel>Design System</SectionLabel>
+					</div>
+					<Pane className="p-7 sm:p-9">
+						<h1 className="max-w-3xl text-heading-56 text-foreground sm:text-heading-64">
+							Neutral black, electric signal.
+						</h1>
+						<p className="mt-5 max-w-2xl text-copy-18 text-text-muted">
+							The single source of truth for color, type, motion, and surface. Two
+							themes ship — neutral black (default) and neutral paper — sharing one
+							electric accent (iMessage blue), used sparingly. Toggle them top-right.
+							Pure white and pure black are both off the table.
+						</p>
+					</Pane>
 				</header>
 
 				{/* ── Ink ramp ── */}
@@ -617,7 +642,7 @@ export default function DesignSystemPage() {
 				{/* ── Glass: the Signal Glass material ── */}
 				<Block id="glass" label="Glass" title="Glass — the Signal Glass material">
 					{/* Live demo over a signal-tinted bed so the material reads on this solid page. */}
-					<div className="relative overflow-hidden rounded-2xl border border-border p-8">
+					<Pane className="p-8">
 						<div
 							aria-hidden="true"
 							className="pointer-events-none absolute inset-0"
@@ -641,7 +666,7 @@ export default function DesignSystemPage() {
 								</p>
 							</div>
 						</div>
-					</div>
+					</Pane>
 					<p className="max-w-2xl text-sm font-light text-foreground/45">
 						Glass is <strong className="font-normal text-foreground/70">solid by default</strong>{" "}
 						and translucent only as a progressive enhancement — gated on{" "}
