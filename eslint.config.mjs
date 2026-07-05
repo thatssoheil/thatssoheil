@@ -4,8 +4,7 @@ import typescript from "eslint-config-next/typescript";
 // ─── Design-system tier-precedence gate (ADR-0001) ───
 // Components consume semantics, never primitives. Rules ERROR so the law can't rot.
 // Selectors are shared so the glass block can extend (not replace) the tier block.
-// Still deferred (turn on in Slice 2/T3-T4 once clean): text-foreground/NN and
-// arbitrary text-[…rem] sizes.
+// Still deferred (turn on in Slice 2/T3-T4 once clean): arbitrary text-[…rem] sizes.
 const tierSelectors = [
 	{
 		selector: "Literal[value=/var\\(--(signal|ink)-/]",
@@ -26,6 +25,19 @@ const tierSelectors = [
 		selector: "TemplateElement[value.raw=/(oklch|rgba?)\\(/]",
 		message:
 			"Tier law (ADR-0001): no raw color literals in components — use a semantic token (masks may use #000/#fff/transparent).",
+	},
+];
+
+const productTextSelectors = [
+	{
+		selector: "Literal[value=/\\btext-foreground\\/[0-9]/]",
+		message:
+			"ADR-0004: no text-foreground/NN for product text — use text-text-muted, text-text-faint, or text-foreground.",
+	},
+	{
+		selector: "TemplateElement[value.raw=/\\btext-foreground\\/[0-9]/]",
+		message:
+			"ADR-0004: no text-foreground/NN for product text — use text-text-muted, text-text-faint, or text-foreground.",
 	},
 ];
 
@@ -66,9 +78,18 @@ const config = [
 	// flat-config replaces (not merges) a rule's options for matching files.
 	{
 		files: ["src/components/**/*.{ts,tsx}"],
-		ignores: ["src/components/ui/**", "src/components/signal-field/**"],
+		ignores: [
+			"src/components/ui/**",
+			"src/components/signal-field/**",
+			"src/components/ds/**",
+		],
 		rules: {
-			"no-restricted-syntax": ["error", ...tierSelectors, ...glassSelectors],
+			"no-restricted-syntax": [
+				"error",
+				...tierSelectors,
+				...glassSelectors,
+				...productTextSelectors,
+			],
 		},
 	},
 ];

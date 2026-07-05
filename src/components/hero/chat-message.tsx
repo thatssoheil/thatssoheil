@@ -1,5 +1,6 @@
 import type { ChatMessage } from "@/lib/ai-soheil/types";
 import { SoheilLabel } from "@/components/hero/soheil-label";
+import { textRole } from "@/components/ui/typography";
 
 /**
  * One transcript row. User turns are a soft, signal-tinted *outline* bubble on the
@@ -19,7 +20,7 @@ export function ChatMessageRow({ message }: { message: ChatMessage }) {
 	return (
 		<div className="flex flex-col gap-1.5">
 			<SoheilLabel />
-			<p className="max-w-[80%] text-[0.98rem] leading-relaxed text-foreground/90">
+			<p className={`max-w-[80%] text-[0.98rem] leading-relaxed ${textRole.default}`}>
 				{message.content || " "}
 			</p>
 		</div>

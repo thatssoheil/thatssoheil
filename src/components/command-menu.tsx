@@ -16,11 +16,15 @@ import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { jumpToSection } from "@/lib/section-navigation";
 import { cn } from "@/lib/utils";
 import { surfaceVariants } from "@/components/ui/surface";
+import { textRole } from "@/components/ui/typography";
 
 const ITEM_CLASS =
 	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
 	// mobile nav); sm:py-2.5 keeps the compact desktop rows unchanged.
-	"group flex items-center gap-3 rounded-xl px-3 py-3 sm:py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-alpha-100 data-[selected=true]:text-foreground";
+	[
+		"group flex items-center gap-3 rounded-xl px-3 py-3 sm:py-2.5 text-sm cursor-pointer data-[selected=true]:bg-alpha-100 data-[selected=true]:text-foreground",
+		textRole.muted,
+	].join(" ");
 
 const ICON_CLASS =
 	"size-4 text-muted-foreground group-data-[selected=true]:text-brand";

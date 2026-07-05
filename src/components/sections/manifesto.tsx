@@ -1,6 +1,7 @@
 import type { SectionId } from "@/lib/constants";
 import { MANIFESTO } from "@/data/manifesto";
 import { Surface } from "@/components/ui/surface";
+import { textRole } from "@/components/ui/typography";
 
 export function ManifestoSection() {
 	return (
@@ -58,7 +59,7 @@ export function ManifestoSection() {
 									<p className="whitespace-nowrap pt-[0.35em] font-sans text-[11px] tracking-[0.16em] uppercase text-text-faint">
 										{p.label}
 									</p>
-									<p className="text-left text-base leading-relaxed text-foreground/75 sm:text-lg">
+									<p className={`text-left text-base leading-relaxed sm:text-lg ${textRole.muted}`}>
 										{p.body}
 									</p>
 								</div>

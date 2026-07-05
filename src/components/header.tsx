@@ -9,6 +9,7 @@ import { CommandMenu } from "@/components/command-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LogoMark } from "@/components/logo";
 import { Surface } from "@/components/ui/surface";
+import { textRole } from "@/components/ui/typography";
 
 /**
  * Fixed glass island header (static — no entrance animation).
@@ -40,7 +41,7 @@ export function Header() {
 					href="#hero"
 					onClick={(e) => handleClick(e, "#hero")}
 					aria-label={`${SITE.name}, home`}
-					className="flex min-h-11 items-center gap-2.5 rounded-lg tracking-tight text-foreground hover:text-foreground/80 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+					className="flex min-h-11 items-center gap-2.5 rounded-lg tracking-tight text-foreground hover:text-text-muted focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 				>
 					<LogoMark className="h-[18px]" />
 					{SITE.name}
@@ -61,7 +62,7 @@ export function Header() {
 									className={cn(
 										"rounded-lg py-1 transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
 										isActive
-											? "text-foreground/90"
+											? textRole.default
 											: "text-text-faint hover:text-foreground",
 									)}
 								>
