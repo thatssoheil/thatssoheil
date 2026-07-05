@@ -16,7 +16,7 @@ import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { jumpToSection } from "@/lib/section-navigation";
 import { cn } from "@/lib/utils";
 import { surfaceVariants } from "@/components/ui/surface";
-import { textRole } from "@/components/ui/typography";
+import { textRole, typeRole } from "@/components/ui/typography";
 
 const ITEM_CLASS =
 	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
@@ -103,7 +103,10 @@ export function CommandMenu() {
 
 						<Command
 							label="Command menu"
-							className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:font-sans [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-[0.18em] [&_[cmdk-group-heading]]:text-muted-foreground"
+							className={cn(
+								"[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:text-muted-foreground",
+								typeRole.commandGroupHeading,
+							)}
 						>
 							<div className="flex items-center gap-2 border-b border-border px-4">
 								<Search className="size-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
@@ -156,7 +159,7 @@ export function CommandMenu() {
 									>
 										<Mail className={ICON_CLASS} strokeWidth={1.5} />
 										<span>Email me</span>
-										<span className="ml-auto font-sans text-[10px] text-muted-foreground">{EMAIL}</span>
+										<span className={`ml-auto text-muted-foreground ${typeRole.commandMeta}`}>{EMAIL}</span>
 									</Command.Item>
 									<Command.Item
 										value="copy email address clipboard"

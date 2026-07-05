@@ -4,7 +4,6 @@ import typescript from "eslint-config-next/typescript";
 // ─── Design-system tier-precedence gate (ADR-0001) ───
 // Components consume semantics, never primitives. Rules ERROR so the law can't rot.
 // Selectors are shared so the glass block can extend (not replace) the tier block.
-// Still deferred (turn on in Slice 2/T3-T4 once clean): arbitrary text-[…rem] sizes.
 const tierSelectors = [
 	{
 		selector: "Literal[value=/var\\(--(signal|ink)-/]",
@@ -38,6 +37,17 @@ const productTextSelectors = [
 		selector: "TemplateElement[value.raw=/\\btext-foreground\\/[0-9]/]",
 		message:
 			"ADR-0004: no text-foreground/NN for product text — use text-text-muted, text-text-faint, or text-foreground.",
+	},
+	{
+		selector: "Literal[value=/\\btext-\\[[0-9.]+(?:rem|px)\\]/]",
+		message:
+			"ADR-0003: no numeric arbitrary text sizes in product modules — use a named typography role.",
+	},
+	{
+		selector:
+			"TemplateElement[value.raw=/\\btext-\\[[0-9.]+(?:rem|px)\\]/]",
+		message:
+			"ADR-0003: no numeric arbitrary text sizes in product modules — use a named typography role.",
 	},
 ];
 

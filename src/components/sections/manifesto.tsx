@@ -1,7 +1,7 @@
 import type { SectionId } from "@/lib/constants";
 import { MANIFESTO } from "@/data/manifesto";
 import { Surface } from "@/components/ui/surface";
-import { textRole } from "@/components/ui/typography";
+import { textRole, typeRole } from "@/components/ui/typography";
 
 export function ManifestoSection() {
 	return (
@@ -56,7 +56,7 @@ export function ManifestoSection() {
 											className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,var(--alpha-300),transparent)]"
 										/>
 									) : null}
-									<p className="whitespace-nowrap pt-[0.35em] font-sans text-[11px] tracking-[0.16em] uppercase text-text-faint">
+									<p className={`whitespace-nowrap pt-[0.35em] text-text-faint ${typeRole.manifestoEntryLabel}`}>
 										{p.label}
 									</p>
 									<p className={`text-left text-base leading-relaxed sm:text-lg ${textRole.muted}`}>
