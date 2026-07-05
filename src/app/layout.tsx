@@ -127,7 +127,7 @@ export default function RootLayout({
 				    the `.js` class, so the gate stays inert and content is visible. */}
 				<script
 					dangerouslySetInnerHTML={{
-						__html: `document.documentElement.classList.add('js');try{if('scrollRestoration' in history)history.scrollRestoration='manual'}catch(e){}`,
+						__html: `document.documentElement.classList.add('js');try{if('scrollRestoration'in history)history.scrollRestoration='manual';var root=document.documentElement;var width=window.innerWidth;var coarse=window.matchMedia&&window.matchMedia('(pointer: coarse)').matches;var setStableViewport=function(){root.style.setProperty('--stable-viewport-height',window.innerHeight+'px')};setStableViewport();window.addEventListener('resize',function(){var nextWidth=window.innerWidth;if(!coarse||nextWidth!==width){width=nextWidth;setStableViewport()}},{passive:true})}catch(e){}`,
 					}}
 				/>
 				<PersonJsonLd />
