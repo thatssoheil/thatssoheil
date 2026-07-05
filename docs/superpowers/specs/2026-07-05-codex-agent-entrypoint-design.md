@@ -38,7 +38,7 @@ This is a documentation/tooling migration. Verification should prove:
 
 - No `CLAUDE.md` remains at the repo root.
 - `AGENTS.md` exists and contains the project instructions.
-- No non-generated `claude` text remains in the repository.
+- No legacy-provider references remain outside the migration spec/plan docs.
 - Product AI paths and generic `docs/agents/*` paths remain unchanged.
 - The repo still passes the detected verify gate: `pnpm lint`,
   `pnpm typecheck`, `pnpm build`, and `pnpm test`.

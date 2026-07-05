@@ -88,12 +88,18 @@ test ! -e CLAUDE.md && test -f AGENTS.md
 
 Expected: exit code `0`.
 
-- [ ] **Step 2: Verify no non-generated Claude references remain**
+- [ ] **Step 2: Verify no legacy-provider references remain outside migration docs**
 
 Run:
 
 ```bash
-rg -n --hidden --glob '!node_modules/**' --glob '!cloudflare-env.d.ts' --glob '!.git/**' -i "claude" . || true
+rg -n --hidden \
+  --glob '!node_modules/**' \
+  --glob '!cloudflare-env.d.ts' \
+  --glob '!.git/**' \
+  --glob '!docs/superpowers/specs/2026-07-05-codex-agent-entrypoint-design.md' \
+  --glob '!docs/superpowers/plans/2026-07-05-codex-agent-entrypoint.md' \
+  -i "claude" . || true
 ```
 
 Expected: no output.
