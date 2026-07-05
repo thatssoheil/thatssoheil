@@ -99,7 +99,6 @@ const config = [
 		ignores: [
 			"src/components/ui/**",
 			"src/components/signal-field/**",
-			"src/components/ds/**",
 		],
 		rules: {
 			"no-restricted-syntax": [
