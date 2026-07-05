@@ -15,7 +15,7 @@ import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { jumpToSection } from "@/lib/section-navigation";
 import { cn } from "@/lib/utils";
-import { surfaceVariants } from "@/components/ui/surface";
+import { surfaceRole } from "@/components/ui/surface";
 import { textRole, typeRole } from "@/components/ui/typography";
 
 const ITEM_CLASS =
@@ -93,7 +93,7 @@ export function CommandMenu() {
 					<Dialog.Content
 						aria-describedby={undefined}
 						className={cn(
-							surfaceVariants({ variant: "panel", radius: "sm" }),
+							surfaceRole.commandMenuPanel,
 							"fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden text-popover-foreground outline-none",
 						)}
 					>

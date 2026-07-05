@@ -9,7 +9,7 @@ import { STARTERS } from "@/lib/ai-soheil/starters";
 import { Input } from "@/components/ui/input";
 import { IconButton } from "@/components/ui/icon-button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { surfaceVariants } from "@/components/ui/surface";
+import { surfaceRole } from "@/components/ui/surface";
 import { ChatMessageRow } from "@/components/hero/chat-message";
 import { CipherLoader } from "@/components/hero/cipher-loader";
 import { typeRole } from "@/components/ui/typography";
@@ -117,7 +117,7 @@ export function HeroChat() {
 					className={cn(
 						"absolute inset-x-0 top-0 z-20 flex flex-col overflow-hidden origin-top",
 						"transition-[height] duration-500 ease-[var(--ease-swift)] motion-reduce:transition-none",
-						surfaceVariants({ variant: "panel", edge: true, radius: "md" }),
+						surfaceRole.heroChatPanel,
 						active && "shadow-[var(--shadow-elevated)]",
 					)}
 					style={{ height: active ? OPEN_H : BAR_H }}

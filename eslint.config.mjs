@@ -68,6 +68,14 @@ const glassSelectors = [
 	},
 ];
 
+const productSurfaceSelectors = [
+	{
+		selector: "ImportSpecifier[imported.name='surfaceVariants']",
+		message:
+			"ADR-0002: product modules should use a named surface role, not surfaceVariants directly.",
+	},
+];
+
 const config = [
 	{
 		ignores: ["cloudflare-env.d.ts", ".open-next/**", ".next/**"],
@@ -98,6 +106,7 @@ const config = [
 				"error",
 				...tierSelectors,
 				...glassSelectors,
+				...productSurfaceSelectors,
 				...productTextSelectors,
 			],
 		},
