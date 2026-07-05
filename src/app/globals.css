@@ -170,6 +170,10 @@
 	/* Interaction states (theme-independent) — the full states layer is ADR-pending;
 	   this is the disabled dimming, referenced by inputs/buttons. */
 	--disabled-opacity: 0.5;
+
+	/* Mobile browser toolbars resize the visual viewport while a finger lifts,
+	   so full-screen sections use a pre-paint stable height instead of dvh/vh. */
+	--stable-viewport-height: 100svh;
 }
 
 /* ─── Light theme (default) — neutral paper + signal accent ─── */
@@ -450,6 +454,21 @@
 @utility text-button-12 { font-family: var(--font-sans); font-size: 0.75rem; line-height: 1rem; font-weight: 500; }
 @utility text-button-14 { font-family: var(--font-sans); font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; }
 @utility text-button-16 { font-family: var(--font-sans); font-size: 1rem; line-height: 1.25rem; font-weight: 500; }
+
+@layer utilities {
+	/* Viewport shells - stable through mobile toolbar height changes. */
+	.h-stable-screen {
+		height: var(--stable-viewport-height);
+	}
+
+	.min-h-stable-screen {
+		min-height: var(--stable-viewport-height);
+	}
+
+	.mt-stable-screen-gap {
+		margin-top: calc(var(--stable-viewport-height) * 0.2);
+	}
+}
 
 /* ─── Glass material ───
    Composable. Solid + legible by DEFAULT; real translucent glass only where
