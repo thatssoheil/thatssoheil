@@ -38,6 +38,15 @@ const surfaceVariants = cva("", {
 	},
 });
 
+const surfaceRole = {
+	commandMenuPanel: surfaceVariants({ variant: "panel", radius: "sm" }),
+	heroChatPanel: surfaceVariants({
+		variant: "panel",
+		edge: true,
+		radius: "md",
+	}),
+} as const;
+
 function Surface({
 	className,
 	variant,
@@ -59,4 +68,4 @@ function Surface({
 	);
 }
 
-export { Surface, surfaceVariants };
+export { Surface, surfaceRole, surfaceVariants };

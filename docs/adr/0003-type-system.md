@@ -5,9 +5,9 @@
 ## Context
 
 `--font-mono` was aliased to Lexend, so `code`/`pre`/`kbd` and the `-mono` ramps
-rendered proportional and `/ds` mislabeled the face — the highest-consensus defect in
-the audit (#3). Separately, ~40 composite type ramps shipped with **zero** product
-adoption (#2): a Geist clone nobody used.
+rendered proportional — the highest-consensus defect in the audit (#3). Separately,
+~40 composite type ramps shipped with **zero** product adoption (#2): a Geist clone
+nobody used.
 
 ## Decision
 

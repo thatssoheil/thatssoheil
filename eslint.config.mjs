@@ -4,8 +4,6 @@ import typescript from "eslint-config-next/typescript";
 // ─── Design-system tier-precedence gate (ADR-0001) ───
 // Components consume semantics, never primitives. Rules ERROR so the law can't rot.
 // Selectors are shared so the glass block can extend (not replace) the tier block.
-// Still deferred (turn on in Slice 2/T3-T4 once clean): text-foreground/NN and
-// arbitrary text-[…rem] sizes.
 const tierSelectors = [
 	{
 		selector: "Literal[value=/var\\(--(signal|ink)-/]",
@@ -29,6 +27,30 @@ const tierSelectors = [
 	},
 ];
 
+const productTextSelectors = [
+	{
+		selector: "Literal[value=/\\btext-foreground\\/[0-9]/]",
+		message:
+			"ADR-0004: no text-foreground/NN for product text — use text-text-muted, text-text-faint, or text-foreground.",
+	},
+	{
+		selector: "TemplateElement[value.raw=/\\btext-foreground\\/[0-9]/]",
+		message:
+			"ADR-0004: no text-foreground/NN for product text — use text-text-muted, text-text-faint, or text-foreground.",
+	},
+	{
+		selector: "Literal[value=/\\btext-\\[[0-9.]+(?:rem|px)\\]/]",
+		message:
+			"ADR-0003: no numeric arbitrary text sizes in product modules — use a named typography role.",
+	},
+	{
+		selector:
+			"TemplateElement[value.raw=/\\btext-\\[[0-9.]+(?:rem|px)\\]/]",
+		message:
+			"ADR-0003: no numeric arbitrary text sizes in product modules — use a named typography role.",
+	},
+];
+
 // Glass classes are internal to the primitives — product surfaces go through <Surface>
 // (ADR-0002). Banned everywhere except the primitives (ui/) and the field that defines
 // them. `(?<!-)` lets `var(--glass-rim)` through (that's a token, not a class).
@@ -43,6 +65,14 @@ const glassSelectors = [
 			"TemplateElement[value.raw=/(?<!-)\\bglass(-(panel|edge|strong|refract))?\\b/]",
 		message:
 			"ADR-0002: no inline glass classes in product — compose <Surface> / surfaceVariants instead.",
+	},
+];
+
+const productSurfaceSelectors = [
+	{
+		selector: "ImportSpecifier[imported.name='surfaceVariants']",
+		message:
+			"ADR-0002: product modules should use a named surface role, not surfaceVariants directly.",
 	},
 ];
 
@@ -66,9 +96,18 @@ const config = [
 	// flat-config replaces (not merges) a rule's options for matching files.
 	{
 		files: ["src/components/**/*.{ts,tsx}"],
-		ignores: ["src/components/ui/**", "src/components/signal-field/**"],
+		ignores: [
+			"src/components/ui/**",
+			"src/components/signal-field/**",
+		],
 		rules: {
-			"no-restricted-syntax": ["error", ...tierSelectors, ...glassSelectors],
+			"no-restricted-syntax": [
+				"error",
+				...tierSelectors,
+				...glassSelectors,
+				...productSurfaceSelectors,
+				...productTextSelectors,
+			],
 		},
 	},
 ];

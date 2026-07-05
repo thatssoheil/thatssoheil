@@ -15,12 +15,16 @@ import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { jumpToSection } from "@/lib/section-navigation";
 import { cn } from "@/lib/utils";
-import { surfaceVariants } from "@/components/ui/surface";
+import { surfaceRole } from "@/components/ui/surface";
+import { textRole, typeRole } from "@/components/ui/typography";
 
 const ITEM_CLASS =
 	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
 	// mobile nav); sm:py-2.5 keeps the compact desktop rows unchanged.
-	"group flex items-center gap-3 rounded-xl px-3 py-3 sm:py-2.5 text-sm text-foreground/70 cursor-pointer data-[selected=true]:bg-alpha-100 data-[selected=true]:text-foreground";
+	[
+		"group flex items-center gap-3 rounded-xl px-3 py-3 sm:py-2.5 text-sm cursor-pointer data-[selected=true]:bg-alpha-100 data-[selected=true]:text-foreground",
+		textRole.muted,
+	].join(" ");
 
 const ICON_CLASS =
 	"size-4 text-muted-foreground group-data-[selected=true]:text-brand";
@@ -89,7 +93,7 @@ export function CommandMenu() {
 					<Dialog.Content
 						aria-describedby={undefined}
 						className={cn(
-							surfaceVariants({ variant: "panel", radius: "sm" }),
+							surfaceRole.commandMenuPanel,
 							"fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden text-popover-foreground outline-none",
 						)}
 					>
@@ -99,7 +103,10 @@ export function CommandMenu() {
 
 						<Command
 							label="Command menu"
-							className="[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:font-sans [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-[0.18em] [&_[cmdk-group-heading]]:text-muted-foreground"
+							className={cn(
+								"[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:text-muted-foreground",
+								typeRole.commandGroupHeading,
+							)}
 						>
 							<div className="flex items-center gap-2 border-b border-border px-4">
 								<Search className="size-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
@@ -152,7 +159,7 @@ export function CommandMenu() {
 									>
 										<Mail className={ICON_CLASS} strokeWidth={1.5} />
 										<span>Email me</span>
-										<span className="ml-auto font-sans text-[10px] text-muted-foreground">{EMAIL}</span>
+										<span className={`ml-auto text-muted-foreground ${typeRole.commandMeta}`}>{EMAIL}</span>
 									</Command.Item>
 									<Command.Item
 										value="copy email address clipboard"
