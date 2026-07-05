@@ -1,14 +1,11 @@
 import Link from "next/link";
 
-import { LogoMark } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Surface } from "@/components/ui/surface";
 
 type RouteFallbackProps = {
 	code: string;
-	eyebrow: string;
 	title: string;
-	body: string;
 	actionLabel?: string;
 	actionHref?: string;
 	onAction?: () => void;
@@ -16,64 +13,49 @@ type RouteFallbackProps = {
 
 export function RouteFallback({
 	code,
-	eyebrow,
 	title,
-	body,
-	actionLabel = "Return home",
+	actionLabel = "Home",
 	actionHref = "/",
 	onAction,
 }: RouteFallbackProps) {
 	return (
-		<main className="relative flex min-h-stable-screen w-full items-center justify-center overflow-hidden px-5 py-24 sm:px-8 md:px-12 lg:px-16">
+		<main className="relative flex min-h-stable-screen w-full items-center justify-center overflow-hidden px-5 py-20 sm:px-8">
 			<Surface
 				variant="panel"
 				radius="lg"
-				className="relative isolate mx-auto grid w-full max-w-3xl gap-10 overflow-hidden p-6 text-left sm:p-12 md:p-16"
+				className="relative isolate mx-auto grid w-full max-w-md gap-8 overflow-hidden p-7 text-left sm:p-10"
 			>
 				<div
 					aria-hidden="true"
-					className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_18%_18%,color-mix(in_oklch,var(--primary)_9%,transparent),transparent_68%)]"
+					className="pointer-events-none absolute inset-0 bg-[radial-gradient(68%_60%_at_18%_18%,color-mix(in_oklch,var(--primary)_7%,transparent),transparent_70%)]"
 				/>
 
-				<div className="relative z-10 flex items-center justify-between gap-6">
-					<div className="flex min-h-11 items-center gap-2.5 font-sans text-sm tracking-tight text-foreground">
-						<LogoMark className="h-[18px]" />
-						<span>Soheil Fakour</span>
-					</div>
-					<p className="font-sans text-sm tracking-[0.2em] uppercase text-text-faint">
+				<div className="relative z-10 grid gap-3">
+					<p className="font-sans text-xs tracking-[0.26em] uppercase text-text-faint">
 						{code}
 					</p>
-				</div>
-
-				<div className="relative z-10 max-w-2xl">
-					<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
-						{eyebrow}
-					</p>
-
-					<h1 className="mt-3 text-fluid-36-60 font-sans font-light tracking-tight text-foreground">
+					<h1 className="max-w-[15rem] text-fluid-24-32 font-sans font-light leading-tight tracking-tight text-foreground">
 						{title}
 					</h1>
-
-					<p className="mt-5 max-w-xl text-lg font-light leading-relaxed text-text-muted">
-						{body}
-					</p>
 				</div>
 
-				<div className="relative z-10 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+				<div className="relative z-10 flex items-center">
 					{onAction ? (
 						<Button
 							type="button"
-							size="lg"
+							variant="ghost"
+							size="sm"
 							onClick={onAction}
-							className="h-12 justify-center border border-alpha-300 bg-primary text-sm shadow-[0_0_16px_color-mix(in_oklch,var(--primary)_14%,transparent)] hover:bg-primary/90 sm:text-base"
+							className="h-9 px-0 text-text-faint hover:bg-transparent hover:text-foreground"
 						>
 							{actionLabel}
 						</Button>
 					) : (
 						<Button
 							asChild
-							size="lg"
-							className="h-12 justify-center border border-alpha-300 bg-primary text-sm shadow-[0_0_16px_color-mix(in_oklch,var(--primary)_14%,transparent)] hover:bg-primary/90 sm:text-base"
+							variant="ghost"
+							size="sm"
+							className="h-9 px-0 text-text-faint hover:bg-transparent hover:text-foreground"
 						>
 							<Link href={actionHref}>{actionLabel}</Link>
 						</Button>

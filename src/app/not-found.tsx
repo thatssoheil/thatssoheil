@@ -15,9 +15,7 @@ export default function NotFound() {
 	return (
 		<RouteFallback
 			code="404"
-			eyebrow="Signal lost"
-			title="This route does not exist."
-			body="The page you asked for is outside this site now. The homepage is the source of truth."
+			title="Route not found."
 		/>
 	);
 }
