@@ -11,13 +11,13 @@ export function ManifestoSection() {
 			// While the chat is open (<html data-chat-open>), this section recedes so
 			// the conversation is the sole focus; it eases back when the chat closes.
 			className={[
-				"relative mt-[20vh] w-full min-h-[100dvh] overflow-hidden",
+				"relative mt-stable-screen-gap w-full min-h-stable-screen overflow-hidden",
 				"transition-[opacity,filter] duration-500 ease-[var(--ease-signature)] motion-reduce:transition-none",
 				"[:root[data-chat-open]_&]:opacity-25 [:root[data-chat-open]_&]:blur-[2px] [:root[data-chat-open]_&]:pointer-events-none",
 			].join(" ")}
 			aria-label="Manifesto"
 		>
-			<div className="flex min-h-[100dvh] items-center justify-center px-5 py-20 sm:px-8 sm:py-24 md:px-12 lg:px-16">
+			<div className="flex min-h-stable-screen items-center justify-center px-5 py-20 sm:px-8 sm:py-24 md:px-12 lg:px-16">
 				<Surface
 					variant="panel"
 					radius="lg"

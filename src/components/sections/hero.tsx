@@ -29,7 +29,7 @@ export function HeroSection() {
 			// `overflow-x-clip` keeps the ambient plane from bleeding sideways (no
 			// horizontal scrollbar) while still letting the hero chat box overflow
 			// DOWNWARD past the fold when it expands — so it's never clipped at the seam.
-			className="relative w-full h-[100dvh] overflow-x-clip"
+			className="relative h-stable-screen w-full overflow-x-clip"
 			aria-label="Hero"
 		>
 			<div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center select-none">

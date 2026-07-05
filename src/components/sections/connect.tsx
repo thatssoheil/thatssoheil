@@ -7,10 +7,10 @@ export function ConnectSection() {
 	return (
 		<section
 			id={"connect" satisfies SectionId}
-			className="relative min-h-[100dvh] w-full overflow-hidden"
+			className="relative min-h-stable-screen w-full overflow-hidden"
 			aria-label="Connect"
 		>
-			<div className="flex min-h-[100dvh] items-center justify-center px-5 pb-16 pt-40 sm:px-8 sm:py-28 md:px-12 md:py-24 lg:px-16">
+			<div className="flex min-h-stable-screen items-center justify-center px-5 pb-16 pt-40 sm:px-8 sm:py-28 md:px-12 md:py-24 lg:px-16">
 				<Surface
 					variant="panel"
 					radius="lg"
