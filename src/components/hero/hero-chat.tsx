@@ -9,9 +9,10 @@ import { STARTERS } from "@/lib/ai-soheil/starters";
 import { Input } from "@/components/ui/input";
 import { IconButton } from "@/components/ui/icon-button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { surfaceVariants } from "@/components/ui/surface";
+import { surfaceRole } from "@/components/ui/surface";
 import { ChatMessageRow } from "@/components/hero/chat-message";
 import { CipherLoader } from "@/components/hero/cipher-loader";
+import { typeRole } from "@/components/ui/typography";
 import type { ChatError } from "@/hooks/use-hero-chat";
 
 const ERROR_COPY: Record<NonNullable<ChatError>, string> = {
@@ -116,7 +117,7 @@ export function HeroChat() {
 					className={cn(
 						"absolute inset-x-0 top-0 z-20 flex flex-col overflow-hidden origin-top",
 						"transition-[height] duration-500 ease-[var(--ease-swift)] motion-reduce:transition-none",
-						surfaceVariants({ variant: "panel", edge: true, radius: "md" }),
+						surfaceRole.heroChatPanel,
 						active && "shadow-[var(--shadow-elevated)]",
 					)}
 					style={{ height: active ? OPEN_H : BAR_H }}
@@ -147,13 +148,13 @@ export function HeroChat() {
 								)}
 								{status === "error" && error && (
 									<div className="flex items-center gap-3" role="alert">
-										<span className="font-sans text-[0.8rem] tracking-wide text-destructive">
+										<span className={`text-destructive ${typeRole.chatStatus}`}>
 											{ERROR_COPY[error]}
 										</span>
 										<button
 											type="button"
 											onClick={retry}
-											className="rounded-xl border border-alpha-300 px-3 py-1 font-sans text-[0.7rem] tracking-wide text-text-faint transition-colors hover:border-alpha-500 hover:bg-alpha-100 hover:text-foreground"
+											className={`rounded-xl border border-alpha-300 px-3 py-1 text-text-faint transition-colors hover:border-alpha-500 hover:bg-alpha-100 hover:text-foreground ${typeRole.chatAction}`}
 										>
 											retry
 										</button>
@@ -219,7 +220,7 @@ export function HeroChat() {
 						key={s}
 						type="button"
 						onClick={() => submit(s)}
-						className="rounded-xl border border-alpha-300 px-3.5 py-1.5 font-sans text-[0.72rem] tracking-wide text-text-faint transition-colors hover:border-alpha-500 hover:bg-alpha-100 hover:text-foreground"
+						className={`rounded-xl border border-alpha-300 px-3.5 py-1.5 text-text-faint transition-colors hover:border-alpha-500 hover:bg-alpha-100 hover:text-foreground ${typeRole.chatStarter}`}
 					>
 						{s}
 					</button>

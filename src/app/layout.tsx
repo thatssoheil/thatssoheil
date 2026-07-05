@@ -127,7 +127,7 @@ export default function RootLayout({
 				    the `.js` class, so the gate stays inert and content is visible. */}
 				<script
 					dangerouslySetInnerHTML={{
-						__html: `document.documentElement.classList.add('js');try{if('scrollRestoration'in history)history.scrollRestoration='manual';var root=document.documentElement;var width=window.innerWidth;var coarse=window.matchMedia&&window.matchMedia('(pointer: coarse)').matches;var setStableViewport=function(){root.style.setProperty('--stable-viewport-height',window.innerHeight+'px')};setStableViewport();window.addEventListener('resize',function(){var nextWidth=window.innerWidth;if(!coarse||nextWidth!==width){width=nextWidth;setStableViewport()}},{passive:true})}catch(e){}`,
+						__html: `(function(){var root=document.documentElement;root.classList.add('js');try{var overrideKey='thatssoheil-theme-override';var getScheduledTheme=function(){var hour=(new Date()).getHours();return hour>=7&&hour<18?'light':'dark'};var getTheme=function(){try{var raw=window.localStorage&&window.localStorage.getItem(overrideKey);if(raw){var override=JSON.parse(raw);if((override.theme==='light'||override.theme==='dark')&&typeof override.expiresAt==='number'&&override.expiresAt>Date.now()){return override.theme}window.localStorage.removeItem(overrideKey)}}catch(error){try{window.localStorage.removeItem(overrideKey)}catch(error){}}return getScheduledTheme()};var theme=getTheme();root.classList.toggle('dark',theme==='dark');root.style.colorScheme=theme;if('scrollRestoration'in history)history.scrollRestoration='manual';var width=window.innerWidth;var coarse=window.matchMedia&&window.matchMedia('(pointer: coarse)').matches;var setStableViewport=function(){root.style.setProperty('--stable-viewport-height',window.innerHeight+'px')};setStableViewport();window.addEventListener('resize',function(){var nextWidth=window.innerWidth;if(!coarse||nextWidth!==width){width=nextWidth;setStableViewport()}},{passive:true})}catch(e){}})();`,
 					}}
 				/>
 				<PersonJsonLd />
@@ -135,12 +135,7 @@ export default function RootLayout({
 			<body
 				className={`${lexend.variable} ${geistMono.variable} antialiased`}
 			>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="dark"
-					enableSystem={false}
-					disableTransitionOnChange
-				>
+				<ThemeProvider>
 					<SignalField />
 					<StructureGrid />
 					<SkipToContent />

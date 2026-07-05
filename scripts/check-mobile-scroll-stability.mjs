@@ -14,23 +14,36 @@ const CHECKS = [
 		message: "top-level hero height must not use dynamic viewport units",
 	},
 	{
-		file: "src/components/sections/manifesto.tsx",
+		file: "src/components/sections/section-panel.tsx",
 		forbidden: [
 			/\b(?:h|min-h)-\[100(?:dvh|svh|vh)\]/g,
 			/\b(?:h|min-h)-(?:dvh|svh|screen)\b/g,
 			/\bmt-\[[^\]]*(?:dvh|svh|vh)\]/g,
 		],
 		required: [/\bmin-h-stable-screen\b/, /\bmt-stable-screen-gap\b/],
-		message: "manifesto section shell must not use dynamic viewport units",
+		message: "stable section panel shell must not use dynamic viewport units",
+	},
+	{
+		file: "src/components/sections/manifesto.tsx",
+		forbidden: [
+			/\b(?:h|min-h)-\[100(?:dvh|svh|vh)\]/g,
+			/\b(?:h|min-h)-(?:dvh|svh|screen)\b/g,
+			/\bmin-h-stable-screen\b/g,
+			/\bmt-stable-screen-gap\b/g,
+		],
+		required: [/<SectionPanel\b/],
+		message: "manifesto section must use the stable section panel module",
 	},
 	{
 		file: "src/components/sections/connect.tsx",
 		forbidden: [
 			/\b(?:h|min-h)-\[100(?:dvh|svh|vh)\]/g,
 			/\b(?:h|min-h)-(?:dvh|svh|screen)\b/g,
+			/\bmin-h-stable-screen\b/g,
+			/\bmt-stable-screen-gap\b/g,
 		],
-		required: [/\bmin-h-stable-screen\b/],
-		message: "connect section shell must not use dynamic viewport units",
+		required: [/<SectionPanel\b/],
+		message: "connect section must use the stable section panel module",
 	},
 ];
 

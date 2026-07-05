@@ -2,6 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: superpowers:executing-plans (or subagent-driven-development). Steps use `- [ ]` checkboxes. Slice 1 is detailed; Slices 2–3 are sequenced outlines — expand each into its own plan when reached.
 
+> **Stabilization note (2026-07-06):** this plan is historical. Signal Glass no
+> longer has a dedicated `/ds` route; ADR-0006 makes the root page the living
+> design-system reference, with `globals.css`, `src/components/ui/*`, lint gates,
+> and token coverage as the current governance surface.
+
 **Goal:** Turn Signal Glass from "a beautiful theme" into a small, honest, *enforced* system the product is actually built from — without over-engineering a solo N=1 portfolio.
 
 **Source:** [docs/audits/2026-06-29-design-system-gap-analysis.md](../../audits/2026-06-29-design-system-gap-analysis.md) (overall maturity 4.7/10). The audit holds the per-finding detail (`#1`–`#22`); this plan references findings by number rather than restating them.
