@@ -337,15 +337,15 @@
 	--plane-sheen: color-mix(in oklch, white 18%, transparent);
 	--plane-glow: color-mix(in oklch, var(--primary) 18%, transparent);
 
-	/* Glass — slightly more luminous + a stronger drop on the void (see :root) */
+	/* Glass — luminous fill + shadow on the void; no visible rim in dark mode. */
 	--glass-bg: color-mix(in oklch, var(--card) 66%, transparent);
 	--glass-bg-panel: color-mix(in oklch, var(--card) 89%, transparent);
 	--glass-bg-solid: var(--card);
 	--glass-blur: 16px;
 	--glass-blur-strong: 32px;
 	--glass-saturate: 150%;
-	--glass-rim: color-mix(in oklch, var(--foreground) 18%, transparent);
-	--glass-sheen: color-mix(in oklch, white 18%, transparent);
+	--glass-rim: transparent;
+	--glass-sheen: transparent;
 	--glass-shadow: 0 16px 56px oklch(0 0 0 / 0.58);
 
 	/* Signal field — a restrained signal aurora on the deeper black void. */
