@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CipherText } from "@/components/matrix/cipher-text";
+import { HERO_MICROCOPY_TYPE_CLASS } from "@/components/hero/hero-typography";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { TAGLINE } from "@/lib/constants";
 
@@ -28,7 +29,12 @@ export function HeroMotto() {
 	const word = MOTTO_WORDS[wordIndex];
 
 	return (
-		<p className="motto-ai-flow pointer-events-none absolute inset-x-6 bottom-28 mx-auto whitespace-nowrap text-center font-sans text-[clamp(0.5rem,2.6vw,0.875rem)] font-medium leading-none tracking-[0.22em] text-text-faint uppercase sm:font-normal sm:tracking-[0.3em]">
+		<p
+			className={[
+				"motto-ai-flow pointer-events-none absolute inset-x-6 bottom-28 mx-auto whitespace-nowrap text-center",
+				HERO_MICROCOPY_TYPE_CLASS,
+			].join(" ")}
+		>
 			<CipherText
 				key={word}
 				text={word.toUpperCase()}

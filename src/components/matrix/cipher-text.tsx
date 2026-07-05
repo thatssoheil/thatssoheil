@@ -25,6 +25,8 @@ export interface CipherTextProps {
   intensity?: "normal" | "display";
   /** Start readable and only run ambient pulses. Default preserves hero-name scramble. */
   initialState?: "scrambled" | "settled";
+  /** Hide this instance from assistive tech when a parent already provides the accessible text. */
+  decorative?: boolean;
   /** Wrapper element type. */
   as?: React.ElementType;
 }
@@ -42,6 +44,7 @@ export function CipherText({
   ambient = false,
   intensity = "normal",
   initialState = "scrambled",
+  decorative = false,
   as: Component = "h1",
 }: CipherTextProps) {
   const display = useCipherAnimation(text, {
@@ -56,11 +59,11 @@ export function CipherText({
   });
 
   return (
-    <Component className={className}>
+    <Component className={className} aria-hidden={decorative || undefined}>
       {/* Real text is the accessible name + the SSR/no-JS/crawler source of truth;
           the scrambling glyph layer is decorative (audit #7 — a scrambled H1 was
           serving "Soheil F@k0ur" to screen readers and search engines). */}
-      <span className="sr-only">{text}</span>
+      {!decorative ? <span className="sr-only">{text}</span> : null}
       <span aria-hidden="true">
         {display.map((d, i) => (
         <span
