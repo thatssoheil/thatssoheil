@@ -47,7 +47,7 @@ export function ManifestoSection() {
 							{MANIFESTO.paragraphs.map((p, index) => (
 								<div
 									key={p.label}
-									className="relative grid gap-3 pt-6 first:pt-0 sm:grid-cols-[7rem_1fr]"
+									className="relative grid gap-3 pt-6 first:pt-0 sm:grid-cols-[8.75rem_minmax(0,1fr)]"
 								>
 									{index > 0 ? (
 										<span
@@ -55,7 +55,7 @@ export function ManifestoSection() {
 											className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,var(--alpha-300),transparent)]"
 										/>
 									) : null}
-									<p className="pt-[0.35em] font-sans text-[11px] tracking-[0.16em] uppercase text-text-faint">
+									<p className="whitespace-nowrap pt-[0.35em] font-sans text-[11px] tracking-[0.16em] uppercase text-text-faint">
 										{p.label}
 									</p>
 									<p className="text-left text-base leading-relaxed text-foreground/75 sm:text-lg">
