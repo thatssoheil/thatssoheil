@@ -10,7 +10,9 @@ import {
 	Search,
 	Menu,
 	CornerDownLeft,
+	MessageCircle,
 } from "lucide-react";
+import { useAskConsole } from "@/components/ai-soheil/ask-console-provider";
 import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { jumpToSection } from "@/lib/section-navigation";
@@ -32,6 +34,7 @@ const ICON_CLASS =
 export function CommandMenu() {
 	const [open, setOpen] = useState(false);
 	const [copied, setCopied] = useState(false);
+	const { enabled: chatEnabled, openAskConsole } = useAskConsole();
 	// On touch devices the menu doubles as mobile nav, so the palette input must
 	// not autofocus — that would pop the on-screen keyboard over the section list
 	// the moment the menu opens.
@@ -63,6 +66,11 @@ export function CommandMenu() {
 		setCopied(true);
 		setTimeout(() => setCopied(false), 1500);
 	}, []);
+
+	const askSoheil = useCallback(() => {
+		setOpen(false);
+		openAskConsole();
+	}, [openAskConsole]);
 
 	return (
 		<>
@@ -152,6 +160,19 @@ export function CommandMenu() {
 								</Command.Group>
 
 								<Command.Group heading="Actions">
+									{chatEnabled && (
+										<Command.Item
+											value="ask soheil chat ai questions work availability projects"
+											onSelect={askSoheil}
+											className={ITEM_CLASS}
+										>
+											<MessageCircle className={ICON_CLASS} strokeWidth={1.5} />
+											<span>Ask Soheil</span>
+											<span className={`ml-auto text-muted-foreground ${typeRole.commandMeta}`}>
+												chat
+											</span>
+										</Command.Item>
+									)}
 									<Command.Item
 										value="email send write contact"
 										onSelect={sendEmail}
