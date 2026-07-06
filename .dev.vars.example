@@ -11,3 +11,7 @@ AI_SOHEIL_API_KEY=your-key-here
 # Feature flag — set "true" for local dev (chat enabled), "false" to test
 # the chat-disabled ship.
 ENABLE_CHAT=true
+
+# Also set NEXT_PUBLIC_ENABLE_CHAT=true in .env.local or your shell.
+# .dev.vars is read by Wrangler/OpenNext for Worker vars; Next.js client flags
+# are build-time env vars and belong in .env.local / CI / Cloudflare build env.

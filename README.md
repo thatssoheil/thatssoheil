@@ -33,3 +33,20 @@ Email first. Catch me on X. Everything else, eventually.
 - **LinkedIn:** [linkedin.com/in/soheilfakour](https://linkedin.com/in/soheilfakour)
 - **X / Twitter:** [@Thatssoheil](https://x.com/Thatssoheil)
 - **Site:** [thatssoheil.website](https://thatssoheil.website)
+
+## AI Soheil chat
+
+The hero prompt and Cmd+K “Ask Soheil” action are behind a two-part env gate:
+
+- `NEXT_PUBLIC_ENABLE_CHAT=true` renders client chat entry points at build time.
+- `ENABLE_CHAT=true` lets `/api/chat` accept requests at runtime.
+
+Local setup:
+
+```bash
+cp .env.example .env.local
+cp .dev.vars.example .dev.vars
+```
+
+Fill `AI_SOHEIL_API_KEY` in `.dev.vars`. The upstream must be OpenAI-compatible at
+`$AI_SOHEIL_API_URL/chat/completions`; the default URL already includes `/v1`.
