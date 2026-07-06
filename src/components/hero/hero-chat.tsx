@@ -18,6 +18,7 @@ import type { ChatError } from "@/hooks/use-hero-chat";
 const ERROR_COPY: Record<NonNullable<ChatError>, string> = {
 	signal_dropped: "signal dropped. try again.",
 	rate_limited: "too many. give it a moment.",
+	unavailable: "chat is offline for now.",
 };
 
 // The resting prompt-bar height (also the input-row height, and the collapsed box height).

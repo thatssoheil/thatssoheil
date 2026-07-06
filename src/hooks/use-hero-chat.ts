@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from "react";
 import type { ChatMessage } from "@/lib/ai-soheil/types";
 
 export type ChatStatus = "idle" | "decoding" | "streaming" | "error";
-export type ChatError = "signal_dropped" | "rate_limited" | null;
+export type ChatError = "signal_dropped" | "rate_limited" | "unavailable" | null;
 
 /** Abort if no bytes arrive (connect or mid-stream) within this window. */
 const STALL_MS = 20_000;
@@ -94,6 +94,11 @@ export function useHeroChat(): UseHeroChat {
 
 					if (res.status === 429) {
 						setError("rate_limited");
+						setStatus("error");
+						return;
+					}
+					if (res.status === 404) {
+						setError("unavailable");
 						setStatus("error");
 						return;
 					}
