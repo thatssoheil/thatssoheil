@@ -33,3 +33,9 @@ Email first. Catch me on X. Everything else, eventually.
 - **LinkedIn:** [linkedin.com/in/soheilfakour](https://linkedin.com/in/soheilfakour)
 - **X / Twitter:** [@Thatssoheil](https://x.com/Thatssoheil)
 - **Site:** [thatssoheil.website](https://thatssoheil.website)
+
+<!-- OSS:START -->
+**2 merged PRs** across **2 repos** · **3 open** in flight.
+
+→ [Full dashboard](https://github.com/thatssoheil/oss-contributions)
+<!-- OSS:END -->
