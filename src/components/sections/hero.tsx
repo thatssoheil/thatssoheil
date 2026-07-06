@@ -4,6 +4,7 @@ import { CipherText } from "@/components/matrix/cipher-text";
 import { HeroChat } from "@/components/hero/hero-chat";
 import { HeroMotto } from "@/components/hero/hero-motto";
 import { HERO_MICROCOPY_TYPE_CLASS } from "@/components/hero/hero-typography";
+import { CHAT_CLIENT_ENABLED } from "@/lib/ai-soheil/config";
 import { type SectionId } from "@/lib/constants";
 import { jumpToSection } from "@/lib/section-navigation";
 
@@ -77,7 +78,7 @@ export function HeroSection() {
 
 				{/* Ask, don't scroll — the prompt bar grows in place into the chat.
 				                    Feature-flagged: ship without chat by setting NEXT_PUBLIC_ENABLE_CHAT=false. */}
-				{process.env.NEXT_PUBLIC_ENABLE_CHAT === "true" && <HeroChat />}
+				{CHAT_CLIENT_ENABLED && <HeroChat />}
 
 				<HeroMotto />
 			</div>
