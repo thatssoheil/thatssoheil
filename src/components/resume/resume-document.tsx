@@ -64,7 +64,7 @@ export function ResumeDocument() {
 			</section>
 
 			<section id="education" className={styles.section}>
-				<SectionHeading>Education and Recognition</SectionHeading>
+				<SectionHeading>Education</SectionHeading>
 				<div className={styles.education}>
 					<div>
 						<h3>{sections.education.degree}</h3>
@@ -76,9 +76,6 @@ export function ResumeDocument() {
 						endDate={sections.education.endDate}
 					/>
 				</div>
-				<ul className={styles.compactList}>
-					{sections.recognition.map((item) => <li key={item}>{item}</li>)}
-				</ul>
 			</section>
 
 			<section id="additional" className={styles.section}>

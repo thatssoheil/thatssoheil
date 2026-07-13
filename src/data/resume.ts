@@ -56,7 +56,6 @@ export interface ResumeData {
 			startDate: string;
 			endDate: string;
 		};
-		recognition: readonly string[];
 		additional: readonly string[];
 	};
 }
@@ -225,7 +224,6 @@ export const RESUME = {
 			startDate: "2016-10",
 			endDate: "2021-10",
 		},
-		recognition: ["Developer of the Month, Rechat — twice"],
 		additional: ["English — Advanced Professional Proficiency", AVAILABILITY],
 	},
 } as const satisfies ResumeData;

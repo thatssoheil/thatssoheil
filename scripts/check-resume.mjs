@@ -41,6 +41,7 @@ const forbidden = [
 	/official IELTS/i,
 	/solo developer at Zaman/i,
 	/designed Xperix/i,
+	/Developer of the Month/i,
 ];
 
 const failures = [];
@@ -68,7 +69,7 @@ for (const [source, pattern, message] of [
 	[document, /Technical Skills/, "standard skills heading missing"],
 	[document, /Work Experience/, "standard experience heading missing"],
 	[document, /Selected Project/, "standard project heading missing"],
-	[document, /Education and Recognition/, "standard education heading missing"],
+	[document, /<SectionHeading>Education<\/SectionHeading>/, "standard education heading missing"],
 	[document, /Additional Information/, "standard additional-information heading missing"],
 	[experience, /<article/, "experience entries need article elements"],
 	[dateRange, /<time dateTime={startDate}>/, "date ranges need a semantic start time"],
