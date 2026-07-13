@@ -50,6 +50,18 @@ for (const [source, pattern, message] of [
 	if (!pattern.test(source)) failures.push(message);
 }
 
+const css = read("src/components/resume/resume.module.css");
+for (const [pattern, message] of [
+	[/@page\s*{[^}]*size:\s*A4 portrait/s, "print CSS needs A4 portrait @page"],
+	[/@media print/, "print media rules missing"],
+	[/break-before:\s*page/, "page-two boundary missing"],
+	[/break-inside:\s*avoid/, "role split protection missing"],
+	[/\.screenOnly[^}]*display:\s*none/s, "web-only chrome must disappear in print"],
+	[/font-family:\s*Arial/, "print needs conservative system typography"],
+]) {
+	if (!pattern.test(css)) failures.push(message);
+}
+
 if (failures.length) {
 	console.error("x resume-contract");
 	for (const failure of failures) console.error(`- ${failure}`);
