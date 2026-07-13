@@ -157,6 +157,11 @@ for (const [pattern, message] of [
 	[/break-inside:\s*avoid/, "role split protection missing"],
 	[/\.screenOnly[^}]*display:\s*none/s, "web-only chrome must disappear in print"],
 	[/font-family:\s*Arial/, "print needs conservative system typography"],
+	[/\.paper\s*{[^}]*font-size:\s*8\.7pt;[^}]*line-height:\s*1\.42/s, "print body needs the approved open line spacing"],
+	[/\.identity\s*{[^}]*padding-bottom:\s*5mm/s, "print identity needs balanced separation"],
+	[/\.section\s*{[^}]*padding-top:\s*7mm/s, "print sections need the approved vertical rhythm"],
+	[/\.experienceList\s*{[^}]*gap:\s*6mm/s, "print roles need the approved separation"],
+	[/\.highlights,\s*\.compactList\s*{[^}]*gap:\s*1\.4mm;[^}]*margin-top:\s*2mm/s, "print bullets need the approved vertical rhythm"],
 	[/:global\(html\),\s*:global\(body\)\s*{[^}]*width:\s*(?:auto|100%)/s, "print roots must fit within @page margins"],
 	[/:global\(html\)\s*{[^}]*color-scheme:\s*only light\s*!important/s, "print root must override the scheduled dark color scheme"],
 ]) {
