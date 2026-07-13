@@ -49,6 +49,10 @@ export const NAV_LINKS = SECTIONS.filter((s) => s.id !== "hero").map((s) => ({
 // ─── Contact / social ───
 
 export const EMAIL = "soheil.fakour@gmail.com";
+export const PHONE = "+98 910 313 9376";
+export const LOCATION = "Tehran, Iran";
+export const AVAILABILITY =
+	"Open to remote roles in Iran and international opportunities across Europe and GCC.";
 
 /** Canonical social profiles — single source for the command menu, the connect
     section, and the Person JSON-LD `sameAs`, so the three can't drift. Icons +
