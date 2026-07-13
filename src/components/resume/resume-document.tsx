@@ -1,5 +1,6 @@
 import { RESUME } from "@/data/resume";
 import { Surface } from "@/components/ui/surface";
+import { DateRange } from "./date-range";
 import { ExperienceEntry } from "./experience-entry";
 import styles from "./resume.module.css";
 
@@ -64,9 +65,11 @@ export function ResumeDocument() {
 						<h3>{sections.education.degree}</h3>
 						<p>{sections.education.institution}</p>
 					</div>
-					<time dateTime={sections.education.startDate}>
-						{sections.education.dateLabel}
-					</time>
+					<DateRange
+						label={sections.education.dateLabel}
+						startDate={sections.education.startDate}
+						endDate={sections.education.endDate}
+					/>
 				</div>
 				<ul className={styles.compactList}>
 					{sections.recognition.map((item) => <li key={item}>{item}</li>)}

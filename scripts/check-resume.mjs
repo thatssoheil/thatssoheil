@@ -17,12 +17,16 @@ const readBlock = (source, marker) => {
 	return "";
 };
 const resumeSource = [read("src/data/resume.ts"), read("src/lib/constants.ts")].join("\n");
+const experienceBlock = (id) => {
+	const start = resumeSource.indexOf(`id: "${id}"`);
+	if (start === -1) return "";
+
+	const next = resumeSource.indexOf("\n\t\t\t{\n\t\t\t\tid:", start + 1);
+	return resumeSource.slice(start, next === -1 ? resumeSource.length : next);
+};
 
 const required = [
 	"Senior Frontend Engineer",
-	"Professional Summary",
-	"Technical Skills",
-	"Work Experience",
 	"Climic",
 	"MCINEXT",
 	"Xperix",
@@ -50,6 +54,8 @@ for (const pattern of forbidden) {
 const route = read("src/app/resume/page.tsx");
 const document = read("src/components/resume/resume-document.tsx");
 const experience = read("src/components/resume/experience-entry.tsx");
+const dateRange = read("src/components/resume/date-range.tsx");
+const exportControls = read("src/components/resume/export-controls.tsx");
 
 for (const [source, pattern, message] of [
 	[route, /<main[^>]+id="main-content"/, "resume route needs a main landmark"],
@@ -59,9 +65,33 @@ for (const [source, pattern, message] of [
 	[document, /Technical Skills/, "standard skills heading missing"],
 	[document, /Work Experience/, "standard experience heading missing"],
 	[experience, /<article/, "experience entries need article elements"],
-	[experience, /<time/, "experience entries need time elements"],
+	[dateRange, /<time dateTime={startDate}>/, "date ranges need a semantic start time"],
+	[dateRange, /endDate \? <time dateTime={endDate}>/, "completed date ranges need a semantic end time"],
+	[exportControls, /Save as PDF[^\n]+disable [^\n]+Headers and footers/, "export guidance must disable browser headers and footers"],
 ]) {
 	if (!pattern.test(source)) failures.push(message);
+}
+
+const xperix = experienceBlock("mcinext");
+const zaman = experienceBlock("zaman");
+const climic = experienceBlock("climic");
+const dideban = experienceBlock("dideban");
+
+if (!/Shipped production Xperix features for the Oman market from supplied Figma designs/.test(xperix)) {
+	failures.push("Xperix work must be described as implementation from supplied Figma designs");
+}
+if (!/dateLabel: "Feb 2026 — Present"[\s\S]*startDate: "2026-02"/.test(climic)) {
+	failures.push("Climic experience needs the evidence-backed February 2026 start date");
+}
+if (!/location: "Tehran, Iran"/.test(dideban)) {
+	failures.push("Dideban experience needs its evidence-backed Tehran location");
+}
+if (/\b(?:sole|solo|only) (?:Frontend Engineer|frontend developer|developer|engineer)\b/i.test(zaman)) {
+	failures.push("Zaman experience must not imply solo frontend ownership");
+}
+if (/\b(?:hospital staff|patients?) (?:use|uses|used|using|access|accesses|accessed)\b/i.test(climic)
+	|| /\bused by (?:all )?(?:Mom Fertility Hospital|hospital) staff\b/i.test(climic)) {
+	failures.push("Climic experience must not generalize clinician-facing use to hospital staff or patients");
 }
 
 const css = read("src/components/resume/resume.module.css");

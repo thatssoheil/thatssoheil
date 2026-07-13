@@ -102,8 +102,8 @@ export const RESUME = {
 				id: "climic",
 				company: "Climic",
 				role: "Frontend Engineer",
-				dateLabel: "2026 — Present",
-				startDate: "2026",
+				dateLabel: "Feb 2026 — Present",
+				startDate: "2026-02",
 				location: "Tehran, Iran",
 				context: "Clinical AI startup launched by Mom Fertility Hospital",
 				highlights: [
@@ -138,6 +138,7 @@ export const RESUME = {
 				dateLabel: "Aug 2023 — Dec 2023",
 				startDate: "2023-08",
 				endDate: "2023-12",
+				location: "Tehran, Iran",
 				startsPrintPage: true,
 				highlights: [
 					"Contributed pricing, subscription, and selected internal-panel features during a short engagement with an early-stage startup.",
@@ -228,12 +229,3 @@ export const RESUME = {
 		additional: ["English — Advanced Professional Proficiency", AVAILABILITY],
 	},
 } as const satisfies ResumeData;
-
-export const RESUME_SECTION_LABELS = [
-	"Professional Summary",
-	"Technical Skills",
-	"Work Experience",
-	"Selected Project",
-	"Education and Recognition",
-	"Additional Information",
-] as const;

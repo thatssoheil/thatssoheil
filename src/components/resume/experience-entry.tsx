@@ -1,4 +1,5 @@
 import type { ResumeExperience } from "@/data/resume";
+import { DateRange } from "./date-range";
 import styles from "./resume.module.css";
 
 export function ExperienceEntry({ entry }: { entry: ResumeExperience }) {
@@ -16,7 +17,11 @@ export function ExperienceEntry({ entry }: { entry: ResumeExperience }) {
 					</p>
 				</div>
 				<div className={styles.experienceMeta}>
-					<time dateTime={entry.startDate}>{entry.dateLabel}</time>
+					<DateRange
+						label={entry.dateLabel}
+						startDate={entry.startDate}
+						endDate={entry.endDate}
+					/>
 					{entry.location ? <span>{entry.location}</span> : null}
 				</div>
 			</header>
