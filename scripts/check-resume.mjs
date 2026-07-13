@@ -59,6 +59,7 @@ const exportControls = read("src/components/resume/export-controls.tsx");
 
 for (const [source, pattern, message] of [
 	[route, /<main[^>]+id="main-content"/, "resume route needs a main landmark"],
+	[route, /<ResumeDocument\s*\/>[\s\S]*<ExportControls\s*\/>/, "export controls must follow the complete resume document"],
 	[document, /<h1/, "resume document needs one h1"],
 	[document, /<address/, "contact details need a body address"],
 	[document, /Professional Summary/, "standard summary heading missing"],
@@ -73,6 +74,10 @@ for (const [source, pattern, message] of [
 	[exportControls, /Save as PDF[^\n]+disable [^\n]+Headers and footers/, "export guidance must disable browser headers and footers"],
 ]) {
 	if (!pattern.test(source)) failures.push(message);
+}
+
+if (/ResumeScrollReset/.test(route)) {
+	failures.push("resume route must preserve native browser scroll restoration");
 }
 
 const xperix = experienceBlock("mcinext");
@@ -106,6 +111,7 @@ const toolbarEnvelope = readBlock(css, ".toolbar")
 	.match(/width:\s*min\(100%,\s*([^)]+)\)/)?.[1];
 const paperEnvelope = readBlock(css, ".paper")
 	.match(/width:\s*min\(100%,\s*([^)]+)\)/)?.[1];
+const toolbarCss = readBlock(css, ".toolbar");
 
 if (!structuralEnvelope
 	|| toolbarEnvelope !== structuralEnvelope
@@ -113,8 +119,17 @@ if (!structuralEnvelope
 	failures.push("screen resume surfaces must align with the structural grid envelope");
 }
 if (!/\.structure-grid__frame\s*{[^}]*padding-inline:\s*var\(--site-gutter\)/s.test(globalCss)
-	|| !/\.resumeViewport\s*{[^}]*padding:[^;]*var\(--site-gutter\)/s.test(css)) {
+	|| !/\.resumeViewport\s*{[^}]*padding-inline:\s*var\(--site-gutter/s.test(css)) {
 	failures.push("screen resume and structural grid must share the responsive site gutter");
+}
+if (!/\.resumeViewport\s*{[^}]*padding-block:\s*7rem 2rem/s.test(css)) {
+	failures.push("screen resume top clearance must not depend on the site gutter variable");
+}
+if (!/\.resumeViewport\s*{[^}]*padding-inline:\s*var\(--site-gutter,\s*1\.25rem\)/s.test(css)) {
+	failures.push("screen resume gutter needs a safe fallback");
+}
+if (/position:\s*(?:sticky|fixed|absolute)/.test(toolbarCss)) {
+	failures.push("export controls must stay in normal flow below the resume");
 }
 
 if (!/@page\s*{[^}]*size:\s*A4 portrait/s.test(css)) {

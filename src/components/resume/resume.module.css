@@ -4,19 +4,17 @@
 	position: relative;
 	z-index: 1;
 	min-height: 100vh;
-	padding: 7rem var(--site-gutter) 2rem;
+	padding-block: 7rem 2rem;
+	padding-inline: var(--site-gutter, 1.25rem);
 }
 
 .toolbar {
-	position: sticky;
-	top: 5.75rem;
-	z-index: var(--z-sticky);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 1rem;
 	width: min(100%, 56rem);
-	margin: 0 auto 1rem;
+	margin: 1rem auto 0;
 	padding: 0.75rem 0.875rem;
 	border: 1px solid var(--glass-rim);
 	border-radius: var(--radius-lg);
@@ -83,7 +81,7 @@
 
 @media (max-width: 40rem) {
 	.resumeViewport { padding-inline: 0; }
-	.toolbar { position: static; display: grid; width: calc(100% - 2rem); }
+	.toolbar { display: grid; width: calc(100% - 2rem); }
 	.toolbar button { justify-content: center; }
 	.paper { border-inline: 0; border-radius: 0; box-shadow: none; }
 	.experienceHeader, .education { display: grid; gap: 0.25rem; }

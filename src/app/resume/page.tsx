@@ -40,8 +40,8 @@ export default function ResumePage() {
 		<>
 			<div className={styles.screenOnly}><Header /></div>
 			<main id="main-content" className={styles.resumeViewport}>
-				<ExportControls />
 				<ResumeDocument />
+				<ExportControls />
 			</main>
 			<div className={styles.screenOnly}><Footer /></div>
 			<ResumeJsonLd />
