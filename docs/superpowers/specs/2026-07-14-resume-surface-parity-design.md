@@ -1,7 +1,7 @@
 # Résumé Surface Parity Design
 
-**Date:** 2026-07-14  
-**Branch:** `feat/ats-resume`  
+**Date:** 2026-07-14
+**Branch:** `feat/ats-resume`
 **Status:** Approved
 
 ## Context
