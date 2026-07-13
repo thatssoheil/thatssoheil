@@ -467,4 +467,3 @@ The design is complete when:
 - supplied Figma work is described as implementation rather than product-design ownership;
 - the page exposes standard résumé headings and explicit contact, employer, title, date, education, and skill text;
 - verification passes for repository quality checks, accessibility, responsive behavior, print layout, hyperlinks, and extracted PDF text.
-
