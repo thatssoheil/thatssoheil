@@ -70,6 +70,9 @@ const printCss = readBlock(css, "@media print");
 if (!/@page\s*{[^}]*size:\s*A4 portrait/s.test(css)) {
 	failures.push("print CSS needs A4 portrait @page");
 }
+if (!/@page\s*{[^}]*background:\s*#fff/s.test(css)) {
+	failures.push("printed page canvas must be explicitly white");
+}
 if (!printCss) failures.push("print media rules missing");
 
 for (const [pattern, message] of [
@@ -78,6 +81,7 @@ for (const [pattern, message] of [
 	[/\.screenOnly[^}]*display:\s*none/s, "web-only chrome must disappear in print"],
 	[/font-family:\s*Arial/, "print needs conservative system typography"],
 	[/:global\(html\),\s*:global\(body\)\s*{[^}]*width:\s*(?:auto|100%)/s, "print roots must fit within @page margins"],
+	[/:global\(html\)\s*{[^}]*color-scheme:\s*only light\s*!important/s, "print root must override the scheduled dark color scheme"],
 ]) {
 	if (!pattern.test(printCss)) failures.push(message);
 }

@@ -104,11 +104,13 @@
 @page {
 	size: A4 portrait;
 	margin: 9mm 11mm;
+	background: #fff;
 }
 
 @media print {
 	.screenOnly, .toolbar { display: none !important; }
 	:global(.signal-field), :global(.structure-grid) { display: none !important; }
+	:global(html) { color-scheme: only light !important; }
 	:global(html), :global(body) {
 		width: auto;
 		min-height: auto;
