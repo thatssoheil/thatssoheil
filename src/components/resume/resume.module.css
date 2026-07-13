@@ -41,7 +41,11 @@
 }
 .toolbar button:hover { opacity: 0.9; }
 .toolbar button:active { transform: scale(0.98); }
-.toolbar button:focus-visible { outline: none; box-shadow: var(--ring-focus); }
+.toolbar button:focus-visible {
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+	box-shadow: var(--ring-focus);
+}
 
 .paper {
 	width: min(100%, 57.5rem);
@@ -90,6 +94,13 @@
 	.toolbar { background: var(--glass-bg-solid); }
 }
 
+@media (forced-colors: active) {
+	.toolbar button:focus-visible {
+		outline-color: Highlight;
+		box-shadow: none;
+	}
+}
+
 @page {
 	size: A4 portrait;
 	margin: 9mm 11mm;
@@ -99,7 +110,7 @@
 	.screenOnly, .toolbar { display: none !important; }
 	:global(.signal-field), :global(.structure-grid) { display: none !important; }
 	:global(html), :global(body) {
-		width: 210mm;
+		width: auto;
 		min-height: auto;
 		background: #fff !important;
 		color: #111 !important;
