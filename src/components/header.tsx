@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { SITE, NAV_LINKS } from "@/lib/constants";
 import { useActiveSection } from "@/hooks/use-active-section";
@@ -17,14 +18,20 @@ import { textRole } from "@/components/ui/typography";
  */
 export function Header() {
 	const { activeSection } = useActiveSection();
+	const pathname = usePathname();
+	const isHome = pathname === "/";
 
 	const handleClick = useCallback(
 		(e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+			if (!href.startsWith("#") || !isHome) return;
 			e.preventDefault();
 			jumpToSection(href);
 		},
-		[],
+		[isHome],
 	);
+
+	const resolveHref = (href: string) =>
+		href.startsWith("#") && !isHome ? `/${href}` : href;
 
 	return (
 		<header
@@ -38,8 +45,10 @@ export function Header() {
 			>
 				{/* ── Branding ── */}
 				<a
-					href="#hero"
-					onClick={(e) => handleClick(e, "#hero")}
+					href={isHome ? "#hero" : "/"}
+					onClick={(e) => {
+						if (isHome) handleClick(e, "#hero");
+					}}
 					aria-label={`${SITE.name}, home`}
 					className="flex min-h-11 items-center gap-2.5 rounded-lg tracking-tight text-foreground hover:text-text-muted focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 				>
@@ -51,14 +60,18 @@ export function Header() {
 				<div className="flex items-center gap-4 sm:gap-6">
 					<nav aria-label="Main navigation" className="hidden sm:flex items-center gap-6">
 						{NAV_LINKS.map(({ label, href }) => {
-							const isActive = activeSection === href.replace("#", "");
+							const isHash = href.startsWith("#");
+							const isActive = isHash
+								? isHome && activeSection === href.slice(1)
+								: pathname === href;
+							const resolvedHref = resolveHref(href);
 
 							return (
 								<a
 									key={href}
-									href={href}
+									href={resolvedHref}
 									onClick={(e) => handleClick(e, href)}
-									aria-current={isActive ? "true" : undefined}
+									aria-current={isActive ? "page" : undefined}
 									className={cn(
 										"rounded-lg py-1 transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
 										isActive

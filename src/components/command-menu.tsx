@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { Command } from "cmdk";
 import { Dialog, VisuallyHidden } from "radix-ui";
 import {
@@ -10,6 +11,7 @@ import {
 	Search,
 	Menu,
 	CornerDownLeft,
+	FileText,
 } from "lucide-react";
 import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
@@ -32,6 +34,8 @@ const ICON_CLASS =
 export function CommandMenu() {
 	const [open, setOpen] = useState(false);
 	const [copied, setCopied] = useState(false);
+	const pathname = usePathname();
+	const router = useRouter();
 	// On touch devices the menu doubles as mobile nav, so the palette input must
 	// not autofocus — that would pop the on-screen keyboard over the section list
 	// the moment the menu opens.
@@ -52,6 +56,23 @@ export function CommandMenu() {
 		setOpen(false);
 		window.open(href, "_blank", "noopener,noreferrer");
 	}, []);
+
+	const goToSection = useCallback(
+		(id: string) => {
+			setOpen(false);
+			if (pathname === "/") {
+				jumpToSection(`#${id}`);
+				return;
+			}
+			router.push(`/#${id}`);
+		},
+		[pathname, router],
+	);
+
+	const openResume = useCallback(() => {
+		setOpen(false);
+		router.push("/resume");
+	}, [router]);
 
 	const sendEmail = useCallback(() => {
 		setOpen(false);
@@ -127,7 +148,7 @@ export function CommandMenu() {
 										<Command.Item
 											key={s.id}
 											value={`section ${s.label}`}
-											onSelect={() => { setOpen(false); jumpToSection(`#${s.id}`); }}
+											onSelect={() => goToSection(s.id)}
 											className={ITEM_CLASS}
 										>
 											<Hash className={ICON_CLASS} strokeWidth={1.5} />
@@ -138,6 +159,14 @@ export function CommandMenu() {
 								</Command.Group>
 
 								<Command.Group heading="Links">
+									<Command.Item
+										value="resume cv work experience career"
+										onSelect={openResume}
+										className={ITEM_CLASS}
+									>
+										<FileText className={ICON_CLASS} strokeWidth={1.5} />
+										<span>Resume</span>
+									</Command.Item>
 									{SOCIALS.map((l) => (
 										<Command.Item
 											key={l.label}

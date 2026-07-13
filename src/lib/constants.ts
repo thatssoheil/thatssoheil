@@ -41,10 +41,13 @@ export type SectionId = (typeof SECTIONS)[number]["id"];
 export const SM_BREAKPOINT_PX = 640;
 
 /** Links shown in the header nav (hero excluded). */
-export const NAV_LINKS = SECTIONS.filter((s) => s.id !== "hero").map((s) => ({
-	label: s.label,
-	href: `#${s.id}`,
-}));
+export const NAV_LINKS = [
+	...SECTIONS.filter((section) => section.id !== "hero").map((section) => ({
+		label: section.label,
+		href: `#${section.id}`,
+	})),
+	{ label: "Resume", href: "/resume" },
+] as const;
 
 // ─── Contact / social ───
 
