@@ -33,6 +33,23 @@ for (const pattern of forbidden) {
 	if (pattern.test(resumeSource)) failures.push(`forbidden resume claim: ${pattern}`);
 }
 
+const route = read("src/app/resume/page.tsx");
+const document = read("src/components/resume/resume-document.tsx");
+const experience = read("src/components/resume/experience-entry.tsx");
+
+for (const [source, pattern, message] of [
+	[route, /<main[^>]+id="main-content"/, "resume route needs a main landmark"],
+	[document, /<h1/, "resume document needs one h1"],
+	[document, /<address/, "contact details need a body address"],
+	[document, /Professional Summary/, "standard summary heading missing"],
+	[document, /Technical Skills/, "standard skills heading missing"],
+	[document, /Work Experience/, "standard experience heading missing"],
+	[experience, /<article/, "experience entries need article elements"],
+	[experience, /<time/, "experience entries need time elements"],
+]) {
+	if (!pattern.test(source)) failures.push(message);
+}
+
 if (failures.length) {
 	console.error("x resume-contract");
 	for (const failure of failures) console.error(`- ${failure}`);
