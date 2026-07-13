@@ -64,6 +64,9 @@ for (const [source, pattern, message] of [
 	[document, /Professional Summary/, "standard summary heading missing"],
 	[document, /Technical Skills/, "standard skills heading missing"],
 	[document, /Work Experience/, "standard experience heading missing"],
+	[document, /Selected Project/, "standard project heading missing"],
+	[document, /Education and Recognition/, "standard education heading missing"],
+	[document, /Additional Information/, "standard additional-information heading missing"],
 	[experience, /<article/, "experience entries need article elements"],
 	[dateRange, /<time dateTime={startDate}>/, "date ranges need a semantic start time"],
 	[dateRange, /endDate \? <time dateTime={endDate}>/, "completed date ranges need a semantic end time"],
@@ -90,7 +93,7 @@ if (/\b(?:sole|solo|only) (?:Frontend Engineer|frontend developer|developer|engi
 	failures.push("Zaman experience must not imply solo frontend ownership");
 }
 if (/\b(?:hospital staff|patients?) (?:use|uses|used|using|access|accesses|accessed)\b/i.test(climic)
-	|| /\bused by (?:all )?(?:Mom Fertility Hospital|hospital) staff\b/i.test(climic)) {
+	|| /\b(?:used|accessed) by (?:patients?|(?:all )?(?:Mom Fertility Hospital|hospital) staff)\b/i.test(climic)) {
 	failures.push("Climic experience must not generalize clinician-facing use to hospital staff or patients");
 }
 
