@@ -98,7 +98,24 @@ if (/\b(?:hospital staff|patients?) (?:use|uses|used|using|access|accesses|acces
 }
 
 const css = read("src/components/resume/resume.module.css");
+const globalCss = read("src/app/globals.css");
 const printCss = readBlock(css, "@media print");
+const structuralEnvelope = readBlock(globalCss, ".structure-grid__envelope")
+	.match(/max-width:\s*([^;]+)/)?.[1];
+const toolbarEnvelope = readBlock(css, ".toolbar")
+	.match(/width:\s*min\(100%,\s*([^)]+)\)/)?.[1];
+const paperEnvelope = readBlock(css, ".paper")
+	.match(/width:\s*min\(100%,\s*([^)]+)\)/)?.[1];
+
+if (!structuralEnvelope
+	|| toolbarEnvelope !== structuralEnvelope
+	|| paperEnvelope !== structuralEnvelope) {
+	failures.push("screen resume surfaces must align with the structural grid envelope");
+}
+if (!/\.structure-grid__frame\s*{[^}]*padding-inline:\s*var\(--site-gutter\)/s.test(globalCss)
+	|| !/\.resumeViewport\s*{[^}]*padding:[^;]*var\(--site-gutter\)/s.test(css)) {
+	failures.push("screen resume and structural grid must share the responsive site gutter");
+}
 
 if (!/@page\s*{[^}]*size:\s*A4 portrait/s.test(css)) {
 	failures.push("print CSS needs A4 portrait @page");
