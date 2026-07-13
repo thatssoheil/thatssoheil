@@ -2,7 +2,7 @@
 
 **Date:** 2026-07-14  
 **Branch:** `feat/ats-resume`  
-**Status:** Approved direction; awaiting written-spec review
+**Status:** Approved
 
 ## Context
 
