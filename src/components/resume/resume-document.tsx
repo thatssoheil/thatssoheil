@@ -11,7 +11,12 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 export function ResumeDocument() {
 	const { sections } = RESUME;
 	return (
-		<Surface className={styles.paper} aria-label={`${RESUME.name} résumé`}>
+		<Surface
+			variant="panel"
+			radius="lg"
+			className={styles.paper}
+			aria-label={`${RESUME.name} résumé`}
+		>
 			<header className={styles.identity}>
 				<p className={styles.eyebrow}>Résumé</p>
 				<h1>{RESUME.name}</h1>

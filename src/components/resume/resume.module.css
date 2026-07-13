@@ -16,10 +16,6 @@
 	width: min(100%, 56rem);
 	margin: 1rem auto 0;
 	padding: 0.75rem 0.875rem;
-	border: 1px solid var(--glass-rim);
-	border-radius: var(--radius-lg);
-	background: var(--glass-bg-solid);
-	box-shadow: var(--shadow-border);
 }
 
 .toolbar p { font-size: 0.8125rem; font-weight: 500; }
@@ -49,7 +45,6 @@
 	width: min(100%, 56rem);
 	margin: 0 auto;
 	padding: clamp(1.5rem, 4vw, 3.5rem);
-	border-radius: var(--radius-xl);
 	color: var(--foreground);
 	font-size: 0.9375rem;
 	line-height: 1.6;
@@ -86,10 +81,6 @@
 	.paper { border-inline: 0; border-radius: 0; box-shadow: none; }
 	.experienceHeader, .education { display: grid; gap: 0.25rem; }
 	.experienceMeta { justify-items: start; text-align: left; }
-}
-
-@media (prefers-reduced-transparency: reduce) {
-	.toolbar { background: var(--glass-bg-solid); }
 }
 
 @media (forced-colors: active) {

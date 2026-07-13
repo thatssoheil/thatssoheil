@@ -60,6 +60,8 @@ const exportControls = read("src/components/resume/export-controls.tsx");
 for (const [source, pattern, message] of [
 	[route, /<main[^>]+id="main-content"/, "resume route needs a main landmark"],
 	[route, /<ResumeDocument\s*\/>[\s\S]*<ExportControls\s*\/>/, "export controls must follow the complete resume document"],
+	[document, /<Surface\s+variant="panel"\s+radius="lg"/s, "resume paper must inherit the root reading-panel surface"],
+	[exportControls, /<Surface\s+variant="panel"\s+radius="lg"/s, "export controls must inherit the root reading-panel surface"],
 	[document, /<h1/, "resume document needs one h1"],
 	[document, /<address/, "contact details need a body address"],
 	[document, /Professional Summary/, "standard summary heading missing"],
@@ -112,6 +114,7 @@ const toolbarEnvelope = readBlock(css, ".toolbar")
 const paperEnvelope = readBlock(css, ".paper")
 	.match(/width:\s*min\(100%,\s*([^)]+)\)/)?.[1];
 const toolbarCss = readBlock(css, ".toolbar");
+const paperCss = readBlock(css, ".paper");
 
 if (!structuralEnvelope
 	|| toolbarEnvelope !== structuralEnvelope
@@ -127,6 +130,14 @@ if (!/\.resumeViewport\s*{[^}]*padding-block:\s*7rem 2rem/s.test(css)) {
 }
 if (!/\.resumeViewport\s*{[^}]*padding-inline:\s*var\(--site-gutter,\s*1\.25rem\)/s.test(css)) {
 	failures.push("screen resume gutter needs a safe fallback");
+}
+for (const [block, label] of [
+	[paperCss, "resume paper"],
+	[toolbarCss, "export controls"],
+]) {
+	if (/(?:border(?:-radius)?|background|box-shadow):/.test(block)) {
+		failures.push(`${label} must inherit material, edge, radius, and depth from Surface`);
+	}
 }
 if (/position:\s*(?:sticky|fixed|absolute)/.test(toolbarCss)) {
 	failures.push("export controls must stay in normal flow below the resume");
