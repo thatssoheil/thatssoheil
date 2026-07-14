@@ -116,6 +116,9 @@ const paperEnvelope = readBlock(css, ".paper")
 	.match(/width:\s*min\(100%,\s*([^)]+)\)/)?.[1];
 const toolbarCss = readBlock(css, ".toolbar");
 const paperCss = readBlock(css, ".paper");
+const mobileCss = readBlock(css, "@media (max-width: 40rem)");
+const mobilePaperCss = readBlock(mobileCss, ".paper");
+const mobileToolbarCss = readBlock(mobileCss, ".toolbar");
 
 if (!structuralEnvelope
 	|| toolbarEnvelope !== structuralEnvelope
@@ -131,6 +134,15 @@ if (!/\.resumeViewport\s*{[^}]*padding-block:\s*7rem 2rem/s.test(css)) {
 }
 if (!/\.resumeViewport\s*{[^}]*padding-inline:\s*var\(--site-gutter,\s*1\.25rem\)/s.test(css)) {
 	failures.push("screen resume gutter needs a safe fallback");
+}
+if (/\.resumeViewport\s*{[^}]*padding-inline:\s*0/s.test(mobileCss)) {
+	failures.push("mobile resume must retain the shared responsive site gutter");
+}
+if (/(?:border(?:-radius)?|box-shadow):/.test(mobilePaperCss)) {
+	failures.push("mobile resume paper must retain its Surface edges, radius, and depth");
+}
+if (/width:/.test(mobileToolbarCss)) {
+	failures.push("mobile export controls must align with the resume paper grid edges");
 }
 for (const [block, label] of [
 	[paperCss, "resume paper"],

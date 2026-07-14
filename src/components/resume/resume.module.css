@@ -75,10 +75,8 @@
 .pageTwoStart { scroll-margin-top: 7rem; }
 
 @media (max-width: 40rem) {
-	.resumeViewport { padding-inline: 0; }
-	.toolbar { display: grid; width: calc(100% - 2rem); }
+	.toolbar { display: grid; }
 	.toolbar button { justify-content: center; }
-	.paper { border-inline: 0; border-radius: 0; box-shadow: none; }
 	.experienceHeader, .education { display: grid; gap: 0.25rem; }
 	.experienceMeta { justify-items: start; text-align: left; }
 }
