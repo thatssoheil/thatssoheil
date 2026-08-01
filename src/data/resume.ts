@@ -101,11 +101,12 @@ export const RESUME = {
 				id: "climic",
 				company: "Climic",
 				role: "Frontend Engineer",
-				dateLabel: "Feb 2026 - Present",
+				dateLabel: "Feb 2026 - Jul 2026",
 				startDate: "2026-02",
+				endDate: "2026-07",
 				location: "Tehran, Iran",
 				highlights: [
-					"Own frontend delivery as the sole Frontend Engineer on an eight-person team building an ambient clinical AI product that turns physician-patient conversations into structured records and SOAP notes.",
+					"Owned frontend delivery as the sole Frontend Engineer on an eight-person team building an ambient clinical AI product that turns physician-patient conversations into structured records and SOAP notes.",
 					"Audited and modernized an early AI-generated React codebase, replacing inconsistent components and uncoordinated API calls with reusable UI, TanStack Query services, centralized query keys, and documented frontend conventions.",
 					"Redesigned a 50-row patient workflow from more than 100 potential per-row requests to 2-3 list-level requests using server pagination, list-shaped payloads, and lazy-loaded histories.",
 					"Hardened live encounters with HTTP/WebSocket reconciliation, cross-tab recording synchronization, token refresh, ordered autosave, submit flushing, and signoff guards.",
@@ -114,7 +115,7 @@ export const RESUME = {
 			},
 			{
 				id: "mcinext",
-				company: "MCINEXT",
+				company: "MCI (Hamrah-e Avval)",
 				role: "Frontend Engineer",
 				dateLabel: "Dec 2023 - Nov 2025",
 				startDate: "2023-12",
