@@ -12,28 +12,36 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 1rem;
+	gap: 1.25rem;
 	width: min(100%, 56rem);
 	margin: 1rem auto 0;
-	padding: 0.75rem 0.875rem;
+	padding: 1.25rem 1.5rem;
 }
 
-.toolbar p { font-size: 0.8125rem; font-weight: 500; }
-.toolbar span { color: var(--text-faint); font-size: 0.75rem; }
+.toolbar > div:first-child { display: flex; align-items: center; min-height: 2.75rem; }
+.toolbar span { color: var(--text-faint); font-size: 0.8125rem; line-height: 1.5; }
 .toolbar button {
 	display: inline-flex;
+	flex: none;
 	min-height: 2.75rem;
 	align-items: center;
+	justify-content: center;
 	gap: 0.5rem;
-	padding: 0 0.875rem;
+	padding: 0 1.25rem;
+	border: 1px solid color-mix(in oklch, var(--primary) 45%, transparent);
 	border-radius: var(--radius-md);
 	background: var(--primary);
 	color: var(--primary-foreground);
 	font-size: 0.8125rem;
-	font-weight: 500;
-	transition: transform var(--dur-micro) var(--ease-snap), opacity var(--dur-micro) var(--ease-snap);
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	box-shadow: 0 1px 0 color-mix(in oklch, var(--primary-foreground) 18%, transparent) inset,
+		0 1px 2px color-mix(in oklch, #000 14%, transparent);
+	transition: transform var(--dur-micro) var(--ease-snap),
+		box-shadow var(--dur-micro) var(--ease-snap),
+		background-color var(--dur-micro) var(--ease-snap);
 }
-.toolbar button:hover { opacity: 0.9; }
+.toolbar button:hover { background: var(--primary); box-shadow: 0 2px 10px color-mix(in oklch, var(--primary) 35%, transparent), 0 1px 0 color-mix(in oklch, var(--primary-foreground) 22%, transparent) inset; }
 .toolbar button:active { transform: scale(0.98); }
 .toolbar button:focus-visible {
 	outline: 2px solid transparent;
@@ -136,6 +144,11 @@
 	.experienceHeader h3, .project h3, .education h3 { font-size: 9pt; }
 	.employerLine, .context, .experienceMeta { color: #333; }
 	.experienceMeta, .context { font-size: 7.6pt; }
+	/* Single-column flow: ATS parsers detach dates when they sit in a
+	   right-aligned flex column. Collapse the space-between row so role,
+	   company, dates, and location read linearly top-to-bottom. */
+	.experienceHeader, .education { display: block; }
+	.experienceMeta { justify-items: start; text-align: left; }
 	.highlights, .compactList { gap: 1.4mm; margin-top: 2mm; padding-left: 4mm; }
 	.highlights li::marker, .compactList li::marker { color: #111; }
 	.pageTwoStart { break-before: page; page-break-before: always; }

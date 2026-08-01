@@ -16,7 +16,7 @@ export const NOW = {
 	status: AVAILABILITY,
 	/** What he's anchoring right now. */
 	current:
-		"Owning frontend delivery on a small team building clinical AI that turns physician-patient conversations into structured medical documentation.",
+		"Recently owned frontend delivery on a small team building clinical AI that turns physician-patient conversations into structured medical documentation.",
 	/** The tools he actually reaches for. */
 	stack: [
 		"TypeScript",

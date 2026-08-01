@@ -121,7 +121,6 @@ export default async function OpengraphImage() {
 					style={{
 						position: "absolute",
 						inset: GRID.frameInset,
-						border: "1px solid rgba(245,247,251,0.17)",
 						borderRadius: 28,
 						background:
 							"linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.022) 32%, rgba(255,255,255,0.04) 68%, rgba(255,255,255,0.014))",

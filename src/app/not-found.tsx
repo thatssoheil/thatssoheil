@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { RouteFallback } from "@/components/route-fallback";
 
 export const metadata: Metadata = {
-	title: "Not found — Soheil Fakour",
+	title: "Not Found",
 	description: "The requested page does not exist.",
 	robots: {
 		index: false,
