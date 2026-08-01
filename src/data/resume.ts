@@ -104,7 +104,6 @@ export const RESUME = {
 				dateLabel: "Feb 2026 - Present",
 				startDate: "2026-02",
 				location: "Tehran, Iran",
-				context: "Clinical AI startup launched by Mom Fertility Hospital",
 				highlights: [
 					"Own frontend delivery as the sole Frontend Engineer on an eight-person team building an ambient clinical AI product that turns physician-patient conversations into structured records and SOAP notes.",
 					"Audited and modernized an early AI-generated React codebase, replacing inconsistent components and uncoordinated API calls with reusable UI, TanStack Query services, centralized query keys, and documented frontend conventions.",
