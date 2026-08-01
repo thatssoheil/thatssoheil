@@ -136,6 +136,11 @@
 	.experienceHeader h3, .project h3, .education h3 { font-size: 9pt; }
 	.employerLine, .context, .experienceMeta { color: #333; }
 	.experienceMeta, .context { font-size: 7.6pt; }
+	/* Single-column flow: ATS parsers detach dates when they sit in a
+	   right-aligned flex column. Collapse the space-between row so role,
+	   company, dates, and location read linearly top-to-bottom. */
+	.experienceHeader, .education { display: block; }
+	.experienceMeta { justify-items: start; text-align: left; }
 	.highlights, .compactList { gap: 1.4mm; margin-top: 2mm; padding-left: 4mm; }
 	.highlights li::marker, .compactList li::marker { color: #111; }
 	.pageTwoStart { break-before: page; page-break-before: always; }
