@@ -13,7 +13,7 @@ export function ResumeJsonLd() {
 				"@type": "ProfilePage",
 				"@id": `${url}#profile`,
 				url,
-				name: `${RESUME.name} — ${RESUME.title}`,
+				name: `${RESUME.name} - ${RESUME.title}`,
 				mainEntity: { "@id": `${SITE.url}/#person` },
 				isPartOf: { "@id": `${SITE.url}/#website` },
 			},

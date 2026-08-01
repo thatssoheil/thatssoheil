@@ -9,19 +9,19 @@ import { SITE, X_HANDLE } from "@/lib/constants";
 import styles from "@/components/resume/resume.module.css";
 
 export const metadata: Metadata = {
-	title: `${RESUME.name} — ${RESUME.title}`,
+	title: "Resume",
 	description: RESUME.sections.summary,
 	alternates: { canonical: "/resume" },
 	openGraph: {
 		type: "profile",
 		url: `${SITE.url}/resume`,
-		title: `${RESUME.name} — ${RESUME.title}`,
+		title: `Resume | ${SITE.name}`,
 		description: RESUME.sections.summary,
 		images: [{ url: SITE.ogImage, alt: SITE.ogImageAlt }],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: `${RESUME.name} — ${RESUME.title}`,
+		title: `Resume | ${SITE.name}`,
 		description: RESUME.sections.summary,
 		creator: X_HANDLE,
 		images: [

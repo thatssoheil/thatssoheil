@@ -13,7 +13,7 @@ export function ExperienceEntry({ entry }: { entry: ResumeExperience }) {
 					<h3 id={`${entry.id}-title`}>{entry.role}</h3>
 					<p className={styles.employerLine}>
 						<span>{entry.company}</span>
-						{entry.employmentType ? <span> · {entry.employmentType}</span> : null}
+						{entry.employmentType ? <span>, {entry.employmentType}</span> : null}
 					</p>
 				</div>
 				<div className={styles.experienceMeta}>
