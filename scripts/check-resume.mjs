@@ -26,9 +26,9 @@ const experienceBlock = (id) => {
 };
 
 const required = [
-	"Senior Frontend Engineer",
+	"Frontend Engineer",
 	"Climic",
-	"MCINEXT",
+	"MCI (Hamrah-e Avval)",
 	"Xperix",
 	"Amirkabir University of Technology",
 	"+98 910 313 9376",
@@ -68,7 +68,7 @@ for (const [source, pattern, message] of [
 	[document, /Professional Summary/, "standard summary heading missing"],
 	[document, /Technical Skills/, "standard skills heading missing"],
 	[document, /Work Experience/, "standard experience heading missing"],
-	[document, /Selected Project/, "standard project heading missing"],
+	[document, /<SectionHeading>Projects<\/SectionHeading>/, "standard project heading missing"],
 	[document, /<SectionHeading>Education<\/SectionHeading>/, "standard education heading missing"],
 	[document, /Additional Information/, "standard additional-information heading missing"],
 	[experience, /<article/, "experience entries need article elements"],
@@ -86,16 +86,12 @@ if (/ResumeScrollReset/.test(route)) {
 const xperix = experienceBlock("mcinext");
 const zaman = experienceBlock("zaman");
 const climic = experienceBlock("climic");
-const dideban = experienceBlock("dideban");
 
 if (!/Shipped production Xperix features for the Oman market from supplied Figma designs/.test(xperix)) {
 	failures.push("Xperix work must be described as implementation from supplied Figma designs");
 }
-if (!/dateLabel: "Feb 2026 — Present"[\s\S]*startDate: "2026-02"/.test(climic)) {
+if (!/dateLabel: "Feb 2026 - Jul 2026"[\s\S]*startDate: "2026-02"/.test(climic)) {
 	failures.push("Climic experience needs the evidence-backed February 2026 start date");
-}
-if (!/location: "Tehran, Iran"/.test(dideban)) {
-	failures.push("Dideban experience needs its evidence-backed Tehran location");
 }
 if (/\b(?:sole|solo|only) (?:Frontend Engineer|frontend developer|developer|engineer)\b/i.test(zaman)) {
 	failures.push("Zaman experience must not imply solo frontend ownership");

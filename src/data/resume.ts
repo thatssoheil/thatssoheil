@@ -77,11 +77,11 @@ export const RESUME = {
 	],
 	sections: {
 		summary:
-			"Frontend Engineer with 6+ years in software engineering, including 5+ years focused on frontend development. Builds maintainable frontend architecture and product workflows for AI, healthcare, B2B, and real-time applications. Experienced owning frontend delivery in early-stage teams, modernizing inconsistent codebases, developing shared systems, and translating Figma designs into responsive production interfaces.",
+			"Frontend Engineer with 6+ years in software engineering, including 5+ years focused on frontend development. Builds maintainable frontend architecture and product workflows for AI, healthcare, B2B, and real-time web applications. Experienced owning frontend delivery in early-stage teams, modernizing inconsistent codebases, developing shared systems, translating Figma designs into responsive production interfaces, with strong problem solving skills and attention to quality.",
 		skills: [
 			{
 				label: "Frontend",
-				items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Recharts", "Accessibility", "Performance optimization"],
+				items: ["React", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS", "GSAP", "Recharts", "Accessibility", "Performance optimization", "Core Web Vitals"],
 			},
 			{
 				label: "Architecture & Systems",
@@ -93,7 +93,7 @@ export const RESUME = {
 			},
 			{
 				label: "Tooling & Delivery",
-				items: ["Git", "pnpm", "Vite", "Cypress", "Jest", "Docker", "Cloudflare", "Nginx", "WordPress", "Postman"],
+				items: ["Git", "pnpm", "Vite", "Cypress", "Jest", "Docker", "Cloudflare", "Nginx", "WordPress", "Postman", "Lighthouse", "AI-assisted development"],
 			},
 		],
 		experience: [
@@ -109,8 +109,8 @@ export const RESUME = {
 					"Owned frontend delivery as the sole Frontend Engineer on an eight-person team building an ambient clinical AI product that turns physician-patient conversations into structured records and SOAP notes.",
 					"Audited and modernized an early AI-generated React codebase, replacing inconsistent components and uncoordinated API calls with reusable UI, TanStack Query services, centralized query keys, and documented frontend conventions.",
 					"Redesigned a 50-row patient workflow from more than 100 potential per-row requests to 2-3 list-level requests using server pagination, list-shaped payloads, and lazy-loaded histories.",
-					"Hardened live encounters with HTTP/WebSocket reconciliation, cross-tab recording synchronization, token refresh, ordered autosave, submit flushing, and signoff guards.",
-					"Built shared table, form, date/time, localization, access-control, and encounter foundations across four locales while continuously curating small workflow and scope decisions with the team.",
+					"Hardened live encounters with HTTP/WebSocket reconciliation, cross-tab recording synchronization, token refresh, ordered autosave, submit flushing, and signoff guards, using Claude for agentic development and AI-driven debugging.",
+					"Built shared table, form, date/time, localization, access-control, and encounter foundations across four locales while continuously curating small workflow and scope decisions with the team, including participating in code review and raising code quality.",
 				],
 			},
 			{
@@ -122,11 +122,12 @@ export const RESUME = {
 				endDate: "2025-11",
 				location: "Tehran, Iran",
 				highlights: [
-					"Built Daani from scratch in Next.js 13 from supplied Figma designs, serving as its only Frontend Engineer for the first three months and adapting an internal Instagram-like media explorer for the gamified children's search product.",
+					"Built Daani from scratch in Next.js 13 from supplied Figma designs, serving as its only Frontend Engineer for the first three months and adapting an internal Instagram-like media explorer for the gamified children's search product, including server-side rendering (SSR) and incremental static regeneration (ISR) page strategies.",
 					"Delivered authentication, Q&A, user and expert administration, role management, filtering, pagination, and embedded analytics for Anzu's chatbot and call-center analysis products.",
 					"Designed frontend role-based access control around backend permissions, gating routes, navigation, tabs, components, and actions while consolidating duplicated authentication and administration flows into shared Nx libraries used by two dashboards.",
 					"Developed shared conversational capabilities inside a six-application Nx platform, including segmented streaming text-to-speech, continuous speech recognition, media uploads, WebSocket-driven operator handoff, and feedback workflows.",
 					"Shipped production Xperix features for the Oman market from supplied Figma designs, including documentation, responsive navigation, conversation filtering, reporting, topic analytics, publishing/embed setup, secure agent reset, and a GSAP-driven landing hero; also completed a short Chakra UI-to-Material UI migration for Nova.",
+					"Improved SEO and Core Web Vitals on MCI products using performance tooling such as Lighthouse, and accelerated development with AI-assisted coding and agentic debugging with Claude.",
 				],
 			},
 			{
