@@ -65,7 +65,7 @@ const linkedIn = SOCIALS.find((item) => item.label === "LinkedIn");
 
 export const RESUME = {
 	name: SITE.name,
-	title: "Senior Frontend Engineer",
+	title: "Frontend Engineer",
 	location: LOCATION,
 	availability: AVAILABILITY,
 	contact: [
@@ -77,11 +77,11 @@ export const RESUME = {
 	],
 	sections: {
 		summary:
-			"Senior Frontend Engineer with 6+ years in software engineering, including 5+ years focused on frontend development. Builds maintainable frontend architecture and product workflows for AI, healthcare, B2B, and real-time applications. Experienced owning frontend delivery in early-stage teams, modernizing inconsistent codebases, developing shared systems, and translating Figma designs into responsive production interfaces.",
+			"Frontend Engineer with 6+ years in software engineering, including 5+ years focused on frontend development. Builds maintainable frontend architecture and product workflows for AI, healthcare, B2B, and real-time applications. Experienced owning frontend delivery in early-stage teams, modernizing inconsistent codebases, developing shared systems, and translating Figma designs into responsive production interfaces.",
 		skills: [
 			{
 				label: "Frontend",
-				items: ["React", "Next.js", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS"],
+				items: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
 			},
 			{
 				label: "Architecture",
@@ -101,7 +101,7 @@ export const RESUME = {
 				id: "climic",
 				company: "Climic",
 				role: "Frontend Engineer",
-				dateLabel: "Feb 2026 — Present",
+				dateLabel: "Feb 2026 - Present",
 				startDate: "2026-02",
 				location: "Tehran, Iran",
 				context: "Clinical AI startup launched by Mom Fertility Hospital",
@@ -117,7 +117,7 @@ export const RESUME = {
 				id: "mcinext",
 				company: "MCINEXT",
 				role: "Frontend Engineer",
-				dateLabel: "Dec 2023 — Nov 2025",
+				dateLabel: "Dec 2023 - Nov 2025",
 				startDate: "2023-12",
 				endDate: "2025-11",
 				location: "Tehran, Iran",
@@ -130,24 +130,10 @@ export const RESUME = {
 				],
 			},
 			{
-				id: "dideban",
-				company: "Dideban",
-				role: "Frontend Engineer",
-				employmentType: "Contract",
-				dateLabel: "Aug 2023 — Dec 2023",
-				startDate: "2023-08",
-				endDate: "2023-12",
-				location: "Tehran, Iran",
-				startsPrintPage: true,
-				highlights: [
-					"Contributed pricing, subscription, and selected internal-panel features during a short engagement with an early-stage startup.",
-				],
-			},
-			{
 				id: "zaman",
 				company: "Zaman",
 				role: "Frontend Engineer",
-				dateLabel: "Jul 2022 — Oct 2023",
+				dateLabel: "Jul 2022 - Oct 2023",
 				startDate: "2022-07",
 				endDate: "2023-10",
 				location: "Tehran, Iran",
@@ -157,27 +143,13 @@ export const RESUME = {
 				],
 			},
 			{
-				id: "epic-labs",
-				company: "Epic Labs / 6Success",
-				role: "Frontend Engineer",
-				employmentType: "Contract",
-				dateLabel: "Jun 2022 — Jun 2023",
-				startDate: "2022-06",
-				endDate: "2023-06",
-				location: "Remote · Canada",
-				highlights: [
-					"Delivered and maintained approximately ten self-hosted WordPress client sites, translating supplied responsive designs into pixel-accurate templates with custom CSS and JavaScript.",
-					"Handled Cloudflare configuration, server deployment, maintenance, and Nginx setup for the production sites.",
-				],
-			},
-			{
 				id: "rechat",
 				company: "Rechat",
 				role: "Frontend Engineer",
-				dateLabel: "Sep 2021 — Jun 2022",
+				dateLabel: "Sep 2021 - Jun 2022",
 				startDate: "2021-09",
 				endDate: "2022-06",
-				location: "Remote · Dallas, Texas",
+				location: "Remote, Dallas, Texas",
 				highlights: [
 					"Implemented responsive email, social, print, and deal-document templates from supplied designs using HTML, CSS, MJML, and the platform's templating system.",
 					"Tested cross-device output and published versioned templates through a repository-to-CMS delivery pipeline.",
@@ -187,7 +159,7 @@ export const RESUME = {
 				id: "independent",
 				company: "Independent Projects",
 				role: "Frontend and WordPress Developer",
-				dateLabel: "Apr 2020 — Aug 2021",
+				dateLabel: "Apr 2020 - Aug 2021",
 				startDate: "2020-04",
 				endDate: "2021-08",
 				location: "Tehran, Iran",
@@ -199,12 +171,12 @@ export const RESUME = {
 				id: "lamasoo",
 				company: "Lamasoo",
 				role: "Junior Backend Developer",
-				dateLabel: "Jan 2019 — Mar 2020",
+				dateLabel: "Jan 2019 - Mar 2020",
 				startDate: "2019-01",
 				endDate: "2020-03",
 				location: "Tehran, Iran",
 				highlights: [
-					"Worked with Node.js promises, queues, and asynchronous integration behavior in a channel-management system connecting hotels with travel agencies.",
+					"Worked with Node.js promises, queues, and asynchronous integration behavior in a channel-management system connecting hospitals with travel agencies.",
 				],
 			},
 		],
@@ -220,7 +192,7 @@ export const RESUME = {
 		education: {
 			degree: "B.Eng. in Computer Engineering",
 			institution: "Amirkabir University of Technology",
-			dateLabel: "Oct 2016 — Oct 2021",
+			dateLabel: "Oct 2016 - Oct 2021",
 			startDate: "2016-10",
 			endDate: "2021-10",
 		},
