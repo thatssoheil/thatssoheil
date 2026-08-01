@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 
 import { RouteFallback } from "@/components/route-fallback";
+import { SITE } from "@/lib/constants";
 
 export default function Error({
 	error,
@@ -18,11 +19,14 @@ export default function Error({
 	}, [error]);
 
 	return (
-		<RouteFallback
-			code="500"
-			title="Signal dropped."
-			actionLabel="Try again"
-			onAction={unstable_retry ?? reset}
-		/>
+		<>
+			<title>{`Error | ${SITE.name}`}</title>
+			<RouteFallback
+				code="500"
+				title="Signal dropped."
+				actionLabel="Try again"
+				onAction={unstable_retry ?? reset}
+			/>
+		</>
 	);
 }
