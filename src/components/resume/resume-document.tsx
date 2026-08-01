@@ -56,7 +56,7 @@ export function ResumeDocument() {
 				<SectionHeading>Projects</SectionHeading>
 				<article className={styles.project}>
 					<h3><a href={sections.project.href}>{sections.project.name}</a></h3>
-					<p className={styles.context}>{sections.project.stack.join(" · ")}</p>
+					<p className={styles.context}>{sections.project.stack.join(", ")}</p>
 					<ul className={styles.highlights}>
 						{sections.project.highlights.map((item) => <li key={item}>{item}</li>)}
 					</ul>

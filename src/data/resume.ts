@@ -107,7 +107,7 @@ export const RESUME = {
 				highlights: [
 					"Own frontend delivery as the sole Frontend Engineer on an eight-person team building an ambient clinical AI product that turns physician-patient conversations into structured records and SOAP notes.",
 					"Audited and modernized an early AI-generated React codebase, replacing inconsistent components and uncoordinated API calls with reusable UI, TanStack Query services, centralized query keys, and documented frontend conventions.",
-					"Redesigned a 50-row patient workflow from more than 100 potential per-row requests to 2–3 list-level requests using server pagination, list-shaped payloads, and lazy-loaded histories.",
+					"Redesigned a 50-row patient workflow from more than 100 potential per-row requests to 2-3 list-level requests using server pagination, list-shaped payloads, and lazy-loaded histories.",
 					"Hardened live encounters with HTTP/WebSocket reconciliation, cross-tab recording synchronization, token refresh, ordered autosave, submit flushing, and signoff guards.",
 					"Built shared table, form, date/time, localization, access-control, and encounter foundations across four locales while continuously curating small workflow and scope decisions with the team.",
 				],
@@ -125,7 +125,7 @@ export const RESUME = {
 					"Delivered authentication, Q&A, user and expert administration, role management, filtering, pagination, and embedded analytics for Anzu's chatbot and call-center analysis products.",
 					"Designed frontend role-based access control around backend permissions, gating routes, navigation, tabs, components, and actions while consolidating duplicated authentication and administration flows into shared Nx libraries used by two dashboards.",
 					"Developed shared conversational capabilities inside a six-application Nx platform, including segmented streaming text-to-speech, continuous speech recognition, media uploads, WebSocket-driven operator handoff, and feedback workflows.",
-					"Shipped production Xperix features for the Oman market from supplied Figma designs—documentation, responsive navigation, conversation filtering, reporting, topic analytics, publishing/embed setup, secure agent reset, and a GSAP-driven landing hero; also completed a short Chakra UI-to-Material UI migration for Nova.",
+					"Shipped production Xperix features for the Oman market from supplied Figma designs, including documentation, responsive navigation, conversation filtering, reporting, topic analytics, publishing/embed setup, secure agent reset, and a GSAP-driven landing hero; also completed a short Chakra UI-to-Material UI migration for Nova.",
 				],
 			},
 			{
@@ -195,6 +195,6 @@ export const RESUME = {
 			startDate: "2016-10",
 			endDate: "2021-10",
 		},
-		additional: ["English — Advanced Professional Proficiency", AVAILABILITY],
+		additional: ["English - Advanced Professional Proficiency", AVAILABILITY],
 	},
 } as const satisfies ResumeData;
