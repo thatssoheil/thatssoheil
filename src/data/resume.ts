@@ -81,19 +81,19 @@ export const RESUME = {
 		skills: [
 			{
 				label: "Frontend",
-				items: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+				items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Recharts", "Accessibility", "Performance optimization"],
 			},
 			{
-				label: "Architecture",
-				items: ["Nx monorepos", "Design systems", "Component libraries", "REST APIs", "WebSockets", "Role-based access control", "Internationalization"],
+				label: "Architecture & Systems",
+				items: ["Nx monorepos", "Design systems", "Component libraries", "WebSockets", "Role-based access control", "Internationalization"],
 			},
 			{
-				label: "Product Engineering",
-				items: ["TanStack Query", "React Hook Form", "Zod", "Redux", "Zustand", "Recharts", "GSAP", "Accessibility", "Performance optimization"],
+				label: "Data & API",
+				items: ["TanStack Query", "React Hook Form", "Zod", "Redux", "Zustand", "REST APIs", "OpenAPI"],
 			},
 			{
-				label: "Tooling",
-				items: ["Git", "pnpm", "Vite", "Cypress", "Jest", "Docker", "Cloudflare", "Nginx", "WordPress"],
+				label: "Tooling & Delivery",
+				items: ["Git", "pnpm", "Vite", "Cypress", "Jest", "Docker", "Cloudflare", "Nginx", "WordPress", "Postman"],
 			},
 		],
 		experience: [
