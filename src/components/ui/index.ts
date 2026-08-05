@@ -13,5 +13,3 @@ export {
 } from "./card";
 export { Separator } from "./separator";
 export { Surface, surfaceVariants } from "./surface";
-export { Input } from "./input";
-export { IconButton, iconButtonVariants } from "./icon-button";

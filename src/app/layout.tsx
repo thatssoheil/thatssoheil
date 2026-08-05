@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Lexend } from "next/font/google";
+import { Lexend } from "next/font/google";
 import { SITE, X_HANDLE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
@@ -11,15 +11,6 @@ import "./globals.css";
 // site's UI and prose.
 const lexend = Lexend({
 	variable: "--font-lexend",
-	subsets: ["latin"],
-	display: "swap",
-});
-
-// Geist Mono is intentionally narrow-scoped to cipher moments. The fixed advance
-// width keeps scrambled glyphs from reflowing and gives the hero wordmark its
-// code-like pulse without pulling the whole interface into a monospace voice.
-const geistMono = Geist_Mono({
-	variable: "--font-cipher",
 	subsets: ["latin"],
 	display: "swap",
 });
@@ -105,10 +96,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-	themeColor: [
-		{ media: "(prefers-color-scheme: dark)", color: "#0a0a0f" },
-		{ media: "(prefers-color-scheme: light)", color: "#f4f1ea" },
-	],
+	themeColor: "#08090b",
 	width: "device-width",
 	initialScale: 1,
 };
@@ -133,9 +121,7 @@ export default function RootLayout({
 				/>
 				<PersonJsonLd />
 			</head>
-			<body
-				className={`${lexend.variable} ${geistMono.variable} antialiased`}
-			>
+			<body className={`${lexend.variable} antialiased`}>
 				<ThemeProvider>
 					<SkipToContent />
 					{children}
