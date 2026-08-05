@@ -14,6 +14,8 @@ function ScrollCue() {
 		<button
 			onClick={() => jumpToSection("#manifesto")}
 			aria-label="Scroll to content"
+			aria-hidden="true"
+			tabIndex={-1}
 			className="group absolute inset-x-0 bottom-10 z-10 mx-auto flex h-12 w-11 cursor-pointer items-center justify-center"
 		>
 			<span className="block h-8 w-px bg-foreground/20" />
@@ -33,12 +35,12 @@ export function HeroSection() {
 			className="relative h-stable-screen w-full overflow-x-clip"
 			aria-label="Hero"
 		>
-			<div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center select-none">
+			<div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
 				<div className="relative isolate flex flex-col items-center">
 					{/* Eyebrow — "Frontend Engineer × Product Curator". The two roles recede
 					    to a quiet grey; the signal × is the lone accent — the fusion of the two
 					    disciplines. One line, centred, scales down on small screens. */}
-						<p className={`grid w-[min(100%,31rem)] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-[0.6em] whitespace-nowrap ${HERO_MICROCOPY_TYPE_CLASS}`}>
+						<p className={`grid w-[min(100%,31rem)] grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-[0.6em] ${HERO_MICROCOPY_TYPE_CLASS}`}>
 							<span className="justify-self-end">Frontend Engineer</span>
 							<span
 								className="text-[1.2em] tracking-normal text-brand"
