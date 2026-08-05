@@ -4,8 +4,6 @@ import { SITE, X_HANDLE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SignalField } from "@/components/signal-field/signal-field";
-import { StructureGrid } from "@/components/signal-field/structure-grid";
 import "./globals.css";
 
 // Primary typeface: Lexend — tuned for low reading fatigue. Variable (no `weight`),
@@ -108,8 +106,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
 	themeColor: [
-		{ media: "(prefers-color-scheme: dark)", color: "#08090b" },
-		{ media: "(prefers-color-scheme: light)", color: "#f7f7f7" },
+		{ media: "(prefers-color-scheme: dark)", color: "#0a0a0f" },
+		{ media: "(prefers-color-scheme: light)", color: "#f4f1ea" },
 	],
 	width: "device-width",
 	initialScale: 1,
@@ -139,8 +137,6 @@ export default function RootLayout({
 				className={`${lexend.variable} ${geistMono.variable} antialiased`}
 			>
 				<ThemeProvider>
-					<SignalField />
-					<StructureGrid />
 					<SkipToContent />
 					{children}
 				</ThemeProvider>

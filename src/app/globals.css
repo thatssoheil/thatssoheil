@@ -183,12 +183,12 @@
 :root {
 	--radius: 0.625rem;
 
-	/* Surfaces — soft paper, never pure #fff */
-	--background: oklch(0.97 0 0);
+	/* Surfaces — soft warm paper, never pure #fff */
+	--background: oklch(0.955 0.006 85);
 	--foreground: oklch(0.2 0 0);
-	--card: oklch(0.99 0 0);
+	--card: oklch(0.985 0.004 85);
 	--card-foreground: oklch(0.2 0 0);
-	--popover: oklch(0.99 0 0);
+	--popover: oklch(0.985 0.004 85);
 	--popover-foreground: oklch(0.2 0 0);
 
 	/* Primary — signal accent with light text */
@@ -240,8 +240,8 @@
 	/* Glass — Signal Glass material. Solid fill is the legible default;
 	   --glass-bg (translucent) is used only behind the @supports/reduced-transparency
 	   gate in the .glass class. Applied to surfaces in P1. */
-	--glass-bg: color-mix(in oklch, var(--card) 70%, transparent);
-	--glass-bg-panel: color-mix(in oklch, var(--card) 88%, transparent);
+	--glass-bg: color-mix(in oklch, var(--card) 55%, transparent);
+	--glass-bg-panel: color-mix(in oklch, var(--card) 78%, transparent);
 	--glass-bg-solid: var(--card);
 	--glass-blur: 16px;
 	--glass-blur-strong: 32px;
@@ -259,7 +259,7 @@
 	--field-blob-a: var(--signal-500);
 	--field-blob-b: var(--field-accent);
 	--field-blob-c: var(--signal-400);
-	--field-opacity: 0.1;
+	--field-opacity: 0.18;
 	/* Structural grid — faint architectural guides on paper. */
 	--grid-rail: color-mix(in oklch, var(--foreground) 8%, transparent);
 	--grid-rhythm: color-mix(in oklch, var(--foreground) 5%, transparent);
@@ -290,12 +290,12 @@
 
 /* ─── Dark Mode — deep neutral-black + signal accent (the active theme) ─── */
 .dark {
-	/* Surfaces — cinematic black void with lifted panels, still not pure #000 */
-	--background: oklch(0.075 0.004 245);
+	/* Surfaces — cinematic near-black void, lifted panels (never pure #000) */
+	--background: oklch(0.045 0.003 245);
 	--foreground: var(--ink-50);
-	--card: oklch(0.145 0.005 245);
+	--card: oklch(0.11 0.004 245);
 	--card-foreground: var(--ink-50);
-	--popover: oklch(0.145 0.005 245);
+	--popover: oklch(0.11 0.004 245);
 	--popover-foreground: var(--ink-50);
 
 	/* Primary — signal accent (CTAs, key accents) with light text (iMessage-style) */
@@ -341,8 +341,8 @@
 	--plane-glow: color-mix(in oklch, var(--primary) 18%, transparent);
 
 	/* Glass — luminous fill + shadow on the void; no visible rim in dark mode. */
-	--glass-bg: color-mix(in oklch, var(--card) 66%, transparent);
-	--glass-bg-panel: color-mix(in oklch, var(--card) 89%, transparent);
+	--glass-bg: color-mix(in oklch, var(--card) 45%, transparent);
+	--glass-bg-panel: color-mix(in oklch, var(--card) 70%, transparent);
 	--glass-bg-solid: var(--card);
 	--glass-blur: 16px;
 	--glass-blur-strong: 32px;
@@ -356,7 +356,7 @@
 	--field-blob-a: var(--signal-500);
 	--field-blob-b: var(--field-accent);
 	--field-blob-c: var(--signal-700);
-	--field-opacity: 0.18;
+	--field-opacity: 0.22;
 	/* Structural grid — visible but quiet on the deep void. */
 	--grid-rail: color-mix(in oklch, var(--foreground) 11%, transparent);
 	--grid-rhythm: color-mix(in oklch, var(--foreground) 6%, transparent);
