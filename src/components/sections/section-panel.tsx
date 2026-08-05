@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import type { SectionId } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Surface } from "@/components/ui/surface";
+import { useReveal } from "@/hooks/use-reveal";
 
 const sectionPanelKind = {
 	manifesto: {
@@ -49,10 +50,12 @@ export function SectionPanel({
 	children,
 }: SectionPanelProps) {
 	const recipe = sectionPanelKind[kind];
+	const scope = useReveal<HTMLElement>();
 
 	return (
 		<section
 			id={id}
+			ref={scope}
 			className={cn(
 				"relative min-h-stable-screen w-full overflow-hidden",
 				recipe.section,
