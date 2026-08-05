@@ -5,12 +5,11 @@ import type { ReactNode } from "react";
 import type { SectionId } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Surface } from "@/components/ui/surface";
-import { useReveal } from "@/hooks/use-reveal";
 
 const sectionPanelKind = {
 	manifesto: {
 		section:
-			"mt-stable-screen-gap transition-[opacity,filter] duration-500 ease-[var(--ease-signature)] motion-reduce:transition-none [:root[data-chat-open]_&]:opacity-25 [:root[data-chat-open]_&]:blur-[2px] [:root[data-chat-open]_&]:pointer-events-none",
+			"mt-stable-screen-gap transition-[opacity,filter] duration-500 ease-[var(--ease-signature)] motion-reduce:transition-none",
 		frame: "px-5 py-20 sm:px-8 sm:py-24 md:px-12 lg:px-16",
 		wash:
 			"bg-[radial-gradient(70%_58%_at_22%_24%,color-mix(in_oklch,var(--primary)_8%,transparent),transparent_68%)]",
@@ -50,12 +49,10 @@ export function SectionPanel({
 	children,
 }: SectionPanelProps) {
 	const recipe = sectionPanelKind[kind];
-	const scope = useReveal<HTMLElement>();
 
 	return (
 		<section
 			id={id}
-			ref={scope}
 			className={cn(
 				"relative min-h-stable-screen w-full overflow-hidden",
 				recipe.section,

@@ -14,6 +14,5 @@ export const typeRole = {
 	chatStatus: "font-sans text-[0.8rem] tracking-wide",
 	chatAction: "font-sans text-[0.7rem] tracking-wide",
 	chatStarter: "font-sans text-[0.72rem] tracking-wide",
-	cipherStatus: "[font-family:var(--font-cipher)] text-[0.95rem] font-light tracking-tighter",
 	manifestoEntryLabel: "font-sans text-[11px] tracking-[0.16em] uppercase",
 } as const;
