@@ -6,8 +6,7 @@
 
 /* ─── Design Tokens ─── */
 @theme inline {
-	/* Fonts — Lexend carries UI/prose. Geist Mono is exposed only as
-	   --font-cipher for cipher moments; generic mono labels use the local stack. */
+	/* Fonts — Lexend carries UI/prose; generic mono labels use the local stack. */
 	--font-sans: var(--font-lexend);
 	--font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 
@@ -660,8 +659,8 @@
 	50%      { transform: translate3d(4vmax, -6vmax, 0) scale(0.92); }
 }
 
-.motto-ai-word span[aria-hidden="true"] > span {
-	animation: motto-ai-flow 13s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+.motto-ai-word {
+	color: var(--text-faint);
 }
 
 @keyframes motto-ai-flow {
@@ -685,12 +684,6 @@
 
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
-	.motto-ai-word span[aria-hidden="true"] > span {
-		animation: none;
-		color: var(--text-faint);
-		text-shadow: none;
-	}
-
 	*,
 	*::before,
 	*::after {
