@@ -1,8 +1,11 @@
+"use client";
+
 import type { ReactNode } from "react";
 
 import type { SectionId } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Surface } from "@/components/ui/surface";
+import { useReveal } from "@/hooks/use-reveal";
 
 const sectionPanelKind = {
 	manifesto: {
@@ -47,10 +50,12 @@ export function SectionPanel({
 	children,
 }: SectionPanelProps) {
 	const recipe = sectionPanelKind[kind];
+	const scope = useReveal<HTMLElement>();
 
 	return (
 		<section
 			id={id}
+			ref={scope}
 			className={cn(
 				"relative min-h-stable-screen w-full overflow-hidden",
 				recipe.section,
@@ -66,15 +71,23 @@ export function SectionPanel({
 				<Surface
 					variant="panel"
 					radius="lg"
+					bezel
 					className="relative isolate mx-auto grid w-full max-w-4xl gap-10 overflow-hidden p-6 text-left sm:p-12 md:p-16"
 				>
 					<div
 						aria-hidden="true"
-						className={cn("pointer-events-none absolute inset-0", recipe.wash)}
+						className="pointer-events-none absolute inset-0"
+					/>
+					<div
+						aria-hidden="true"
+						className={cn(
+							"pointer-events-none absolute inset-[calc(1.5rem+2px)] rounded-2xl",
+							recipe.wash,
+						)}
 					/>
 
-					<div className="relative z-10">
-						<p className="font-sans text-sm tracking-[0.2em] uppercase text-brand">
+					<div className="relative z-10" data-reveal>
+						<p className="inline-flex items-center rounded-full border border-alpha-300 px-3 py-1 font-sans text-label-13 font-medium uppercase tracking-[0.2em] text-brand">
 							{eyebrow}
 						</p>
 
@@ -87,7 +100,9 @@ export function SectionPanel({
 						<p className={cn("mt-5 max-w-xl", recipe.intro)}>{intro}</p>
 					</div>
 
-					<div className="relative z-10">{children}</div>
+					<div className="relative z-10" data-reveal>
+						{children}
+					</div>
 				</Surface>
 			</div>
 		</section>

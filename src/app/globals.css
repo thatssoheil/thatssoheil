@@ -558,19 +558,19 @@
 	width: 60vmax; height: 60vmax;
 	top: -12vmax; left: -10vmax;
 	background: radial-gradient(circle, var(--field-blob-a), transparent 70%);
-	animation: signal-drift-a 38s ease-in-out infinite;
+	animation: signal-drift-a 38s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 .signal-field__blob--b {
 	width: 52vmax; height: 52vmax;
 	bottom: -10vmax; right: -8vmax;
 	background: radial-gradient(circle, var(--field-blob-b), transparent 70%);
-	animation: signal-drift-b 46s ease-in-out infinite;
+	animation: signal-drift-b 46s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 .signal-field__blob--c {
 	width: 44vmax; height: 44vmax;
 	top: 30%; left: 32%;
 	background: radial-gradient(circle, var(--field-blob-c), transparent 70%);
-	animation: signal-drift-c 54s ease-in-out infinite;
+	animation: signal-drift-c 54s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 /* ─── Structural grid ───
    A fixed architectural substrate aligned to the site's shared content width.
@@ -661,7 +661,7 @@
 }
 
 .motto-ai-word span[aria-hidden="true"] > span {
-	animation: motto-ai-flow 13s ease-in-out infinite;
+	animation: motto-ai-flow 13s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 
 @keyframes motto-ai-flow {

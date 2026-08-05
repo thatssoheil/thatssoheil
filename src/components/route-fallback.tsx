@@ -23,11 +23,16 @@ export function RouteFallback({
 			<Surface
 				variant="panel"
 				radius="lg"
+				bezel
 				className="relative isolate mx-auto grid w-full max-w-md gap-8 overflow-hidden p-7 text-left sm:p-10"
 			>
 				<div
 					aria-hidden="true"
-					className="pointer-events-none absolute inset-0 bg-[radial-gradient(68%_60%_at_18%_18%,color-mix(in_oklch,var(--primary)_7%,transparent),transparent_70%)]"
+					className="pointer-events-none absolute inset-0"
+				/>
+				<div
+					aria-hidden="true"
+					className="pointer-events-none absolute inset-6 rounded-2xl bg-[radial-gradient(68%_60%_at_18%_18%,color-mix(in_oklch,var(--primary)_7%,transparent),transparent_70%)]"
 				/>
 
 				<div className="relative z-10 grid gap-3">
