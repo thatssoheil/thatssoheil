@@ -11,7 +11,7 @@ export function ChatMessageRow({ message }: { message: ChatMessage }) {
 	if (message.role === "user") {
 		return (
 			<div className="flex justify-end">
-				<div className={`max-w-[80%] rounded-2xl rounded-br-lg border border-[color-mix(in_oklch,var(--primary)_45%,transparent)] bg-[color-mix(in_oklch,var(--primary)_14%,transparent)] px-4 py-2.5 text-foreground ${typeRole.chatUserBubble}`}>
+				<div className={`max-w-[80%] rounded-2xl rounded-br-lg border border-[color-mix(in_oklch,var(--primary)_45%,transparent)] bg-[color-mix(in_oklch,var(--primary)_14%,transparent)] px-4 py-2.5 text-foreground whitespace-pre-wrap break-words ${typeRole.chatUserBubble}`}>
 					{message.content}
 				</div>
 			</div>
@@ -20,7 +20,7 @@ export function ChatMessageRow({ message }: { message: ChatMessage }) {
 	return (
 		<div className="flex flex-col gap-1.5">
 			<SoheilLabel />
-			<p className={`max-w-[80%] ${textRole.default} ${typeRole.chatAssistantBody}`}>
+			<p className={`max-w-[80%] whitespace-pre-wrap break-words ${textRole.default} ${typeRole.chatAssistantBody}`}>
 				{message.content || " "}
 			</p>
 		</div>
