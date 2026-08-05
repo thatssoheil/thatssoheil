@@ -30,13 +30,6 @@ const surfaceVariants = cva("", {
 			md: "rounded-2xl",
 			lg: "rounded-3xl",
 		},
-		// Doppelrand (double-bezel) — nested hardware architecture. Outer shell
-		// (subtle bg + hairline + padding + large radius) around an inner core
-		// (distinct bg + inset highlight + concentric radius). Compose with edge.
-		bezel: {
-			true: "p-1.5 sm:p-2",
-			false: "",
-		},
 	},
 	defaultVariants: {
 		variant: "panel",
@@ -59,7 +52,6 @@ function Surface({
 	variant,
 	edge,
 	radius,
-	bezel,
 	asChild = false,
 	...props
 }: React.ComponentProps<"div"> &
@@ -70,7 +62,7 @@ function Surface({
 	return (
 		<Comp
 			data-slot="surface"
-			className={cn(surfaceVariants({ variant, edge, radius, bezel, className }))}
+			className={cn(surfaceVariants({ variant, edge, radius, className }))}
 			{...props}
 		/>
 	);
