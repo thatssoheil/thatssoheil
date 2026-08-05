@@ -94,8 +94,8 @@ export function CommandMenu() {
 				aria-label="Open command menu"
 				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-xl border border-alpha-300 px-2.5 text-xs text-text-faint hover:text-foreground hover:border-alpha-500 hover:bg-alpha-100 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
 			>
-				<span className="font-sans">⌘</span>
-				<span>K</span>
+				<span className="font-sans" aria-hidden="true">⌘</span>
+				<span aria-hidden="true">K</span>
 			</button>
 
 			{/* Mobile trigger — opens the same menu (also serves as mobile nav) */}
@@ -153,7 +153,7 @@ export function CommandMenu() {
 										>
 											<Hash className={ICON_CLASS} strokeWidth={1.5} />
 											<span>{s.label}</span>
-											<CornerDownLeft className="ml-auto size-3.5 opacity-0 group-data-[selected=true]:opacity-40" strokeWidth={1.5} />
+											<CornerDownLeft className="ml-auto size-3.5 opacity-0 group-data-[selected=true]:opacity-40" strokeWidth={1.5} aria-hidden="true" />
 										</Command.Item>
 									))}
 								</Command.Group>
@@ -188,7 +188,7 @@ export function CommandMenu() {
 									>
 										<Mail className={ICON_CLASS} strokeWidth={1.5} />
 										<span>Email me</span>
-										<span className={`ml-auto text-muted-foreground ${typeRole.commandMeta}`}>{EMAIL}</span>
+										<span className="ml-auto text-muted-foreground" role="status" aria-live="polite">{copied ? "Copied to clipboard" : EMAIL}</span>
 									</Command.Item>
 									<Command.Item
 										value="copy email address clipboard"

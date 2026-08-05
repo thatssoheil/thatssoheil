@@ -181,7 +181,9 @@ export function HeroChat() {
 							ref={inputRef}
 							value={value}
 							onChange={(e) => setValue(e.target.value)}
-							placeholder={busy ? "…" : active ? "reply…" : "ask me anything. no resume here"}
+							name="message"
+							autoComplete="off"
+							placeholder={busy ? "…" : active ? "reply…" : "ask me anything. no resume here…"}
 							aria-label={active ? "Reply to Soheil" : "Ask Soheil anything"}
 						/>
 						{active && (
