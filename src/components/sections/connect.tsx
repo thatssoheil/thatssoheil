@@ -17,11 +17,16 @@ export function ConnectSection() {
 				<Button
 					asChild
 					size="lg"
-					className="h-12 w-full min-w-0 justify-center gap-2 border border-alpha-300 bg-primary text-sm shadow-[0_0_16px_color-mix(in_oklch,var(--primary)_14%,transparent)] hover:bg-primary/90 sm:w-auto sm:text-base"
+					className="group h-12 w-full min-w-0 justify-start gap-3 rounded-full border border-alpha-300 bg-primary px-6 text-sm text-primary-foreground shadow-[0_0_16px_color-mix(in_oklch,var(--primary)_14%,transparent)] transition-transform duration-300 ease-[var(--ease-swift)] hover:bg-primary/90 active:scale-[0.98] sm:w-auto sm:text-base"
 				>
 					<a href={`mailto:${EMAIL}`} className="min-w-0">
-						<Mail className="size-5 shrink-0" />
 						<span className="min-w-0 truncate">{EMAIL}</span>
+						<span
+							aria-hidden="true"
+							className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-foreground/20 transition-transform duration-300 ease-[var(--ease-swift)] group-hover:translate-x-1 group-hover:-translate-y-[1px] group-hover:scale-105 group-active:scale-95"
+						>
+							<Mail className="size-4" />
+						</span>
 					</a>
 				</Button>
 
