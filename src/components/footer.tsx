@@ -27,6 +27,11 @@ export function Footer() {
 					</span>
 				</div>
 
+				{/* سهیل is Canopus, the navigational star; the site's quietest self-reference. */}
+				<p className="text-text-faint">
+					<span lang="fa">سهیل</span> · Canopus, the star that barely clears the horizon over Tehran.
+				</p>
+
 				<p className="text-text-faint">
 					Built with Next.js, deployed on Cloudflare.
 				</p>
