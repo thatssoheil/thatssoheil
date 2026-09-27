@@ -11,7 +11,7 @@ export function ConnectSection() {
 			ariaLabel="Connect"
 			eyebrow="Connect"
 			heading="Say hello."
-			intro="Email first. Catch me on X. Everything else, eventually."
+			intro="Email first. Catch me on X. Everything else, eventually. Currently open to remote and on-site roles in Tehran, and remote roles across the GCC and Europe."
 		>
 			<div className="flex w-full flex-col items-stretch gap-4 sm:flex-row sm:items-center">
 				<Button
