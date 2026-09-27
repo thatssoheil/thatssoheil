@@ -19,7 +19,7 @@ export const SITE = {
 	name: "Soheil Fakour",
 	title: `Soheil Fakour — ${TAGLINE}`,
 	description:
-		"Soheil Fakour is a frontend engineer and product curator building refined, AI-aware product interfaces with React, Next.js, TypeScript, and Cloudflare.",
+		"Soheil Fakour is a frontend engineer and product curator building refined, AI-aware product interfaces with React, Next.js, TypeScript, and Cloudflare. Based in Tehran, working across EMEA and GCC hours.",
 	url: "https://thatssoheil.website",
 	ogImage: "/opengraph-image",
 	ogImageAlt:
