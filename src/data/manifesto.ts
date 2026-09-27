@@ -31,3 +31,22 @@ export const MANIFESTO = {
 		},
 	] satisfies readonly ManifestoParagraph[],
 } as const;
+
+/**
+ * The cut log — what the site has deliberately left out. The manifesto's
+ * curation claim, kept literal: append an entry when something is removed;
+ * the list is meant to grow slowly.
+ */
+export interface CutEntry {
+	text: string;
+	date: string;
+}
+
+export const CUTS = {
+	label: "Left out",
+	items: [
+		{ text: "The hero chat", date: "Aug 2026" },
+		{ text: 'The "Home |" title prefix', date: "Sep 2026" },
+	] satisfies readonly CutEntry[],
+	note: "The list grows; the page gets quieter.",
+} as const;
