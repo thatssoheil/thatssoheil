@@ -85,3 +85,28 @@ export interface MacroNote {
 	/** The dataset date the engine ran on. */
 	dataThrough: string;
 }
+
+export interface StablecoinHistoryPoint {
+	/** ISO date (UTC midnight) of the daily reading. */
+	date: string;
+	/** Total circulating value of all stablecoins, in USD. */
+	usd: number;
+}
+
+export interface StablecoinData {
+	/** When the data was fetched (live) or generated (snapshot). */
+	asOf: string;
+	provenance: "live" | "snapshot";
+	/** The latest daily reading. */
+	latest: number;
+	/** ISO date of the latest daily reading. */
+	latestDate: string;
+	/** Percent change vs 7 days earlier; null when history is too short. */
+	change7d: number | null;
+	/** Percent change vs 30 days earlier; null when history is too short. */
+	change30d: number | null;
+	peak: { value: number; date: string };
+	/** Percent below the all-time peak (0 when at the peak). */
+	distanceFromPeakPct: number;
+	history: StablecoinHistoryPoint[];
+}

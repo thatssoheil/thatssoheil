@@ -6,9 +6,10 @@ interface AreaChartPoint {
 }
 
 /**
- * Hand-rolled SVG area chart — no chart dependency, static markup (no client
+ * Hand-rolled SVG area chart - no chart dependency, static markup (no client
  * JS), scales fluidly with its container. One series, one story: the shape of
- * the trend, with the peak called out in the caption.
+ * the trend, with the peak called out in the caption. Linear by default; an
+ * optional log value scale suits series that span orders of magnitude.
  */
 export function AreaChart({
 	points,
@@ -16,12 +17,14 @@ export function AreaChart({
 	ariaLabel,
 	height = 180,
 	peakLabel = "peak",
+	scale = "linear",
 }: {
 	points: AreaChartPoint[];
 	formatValue: (value: number) => string;
 	ariaLabel: string;
 	height?: number;
 	peakLabel?: string;
+	scale?: "linear" | "log";
 }) {
 	if (points.length < 2) return null;
 
@@ -29,8 +32,17 @@ export function AreaChart({
 	const pad = 6;
 	const values = points.map((point) => point.value);
 	const max = Math.max(...values, 1);
+	const positives = values.filter((value) => value > 0);
+	const min = positives.length > 0 ? Math.min(...positives) : 1;
+	const logSpan = Math.log(max) - Math.log(min);
+	const norm = (value: number) => {
+		if (scale === "log" && logSpan > 0 && value > 0) {
+			return (Math.log(value) - Math.log(min)) / logSpan;
+		}
+		return value / max;
+	};
 	const step = width / (points.length - 1);
-	const y = (value: number) => height - pad - (value / max) * (height - pad * 2);
+	const y = (value: number) => height - pad - norm(value) * (height - pad * 2);
 
 	const line = points
 		.map(
@@ -42,7 +54,8 @@ export function AreaChart({
 
 	const peakIndex = values.indexOf(max);
 	const peak = points[peakIndex];
-	const midY = y(max / 2);
+	const midValue = scale === "log" && logSpan > 0 ? Math.sqrt(max * min) : max / 2;
+	const midY = y(midValue);
 
 	return (
 		<figure className="w-full">
