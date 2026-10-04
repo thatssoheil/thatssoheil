@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
 	title: "Playground",
 	description:
-		"Small, working versions of ideas in progress: a tokenized-assets tracker and weekly BTC and ETH macro notes. Live data, public method.",
+		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, and weekly BTC and ETH macro notes. Live data, public method.",
 	alternates: { canonical: "/playground" },
 };
 
@@ -17,6 +17,14 @@ const EXPERIMENTS = [
 		status: "Live",
 		blurb:
 			"The real-world-asset sector by the numbers: who is issuing, how much actually trades, and the race between venues wrapping the same stocks on different chains.",
+		meta: "Refreshes about every 30 minutes",
+	},
+	{
+		href: "/playground/stablecoins",
+		title: "Stablecoin float tracker",
+		status: "Live",
+		blurb:
+			"The crypto market's dry powder by the numbers: total stablecoin circulation, recent moves, and the full record since 2017.",
 		meta: "Refreshes about every 30 minutes",
 	},
 	{
