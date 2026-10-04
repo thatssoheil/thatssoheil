@@ -15,7 +15,7 @@ export default function NotFound() {
 	return (
 		<RouteFallback
 			code="404"
-			title="Route not found."
+			title="Maybe it was curated out."
 		/>
 	);
 }

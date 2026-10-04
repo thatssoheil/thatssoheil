@@ -77,7 +77,7 @@ export const RESUME = {
 	],
 	sections: {
 		summary:
-			"Frontend Engineer with 6+ years in software engineering, including 5+ years focused on frontend development. Builds maintainable frontend architecture and product workflows for AI, healthcare, B2B, and real-time web applications. Experienced owning frontend delivery in early-stage teams, modernizing inconsistent codebases, developing shared systems, translating Figma designs into responsive production interfaces, with strong problem solving skills and attention to quality.",
+			"Frontend Engineer with 7+ years in software engineering, including 5+ years focused on frontend development. Owns frontend delivery end to end, from architecture and design systems down to the interface details that decide whether a product feels right. Modernizes inconsistent codebases into shared, documented systems and turns Figma designs into responsive production interfaces, across AI, healthcare, B2B, and real-time products.",
 		skills: [
 			{
 				label: "Frontend",
@@ -177,7 +177,7 @@ export const RESUME = {
 				endDate: "2020-03",
 				location: "Tehran, Iran",
 				highlights: [
-					"Worked with Node.js promises, queues, and asynchronous integration behavior in a channel-management system connecting hospitals with travel agencies.",
+					"Worked with Node.js promises, queues, and asynchronous integration behavior in a channel-management system connecting hotels with travel agencies.",
 				],
 			},
 		],
@@ -187,7 +187,7 @@ export const RESUME = {
 			stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Cloudflare"],
 			highlights: [
 				"Designed and built a personal site around the versioned Signal Glass system, using semantic tokens, documented interface decisions, and accessibility constraints.",
-				"Built a grounded streaming AI chat with server validation, rate limiting, abort and retry behavior, and a repository-local knowledge source.",
+				"Built a grounded streaming AI chat with server validation, rate limiting, and controlled retries, then retired it from production in a deliberate curation pass when it stopped earning its place.",
 			],
 		},
 		education: {

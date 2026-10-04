@@ -1,0 +1,43 @@
+name: Deploy Dev
+
+# Deploys the `dev` branch to the dev environment: Worker `thatssoheil-dev`,
+# served at https://dev.thatssoheil.website.
+#
+# Flow: work lands on a feature/bug branch -> merged to `dev` -> reviewed live
+# on dev.thatssoheil.website -> approved -> merged to `main` (production).
+# Manual run: Actions -> "Deploy Dev" -> Run workflow; pick any ref to preview
+# that branch on the dev domain.
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build and deploy (dev)
+        run: pnpm run deploy:dev
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

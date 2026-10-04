@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Lexend } from "next/font/google";
-import { SITE, X_HANDLE } from "@/lib/constants";
+import { ROLE_PROSE, SITE, X_HANDLE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -18,7 +18,7 @@ const lexend = Lexend({
 /* ─── SEO & OG ─── */
 export const metadata: Metadata = {
 	title: {
-		default: `Home | ${SITE.name}`,
+		default: `${SITE.name} | ${ROLE_PROSE}`,
 		template: `%s | ${SITE.name}`,
 	},
 	description: SITE.description,
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 		type: "website",
 		locale: "en_US",
 		url: SITE.url,
-		title: `Home | ${SITE.name}`,
+		title: `${SITE.name} | ${ROLE_PROSE}`,
 		description: SITE.description,
 		siteName: SITE.name,
 		images: [
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: `Home | ${SITE.name}`,
+		title: `${SITE.name} | ${ROLE_PROSE}`,
 		description: SITE.description,
 		creator: X_HANDLE,
 		images: [

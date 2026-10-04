@@ -16,6 +16,8 @@ const sectionPanelKind = {
 		heading: "text-fluid-36-48",
 		intro:
 			"font-sans text-sm leading-relaxed tracking-wide text-text-muted sm:text-base",
+		introNote:
+			"font-sans text-sm leading-relaxed tracking-wide text-text-faint sm:text-base",
 	},
 	connect: {
 		section: "",
@@ -24,6 +26,7 @@ const sectionPanelKind = {
 			"bg-[radial-gradient(60%_72%_at_78%_54%,color-mix(in_oklch,var(--primary)_10%,transparent),transparent_72%)]",
 		heading: "text-fluid-36-60",
 		intro: "font-light text-lg leading-relaxed text-text-muted",
+		introNote: "font-light text-sm leading-relaxed text-text-faint sm:text-base",
 	},
 } as const;
 
@@ -36,6 +39,7 @@ type SectionPanelProps = {
 	eyebrow: ReactNode;
 	heading: ReactNode;
 	intro: ReactNode;
+	introNote?: ReactNode;
 	children: ReactNode;
 };
 
@@ -46,6 +50,7 @@ export function SectionPanel({
 	eyebrow,
 	heading,
 	intro,
+	introNote,
 	children,
 }: SectionPanelProps) {
 	const recipe = sectionPanelKind[kind];
@@ -87,6 +92,10 @@ export function SectionPanel({
 						</h2>
 
 						<p className={cn("mt-5 max-w-xl", recipe.intro)}>{intro}</p>
+
+						{introNote ? (
+							<p className={cn("mt-3 max-w-xl", recipe.introNote)}>{introNote}</p>
+						) : null}
 					</div>
 
 					<div className="relative z-10" data-reveal>

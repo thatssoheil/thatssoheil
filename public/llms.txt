@@ -16,6 +16,11 @@ real product.
 - Manifesto: https://thatssoheil.website/#manifesto
 - Connect: https://thatssoheil.website/#connect
 
+## Playground
+
+- Tokenized assets tracker: https://thatssoheil.website/playground/rwa
+- BTC and ETH macro notes: https://thatssoheil.website/playground/macro
+
 ## Profile Links
 
 - GitHub: https://github.com/thatssoheil
