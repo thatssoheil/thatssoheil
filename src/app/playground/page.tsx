@@ -1,0 +1,65 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { PlaygroundShell } from "@/components/playground/playground-shell";
+import { Badge } from "@/components/ui/badge";
+
+export const metadata: Metadata = {
+	title: "Playground",
+	description:
+		"Small, working versions of ideas in progress: a tokenized-assets tracker and weekly BTC and ETH macro notes. Live data, public method.",
+	alternates: { canonical: "/playground" },
+};
+
+const EXPERIMENTS = [
+	{
+		href: "/playground/rwa",
+		title: "Tokenized assets tracker",
+		status: "Live",
+		blurb:
+			"The real-world-asset sector by the numbers: who is issuing, how much actually trades, and the race between venues wrapping the same stocks on different chains.",
+		meta: "Refreshes about every 30 minutes",
+	},
+	{
+		href: "/playground/macro",
+		title: "BTC and ETH macro notes",
+		status: "Weekly",
+		blurb:
+			"A weekly regime read from a backtested macro engine: the current phase, the signals behind it, and what would change the picture.",
+		meta: "A new note every week",
+	},
+] as const;
+
+export default function PlaygroundPage() {
+	return (
+		<PlaygroundShell
+			eyebrow="Playground"
+			title="Playground"
+			intro="Small, working versions of ideas I keep coming back to. Live data, public method, honest labels."
+		>
+			<section aria-label="Experiments" className="grid gap-3 sm:grid-cols-2">
+				{EXPERIMENTS.map((experiment) => (
+					<Link
+						key={experiment.href}
+						href={experiment.href}
+						className="group flex flex-col justify-between gap-6 rounded-xl border border-border bg-card px-5 py-5 transition-colors hover:border-alpha-500 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+					>
+						<div className="flex flex-col gap-2.5">
+							<div className="flex items-start justify-between gap-3">
+								<span className="text-heading-20 text-foreground">{experiment.title}</span>
+								<Badge variant="outline" className="mt-1 text-text-faint">
+									{experiment.status}
+								</Badge>
+							</div>
+							<p className="text-copy-14 text-text-muted">{experiment.blurb}</p>
+						</div>
+						<span className="text-label-12-mono text-text-faint">{experiment.meta}</span>
+					</Link>
+				))}
+			</section>
+
+			<p className="text-copy-13 text-text-faint">
+				New experiments get added when they earn their place.
+			</p>
+		</PlaygroundShell>
+	);
+}
