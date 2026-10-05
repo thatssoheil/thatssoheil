@@ -35,6 +35,8 @@
 	"observability": {
 		"enabled": true
 	},
+	// workers.dev Preview URLs for non-production branches (created by wrangler preview).
+	"preview_urls": true,
 	"vars": {
 		"AI_SOHEIL_API_URL": "https://agent.thatssoheil.website/v1",
 		"ENABLE_CHAT": "false"
@@ -49,6 +51,34 @@
 			"simple": { "limit": 10, "period": 60 }
 		}
 	],
+	/**
+	 * Worker Previews — the `dev` branch's isolated environment under this same
+	 * Worker, created by `wrangler preview` in Workers Builds. Previews do not
+	 * inherit production settings, so non-inheritable keys are restated here:
+	 * vars, images, services, ratelimits.
+	 */
+	"previews": {
+		"vars": {
+			"AI_SOHEIL_API_URL": "https://agent.thatssoheil.website/v1",
+			"ENABLE_CHAT": "false"
+		},
+		"images": {
+			"binding": "IMAGES"
+		},
+		"services": [
+			{
+				"binding": "WORKER_SELF_REFERENCE",
+				"service": "thatssoheil"
+			}
+		],
+		"ratelimits": [
+			{
+				"name": "CHAT_RATELIMIT",
+				"namespace_id": "1001",
+				"simple": { "limit": 10, "period": 60 }
+			}
+		]
+	},
 	/**
 	 * Dev environment — the staging tier. Deployed from the `dev` branch to
 	 * https://dev.thatssoheil.website by the "Deploy Dev" workflow
