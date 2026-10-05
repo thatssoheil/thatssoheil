@@ -204,3 +204,31 @@ export interface NetworkPulseData {
 	/** BTC price in USD from the same feed. */
 	priceUsd: number;
 }
+
+export interface SeismicEvent {
+	/** Event time, ISO 8601 UTC. */
+	time: string;
+	/** USGS network magnitude. */
+	mag: number;
+	/** Depth below the surface, kilometers. */
+	depthKm: number;
+	place: string;
+	/** USGS event page. */
+	url: string;
+}
+
+export interface SeismicData {
+	/** When the feed was generated (live) or the snapshot written (snapshot). */
+	asOf: string;
+	provenance: "live" | "snapshot";
+	/** Quakes in the rolling past-7-days window (the M4.5+ cut). */
+	count: number;
+	/** Of those, at magnitude 5.0 and above. */
+	m5plus: number;
+	/** Of those, at magnitude 6.0 and above. */
+	m6plus: number;
+	largest: SeismicEvent;
+	latest: SeismicEvent;
+	/** All events, newest first. */
+	events: SeismicEvent[];
+}
