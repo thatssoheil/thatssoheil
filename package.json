@@ -13,7 +13,6 @@
 		"check:resume": "node scripts/check-resume.mjs",
 		"test": "pnpm lint && pnpm typecheck && pnpm check:tokens && pnpm check:mobile-scroll && pnpm check:resume",
 		"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-		"deploy:dev": "opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=dev",
 		"upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
 		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
 		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
