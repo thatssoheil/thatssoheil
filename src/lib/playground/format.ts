@@ -73,3 +73,8 @@ export function formatDateTimeUtc(iso: string): string {
 	}).format(date);
 	return `${formatted} UTC`;
 }
+
+export function formatUsdCents(value: number): string {
+	if (!Number.isFinite(value)) return "-";
+	return `$${value.toFixed(2)}`;
+}

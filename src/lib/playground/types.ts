@@ -136,3 +136,71 @@ export interface VolatilityData {
 	btc: VolatilitySeriesData;
 	eth: VolatilitySeriesData;
 }
+
+export interface NetworkFeeEstimate {
+	/** Next block, about 10 minutes. */
+	fastest: number;
+	/** About 30 minutes (about 3 blocks). */
+	halfHour: number;
+	/** About 1 hour (about 6 blocks). */
+	hour: number;
+	/** No rush. */
+	economy: number;
+	/** Relay floor. */
+	minimum: number;
+}
+
+export interface NetworkHistogramBucket {
+	/** Fee-rate band lower edge, sat/vB. */
+	lo: number;
+	/** Band upper edge, sat/vB (Infinity for the open top band). */
+	hi: number;
+	/** Waiting virtual size in the band, vB. */
+	vsize: number;
+}
+
+export interface NetworkMempoolSummary {
+	/** Waiting transactions. */
+	count: number;
+	/** Waiting virtual size, vB. */
+	vsize: number;
+	/** Sum of the fees offered by the queue, sats. */
+	totalFee: number;
+}
+
+export interface NetworkDifficulty {
+	/** Progress through the current 2,016-block epoch, 0-100. */
+	progressPercent: number;
+	/** Estimated change at the next retarget, percent. */
+	changePercent: number;
+	/** Blocks remaining until the retarget. */
+	remainingBlocks: number;
+	/** Estimated retarget time, ms epoch. */
+	retargetAt: number;
+	/** Change locked in at the previous retarget, percent. */
+	previousChangePercent: number;
+}
+
+export interface NetworkBlock {
+	height: number;
+	/** Block time, unix seconds. */
+	timestamp: number;
+	txCount: number;
+	/** Serialized block size, bytes. */
+	size: number;
+}
+
+export interface NetworkPulseData {
+	/** When the data was fetched (live) or generated (snapshot). */
+	asOf: string;
+	provenance: "live" | "snapshot";
+	fees: NetworkFeeEstimate;
+	mempool: NetworkMempoolSummary;
+	/** Waiting volume by fee-rate band, sat/vB. */
+	histogram: NetworkHistogramBucket[];
+	difficulty: NetworkDifficulty;
+	/** Most recent blocks, newest first. */
+	blocks: NetworkBlock[];
+	/** BTC price in USD from the same feed. */
+	priceUsd: number;
+}

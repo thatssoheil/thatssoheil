@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
 	title: "Playground",
 	description:
-		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, and weekly BTC and ETH macro notes. Live data, public method.",
+		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, and weekly BTC and ETH macro notes. Live data, public method.",
 	alternates: { canonical: "/playground" },
 };
 
@@ -33,6 +33,14 @@ const EXPERIMENTS = [
 		status: "Live",
 		blurb:
 			"Crypto's fear gauge by the numbers: Bitcoin and Ethereum implied volatility, the day's move, and where each sits against its history since 2021.",
+		meta: "Live reading, snapshot fallback",
+	},
+	{
+		href: "/playground/network",
+		title: "Bitcoin network pulse",
+		status: "Live",
+		blurb:
+			"The Bitcoin network itself by the numbers: what a transaction costs right now, how full the mempool is, and when the next difficulty change lands.",
 		meta: "Live reading, snapshot fallback",
 	},
 	{
