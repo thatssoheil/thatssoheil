@@ -1,0 +1,6 @@
+CI/CD sample test file.
+
+Added on 2026-10-05 to verify that pushes to this branch deploy
+automatically (checks + build + deploy) with no manual steps.
+
+Safe to delete.
