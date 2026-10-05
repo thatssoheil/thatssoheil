@@ -28,6 +28,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			priority: 0.8,
 		},
 		{
+			url: `${SITE.url}/playground/volatility`,
+			lastModified: new Date("2026-10-05"),
+			changeFrequency: "daily",
+			priority: 0.8,
+		},
+		{
 			url: `${SITE.url}/playground/macro`,
 			lastModified: new Date("2026-10-04"),
 			changeFrequency: "weekly",
