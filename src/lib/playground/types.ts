@@ -110,3 +110,29 @@ export interface StablecoinData {
 	distanceFromPeakPct: number;
 	history: StablecoinHistoryPoint[];
 }
+
+export interface VolatilityHistoryPoint {
+	/** ISO date (UTC) of the daily close. */
+	date: string;
+	/** DVOL close, in annualized volatility points. */
+	value: number;
+}
+
+export interface VolatilitySeriesData {
+	currency: "BTC" | "ETH";
+	/** The latest daily close. */
+	latest: number;
+	/** Percent change vs the previous day's close. */
+	dayChangePct: number;
+	/** Share (0-100) of daily closes at or below the latest reading. */
+	percentile: number;
+	history: VolatilityHistoryPoint[];
+}
+
+export interface VolatilityData {
+	/** When the snapshot was generated (ISO date). */
+	asOf: string;
+	provenance: "snapshot";
+	btc: VolatilitySeriesData;
+	eth: VolatilitySeriesData;
+}
