@@ -35,6 +35,17 @@
 	"observability": {
 		"enabled": true
 	},
+	// workers.dev Preview URLs for non-production branches (created by wrangler preview).
+	"preview_urls": true,
+	// Custom domain, declared so deploys keep Worker Previews enabled for
+	// non-production branches (the dev preview is served at dev.thatssoheil.website).
+	"routes": [
+		{
+			"pattern": "thatssoheil.website",
+			"custom_domain": true,
+			"previews_enabled": true
+		}
+	],
 	"vars": {
 		"AI_SOHEIL_API_URL": "https://agent.thatssoheil.website/v1",
 		"ENABLE_CHAT": "false"
@@ -50,42 +61,32 @@
 		}
 	],
 	/**
-	 * Dev environment — the staging tier. Deployed from the `dev` branch to
-	 * https://dev.thatssoheil.website by the "Deploy Dev" workflow
-	 * (opennextjs-cloudflare deploy --env=dev). Creates a separate Worker,
-	 * `thatssoheil-dev`. routes/vars/services are non-inheritable, so they are
-	 * restated here to keep the dev Worker self-contained.
+	 * Worker Previews — the `dev` branch's isolated environment under this same
+	 * Worker, created by `wrangler preview` in Workers Builds. Previews do not
+	 * inherit production settings, so non-inheritable keys are restated here:
+	 * vars, images, services, ratelimits.
 	 */
-	"env": {
-		"dev": {
-			"name": "thatssoheil-dev",
-			"routes": [
-				{
-					"pattern": "dev.thatssoheil.website",
-					"custom_domain": true
-				}
-			],
-			"images": {
-				"binding": "IMAGES"
-			},
-			"vars": {
-				"AI_SOHEIL_API_URL": "https://agent.thatssoheil.website/v1",
-				"ENABLE_CHAT": "false"
-			},
-			"services": [
-				{
-					"binding": "WORKER_SELF_REFERENCE",
-					"service": "thatssoheil-dev"
-				}
-			],
-			"ratelimits": [
-				{
-					"name": "CHAT_RATELIMIT",
-					"namespace_id": "1001",
-					"simple": { "limit": 10, "period": 60 }
-				}
-			]
-		}
+	"previews": {
+		"vars": {
+			"AI_SOHEIL_API_URL": "https://agent.thatssoheil.website/v1",
+			"ENABLE_CHAT": "false"
+		},
+		"images": {
+			"binding": "IMAGES"
+		},
+		"services": [
+			{
+				"binding": "WORKER_SELF_REFERENCE",
+				"service": "thatssoheil"
+			}
+		],
+		"ratelimits": [
+			{
+				"name": "CHAT_RATELIMIT",
+				"namespace_id": "1001",
+				"simple": { "limit": 10, "period": 60 }
+			}
+		]
 	},
 	/**
 	 * Smart Placement
