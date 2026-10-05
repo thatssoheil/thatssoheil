@@ -28,7 +28,15 @@ interface RawFallback {
 }
 
 function num(value: unknown): number {
-	return typeof value === "number" && Number.isFinite(value) ? value : 0;
+	if (typeof value === "number" && Number.isFinite(value)) return value;
+	// The aggregate feed sends numeric-string fields (date arrives as
+	// "1791072000"); accept both so type drift cannot silently empty the
+	// series and hide behind the snapshot.
+	if (typeof value === "string" && value !== "") {
+		const parsed = Number(value);
+		if (Number.isFinite(parsed)) return parsed;
+	}
+	return 0;
 }
 
 function toPoints(rows: unknown): Point[] {
@@ -94,7 +102,24 @@ async function fetchLive(): Promise<StablecoinData> {
 		signal: AbortSignal.timeout(15_000),
 	});
 	if (!res.ok) throw new Error(`stablecoincharts/all: HTTP ${res.status}`);
-	const points = toPoints((await res.json()) as unknown);
+	const text = await res.text();
+	const payload = JSON.parse(text) as unknown;
+	const points = toPoints(payload);
+	if (points.length === 0) {
+		console.warn(
+			"[playground/stablecoins] diag: empty series",
+			JSON.stringify({
+				status: res.status,
+				bytes: text.length,
+				cf: res.headers.get("cf-cache-status"),
+				age: res.headers.get("age"),
+				contentType: res.headers.get("content-type"),
+				isArray: Array.isArray(payload),
+				len: Array.isArray(payload) ? (payload as unknown[]).length : -1,
+				head: text.slice(0, 200),
+			}),
+		);
+	}
 	return normalize(points, new Date().toISOString(), "live");
 }
 
@@ -112,7 +137,13 @@ export async function getStablecoinData(): Promise<StablecoinData> {
 		const data = await fetchLive();
 		memoryCache = { at: Date.now(), data };
 		return data;
-	} catch {
+	} catch (error) {
+		// Keep fallbacks visible: a silent catch once hid a live-fetch
+		// regression behind the snapshot.
+		console.warn(
+			"[playground/stablecoins] live fetch failed; serving snapshot:",
+			error instanceof Error ? `${error.name}: ${error.message}` : String(error),
+		);
 		if (memoryCache) return memoryCache.data;
 		const fallback = rawFallback as unknown as RawFallback;
 		const points = fallback.points
