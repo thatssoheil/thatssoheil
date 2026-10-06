@@ -311,3 +311,45 @@ export interface AirData {
 	/** Hourly bins, oldest first: the past two days plus today. */
 	hourly: AirReading[];
 }
+
+export interface ChessGamePlayer {
+	name: string;
+	color: "white" | "black";
+	rating: number;
+}
+
+export interface ChessGame {
+	id: string;
+	/** Time-control name from the feed ("Rapid"). */
+	perf: string;
+	rated: boolean;
+	/** Time control ("10+0"). */
+	clock: string;
+	/** Both players, as the feed lists them. */
+	players: ChessGamePlayer[];
+}
+
+export interface ChessPuzzle {
+	id: string;
+	/** Puzzle rating, a reading that moves through the day. */
+	rating: number;
+	/** Solver attempts so far, a reading that moves through the day. */
+	plays: number;
+	/** UCI move strings: the known solution line, in order. */
+	solution: string[];
+	themes: string[];
+	/** Position FEN; the side to move plays first. */
+	fen: string;
+	/** The opponent's last move before the position (UCI). */
+	lastMove: string;
+	/** 0-based ply index of lastMove within the source game. */
+	initialPly: number;
+}
+
+export interface ChessData {
+	/** When the puzzle was fetched (live) or the snapshot written (snapshot). */
+	asOf: string;
+	provenance: "live" | "snapshot";
+	game: ChessGame;
+	puzzle: ChessPuzzle;
+}
