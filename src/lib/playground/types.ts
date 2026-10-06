@@ -232,3 +232,59 @@ export interface SeismicData {
 	/** All events, newest first. */
 	events: SeismicEvent[];
 }
+
+export interface SolarKpBin {
+	/** Bin start, ISO 8601 UTC. */
+	t: string;
+	/** Planetary K index, third-step resolution. */
+	kp: number;
+	/** NOAA storm-scale label (G1-G5) from the feed, when issued. */
+	scale: string | null;
+}
+
+export interface SolarForecastBin {
+	/** Bin start, ISO 8601 UTC. */
+	t: string;
+	/** Planetary K index for the bin. */
+	kp: number;
+	/** NOAA's processing stage for the bin. */
+	type: "observed" | "estimated" | "predicted";
+	/** NOAA storm-scale label (G1-G5) from the feed, when issued. */
+	scale: string | null;
+}
+
+export interface SolarWindSummary {
+	/** Proton speed, km/s. */
+	speed: number;
+	t: string;
+}
+
+export interface SolarMagSummary {
+	/** Total field strength, nT. */
+	bt: number;
+	/** North-south component of the interplanetary field, nT (GSM). */
+	bz: number;
+	t: string;
+}
+
+export interface SolarFluxSummary {
+	/** F10.7 solar radio flux, solar flux units. */
+	v: number;
+	t: string;
+}
+
+export interface SolarData {
+	/** When the bundle was fetched (live) or the snapshot written (snapshot). */
+	asOf: string;
+	provenance: "live" | "snapshot";
+	/** Past 7 days of 3-hour Kp bins, oldest first. */
+	kp: SolarKpBin[];
+	/** NOAA's observed + estimated + predicted bins, oldest first. */
+	forecast: SolarForecastBin[];
+	/** Near-real-time solar wind speed from the L1 monitors. */
+	wind: SolarWindSummary;
+	/** Near-real-time interplanetary magnetic field. */
+	mag: SolarMagSummary;
+	/** F10.7 solar radio flux. */
+	flux: SolarFluxSummary;
+}
