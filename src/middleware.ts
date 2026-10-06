@@ -20,12 +20,17 @@ import type { NextRequest } from "next/server";
 //
 // The host is read from the raw Host header (port stripped): request.nextUrl
 // does not carry the real host reliably in every runtime.
+//
+// Named middleware.ts on purpose: Next 16 renamed the convention to proxy.ts,
+// but proxy runs on the Node.js runtime and @opennextjs/cloudflare 1.20.1 only
+// supports Edge middleware - the build fails on a proxy.ts file. Keep this on
+// the middleware convention until OpenNext supports Node proxies.
 
 const PROD_HOSTS = new Set(["thatssoheil.website", "www.thatssoheil.website"]);
 const BARE_DEV_HOST = "dev.thatssoheil.website";
 const CANONICAL_PREVIEW_HOST = "dev.dev.thatssoheil.website";
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
 	const host = (request.headers.get("host") ?? "").split(":")[0].toLowerCase();
 
 	if (host === BARE_DEV_HOST) {
