@@ -288,3 +288,26 @@ export interface SolarData {
 	/** F10.7 solar radio flux. */
 	flux: SolarFluxSummary;
 }
+
+export interface AirReading {
+	/** Bin time, Tehran local ("YYYY-MM-DDTHH:MM"), as the feed returns it. */
+	t: string;
+	/** PM2.5, micrograms per cubic meter. */
+	pm25: number;
+	/** PM10, micrograms per cubic meter. */
+	pm10: number;
+	/** European AQI (the feed's EAQI scale). */
+	aqiEu: number;
+	/** US AQI (the feed's USAQI scale). */
+	aqiUs: number;
+}
+
+export interface AirData {
+	/** When the bundle was fetched (live) or the snapshot written (snapshot). */
+	asOf: string;
+	provenance: "live" | "snapshot";
+	/** The current-hour reading (the feed's current bin). */
+	current: AirReading;
+	/** Hourly bins, oldest first: the past two days plus today. */
+	hourly: AirReading[];
+}
