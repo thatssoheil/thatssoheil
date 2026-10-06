@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
 	title: "Playground",
 	description:
-		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, and weekly BTC and ETH macro notes. Live data, public method.",
+		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, and weekly BTC and ETH macro notes. Live data, public method.",
 	alternates: { canonical: "/playground" },
 };
 
@@ -66,6 +66,14 @@ const EXPERIMENTS = [
 		blurb:
 			"The air in Tehran by the numbers: PM2.5 and PM10 right now, the past two days and today's rise and fall, and how the current hour sits against the WHO guideline.",
 		meta: "Live reading, snapshot fallback",
+	},
+	{
+		href: "/playground/chess",
+		title: "Chess puzzle",
+		status: "Live",
+		blurb:
+			"The day's puzzle from Lichess, solvable on the page: click a piece, then its destination, and find the line the position hides.",
+		meta: "A new puzzle every day",
 	},
 	{
 		href: "/playground/macro",
