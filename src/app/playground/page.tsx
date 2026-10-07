@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
 	title: "Playground",
 	description:
-		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, and weekly BTC and ETH macro notes. Live data, public method.",
+		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, a Hafez fal, and weekly BTC and ETH macro notes. Live data, public method.",
 	alternates: { canonical: "/playground" },
 };
 
@@ -82,6 +82,14 @@ const EXPERIMENTS = [
 		blurb:
 			"Where the dollar system's spare cash sits by the numbers: the Treasury's account at the Federal Reserve and the overnight reverse repo pool, each against its history.",
 		meta: "Live reading, snapshot fallback",
+	},
+	{
+		href: "/playground/hafez-fal",
+		title: "Hafez fal",
+		status: "Live",
+		blurb:
+			"A draw from Hafez's Divan, live: hold a wish, then draw, and a random ghazal opens in the original Persian, exactly as Ganjoor serves it.",
+		meta: "A random ghazal per draw",
 	},
 	{
 		href: "/playground/macro",

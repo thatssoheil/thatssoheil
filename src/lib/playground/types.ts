@@ -390,3 +390,39 @@ export interface DryPowderData {
 	/** The overnight reverse repo pool (RRP). */
 	rrp: DryPowderSeriesData;
 }
+
+export interface HafezVerse {
+	/** Hemistich position within the couplet: 0 (first) or 1 (second). */
+	versePosition: 0 | 1;
+	/** Couplet index within the ghazal, 0-based. */
+	coupletIndex: number;
+	/** The hemistich text, exactly as Ganjoor serves it. */
+	text: string;
+}
+
+export interface HafezGhazal {
+	/** Ganjoor's poem id. */
+	id: number;
+	/** "غزل شمارهٔ ۱۱۳" */
+	title: string;
+	/** "حافظ » غزلیات » غزل شمارهٔ ۱۱۳" */
+	fullTitle: string;
+	/** Site-relative path on ganjoor.net ("/hafez/ghazal/sh113"). */
+	fullUrl: string;
+	verses: HafezVerse[];
+}
+
+/** The committed set the page draws from when the live fal is unreachable. */
+export interface HafezFallbackSet {
+	/** When the set was generated (ISO date-time). */
+	generatedAt: string;
+	ghazals: HafezGhazal[];
+}
+
+export interface HafezData {
+	/** When the draw happened (live) or the set was generated (local). */
+	asOf: string;
+	/** "live" = fetched from Ganjoor; "local" = drawn from the committed set. */
+	provenance: "live" | "local";
+	ghazal: HafezGhazal;
+}
