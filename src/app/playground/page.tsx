@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
 	title: "Playground",
 	description:
-		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, a Hafez fal, a Euclidean rhythm machine, and weekly BTC and ETH macro notes. Live data, public method.",
+		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, a Hafez fal, a Euclidean rhythm machine, a logistic map dial, and weekly BTC and ETH macro notes. Live data, public method.",
 	alternates: { canonical: "/playground" },
 };
 
@@ -98,6 +98,14 @@ const EXPERIMENTS = [
 		blurb:
 			"Euclid's algorithm as an instrument: spread a few pulses evenly around a ring and hear the tresillo, the bossa nova, the aksak - the timeline patterns of world music, drawn by the same math.",
 		meta: "Sound on - an instrument, not a feed",
+	},
+	{
+		href: "/playground/logistic-map",
+		title: "Logistic map",
+		status: "Live",
+		blurb:
+			"One equation and one dial, from order into chaos: turn r and watch the orbit settle, split, and dissolve - with an island of order waiting past 3.82.",
+		meta: "Computed in your browser - an instrument, not a feed",
 	},
 	{
 		href: "/playground/macro",
