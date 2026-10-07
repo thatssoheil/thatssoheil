@@ -353,3 +353,40 @@ export interface ChessData {
 	game: ChessGame;
 	puzzle: ChessPuzzle;
 }
+
+export interface DryPowderHistoryPoint {
+	/** ISO date (YYYY-MM-DD) of the daily balance. */
+	date: string;
+	/** Balance, USD billions. */
+	value: number;
+}
+
+/** The headline numbers the reading tiles need; the history stays server-side. */
+export interface DryPowderReadingSeries {
+	/** The latest balance, USD billions. */
+	latest: number;
+	/** ISO date of the latest reading. */
+	latestDate: string;
+	/** Change vs about 7 days earlier, USD billions; null when history is short. */
+	change7d: number | null;
+	/** Change vs about 30 days earlier, USD billions; null when history is short. */
+	change30d: number | null;
+	/** The all-time high of the series. */
+	peak: { value: number; date: string };
+	/** Percent below the all-time peak (0 when at the peak). */
+	distanceFromPeakPct: number;
+}
+
+export interface DryPowderSeriesData extends DryPowderReadingSeries {
+	history: DryPowderHistoryPoint[];
+}
+
+export interface DryPowderData {
+	/** When the snapshot was generated (ISO date-time). */
+	asOf: string;
+	provenance: "snapshot";
+	/** The Treasury General Account (TGA). */
+	tga: DryPowderSeriesData;
+	/** The overnight reverse repo pool (RRP). */
+	rrp: DryPowderSeriesData;
+}

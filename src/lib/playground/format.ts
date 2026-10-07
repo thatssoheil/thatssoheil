@@ -78,3 +78,26 @@ export function formatUsdCents(value: number): string {
 	if (!Number.isFinite(value)) return "-";
 	return `$${value.toFixed(2)}`;
 }
+
+/** Compact USD display for balances carried in billions (dry powder). */
+export function formatUsdBillions(value: number): string {
+	if (!Number.isFinite(value)) return "-";
+	const abs = Math.abs(value);
+	const sign = value < 0 ? "-" : "";
+	if (abs >= 1000) return `${sign}$${(abs / 1000).toFixed(2)}T`;
+	if (abs >= 10) return `${sign}$${abs.toFixed(1)}B`;
+	if (abs >= 1) return `${sign}$${abs.toFixed(2)}B`;
+	if (abs > 0) return `${sign}$${(abs * 1000).toFixed(0)}M`;
+	return "$0";
+}
+
+/** Signed change in billions, e.g. "+$12.2B" / "-$76.2B". */
+export function formatChangeBillions(value: number): string {
+	if (!Number.isFinite(value)) return "-";
+	const abs = Math.abs(value);
+	const sign = value > 0 ? "+" : value < 0 ? "-" : "";
+	if (abs >= 1000) return `${sign}$${(abs / 1000).toFixed(2)}T`;
+	if (abs >= 1) return `${sign}$${abs.toFixed(1)}B`;
+	if (abs > 0) return `${sign}$${Math.round(abs * 1000)}M`;
+	return "$0";
+}
