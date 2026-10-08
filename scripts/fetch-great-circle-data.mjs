@@ -16,7 +16,9 @@
  * a record of what was consumed, not pinned. The subset's shape is what is
  * checked instead: row count, unique IATA codes, coordinate ranges, two
  * published distances recomputed from the trimmed coordinates (JFK-LHR,
- * SYD-LAX), and the farthest scheduled pair.
+ * SYD-LAX), and the farthest scheduled pair. Names and cities get en/em
+ * dashes normalized to ASCII hyphens (the site rule; about 30 official
+ * names carry them, e.g. Seattle-Tacoma).
  *
  * Coordinates ship at 3 decimals; the vetting probes measured the rounding
  * cost at at most about 133 m on distances - below display precision.
@@ -98,6 +100,9 @@ function centralAngle(a, b) {
 
 const distKm = (a, b) => centralAngle(toVec(a.lat, a.lon), toVec(b.lat, b.lon)) * R_KM;
 
+/** The site rule: source names carry en/em dashes; the site uses ASCII hyphens. */
+const normalizeDashes = (s) => s.replace(/[\u2013\u2014]/g, "-");
+
 // --- Fetch.
 
 console.log(`fetching ${SOURCE_URL}`);
@@ -136,8 +141,8 @@ for (const r of table.slice(1)) {
 	if (!/^[A-Za-z]{3}$/.test(iata)) continue;
 	rows.push({
 		iata,
-		name: (r[cName] ?? "").trim(),
-		city: (r[cCity] ?? "").trim(),
+		name: normalizeDashes((r[cName] ?? "").trim()),
+		city: normalizeDashes((r[cCity] ?? "").trim()),
 		cc: (r[cCc] ?? "").trim(),
 		lat: Number.parseFloat(r[cLat]),
 		lon: Number.parseFloat(r[cLon]),
