@@ -448,3 +448,36 @@ export interface FreeShelfData {
 	/** Top books per window, as PG ranks them (top 30 carried; 20 shown). */
 	windows: Record<FreeShelfWindowKey, FreeShelfBook[]>;
 }
+
+export interface SugarProduct {
+	/** Open Food Facts barcode. */
+	code: string;
+	/** Product name as the community database lists it. */
+	name: string;
+	/** Brand line as listed ("" when the entry carries none). */
+	brands: string;
+	/** Pack size as listed ("" when absent). */
+	quantity: string;
+	/** Serving label as listed ("250 ml", "1 cookie (20 g)"); null when absent. */
+	servingSize: string | null;
+	/** Sugars, grams per 100 g / 100 ml (rounded to 1 decimal at read). */
+	sugars100g: number;
+	/** Sugars per serving, grams, when the database lists one. */
+	sugarsServing: number | null;
+}
+
+export interface SugarData {
+	/** When the search was fetched (live) or the snapshot generated. */
+	asOf: string;
+	provenance: "live" | "snapshot";
+	/** The submitted search term, normalized; empty for the default view. */
+	query: string;
+	/** "search" = live search results; "curated" = the committed set. */
+	mode: "search" | "curated";
+	/** When a failed search fell back: "match" = the curated entry for the
+	 * query, "set" = the whole curated set. Null on the default view. */
+	fallback: "match" | "set" | null;
+	/** The live search's total match count, when a live search ran. */
+	totalCount: number | null;
+	results: SugarProduct[];
+}
