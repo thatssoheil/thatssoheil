@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
 	title: "Playground",
 	description:
-		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, a Hafez fal, a Euclidean rhythm machine, a logistic map dial, a night-side map of Earth, and weekly BTC and ETH macro notes. Live data, public method.",
+		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, a Hafez fal, a Euclidean rhythm machine, a logistic map dial, a night-side map of Earth, a free shelf of Project Gutenberg's most-downloaded books, and weekly BTC and ETH macro notes. Live data, public method.",
 	alternates: { canonical: "/playground" },
 };
 
@@ -114,6 +114,14 @@ const EXPERIMENTS = [
 		blurb:
 			"Earth's day/night line right now: the night side shaded, the twilight bands along its edge, the sun's overhead point marked, and a readout for five cities.",
 		meta: "Computed in your browser - an instrument, not a feed",
+	},
+	{
+		href: "/playground/free-shelf",
+		title: "Free shelf",
+		status: "Live",
+		blurb:
+			"What the world is reading for free: Project Gutenberg's most-downloaded books across three windows, every cover one click from the full text.",
+		meta: "Live reading, snapshot fallback",
 	},
 	{
 		href: "/playground/macro",

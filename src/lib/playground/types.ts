@@ -426,3 +426,25 @@ export interface HafezData {
 	provenance: "live" | "local";
 	ghazal: HafezGhazal;
 }
+
+export interface FreeShelfBook {
+	/** Project Gutenberg ebook id. */
+	id: number;
+	title: string;
+	/** Null for the few chart entries PG lists without an author. */
+	author: string | null;
+	/** PG's own download counter for the chart window. */
+	downloads: number;
+}
+
+export type FreeShelfWindowKey = "last1" | "last7" | "last30";
+
+export interface FreeShelfData {
+	/** When the chart was read (live) or the snapshot generated (snapshot). */
+	asOf: string;
+	/** The chart page's own last-modified time, when the server sends one. */
+	chartModified: string | null;
+	provenance: "live" | "snapshot";
+	/** Top books per window, as PG ranks them (top 30 carried; 20 shown). */
+	windows: Record<FreeShelfWindowKey, FreeShelfBook[]>;
+}
