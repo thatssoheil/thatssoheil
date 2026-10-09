@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
 	title: "Playground",
 	description:
-		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, a Hafez fal, a Euclidean rhythm machine, a logistic map dial, a night-side map of Earth, a free shelf of Project Gutenberg's most-downloaded books, a sugar-cubes check for packaged food and drink, and weekly BTC and ETH macro notes. Live data, public method.",
+		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, a Hafez fal, a Euclidean rhythm machine, a logistic map dial, a night-side map of Earth, a free shelf of Project Gutenberg's most-downloaded books, a sugar-cubes check for packaged food and drink, a great-circle route viewer, and weekly BTC and ETH macro notes. Live data, public method.",
 	alternates: { canonical: "/playground" },
 };
 
@@ -130,6 +130,14 @@ const EXPERIMENTS = [
 		blurb:
 			"How much sugar is actually in that: search any packaged food or drink and see its sugars as a stack of cubes, against the WHO's daily guideline.",
 		meta: "Live reading, snapshot fallback",
+	},
+	{
+		href: "/playground/great-circle",
+		title: "Great circle",
+		status: "Live",
+		blurb:
+			"Why flights curve on a map: pick any two of 4,133 airports with scheduled service and see the shortest path twice - bowed on the flat map, straight on the globe.",
+		meta: "Computed in your browser - an instrument, not a feed",
 	},
 	{
 		href: "/playground/macro",
