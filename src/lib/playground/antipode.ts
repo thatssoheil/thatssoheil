@@ -26,6 +26,9 @@ export const EARTH_R_KM = 6371.0088;
 /** The surface distance between any two antipodes: pi * R, km. */
 export const ANTIPODE_KM = Math.PI * EARTH_R_KM;
 
+/** The Earth's diameter: 2 * R, km - the straight path through the center. */
+export const EARTH_D_KM = 2 * EARTH_R_KM;
+
 /** The longest full-load airliner range flown to date (A350-900ULR), km. */
 export const LONGEST_RANGE_KM = 18000;
 
@@ -203,6 +206,13 @@ export function formatKm(km: number): string {
 		maximumFractionDigits: 1,
 	}).format(km);
 	return `${n} km`;
+}
+
+/** "35.7S, 128.6W" - one decimal, hemisphere letters. */
+export function formatLatLon(lat: number, lon: number): string {
+	const la = `${Math.abs(lat).toFixed(1)}${lat >= 0 ? "N" : "S"}`;
+	const lo = `${Math.abs(lon).toFixed(1)}${lon >= 0 ? "E" : "W"}`;
+	return `${la}, ${lo}`;
 }
 
 /** "132k" / "7.9M" / "unknown" - compact population for labels. */

@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
 	title: "Playground",
 	description:
-		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, a Hafez fal, a Euclidean rhythm machine, a logistic map dial, a night-side map of Earth, a free shelf of Project Gutenberg's most-downloaded books, a sugar-cubes check for packaged food and drink, a great-circle route viewer, a color-vision palette simulator, a Persian calendar, and weekly BTC and ETH macro notes. Live data, public method.",
+		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, a Hafez fal, a Euclidean rhythm machine, a logistic map dial, a night-side map of Earth, a free shelf of Project Gutenberg's most-downloaded books, a sugar-cubes check for packaged food and drink, a great-circle route viewer, a color-vision palette simulator, a Persian calendar, an antipodes viewer, and weekly BTC and ETH macro notes. Live data, public method.",
 	alternates: { canonical: "/playground" },
 };
 
@@ -153,6 +153,14 @@ const EXPERIMENTS = [
 		status: "Live",
 		blurb:
 			"Today in Iran's calendar: the Shamsi date right now, the current month you can walk day by day, a countdown to Nowruz, and a two-way converter between the calendars.",
+		meta: "Computed in your browser - an instrument, not a feed",
+	},
+	{
+		href: "/playground/antipodes",
+		title: "Antipodes",
+		status: "Live",
+		blurb:
+			"The other side of the Earth: pick any of 7,342 places and see the exact point opposite it - land or open ocean, the nearest place, and the numbers every pair shares.",
 		meta: "Computed in your browser - an instrument, not a feed",
 	},
 	{
