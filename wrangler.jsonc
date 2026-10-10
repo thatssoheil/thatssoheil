@@ -45,14 +45,30 @@
 			"persist": true
 		}
 	},
-	// workers.dev Preview URLs for non-production branches (created by wrangler preview).
+	// workers.dev production URL is off (the site is served on the apex custom
+	// domain); workers.dev preview URLs stay on (e.g.
+	// dev-thatssoheil.nodeontop.workers.dev). Both declared so deploys keep
+	// this state instead of reverting to defaults.
+	"workers_dev": false,
 	"preview_urls": true,
-	// Custom domain, declared so deploys keep Worker Previews enabled for
-	// non-production branches (the dev preview is served at dev.thatssoheil.website).
+	// Apex custom domain: production only. previews_enabled is intentionally
+	// false on the apex: custom-domain previews there add a *.thatssoheil.website
+	// wildcard whose dispatch claims every subdomain of the zone (it hijacked
+	// agent.thatssoheil.website, which must reach the NYC tunnel, and would
+	// break any future subdomain too). Branch previews are served on the
+	// dedicated preview hostname below.
 	"routes": [
 		{
 			"pattern": "thatssoheil.website",
 			"custom_domain": true,
+			"previews_enabled": false
+		},
+		// Dedicated preview hostname: previews are served at
+		// <preview-name>.dev.thatssoheil.website. Declared so deploys keep it.
+		{
+			"pattern": "dev.thatssoheil.website",
+			"custom_domain": true,
+			"enabled": false,
 			"previews_enabled": true
 		}
 	],
