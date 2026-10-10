@@ -46,7 +46,6 @@ export const NAV_LINKS = [
 		label: section.label,
 		href: `#${section.id}`,
 	})),
-	{ label: "Playground", href: "/playground" },
 	{ label: "Resume", href: "/resume" },
 ] as const;
 
