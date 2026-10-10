@@ -12,7 +12,6 @@ import {
 	Menu,
 	CornerDownLeft,
 	FileText,
-	FlaskConical,
 } from "lucide-react";
 import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
@@ -73,11 +72,6 @@ export function CommandMenu() {
 	const openResume = useCallback(() => {
 		setOpen(false);
 		router.push("/resume");
-	}, [router]);
-
-	const openPlayground = useCallback(() => {
-		setOpen(false);
-		router.push("/playground");
 	}, [router]);
 
 	const sendEmail = useCallback(() => {
@@ -165,14 +159,6 @@ export function CommandMenu() {
 								</Command.Group>
 
 								<Command.Group heading="Links">
-									<Command.Item
-										value="playground experiments tracker macro notes data"
-										onSelect={openPlayground}
-										className={ITEM_CLASS}
-									>
-										<FlaskConical className={ICON_CLASS} strokeWidth={1.5} />
-										<span>Playground</span>
-									</Command.Item>
 									<Command.Item
 										value="resume cv work experience career"
 										onSelect={openResume}
