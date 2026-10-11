@@ -3,6 +3,7 @@ import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { SectionHeading } from "@/components/playground/section-heading";
 import { NightSide } from "@/components/playground/night-side";
 import { BAND_ROWS } from "@/lib/playground/night-side";
+import { Link } from "@/components/ui";
 
 export const metadata: Metadata = {
 	title: "Night side",
@@ -31,7 +32,7 @@ export default function NightSidePage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						Each dot is a cell of land about 1.5 degrees wide, from a mask generated once from
 						Natural Earth&apos;s 110m land layer (public domain) and committed to the page. The
@@ -49,21 +50,21 @@ export default function NightSidePage() {
 						the night side swallows Antarctica, and the whole shape flips with the seasons.
 					</p>
 				</div>
-				<div className="mt-4 max-w-2xl overflow-hidden rounded-xl border border-border bg-card">
+				<div className="mt-4 max-w-2xl overflow-hidden rounded-lg border border-kumo-hairline bg-kumo-base">
 					<table className="w-full border-collapse text-left">
 						<thead>
-							<tr className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+							<tr className="text-label uppercase  text-kumo-default opacity-70">
 								<th className="px-4 py-2.5 font-normal sm:px-6">Band</th>
 								<th className="px-4 py-2.5 font-normal sm:px-6">Sun altitude</th>
 							</tr>
 						</thead>
 						<tbody>
 							{BAND_ROWS.map((row) => (
-								<tr key={row.band} className="border-t border-alpha-200">
-									<td className="px-4 py-2.5 text-copy-13 text-foreground sm:px-6">
+								<tr key={row.band} className="border-t border-kumo-hairline">
+									<td className="px-4 py-2.5 text-body-sm text-kumo-default sm:px-6">
 										{row.label}
 									</td>
-									<td className="px-4 py-2.5 text-copy-13-mono text-text-muted sm:px-6">
+									<td className="px-4 py-2.5 text-code text-kumo-default opacity-80 sm:px-6">
 										{row.range}
 									</td>
 								</tr>
@@ -71,25 +72,25 @@ export default function NightSidePage() {
 						</tbody>
 					</table>
 				</div>
-				<p className="mt-3 max-w-2xl text-copy-13 text-text-faint">
+				<p className="mt-3 max-w-2xl text-body-sm text-kumo-default opacity-70">
 					Solar position after the{" "}
-					<a
+					<Link
 						href="https://aa.usno.navy.mil/faq/sun_approx"
 						target="_blank"
 						rel="noreferrer"
-						className="text-brand transition-opacity hover:opacity-75"
+						className="text-kumo-link transition-opacity hover:opacity-75"
 					>
 						Astronomical Almanac&apos;s low-precision formulas
-					</a>{" "}
+					</Link>{" "}
 					(page C5; USNO&apos;s public mirror). Land mask from{" "}
-					<a
+					<Link
 						href="https://www.naturalearthdata.com/about/terms-of-use/"
 						target="_blank"
 						rel="noreferrer"
-						className="text-brand transition-opacity hover:opacity-75"
+						className="text-kumo-link transition-opacity hover:opacity-75"
 					>
 						Natural Earth
-					</a>{" "}
+					</Link>{" "}
 					(public domain). The map and the readout were verified at build time against published
 					landmarks: the solstice declination, the half-and-half day fraction, and sunrise and
 					sunset times within about two minutes of two independent services.

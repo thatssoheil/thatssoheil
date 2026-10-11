@@ -52,7 +52,7 @@ export function KpStrip({
 				x2={width}
 				y1={thresholdY}
 				y2={thresholdY}
-				className="text-alpha-400"
+				className="text-kumo-default opacity-50"
 				stroke="currentColor"
 				strokeWidth={1}
 				strokeDasharray="4 5"
@@ -63,7 +63,7 @@ export function KpStrip({
 				x2={width}
 				y1={baseline}
 				y2={baseline}
-				className="text-alpha-200"
+				className="text-kumo-default opacity-70"
 				stroke="currentColor"
 				strokeWidth={1}
 				vectorEffect="non-scaling-stroke"
@@ -85,7 +85,7 @@ export function KpStrip({
 						width={barWidth}
 						height={barHeight}
 						rx={2}
-						className={storm ? "text-destructive" : "text-brand"}
+						className={storm ? "text-kumo-default" : "text-kumo-link"}
 						fill="currentColor"
 						fillOpacity={storm ? 0.8 : opacity}
 					/>
@@ -96,7 +96,7 @@ export function KpStrip({
 					cx={peakIndex * step + step / 2}
 					cy={baseline - Math.max((bins[peakIndex].kp / 9) * chartHeight, 2) - 6}
 					r={3}
-					className={bins[peakIndex].scale ? "text-destructive" : "text-brand"}
+					className={bins[peakIndex].scale ? "text-kumo-default" : "text-kumo-link"}
 					fill="currentColor"
 					fillOpacity={0.95}
 				/>

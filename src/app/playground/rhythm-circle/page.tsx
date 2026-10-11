@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { SectionHeading } from "@/components/playground/section-heading";
 import { RhythmCircle } from "@/components/playground/rhythm-circle";
+import { Link } from "@/components/ui";
 
 export const metadata: Metadata = {
 	title: "Rhythm circle",
@@ -25,7 +26,7 @@ export default function RhythmCirclePage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						The pattern is Bjorklund&apos;s algorithm: distribute a number of pulses as
 						evenly as possible across a number of steps. In 2005, Godfried Toussaint showed
@@ -44,14 +45,14 @@ export default function RhythmCirclePage() {
 					</p>
 					<p>
 						Rhythms after{" "}
-						<a
+						<Link
 							href="https://www-cgrl.cs.mcgill.ca/~godfried/publications/banff.pdf"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							Toussaint, 2005
-						</a>
+						</Link>
 						, &quot;The Euclidean Algorithm Generates Traditional Musical Rhythms&quot;,
 						Renaissance Banff: Mathematics, Music, Art, Culture, pp. 47-56.
 					</p>

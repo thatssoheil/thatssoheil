@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { SectionHeading } from "@/components/playground/section-heading";
 import { GreatCircle } from "@/components/playground/great-circle";
+import { Link } from "@/components/ui";
 
 export const metadata: Metadata = {
 	title: "Great circle",
@@ -30,7 +31,7 @@ export default function GreatCirclePage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						A great circle is the shortest path between two points on a sphere - the line a taut
 						string would take across a globe. On a flat map it looks curved, because the map has to
@@ -48,24 +49,24 @@ export default function GreatCirclePage() {
 					</p>
 					<p>
 						The airport table holds 4,133 airports with scheduled service and IATA codes, from{" "}
-						<a
+						<Link
 							href="https://ourairports.com/data/"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							OurAirports
-						</a>{" "}
+						</Link>{" "}
 						(public domain), committed to the page with coordinates rounded to 3 decimals - about 100
 						meters, worth at most about 130 meters on any route. A cross-check against{" "}
-						<a
+						<Link
 							href="https://openflights.org/data.html"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							OpenFlights
-						</a>{" "}
+						</Link>{" "}
 						(a second open dataset) found the 3,744 shared codes agreeing to a median of 0.00 km; 55
 						codes differ by more than 5 km, where an airport was reassigned or relocated - drift, not
 						error. Nothing is fetched at runtime, so nothing here can go stale.

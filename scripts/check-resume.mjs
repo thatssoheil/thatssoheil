@@ -61,8 +61,8 @@ const exportControls = read("src/components/resume/export-controls.tsx");
 for (const [source, pattern, message] of [
 	[route, /<main[^>]+id="main-content"/, "resume route needs a main landmark"],
 	[route, /<ResumeDocument\s*\/>[\s\S]*<ExportControls\s*\/>/, "export controls must follow the complete resume document"],
-	[document, /<Surface\s+variant="panel"\s+radius="lg"/s, "resume paper must inherit the root reading-panel surface"],
-	[exportControls, /<Surface\s+variant="panel"\s+radius="lg"/s, "export controls must inherit the root reading-panel surface"],
+	[document, /<Surface\s+layer="base"/s, "resume paper must use the Kumo base layer"],
+	[exportControls, /<Surface\s+layer="elevated"/s, "export controls must use the Kumo elevated layer"],
 	[document, /<h1/, "resume document needs one h1"],
 	[document, /<address/, "contact details need a body address"],
 	[document, /Professional Summary/, "standard summary heading missing"],
@@ -104,8 +104,6 @@ if (/\b(?:hospital staff|patients?) (?:use|uses|used|using|access|accesses|acces
 const css = read("src/components/resume/resume.module.css");
 const globalCss = read("src/app/globals.css");
 const printCss = readBlock(css, "@media print");
-const structuralEnvelope = readBlock(globalCss, ".structure-grid__envelope")
-	.match(/max-width:\s*([^;]+)/)?.[1];
 const toolbarEnvelope = readBlock(css, ".toolbar")
 	.match(/width:\s*min\(100%,\s*([^)]+)\)/)?.[1];
 const paperEnvelope = readBlock(css, ".paper")
@@ -116,14 +114,12 @@ const mobileCss = readBlock(css, "@media (max-width: 40rem)");
 const mobilePaperCss = readBlock(mobileCss, ".paper");
 const mobileToolbarCss = readBlock(mobileCss, ".toolbar");
 
-if (!structuralEnvelope
-	|| toolbarEnvelope !== structuralEnvelope
-	|| paperEnvelope !== structuralEnvelope) {
-	failures.push("screen resume surfaces must align with the structural grid envelope");
+if (!paperEnvelope || toolbarEnvelope !== paperEnvelope) {
+	failures.push("screen resume surfaces must share the Kumo reading-width envelope");
 }
-if (!/\.structure-grid__frame\s*{[^}]*padding-inline:\s*var\(--site-gutter\)/s.test(globalCss)
+if (!/:root\s*{[^}]*--site-gutter:\s*1\.25rem/s.test(globalCss)
 	|| !/\.resumeViewport\s*{[^}]*padding-inline:\s*var\(--site-gutter/s.test(css)) {
-	failures.push("screen resume and structural grid must share the responsive site gutter");
+	failures.push("screen resume must inherit the responsive Kumo site gutter");
 }
 if (!/\.resumeViewport\s*{[^}]*padding-block:\s*7rem 2rem/s.test(css)) {
 	failures.push("screen resume top clearance must not depend on the site gutter variable");
@@ -155,7 +151,7 @@ if (/position:\s*(?:sticky|fixed|absolute)/.test(toolbarCss)) {
 if (!/@page\s*{[^}]*size:\s*A4 portrait/s.test(css)) {
 	failures.push("print CSS needs A4 portrait @page");
 }
-if (!/@page\s*{[^}]*background:\s*#fff/s.test(css)) {
+if (!/@page\s*{[^}]*background:\s*white/s.test(css)) {
 	failures.push("printed page canvas must be explicitly white");
 }
 if (!printCss) failures.push("print media rules missing");
@@ -171,13 +167,13 @@ for (const [pattern, message] of [
 	[/\.experienceList\s*{[^}]*gap:\s*6mm/s, "print roles need the approved separation"],
 	[/\.highlights,\s*\.compactList\s*{[^}]*gap:\s*1\.4mm;[^}]*margin-top:\s*2mm/s, "print bullets need the approved vertical rhythm"],
 	[/:global\(html\),\s*:global\(body\)\s*{[^}]*width:\s*(?:auto|100%)/s, "print roots must fit within @page margins"],
-	[/:global\(html\)\s*{[^}]*color-scheme:\s*only light\s*!important/s, "print root must override the scheduled dark color scheme"],
+	[/:global\(html\)\s*{[^}]*color-scheme:\s*light/s, "print root must force light color scheme"],
 ]) {
 	if (!pattern.test(printCss)) failures.push(message);
 }
 
-if (!/\.toolbar button:focus-visible\s*{[^}]*outline:\s*[^;}]*transparent/s.test(css)) {
-	failures.push("export control needs an outline fallback for forced colors");
+if (!/@media \(forced-colors: active\)[\s\S]*:focus-visible[\s\S]*outline:\s*2px solid Highlight;[\s\S]*box-shadow:\s*none;/s.test(globalCss)) {
+	failures.push("resume controls need the global forced-colors focus fallback");
 }
 
 if (failures.length) {

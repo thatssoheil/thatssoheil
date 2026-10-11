@@ -195,7 +195,7 @@ export function DryPowderReading({
 
 	return (
 		<div className="flex flex-col gap-3">
-			<p className="text-copy-13 text-text-faint">
+			<p className="text-body-sm text-kumo-default opacity-70">
 				{tgaState} · {rrpState}
 			</p>
 			<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">

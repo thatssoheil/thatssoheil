@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { cn } from "@/lib/utils";
 import type { ChessData } from "@/lib/playground/types";
-
+import { Link, Button } from "@/components/ui";
 // --- The board model ---
 // The puzzle arrives as a FEN position plus a solution line of UCI moves, so
 // the board is a plain map of square -> piece and a move is a from/to pair.
@@ -204,11 +203,11 @@ export function ChessBoard({ data }: { data: ChessData }) {
 	}
 
 	return (
-		<div className="rounded-xl border border-border bg-card p-3 sm:p-4">
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-base p-3 sm:p-4">
 			<div className="mx-auto w-full max-w-md">
 				<div
 					role="group"
-					className="grid grid-cols-8 overflow-hidden rounded-md border border-border"
+					className="grid grid-cols-8 overflow-hidden rounded-md border border-kumo-hairline"
 					aria-label={`Chess puzzle board. You play ${colorName}, the side to move. Select a piece, then its destination square.`}
 				>
 					{squares.map(({ square, file, rank }) => {
@@ -220,18 +219,18 @@ export function ChessBoard({ data }: { data: ChessData }) {
 							? `${square}, ${piece === piece.toUpperCase() ? "white" : "black"} ${PIECE_NAMES[piece.toLowerCase()]}`
 							: `${square}, empty`;
 						return (
-							<button
+							<Button variant="ghost" size="default"
 								key={square}
 								type="button"
 								onClick={() => handleSquare(square)}
 								aria-disabled={!userTurn}
 								aria-label={label}
 								className={cn(
-									"relative flex aspect-square items-center justify-center transition-colors",
-									isLight ? "bg-card" : "bg-muted",
-									isLast && "bg-brand/10",
-									isSelected && "bg-brand/20",
-									userTurn ? "cursor-pointer hover:bg-brand/15" : "cursor-default",
+									"h-auto relative flex w-full aspect-square items-center justify-center rounded-none",
+									isLight ? "bg-kumo-base" : "bg-kumo-recessed",
+									isLast && "bg-kumo-fill-hover",
+									isSelected && "bg-kumo-interact",
+									userTurn ? "cursor-pointer hover:bg-kumo-fill-hover" : "cursor-default",
 								)}
 							>
 								{piece ? (
@@ -240,8 +239,8 @@ export function ChessBoard({ data }: { data: ChessData }) {
 										className={cn(
 											"select-none text-[length:clamp(1.5rem,7vw,2.4rem)] leading-none",
 											piece === piece.toUpperCase()
-												? "text-foreground"
-												: "text-text-muted",
+												? "text-kumo-default"
+												: "text-kumo-default opacity-80",
 										)}
 										style={{ fontFamily: PIECE_FONT_STACK }}
 									>
@@ -251,7 +250,7 @@ export function ChessBoard({ data }: { data: ChessData }) {
 								{rank === displayRanks[7] ? (
 									<span
 										aria-hidden="true"
-										className="pointer-events-none absolute bottom-0.5 right-1 text-label-12 text-text-faint opacity-70"
+										className="pointer-events-none absolute bottom-0.5 right-1 text-label text-kumo-default opacity-70"
 									>
 										{file}
 									</span>
@@ -259,29 +258,29 @@ export function ChessBoard({ data }: { data: ChessData }) {
 								{file === displayFiles[0] ? (
 									<span
 										aria-hidden="true"
-										className="pointer-events-none absolute left-1 top-0.5 text-label-12 text-text-faint opacity-70"
+										className="pointer-events-none absolute left-1 top-0.5 text-label text-kumo-default opacity-70"
 									>
 										{rank}
 									</span>
 								) : null}
-							</button>
+							</Button>
 						);
 					})}
 				</div>
 
 				<div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-					<p className="text-copy-14 text-text-muted" role="status" aria-live="polite">
+					<p className="text-body-sm text-kumo-default opacity-80" role="status" aria-live="polite">
 						{solved ? (
 							<>
 								Solved{usedHint ? " with a hint" : ""} - that is the full line.{" "}
-								<a
+								<Link
 									href={`https://lichess.org/training/${puzzle.id}`}
 									target="_blank"
 									rel="noreferrer"
-									className="text-brand transition-opacity hover:opacity-75"
+									className="text-kumo-link transition-opacity hover:opacity-75"
 								>
 									See it on Lichess
-								</a>
+								</Link>
 							</>
 						) : step % 2 === 1 ? (
 							"Opponent replies..."
@@ -303,8 +302,8 @@ export function ChessBoard({ data }: { data: ChessData }) {
 						</Button>
 					</div>
 				</div>
-				{note ? <p className="mt-2 text-copy-13 text-text-faint">{note}</p> : null}
-				<p className="mt-3 text-copy-13 text-text-faint">
+				{note ? <p className="mt-2 text-body-sm text-kumo-default opacity-70">{note}</p> : null}
+				<p className="mt-3 text-body-sm text-kumo-default opacity-70">
 					You play {colorName}, the side to move. Click a piece, then its destination
 					square; a hint plays the next move of the line.
 				</p>

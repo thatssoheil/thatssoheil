@@ -44,8 +44,8 @@ export default function VolatilityPage() {
 			<section aria-label="The long view">
 				<SectionHeading label="The long view" note="daily closes, March 2021 to today" />
 				<div className="flex flex-col gap-3">
-					<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
-						<span className="mb-3 block text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
+						<span className="mb-3 block text-label uppercase  text-kumo-default opacity-70">
 							Bitcoin implied volatility
 						</span>
 						<AreaChart
@@ -54,8 +54,8 @@ export default function VolatilityPage() {
 							ariaLabel="Bitcoin implied volatility, daily closes since March 2021"
 						/>
 					</div>
-					<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
-						<span className="mb-3 block text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
+						<span className="mb-3 block text-label uppercase  text-kumo-default opacity-70">
 							Ethereum implied volatility
 						</span>
 						<AreaChart
@@ -69,7 +69,7 @@ export default function VolatilityPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						Bitcoin and Ethereum implied volatility from Deribit&apos;s DVOL
 						index: the options market&apos;s 30-day forward volatility read,

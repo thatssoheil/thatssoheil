@@ -11,12 +11,12 @@ export function StatTile({
 	hint?: string;
 }) {
 	return (
-		<div className="flex flex-col gap-1 rounded-xl border border-border bg-card px-4 py-4">
-			<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+		<div className="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-4">
+			<span className="text-label uppercase  text-kumo-default opacity-70">
 				{label}
 			</span>
-			<span className="text-heading-24 text-foreground">{value}</span>
-			{hint ? <span className="text-copy-13 text-text-muted">{hint}</span> : null}
+			<span className="text-heading text-kumo-default">{value}</span>
+			{hint ? <span className="text-body-sm text-kumo-default opacity-80">{hint}</span> : null}
 		</div>
 	);
 }

@@ -85,10 +85,10 @@ export default async function BitcoinNetworkPulsePage() {
 							hint="whenever it clears"
 						/>
 					</div>
-					<div className="rounded-xl border border-border bg-card px-4 py-4 sm:px-5">
-						<p className="text-copy-14 text-text-muted">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-4 sm:px-5">
+						<p className="text-body-sm text-kumo-default opacity-80">
 							A typical transfer (one input, two outputs, about 141 vB) costs about{" "}
-							<span className="text-foreground">{formatSats(transferFastest)}</span> (
+							<span className="text-kumo-default">{formatSats(transferFastest)}</span> (
 							{formatUsdCents(usdOf(transferFastest))}) at the next-block rate, or{" "}
 							{formatSats(transferEconomy)} ({formatUsdCents(usdOf(transferEconomy))}) with
 							no rush.
@@ -117,8 +117,8 @@ export default async function BitcoinNetworkPulsePage() {
 							hint="sum across the queue"
 						/>
 					</div>
-					<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
-						<span className="mb-3 block text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
+						<span className="mb-3 block text-label uppercase  text-kumo-default opacity-70">
 							Waiting volume by fee band
 						</span>
 						<FeeHistogram
@@ -132,18 +132,18 @@ export default async function BitcoinNetworkPulsePage() {
 			<section aria-label="Next difficulty change">
 				<SectionHeading label="Next difficulty change" note="estimated, moves until the retarget" />
 				<div className="flex flex-col gap-3">
-					<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 						<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-							<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+							<span className="text-label uppercase  text-kumo-default opacity-70">
 								Epoch progress
 							</span>
-							<span className="text-label-12-mono text-text-muted">
+							<span className="text-code text-kumo-default opacity-80">
 								{data.difficulty.progressPercent.toFixed(1)}%
 							</span>
 						</div>
-						<div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-border">
+						<div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-kumo-hairline">
 							<div
-								className="h-full rounded-full bg-brand"
+								className="h-full rounded-full bg-kumo-brand"
 								style={{
 									width: `${Math.min(Math.max(data.difficulty.progressPercent, 0), 100)}%`,
 								}}
@@ -172,23 +172,23 @@ export default async function BitcoinNetworkPulsePage() {
 
 			<section aria-label="Recent blocks">
 				<SectionHeading label="Recent blocks" note="newest first" />
-				<div className="rounded-xl border border-border bg-card px-4 py-1 sm:px-6 sm:py-2">
+				<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-1 sm:px-6 sm:py-2">
 					<div className="flex flex-col">
 						{data.blocks.map((block) => (
 							<div
 								key={block.height}
-								className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 border-t border-border py-2.5 first:border-t-0"
+								className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5 border-t border-kumo-hairline py-2.5 first:border-t-0"
 							>
-								<span className="text-copy-13-mono text-foreground">
+								<span className="text-code text-kumo-default">
 									{block.height.toLocaleString("en-US")}
 								</span>
-								<span className="text-copy-13 text-text-muted">
+								<span className="text-body-sm text-kumo-default opacity-80">
 									{formatBlockAge(block.timestamp, asOfMs)}
 								</span>
-								<span className="text-copy-13 text-text-muted">
+								<span className="text-body-sm text-kumo-default opacity-80">
 									{block.txCount.toLocaleString("en-US")} txs
 								</span>
-								<span className="text-copy-13-mono text-text-muted">
+								<span className="text-code text-kumo-default opacity-80">
 									{(block.size / 1e6).toFixed(2)} MvB
 								</span>
 							</div>
@@ -199,7 +199,7 @@ export default async function BitcoinNetworkPulsePage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						Fee estimates, mempool state, and block data come from mempool.space&apos;s
 						public API, fetched by this site about every minute. When the API is

@@ -1,8 +1,7 @@
 import type { SectionId } from "@/lib/constants";
 import { CUTS, MANIFESTO } from "@/data/manifesto";
 import { SectionPanel } from "@/components/sections/section-panel";
-import { textRole, typeRole } from "@/components/ui/typography";
-
+import { Separator, textRole, typeRole } from "@/components/ui";
 export function ManifestoSection() {
 	return (
 		<SectionPanel
@@ -19,13 +18,8 @@ export function ManifestoSection() {
 						key={p.label}
 						className="relative grid gap-3 pt-6 first:pt-0 sm:grid-cols-[8.75rem_minmax(0,1fr)]"
 					>
-						{index > 0 ? (
-							<span
-								aria-hidden="true"
-								className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,var(--alpha-300),transparent)]"
-							/>
-						) : null}
-						<p className={`whitespace-nowrap pt-[0.35em] text-text-faint ${typeRole.manifestoEntryLabel}`}>
+						{index > 0 ? <Separator className="absolute inset-x-0 top-0" aria-hidden="true" /> : null}
+						<p className={`whitespace-nowrap pt-[0.35em] text-kumo-default opacity-70 ${typeRole.manifestoEntryLabel}`}>
 							{p.label}
 						</p>
 						<p className={`text-left text-base leading-relaxed sm:text-lg ${textRole.muted}`}>
@@ -36,11 +30,8 @@ export function ManifestoSection() {
 
 				{/* The cut log — the curation claim kept literal. */}
 				<div className="relative grid gap-3 pt-6 sm:grid-cols-[8.75rem_minmax(0,1fr)]">
-					<span
-						aria-hidden="true"
-						className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,var(--alpha-300),transparent)]"
-					/>
-					<p className={`whitespace-nowrap pt-[0.35em] text-text-faint ${typeRole.manifestoEntryLabel}`}>
+					<Separator className="absolute inset-x-0 top-0" aria-hidden="true" />
+					<p className={`whitespace-nowrap pt-[0.35em] text-kumo-default opacity-70 ${typeRole.manifestoEntryLabel}`}>
 						{CUTS.label}
 					</p>
 					<div className={`text-left text-sm leading-relaxed sm:text-base ${textRole.faint}`}>

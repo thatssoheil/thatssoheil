@@ -43,8 +43,8 @@ export default function DryPowderPage() {
 			<section aria-label="The long view">
 				<SectionHeading label="The long view" note="daily balances" />
 				<div className="flex flex-col gap-3">
-					<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
-						<span className="mb-3 block text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
+						<span className="mb-3 block text-label uppercase  text-kumo-default opacity-70">
 							Treasury General Account
 						</span>
 						<AreaChart
@@ -53,8 +53,8 @@ export default function DryPowderPage() {
 							ariaLabel="Treasury General Account balance, daily since October 2005"
 						/>
 					</div>
-					<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
-						<span className="mb-3 block text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
+						<span className="mb-3 block text-label uppercase  text-kumo-default opacity-70">
 							Reverse repo pool
 						</span>
 						<AreaChart
@@ -68,7 +68,7 @@ export default function DryPowderPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						The Treasury General Account is the U.S. government&apos;s checking
 						account at the Federal Reserve: receipts flow in, payments flow out.

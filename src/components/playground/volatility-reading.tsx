@@ -134,7 +134,7 @@ export function VolatilityReading({
 
 	return (
 		<div className="flex flex-col gap-3">
-			<p className="text-copy-13 text-text-faint">{state}</p>
+			<p className="text-body-sm text-kumo-default opacity-70">{state}</p>
 			<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
 				<StatTile
 					label="BTC implied volatility"

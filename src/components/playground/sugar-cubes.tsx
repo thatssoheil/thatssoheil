@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import Link from "next/link";
+import { Button, Input, Link } from "@/components/ui";
 import { useRouter } from "next/navigation";
 import type { SugarData, SugarProduct } from "@/lib/playground/types";
 import {
@@ -34,10 +34,10 @@ const CHIPS = [
 /** One cube; fill < 1 draws the partial cube at the end of a stack. */
 function Cube({ fill }: { fill: number }) {
 	return (
-		<span className="relative h-3.5 w-3.5 rounded-[3px] border border-alpha-500" aria-hidden="true">
+		<span className="relative h-3.5 w-3.5 rounded-[3px] border border-kumo-line" aria-hidden="true">
 			{fill > 0 ? (
 				<span
-					className="absolute inset-y-0 left-0 rounded-[2px] bg-alpha-600"
+					className="absolute inset-y-0 left-0 rounded-[2px] bg-kumo-overlay"
 					style={{ width: `${Math.round(Math.min(fill, 1) * 1000) / 10}%` }}
 				/>
 			) : null}
@@ -56,7 +56,7 @@ function CubeStack({ grams }: { grams: number }) {
 				<Cube key={index} fill={1} />
 			))}
 			{showPartial ? <Cube fill={frac} /> : null}
-			{capped ? <span className="ml-1 text-label-12-mono text-text-faint">+</span> : null}
+			{capped ? <span className="ml-1 text-code text-kumo-default opacity-70">+</span> : null}
 		</span>
 	);
 }
@@ -73,45 +73,45 @@ function SugarCard({ product }: { product: SugarProduct }) {
 	const entryUrl = `https://world.openfoodfacts.org/product/${product.code}`;
 
 	return (
-		<article className="flex h-full flex-col gap-3 rounded-xl border border-border bg-card px-4 py-4 sm:px-5">
+		<article className="flex h-full flex-col gap-3 rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-4 sm:px-5">
 			<div className="flex flex-col gap-0.5">
-				<a
+				<Link
 					href={entryUrl}
 					target="_blank"
 					rel="noreferrer"
-					className="text-copy-16 text-foreground transition-colors hover:text-brand"
+					className="text-body text-kumo-default  hover:text-kumo-link"
 				>
 					{product.name}
-				</a>
-				{product.brands ? <p className="text-copy-13 text-text-faint">{product.brands}</p> : null}
+				</Link>
+				{product.brands ? <p className="text-body-sm text-kumo-default opacity-70">{product.brands}</p> : null}
 			</div>
 
 			<div className="flex flex-wrap items-center gap-x-4 gap-y-2">
 				<CubeStack grams={product.sugars100g} />
-				<p className="text-copy-14 text-text-muted">
-					<span className="text-foreground">{formatGrams(product.sugars100g)} g sugar</span> per {unit} -
+				<p className="text-body-sm text-kumo-default opacity-80">
+					<span className="text-kumo-default">{formatGrams(product.sugars100g)} g sugar</span> per {unit} -
 					covers {guidelinePct(product.sugars100g)}% of the 25 g daily guideline
 				</p>
 			</div>
 
 			{serving && servingLead ? (
-				<p className="text-copy-13 text-text-muted">
+				<p className="text-body-sm text-kumo-default opacity-80">
 					{servingLead}: {formatGrams(serving.grams)} g - {cubeText(serving.grams)}
 				</p>
 			) : null}
 
 			<div className="mt-auto flex items-center justify-between gap-3">
-				<p className="text-label-12-mono text-text-faint">
+				<p className="text-code text-kumo-default opacity-70">
 					{product.quantity ? `${product.quantity} pack` : "\u00a0"}
 				</p>
-				<a
+				<Link
 					href={entryUrl}
 					target="_blank"
 					rel="noreferrer"
-					className="text-label-12-mono text-text-faint transition-colors hover:text-brand"
+					className="text-code text-kumo-default opacity-70  hover:text-kumo-link"
 				>
 					Open Food Facts
-				</a>
+				</Link>
 			</div>
 		</article>
 	);
@@ -134,7 +134,7 @@ export function SugarCubes({ data }: { data: SugarData }) {
 
 	return (
 		<div className="flex flex-col gap-6">
-			<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+			<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 				<form
 					action="/playground/sugar-cubes"
 					method="get"
@@ -147,7 +147,7 @@ export function SugarCubes({ data }: { data: SugarData }) {
 					<label htmlFor="sugar-query" className="sr-only">
 						Search a packaged food or drink
 					</label>
-					<input
+					<Input
 						id="sugar-query"
 						name="q"
 						type="search"
@@ -156,23 +156,20 @@ export function SugarCubes({ data }: { data: SugarData }) {
 						placeholder="Search a food or drink - nutella, cola, cookies..."
 						autoComplete="off"
 						enterKeyHint="search"
-						className="h-11 w-full min-w-0 flex-1 rounded-xl border border-input bg-background px-4 text-copy-14 text-foreground placeholder:text-text-faint focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+						className="h-11 min-w-0 flex-1 bg-kumo-canvas px-4"
 					/>
-					<button
-						type="submit"
-						className="h-11 shrink-0 rounded-xl border border-border bg-alpha-200 px-5 text-copy-14 text-foreground transition-colors hover:bg-alpha-300 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
-					>
+					<Button type="submit" variant="secondary" size="default" className="h-11 shrink-0 px-5">
 						{pending ? "Checking..." : "Check"}
-					</button>
+					</Button>
 				</form>
 
 				<div className="mt-3 flex flex-wrap items-center gap-2">
-					<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">Try</span>
+					<span className="text-label uppercase  text-kumo-default opacity-70">Try</span>
 					{CHIPS.map((chip) => (
 						<Link
 							key={chip}
 							href={`/playground/sugar-cubes?q=${encodeURIComponent(chip)}`}
-							className="rounded-full border border-border px-3 py-1 text-copy-13 text-text-muted transition-colors hover:border-alpha-500 hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+							className="rounded-full border border-kumo-hairline px-3 py-1 text-body-sm text-kumo-default opacity-80  hover:border-kumo-line hover:text-kumo-default focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus"
 						>
 							{chip}
 						</Link>
@@ -189,7 +186,7 @@ export function SugarCubes({ data }: { data: SugarData }) {
 					))}
 				</ul>
 			) : (
-				<p className="max-w-xl text-copy-14 text-text-muted">
+				<p className="max-w-xl text-body-sm text-kumo-default opacity-80">
 					{data.totalCount !== null && data.totalCount > 0
 						? `Found ${data.totalCount.toLocaleString("en-US")} matches for "${data.query}", but none carry a sugars figure - try a brand name or a plainer search.`
 						: `No matches for "${data.query}" in Open Food Facts - try a brand name or a plainer search.`}
@@ -197,7 +194,7 @@ export function SugarCubes({ data }: { data: SugarData }) {
 			)}
 
 			{data.mode === "search" && data.results.length > 0 ? (
-				<p className="text-copy-13 text-text-faint">
+				<p className="text-body-sm text-kumo-default opacity-70">
 					Showing {data.results.length} {matchWord} of{" "}
 					{data.totalCount === null ? "the results" : data.totalCount.toLocaleString("en-US")} -
 					entries without a sugars figure are skipped.

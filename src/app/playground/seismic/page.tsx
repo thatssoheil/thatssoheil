@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "@/components/ui";
 import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { SectionHeading } from "@/components/playground/section-heading";
 import { StatTile } from "@/components/playground/stat-tile";
@@ -80,21 +80,21 @@ export default async function SeismicWatchPage() {
 							href={data.largest.url}
 							target="_blank"
 							rel="noreferrer"
-							className="flex flex-col gap-1 rounded-xl border border-border bg-card px-4 py-4 transition-colors hover:border-alpha-500 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+							className="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-4  hover:border-kumo-line focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus"
 						>
-							<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+							<span className="text-label uppercase  text-kumo-default opacity-70">
 								Largest this week
 							</span>
 							<span className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
-								<span className="text-heading-24 text-foreground">
+								<span className="text-heading text-kumo-default">
 									{formatMag(data.largest.mag)}
 								</span>
-								<span className="text-copy-13 text-text-muted">
+								<span className="text-body-sm text-kumo-default opacity-80">
 									{formatQuakeAge(data.largest.time, asOfMs)}
 								</span>
 							</span>
-							<span className="text-copy-13 text-text-muted">{data.largest.place}</span>
-							<span className="text-copy-13 text-text-faint">
+							<span className="text-body-sm text-kumo-default opacity-80">{data.largest.place}</span>
+							<span className="text-body-sm text-kumo-default opacity-70">
 								{Math.round(data.largest.depthKm)} km deep
 							</span>
 						</Link>
@@ -102,21 +102,21 @@ export default async function SeismicWatchPage() {
 							href={data.latest.url}
 							target="_blank"
 							rel="noreferrer"
-							className="flex flex-col gap-1 rounded-xl border border-border bg-card px-4 py-4 transition-colors hover:border-alpha-500 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+							className="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-4  hover:border-kumo-line focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus"
 						>
-							<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+							<span className="text-label uppercase  text-kumo-default opacity-70">
 								Most recent
 							</span>
 							<span className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
-								<span className="text-heading-24 text-foreground">
+								<span className="text-heading text-kumo-default">
 									{formatMag(data.latest.mag)}
 								</span>
-								<span className="text-copy-13 text-text-muted">
+								<span className="text-body-sm text-kumo-default opacity-80">
 									{formatQuakeAge(data.latest.time, asOfMs)}
 								</span>
 							</span>
-							<span className="text-copy-13 text-text-muted">{data.latest.place}</span>
-							<span className="text-copy-13 text-text-faint">
+							<span className="text-body-sm text-kumo-default opacity-80">{data.latest.place}</span>
+							<span className="text-body-sm text-kumo-default opacity-70">
 								{Math.round(data.latest.depthKm)} km deep
 							</span>
 						</Link>
@@ -126,7 +126,7 @@ export default async function SeismicWatchPage() {
 
 			<section aria-label="Latest quakes">
 				<SectionHeading label="Latest quakes" note="newest first" />
-				<div className="rounded-xl border border-border bg-card px-4 py-1 sm:px-6 sm:py-2">
+				<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-1 sm:px-6 sm:py-2">
 					<div className="flex flex-col">
 						{latestEvents.map((event) => (
 							<Link
@@ -134,18 +134,18 @@ export default async function SeismicWatchPage() {
 								href={event.url}
 								target="_blank"
 								rel="noreferrer"
-								className="group flex flex-wrap items-baseline gap-x-4 gap-y-0.5 border-t border-border py-2.5 transition-colors first:border-t-0 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+								className="group flex flex-wrap items-baseline gap-x-4 gap-y-0.5 border-t border-kumo-hairline py-2.5  first:border-t-0 focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus"
 							>
-								<span className="w-14 shrink-0 text-copy-13-mono text-foreground">
+								<span className="w-14 shrink-0 text-code text-kumo-default">
 									{formatMag(event.mag)}
 								</span>
-								<span className="min-w-0 flex-1 text-copy-13 text-text-muted group-hover:text-foreground">
+								<span className="min-w-0 flex-1 text-body-sm text-kumo-default opacity-80 group-hover:text-kumo-default">
 									{event.place}
 								</span>
-								<span className="shrink-0 text-copy-13-mono text-text-faint">
+								<span className="shrink-0 text-code text-kumo-default opacity-70">
 									{Math.round(event.depthKm)} km deep
 								</span>
-								<span className="shrink-0 text-copy-13 text-text-faint">
+								<span className="shrink-0 text-body-sm text-kumo-default opacity-70">
 									{formatQuakeAge(event.time, asOfMs)}
 								</span>
 							</Link>
@@ -156,7 +156,7 @@ export default async function SeismicWatchPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						The list is the USGS M4.5+ feed: every earthquake of magnitude 4.5 and
 						above in the past 7 days, a rolling window that USGS updates every minute.

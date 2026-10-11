@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { SectionHeading } from "@/components/playground/section-heading";
 import { ColorVision } from "@/components/playground/color-vision";
+import { Link } from "@/components/ui";
 
 export const metadata: Metadata = {
 	title: "Color vision",
@@ -29,7 +30,7 @@ export default function ColorVisionPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						Color vision deficiency is not one condition but a family: the cone cells that carry red,
 						green, or blue sensitivity are shifted, and colors most eyes tell apart converge. This
@@ -51,14 +52,14 @@ export default function ColorVisionPage() {
 					<p>
 						The matrices come from the authors&apos; published table, captured 2026-10-09 and pinned
 						by content hash; the model is described in{" "}
-						<a
+						<Link
 							href="https://doi.org/10.1109/TVCG.2009.113"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							Machado, Oliveira and Fernandes (2009)
-						</a>
+						</Link>
 						, IEEE Transactions on Visualization and Computer Graphics 15(6):1291-1298. Nothing is
 						fetched at runtime, so nothing here can go stale.
 					</p>

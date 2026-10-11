@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/playground/section-heading";
 import { StatTile } from "@/components/playground/stat-tile";
 import { MACRO_NOTES } from "@/data/playground/macro-notes";
 import { formatDateLong } from "@/lib/playground/format";
+import { Link } from "@/components/ui";
 
 export const metadata: Metadata = {
 	title: "BTC and ETH macro notes",
@@ -31,11 +32,11 @@ export default function MacroNotesPage() {
 		>
 			<article aria-label="Latest note" className="flex flex-col gap-8">
 				<header className="max-w-2xl">
-					<p className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<p className="text-label uppercase  text-kumo-default opacity-70">
 						{formatDateLong(latest.date)}
 					</p>
-					<h2 className="mt-2 text-heading-32 text-foreground">{latest.title}</h2>
-					<p className="mt-4 text-copy-16 text-text-muted">{latest.summary}</p>
+					<h2 className="mt-2 text-display text-kumo-default">{latest.title}</h2>
+					<p className="mt-4 text-body text-kumo-default opacity-80">{latest.summary}</p>
 				</header>
 
 				<section aria-label="Verdict" className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -49,10 +50,10 @@ export default function MacroNotesPage() {
 
 				{latest.sections.map((section) => (
 					<section key={section.label} className="max-w-2xl">
-						<h3 className="text-heading-20 text-foreground">{section.label}</h3>
+						<h3 className="text-heading text-kumo-default">{section.label}</h3>
 						<div className="mt-3 flex flex-col gap-3">
 							{section.body.map((paragraph, index) => (
-								<p key={index} className="text-copy-16 text-text-muted">
+								<p key={index} className="text-body text-kumo-default opacity-80">
 									{paragraph}
 								</p>
 							))}
@@ -68,17 +69,17 @@ export default function MacroNotesPage() {
 						{archive.map((note) => (
 							<li
 								key={note.date}
-								className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-t border-alpha-200 py-3 first:border-t-0"
+								className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-t border-kumo-hairline py-3 first:border-t-0"
 							>
-								<span className="text-copy-14 text-foreground">{note.title}</span>
-								<span className="text-label-12-mono text-text-faint">
+								<span className="text-body-sm text-kumo-default">{note.title}</span>
+								<span className="text-code text-kumo-default opacity-70">
 									{formatDateLong(note.date)}
 								</span>
 							</li>
 						))}
 					</ul>
 				) : (
-					<p className="text-copy-13 text-text-faint">
+					<p className="text-body-sm text-kumo-default opacity-70">
 						This is the first note. A new read lands every week.
 					</p>
 				)}
@@ -86,7 +87,7 @@ export default function MacroNotesPage() {
 
 			<section aria-label="Method">
 				<SectionHeading label="Method" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						The engine scores 14 weighted signals across liquidity, risk
 						appetite, crypto internals, and inflation into a single regime
@@ -96,14 +97,14 @@ export default function MacroNotesPage() {
 					</p>
 					<p>
 						The code, the data pipeline, and the backtests are public:{" "}
-						<a
+						<Link
 							href={REPO_URL}
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							crypto-macro-analysis on GitHub
-						</a>
+						</Link>
 						.
 					</p>
 					<p>These notes are a reading of the data, not investment advice.</p>

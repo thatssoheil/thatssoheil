@@ -3,6 +3,7 @@ import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { SectionHeading } from "@/components/playground/section-heading";
 import { HafezFal } from "@/components/playground/hafez-fal";
 import { getHafezData, getHafezFallbackSet } from "@/lib/playground/hafez-source";
+import { Link } from "@/components/ui";
 
 // The page renders per request: the first draw comes live from Ganjoor (with
 // a per-isolate cache in the source module) and is never baked into the build.
@@ -33,7 +34,7 @@ export default async function HafezFalPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						This page is a window onto an established ritual rather than a re-creation:
 						Ganjoor&apos;s own fal service draws a random ghazal from Hafez&apos;s Divan, the
@@ -48,14 +49,14 @@ export default async function HafezFalPage() {
 					</p>
 					<p>
 						Data:{" "}
-						<a
+						<Link
 							href="https://api.ganjoor.net"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							Ganjoor&apos;s fal API
-						</a>{" "}
+						</Link>{" "}
 						(keyless and public; the classical text is in the public domain). Draws are one
 						request each, and the first draw is cached for about a minute per running instance.
 						Attribution: &quot;Text from Ganjoor&quot;, with a link to the ghazal.

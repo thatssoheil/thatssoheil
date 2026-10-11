@@ -1,12 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { cn } from "@/lib/utils";
 import { formatDateShort } from "@/lib/playground/format";
 import { parseFalPayload } from "@/lib/playground/hafez-parse";
 import type { HafezData, HafezFallbackSet, HafezGhazal } from "@/lib/playground/types";
+import { Link } from "@/components/ui";
+import { Button } from "@/components/ui";
 
 // The fal, drawn: the server renders the first draw (live from Ganjoor, or a
 // local draw when the live path failed). Each redraw asks Ganjoor directly
@@ -16,7 +17,7 @@ import type { HafezData, HafezFallbackSet, HafezGhazal } from "@/lib/playground/
 
 const FAAL_URL = "https://api.ganjoor.net/api/ganjoor/hafez/faal";
 
-/** Persian typefaces, system fonts only; Lexend has no Arabic coverage. */
+/** Persian typefaces use native Arabic-capable system fallbacks. */
 const PERSIAN_FONT_STACK =
 	'"Noto Naskh Arabic", "Noto Sans Arabic", "Geeza Pro", Tahoma, "Segoe UI", Arial, sans-serif';
 
@@ -114,10 +115,10 @@ export function HafezFal({
 	const ganjoorUrl = `https://ganjoor.net${draw.ghazal.fullUrl}`;
 
 	return (
-		<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-				<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">The draw</span>
-				<span role="status" aria-live="polite" className="text-label-12-mono text-text-faint">
+				<span className="text-label uppercase  text-kumo-default opacity-70">The draw</span>
+				<span role="status" aria-live="polite" className="text-code text-kumo-default opacity-70">
 					{stateLine}
 				</span>
 			</div>
@@ -132,11 +133,11 @@ export function HafezFal({
 					drawing && "opacity-60",
 				)}
 			>
-				<p className="text-copy-14 text-text-muted">{draw.ghazal.fullTitle}</p>
+				<p className="text-body-sm text-kumo-default opacity-80">{draw.ghazal.fullTitle}</p>
 				{couplets.map((couplet, index) => (
 					<p
 						key={index}
-						className="flex flex-wrap justify-start gap-x-10 text-copy-20 leading-loose text-foreground sm:text-copy-24"
+						className="flex flex-wrap justify-start gap-x-10 text-body leading-loose text-kumo-default sm:text-body"
 					>
 						{couplet.first ? <span>{couplet.first}</span> : null}
 						{couplet.second ? <span>{couplet.second}</span> : null}
@@ -146,36 +147,36 @@ export function HafezFal({
 
 			<div className="mt-5 flex flex-wrap items-center justify-between gap-3">
 				<div className="flex max-w-md flex-col gap-1">
-					<p className="text-copy-14 text-text-muted">
+					<p className="text-body-sm text-kumo-default opacity-80">
 						Hold a wish, then draw. Each draw is a random ghazal from Ganjoor&apos;s fal service; the
 						page stores nothing about you.
 					</p>
-					{note ? <p className="text-copy-13 text-text-faint">{note}</p> : null}
+					{note ? <p className="text-body-sm text-kumo-default opacity-70">{note}</p> : null}
 				</div>
 				<Button onClick={handleDraw} disabled={drawing}>
 					{drawing ? "Drawing..." : drawCount > 0 ? "Draw again" : "Draw"}
 				</Button>
 			</div>
 
-			<p className="mt-4 text-copy-13 text-text-faint">
+			<p className="mt-4 text-body-sm text-kumo-default opacity-70">
 				Text from{" "}
-				<a
+				<Link
 					href="https://ganjoor.net"
 					target="_blank"
 					rel="noreferrer"
-					className="text-brand transition-opacity hover:opacity-75"
+					className="text-kumo-link transition-opacity hover:opacity-75"
 				>
 					Ganjoor
-				</a>{" "}
+				</Link>{" "}
 				·{" "}
-				<a
+				<Link
 					href={ganjoorUrl}
 					target="_blank"
 					rel="noreferrer"
-					className="text-brand transition-opacity hover:opacity-75"
+					className="text-kumo-link transition-opacity hover:opacity-75"
 				>
 					this ghazal on ganjoor.net
-				</a>
+				</Link>
 			</p>
 		</div>
 	);

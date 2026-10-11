@@ -61,7 +61,7 @@ export function AreaChart({
 		<figure className="w-full">
 			<svg
 				viewBox={`0 0 ${width} ${height}`}
-				className="h-auto w-full text-brand"
+				className="h-auto w-full text-kumo-link"
 				role="img"
 				aria-label={ariaLabel}
 			>
@@ -70,7 +70,7 @@ export function AreaChart({
 					x2={width}
 					y1={midY}
 					y2={midY}
-					className="text-alpha-200"
+					className="text-kumo-default opacity-70"
 					stroke="currentColor"
 					strokeWidth={1}
 					strokeDasharray="4 6"
@@ -85,7 +85,7 @@ export function AreaChart({
 					vectorEffect="non-scaling-stroke"
 				/>
 			</svg>
-			<figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-label-12-mono text-text-faint">
+			<figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-code text-kumo-default opacity-70">
 				<span>
 					{formatDateShort(points[0].date)} to {formatDateShort(points[points.length - 1].date)}
 				</span>

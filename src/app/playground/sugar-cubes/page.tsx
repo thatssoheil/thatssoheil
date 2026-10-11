@@ -5,6 +5,7 @@ import { SugarCubes } from "@/components/playground/sugar-cubes";
 import { getSugarData } from "@/lib/playground/sugar-source";
 import { formatDateShort, formatDateTimeUtc } from "@/lib/playground/format";
 import type { SugarData } from "@/lib/playground/types";
+import { Link } from "@/components/ui";
 
 // The page renders per request from the live search (with a per-isolate
 // cache in the source module) - never baked into the build.
@@ -76,17 +77,17 @@ export default async function SugarCubesPage({
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						Every product comes from{" "}
-						<a
+						<Link
 							href="https://world.openfoodfacts.org"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							Open Food Facts
-						</a>
+						</Link>
 						, a community database of packaged food and drink - millions of entries, written and checked
 						by volunteers, open to everyone. The sugars figures are the ones on each product&apos;s
 						nutrition panel as the database has it; nothing here is estimated. Each result opens its own
@@ -94,14 +95,14 @@ export default async function SugarCubesPage({
 					</p>
 					<p>
 						One cube is about 4 grams of sugar (brand cubes run 2.5 to 5 grams).{" "}
-						<a
+						<Link
 							href="https://www.who.int/news/item/04-03-2015-who-calls-on-countries-to-reduce-sugars-intake-among-adults-and-children"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							The WHO suggests
-						</a>{" "}
+						</Link>{" "}
 						keeping free sugars under 25 grams a day - about six cubes - and each card shows the
 						product&apos;s sugars against that line. Free sugars are the added sugars plus those in honey,
 						syrups, and fruit juice.

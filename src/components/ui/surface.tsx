@@ -1,71 +1,42 @@
 import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "radix-ui";
 
 import { cn } from "@/lib/utils";
 
-// The one entry point for glass. The raw .glass-* classes (globals.css) are internal
-// building blocks; product surfaces compose them through this primitive so the material,
-// the edge, and the radius law live in a single place (ADR-0002, audit #9).
-const surfaceVariants = cva("", {
-	variants: {
-		// chrome  = translucent bars/inputs/overlays · panel = near-solid reading content
-		// strong  = deep-blur takeover (compose with the chat dialog)
-		variant: {
-			chrome: "glass",
-			panel: "glass-panel",
-			strong: "glass glass-strong",
-			// Chromium-only field refraction (gate on useRefractionSupported); falls
-			// back to `strong` everywhere else. Needs <SignalGlassFilter/> mounted.
-			refract: "glass glass-refract",
-		},
-		edge: {
-			true: "glass-edge",
-			false: "",
-		},
-		// The sanctioned radius law — no ad-hoc rounded-* on glass surfaces.
-		radius: {
-			none: "",
-			sm: "rounded-xl",
-			md: "rounded-2xl",
-			lg: "rounded-3xl",
-		},
-	},
-	defaultVariants: {
-		variant: "panel",
-		edge: true,
-		radius: "md",
-	},
-});
+export const surfaceLayer = {
+	canvas: "bg-kumo-canvas",
+	base: "bg-kumo-base",
+	elevated: "bg-kumo-elevated",
+	recessed: "bg-kumo-recessed",
+	control: "bg-kumo-control",
+	overlay: "bg-kumo-overlay",
+} as const;
 
-const surfaceRole = {
-	commandMenuPanel: surfaceVariants({ variant: "panel", radius: "sm" }),
-	heroChatPanel: surfaceVariants({
-		variant: "panel",
-		edge: true,
-		radius: "md",
-	}),
+export type SurfaceLayer = keyof typeof surfaceLayer;
+
+export const surfaceRole = {
+	commandMenuPanel: "bg-kumo-elevated rounded-lg shadow-xs ring ring-kumo-line",
 } as const;
 
 function Surface({
 	className,
-	variant,
-	edge,
-	radius,
+	layer = "base",
 	asChild = false,
 	...props
-}: React.ComponentProps<"div"> &
-	VariantProps<typeof surfaceVariants> & {
-		asChild?: boolean;
-	}) {
+}: React.ComponentProps<"div"> & {
+	layer?: SurfaceLayer;
+	asChild?: boolean;
+}) {
 	const Comp = asChild ? Slot.Root : "div";
+
 	return (
 		<Comp
 			data-slot="surface"
-			className={cn(surfaceVariants({ variant, edge, radius, className }))}
+			data-layer={layer}
+			className={cn(surfaceLayer[layer], className)}
 			{...props}
 		/>
 	);
 }
 
-export { Surface, surfaceRole, surfaceVariants };
+export { Surface };

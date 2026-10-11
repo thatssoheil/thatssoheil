@@ -88,7 +88,7 @@ export function NightSide() {
 		const h = canvas.height;
 		ctx.clearRect(0, 0, w, h);
 		if (w < 2 || h < 2) return;
-		ctx.fillStyle = tokenColor("--alpha-600");
+		ctx.fillStyle = tokenColor("--color-kumo-line");
 		const { cols, rows } = maskData;
 		const cellW = w / cols;
 		const cellH = h / rows;
@@ -122,7 +122,7 @@ export function NightSide() {
 		// Shading, on a coarse grid of about two css px blocks.
 		const cols = Math.max(90, Math.round(w / (SHADE_BLOCK * dpr)));
 		const rows = Math.max(45, Math.round(h / (SHADE_BLOCK * dpr)));
-		ctx.fillStyle = tokenColor("--alpha-600");
+		ctx.fillStyle = tokenColor("--color-kumo-contrast");
 		for (let j = 0; j < rows; j += 1) {
 			const lat = 90 - ((j + 0.5) / rows) * 180;
 			const y0 = Math.round((j * h) / rows);
@@ -142,14 +142,14 @@ export function NightSide() {
 		// The sun's overhead point: a ring in the brand color.
 		const sx = ((subsolarLon + 180) / 360) * w;
 		const sy = ((90 - dec) / 180) * h;
-		ctx.strokeStyle = tokenColor("--brand");
+		ctx.strokeStyle = tokenColor("--color-kumo-brand");
 		ctx.lineWidth = Math.max(1, Math.round(1.4 * dpr));
 		ctx.beginPath();
 		ctx.arc(sx, sy, Math.max(3, 4.5 * dpr), 0, Math.PI * 2);
 		ctx.stroke();
 
 		// The five cities: small brand dots.
-		ctx.fillStyle = tokenColor("--brand");
+		ctx.fillStyle = tokenColor("--color-kumo-brand");
 		const dotR = Math.max(1.2, 1.8 * dpr);
 		for (const city of CITIES) {
 			const cx = ((city.lon + 180) / 360) * w;
@@ -233,17 +233,17 @@ export function NightSide() {
 			: "World map of the day/night line, computed in your browser.";
 
 	return (
-		<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-				<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">The instrument</span>
-				<span className="text-label-12-mono text-text-faint">
+				<span className="text-label uppercase  text-kumo-default opacity-70">The instrument</span>
+				<span className="text-code text-kumo-default opacity-70">
 					{asOfUtc === null ? "computing" : `${asOfUtc} UTC`}
 				</span>
 			</div>
 
 			<div
 				ref={boxRef}
-				className="relative mt-4 aspect-[2/1] w-full overflow-hidden rounded-lg border border-alpha-200"
+				className="relative mt-4 aspect-[2/1] w-full overflow-hidden rounded-lg border border-kumo-hairline"
 			>
 				<canvas ref={atlasRef} role="img" aria-label={mapLabel} className="block h-full w-full" />
 				<canvas
@@ -253,23 +253,23 @@ export function NightSide() {
 				/>
 			</div>
 
-			<div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-label-12 text-text-faint">
+			<div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-label text-kumo-default opacity-70">
 				{BAND_ROWS.map((row) => (
 					<span key={row.band} className="flex items-center gap-1.5">
 						<span
 							aria-hidden="true"
-							className="inline-block h-3 w-3 rounded-[3px] border border-alpha-200 bg-background"
+							className="inline-block h-3 w-3 rounded-[3px] border border-kumo-hairline bg-kumo-canvas"
 							style={
 								row.band === "day"
 									? undefined
-									: { backgroundColor: "var(--alpha-600)", opacity: BAND_ALPHAS[row.band] }
+									: { backgroundColor: "var(--color-kumo-contrast)", opacity: BAND_ALPHAS[row.band] }
 							}
 						/>
 						{row.label}
 					</span>
 				))}
 				<span className="flex items-center gap-1.5">
-					<span aria-hidden="true" className="inline-block h-3 w-3 rounded-full border border-brand" />
+					<span aria-hidden="true" className="inline-block h-3 w-3 rounded-full border border-kumo-brand" />
 					the sun overhead
 				</span>
 			</div>
@@ -278,14 +278,14 @@ export function NightSide() {
 				{CITIES.map((city) => {
 					const state = now === null ? null : cityState(city, now);
 					return (
-						<div key={city.name} className="rounded-lg border border-alpha-200 bg-background px-3 py-2">
+						<div key={city.name} className="rounded-lg border border-kumo-hairline bg-kumo-canvas px-3 py-2">
 							<div className="flex items-baseline justify-between gap-2">
-								<span className="text-label-13 text-foreground">{city.name}</span>
-								<span className="text-label-12-mono text-text-faint">
+								<span className="text-label text-kumo-default">{city.name}</span>
+								<span className="text-code text-kumo-default opacity-70">
 									{now === null ? "--:--" : formatLocalTime(now, city.zone)}
 								</span>
 							</div>
-							<div className="mt-1 text-label-12-mono text-text-faint">
+							<div className="mt-1 text-code text-kumo-default opacity-70">
 								{state
 									? `${BAND_LABELS[state.band]} · sun ${state.alt >= 0 ? "+" : ""}${state.alt.toFixed(1)} degrees`
 									: "computing"}
@@ -295,7 +295,7 @@ export function NightSide() {
 				})}
 			</div>
 
-			<p className="mt-4 text-copy-13 text-text-faint">
+			<p className="mt-4 text-body-sm text-kumo-default opacity-70">
 				Computed in your browser from the clock, on a committed outline of Natural Earth&apos;s 110m
 				land layer - nothing is fetched, so nothing here can go stale.{" "}
 				{reducedMotion

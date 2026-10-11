@@ -5,8 +5,8 @@
 export function SectionHeading({ label, note }: { label: string; note?: string }) {
 	return (
 		<div className="mb-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-			<h2 className="font-sans text-sm tracking-[0.2em] uppercase text-brand">{label}</h2>
-			{note ? <span className="text-label-12-mono text-text-faint">{note}</span> : null}
+			<h2 className="font-sans text-sm  uppercase text-kumo-link">{label}</h2>
+			{note ? <span className="text-code text-kumo-default opacity-70">{note}</span> : null}
 		</div>
 	);
 }

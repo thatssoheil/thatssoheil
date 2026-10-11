@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { Button, Input } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import {
 	MONTH_NAMES_EN,
@@ -95,17 +96,17 @@ function intlCrossCheck(instant: Date): "agrees" | "differs" | null {
 function BlockLabel({ label, children }: { label: string; children?: ReactNode }) {
 	return (
 		<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-			<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">{label}</span>
-			{children ? <span className="text-label-12-mono text-text-faint">{children}</span> : null}
+			<span className="text-label uppercase  text-kumo-default opacity-70">{label}</span>
+			{children ? <span className="text-code text-kumo-default opacity-70">{children}</span> : null}
 		</div>
 	);
 }
 
 const NAV_BUTTON =
-	"rounded-full border border-border px-3 py-1 text-copy-13 text-text-muted transition-colors hover:border-alpha-500 hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)] disabled:cursor-not-allowed disabled:opacity-40";
+	"h-9 rounded-full border border-kumo-hairline px-3 text-kumo-default opacity-80 hover:border-kumo-line hover:text-kumo-default disabled:cursor-not-allowed disabled:opacity-40";
 
 const FIELD =
-	"h-11 rounded-xl border border-input bg-background px-2 text-copy-14 text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]";
+	"h-9 rounded-lg border border-kumo-line bg-kumo-control px-2 text-body-sm text-kumo-default focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-kumo-focus";
 
 export function PersianCalendar({ initialToday }: { initialToday: TehranToday }) {
 	const [today, setToday] = useState<TehranToday>(initialToday);
@@ -192,29 +193,29 @@ export function PersianCalendar({ initialToday }: { initialToday: TehranToday })
 							? "your browser's Persian calendar reads a different date"
 							: null}
 				</BlockLabel>
-				<div className="mt-3 rounded-xl border border-border bg-card px-5 py-5 sm:px-6">
-					<p dir="rtl" className="text-left text-heading-32 text-foreground">
+				<div className="mt-3 rounded-lg border border-kumo-hairline bg-kumo-base px-5 py-5 sm:px-6">
+					<p dir="rtl" className="text-left text-display text-kumo-default">
 						{`${WEEKDAY_NAMES_FA[weekday]} ${today.jd} ${MONTH_NAMES_FA[today.jm - 1]} ${today.jy}`}
 					</p>
-					<p className="mt-1.5 text-heading-20 text-text-muted">
+					<p className="mt-1.5 text-heading text-kumo-default opacity-80">
 						{`${WEEKDAY_NAMES_EN[weekday]} - ${today.jd} ${MONTH_NAMES_EN[today.jm - 1]} ${today.jy}`}
 					</p>
-					<p className="mt-1 text-copy-14 text-text-faint">{formatGregorian(today)}</p>
+					<p className="mt-1 text-body-sm text-kumo-default opacity-70">{formatGregorian(today)}</p>
 
 					<div className="mt-5 flex flex-col gap-2">
 						<div className="flex flex-wrap items-baseline justify-between gap-x-3">
-							<span className="text-copy-13 text-text-muted">{`Day ${doy} of ${yearLen}`}</span>
-							<span className="text-label-12-mono text-text-faint">
+							<span className="text-body-sm text-kumo-default opacity-80">{`Day ${doy} of ${yearLen}`}</span>
+							<span className="text-code text-kumo-default opacity-70">
 								{`${progress.toFixed(1)} percent through the year`}
 							</span>
 						</div>
-						<div className="h-1.5 overflow-hidden rounded-full bg-alpha-200">
+						<div className="h-1.5 overflow-hidden rounded-full bg-kumo-fill-hover">
 							<div
-								className="h-full rounded-full bg-brand"
+								className="h-full rounded-full bg-kumo-brand"
 								style={{ width: `${progress.toFixed(1)}%` }}
 							/>
 						</div>
-						<p className="text-copy-13 text-text-faint">
+						<p className="text-body-sm text-kumo-default opacity-70">
 							{`Nowruz ${today.jy + 1} falls on ${formatGregorian(nowruz)} - ${nowruzDays} days from today.`}
 						</p>
 					</div>
@@ -223,10 +224,10 @@ export function PersianCalendar({ initialToday }: { initialToday: TehranToday })
 
 			<div>
 				<BlockLabel label="The month">Saturday first</BlockLabel>
-				<div className="mt-3 rounded-xl border border-border bg-card px-5 py-5 sm:px-6">
+				<div className="mt-3 rounded-lg border border-kumo-hairline bg-kumo-base px-5 py-5 sm:px-6">
 					<div className="mx-auto w-full max-w-md">
 						<div className="flex items-center justify-between gap-3">
-							<button
+							<Button variant="ghost" size="default"
 								type="button"
 								onClick={() => stepMonth(-1)}
 								disabled={atWindowMin}
@@ -234,16 +235,16 @@ export function PersianCalendar({ initialToday }: { initialToday: TehranToday })
 								className={NAV_BUTTON}
 							>
 								Previous
-							</button>
+							</Button>
 							<div className="flex flex-col items-center gap-0.5">
-								<span dir="rtl" className="text-heading-20 text-foreground">
+								<span dir="rtl" className="text-heading text-kumo-default">
 									{`${MONTH_NAMES_FA[view.jm - 1]} ${view.jy}`}
 								</span>
-								<span className="text-label-12-mono text-text-faint">
+								<span className="text-code text-kumo-default opacity-70">
 									{`${MONTH_NAMES_EN[view.jm - 1]} ${view.jy}`}
 								</span>
 							</div>
-							<button
+							<Button variant="ghost" size="default"
 								type="button"
 								onClick={() => stepMonth(1)}
 								disabled={atWindowMax}
@@ -251,13 +252,13 @@ export function PersianCalendar({ initialToday }: { initialToday: TehranToday })
 								className={NAV_BUTTON}
 							>
 								Next
-							</button>
+							</Button>
 						</div>
 						<div className="mt-4 grid grid-cols-7 gap-1">
 							{WEEKDAY_NAMES_EN.map((name) => (
 								<span
 									key={name}
-									className="py-1 text-center text-label-12 uppercase tracking-[0.14em] text-text-faint"
+									className="py-1 text-center text-label uppercase  text-kumo-default opacity-70"
 								>
 									{name.slice(0, 3)}
 								</span>
@@ -268,10 +269,10 @@ export function PersianCalendar({ initialToday }: { initialToday: TehranToday })
 										key={`${cell.jy}-${cell.jm}-${cell.jd}`}
 										aria-current={isToday(cell) ? "date" : undefined}
 										className={cn(
-											"flex aspect-square items-center justify-center rounded-md text-copy-14",
+											"flex aspect-square items-center justify-center rounded-md text-body-sm",
 											isToday(cell)
-												? "border border-brand/60 bg-brand/10 text-foreground"
-												: "text-text-muted",
+												? "border border-kumo-brand bg-kumo-fill-hover text-kumo-default"
+												: "text-kumo-default opacity-80",
 										)}
 									>
 										{cell.jd}
@@ -287,30 +288,30 @@ export function PersianCalendar({ initialToday }: { initialToday: TehranToday })
 
 			<div>
 				<BlockLabel label="Convert">{`${WINDOW_MIN_JY}-${WINDOW_MAX_JY} Shamsi`}</BlockLabel>
-				<div className="mt-3 rounded-xl border border-border bg-card px-5 py-5 sm:px-6">
+				<div className="mt-3 rounded-lg border border-kumo-hairline bg-kumo-base px-5 py-5 sm:px-6">
 					<div className="grid gap-5 sm:grid-cols-2">
 						<div className="flex flex-col gap-2">
 							<label
 								htmlFor="pc-gregorian"
-								className="text-label-12 uppercase tracking-[0.14em] text-text-faint"
+								className="text-label uppercase  text-kumo-default opacity-70"
 							>
 								Gregorian
 							</label>
-							<input
+							<Input
 								id="pc-gregorian"
 								type="date"
 								min={WINDOW_MIN_ISO}
 								max={WINDOW_MAX_ISO}
 								value={isoDate(pickedG)}
 								onChange={(event) => onGregorian(event.target.value)}
-								className="h-11 w-full rounded-xl border border-input bg-background px-4 text-copy-14 text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+								className="w-full"
 							/>
-							<p className="text-copy-13 text-text-faint">
+							<p className="text-body-sm text-kumo-default opacity-70">
 								{`reads as ${picked.jd} ${MONTH_NAMES_EN[picked.jm - 1]} ${picked.jy}`}
 							</p>
 						</div>
 						<div className="flex flex-col gap-2">
-							<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+							<span className="text-label uppercase  text-kumo-default opacity-70">
 								Shamsi
 							</span>
 							<div className="flex gap-2">
@@ -351,17 +352,17 @@ export function PersianCalendar({ initialToday }: { initialToday: TehranToday })
 									))}
 								</select>
 							</div>
-							<p className="text-copy-13 text-text-faint">
+							<p className="text-body-sm text-kumo-default opacity-70">
 								{`reads as ${formatGregorian(pickedG)}`}
 							</p>
 						</div>
 					</div>
 					{note ? (
-						<p role="status" aria-live="polite" className="mt-3 text-copy-13 text-destructive">
+						<p role="status" aria-live="polite" className="mt-3 text-body-sm text-kumo-default">
 							{note}
 						</p>
 					) : null}
-					<p className="mt-3 text-copy-13 text-text-faint">
+					<p className="mt-3 text-body-sm text-kumo-default opacity-70">
 						{`Supported window: ${windowLabel()}.`}
 					</p>
 				</div>
