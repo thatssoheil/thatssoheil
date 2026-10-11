@@ -1,7 +1,8 @@
 import type { SectionId } from "@/lib/constants";
 import { CUTS, MANIFESTO } from "@/data/manifesto";
 import { SectionPanel } from "@/components/sections/section-panel";
-import { Separator, textRole, typeRole } from "@/components/ui";
+import { Separator, typeRole } from "@/components/ui";
+
 export function ManifestoSection() {
 	return (
 		<SectionPanel
@@ -13,29 +14,30 @@ export function ManifestoSection() {
 			intro={MANIFESTO.subheading}
 		>
 			<div className="flex flex-col gap-8 sm:gap-10">
-				{MANIFESTO.paragraphs.map((p, index) => (
+				{MANIFESTO.paragraphs.map((paragraph, index) => (
 					<div
-						key={p.label}
+						key={paragraph.label}
 						className="relative grid gap-3 pt-6 first:pt-0 sm:grid-cols-[8.75rem_minmax(0,1fr)]"
 					>
-						{index > 0 ? <Separator className="absolute inset-x-0 top-0" aria-hidden="true" /> : null}
-						<p className={`whitespace-nowrap pt-[0.35em] text-kumo-default opacity-70 ${typeRole.manifestoEntryLabel}`}>
-							{p.label}
+						{index > 0 ? (
+							<Separator className="absolute inset-x-0 top-0" aria-hidden="true" />
+						) : null}
+						<p className={`pt-1 text-kumo-default ${typeRole.manifestoEntryLabel}`}>
+							{paragraph.label}
 						</p>
-						<p className={`text-left text-base leading-relaxed sm:text-lg ${textRole.muted}`}>
-							{p.body}
+						<p className="brand-body text-left text-kumo-default">
+							{paragraph.body}
 						</p>
 					</div>
 				))}
 
-				{/* The cut log — the curation claim kept literal. */}
 				<div className="relative grid gap-3 pt-6 sm:grid-cols-[8.75rem_minmax(0,1fr)]">
 					<Separator className="absolute inset-x-0 top-0" aria-hidden="true" />
-					<p className={`whitespace-nowrap pt-[0.35em] text-kumo-default opacity-70 ${typeRole.manifestoEntryLabel}`}>
+					<p className={`pt-1 text-kumo-default ${typeRole.manifestoEntryLabel}`}>
 						{CUTS.label}
 					</p>
-					<div className={`text-left text-sm leading-relaxed sm:text-base ${textRole.faint}`}>
-						<ul className="space-y-1.5">
+					<div className="brand-body text-kumo-default">
+						<ul className="space-y-2">
 							{CUTS.items.map((entry) => (
 								<li key={entry.text}>
 									{entry.text} ({entry.date})

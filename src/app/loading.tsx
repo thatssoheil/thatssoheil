@@ -5,7 +5,7 @@ export default function Loading() {
 	return (
 		<>
 			<title>{`Loading | ${SITE.name}`}</title>
-			<div className="flex min-h-screen flex-col bg-kumo-canvas" role="status" aria-label="Loading page">
+			<div className="flex min-h-stable-screen flex-col bg-kumo-canvas" role="status" aria-label="Loading page">
 				<div className="fixed inset-x-0 top-[calc(env(safe-area-inset-top)+0.75rem)] z-[var(--z-header)] px-5 sm:px-8 md:px-12 lg:px-16">
 					<Surface
 						layer="elevated"

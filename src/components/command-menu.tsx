@@ -11,6 +11,7 @@ import {
 	MagnifyingGlass,
 	List,
 	ArrowElbowDownLeft,
+	ArrowSquareOut,
 	FileText,
 	Flask,
 } from "@phosphor-icons/react/ssr";
@@ -19,32 +20,27 @@ import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { jumpToSection } from "@/lib/section-navigation";
 import { cn } from "@/lib/utils";
 import { surfaceRole, textRole, typeRole, Button } from "@/components/ui";
-const ITEM_CLASS =
-	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
-	// mobile nav); sm:py-2.5 keeps the compact desktop rows unchanged.
-	[
-		"group flex items-center gap-3 rounded-lg px-3 py-3 sm:py-2.5 text-sm cursor-pointer data-[selected=true]:bg-kumo-fill-hover data-[selected=true]:text-kumo-default",
-		textRole.muted,
-	].join(" ");
+
+const ITEM_CLASS = [
+	"group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-3 text-sm data-[selected=true]:bg-kumo-fill-hover data-[selected=true]:text-kumo-default sm:py-2",
+	textRole.muted,
+].join(" ");
 
 const ICON_CLASS =
-	"size-4 text-kumo-default opacity-70 group-data-[selected=true]:text-kumo-link";
+	"size-4 shrink-0 text-kumo-default opacity-70 group-data-[selected=true]:text-kumo-link";
 
 export function CommandMenu() {
 	const [open, setOpen] = useState(false);
 	const [copied, setCopied] = useState(false);
 	const pathname = usePathname();
 	const router = useRouter();
-	// On touch devices the menu doubles as mobile nav, so the palette input must
-	// not autofocus — that would pop the on-screen keyboard over the section list
-	// the moment the menu opens.
 	const coarsePointer = useCoarsePointer();
 
 	useEffect(() => {
-		const onKey = (e: KeyboardEvent) => {
-			if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-				e.preventDefault();
-				setOpen((o) => !o);
+		const onKey = (event: KeyboardEvent) => {
+			if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+				event.preventDefault();
+				setOpen((current) => !current);
 			}
 		};
 		document.addEventListener("keydown", onKey);
@@ -84,42 +80,46 @@ export function CommandMenu() {
 	}, []);
 
 	const copyEmail = useCallback(() => {
-		void navigator.clipboard?.writeText(EMAIL);
+		void navigator.clipboard?.writeText(EMAIL).catch(() => {
+			// The status remains useful when browser or OS policy denies clipboard access.
+		});
 		setCopied(true);
 		setTimeout(() => setCopied(false), 1500);
 	}, []);
 
 	return (
 		<>
-			{/* Desktop trigger — ⌘K hint chip */}
-			<Button variant="ghost" size="default"
+			<Button
+				variant="ghost"
+				size="default"
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-lg border border-kumo-hairline px-2.5 text-sm text-kumo-default opacity-70 hover:text-kumo-default hover:border-kumo-line hover:bg-kumo-fill-hover focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus"
+				className="hidden h-9 items-center gap-1.5 rounded-lg border border-kumo-hairline px-2.5 text-sm text-kumo-default opacity-75 hover:border-kumo-line hover:bg-kumo-fill-hover hover:opacity-100 focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus sm:inline-flex"
 			>
 				<span className="font-sans" aria-hidden="true">⌘</span>
 				<span aria-hidden="true">K</span>
 			</Button>
 
-			{/* Mobile trigger — opens the same menu (also serves as mobile nav) */}
-			<Button variant="ghost" size="default"
+			<Button
+				variant="ghost"
+				size="default"
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 rounded-lg text-kumo-default opacity-70 hover:bg-kumo-fill-hover hover:text-kumo-default focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus"
+				className="-mr-2 inline-flex size-11 items-center justify-center rounded-lg text-kumo-default opacity-75 hover:bg-kumo-fill-hover hover:opacity-100 focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus sm:hidden"
 			>
 				<List className="size-5" aria-hidden="true" />
 			</Button>
 
 			<Dialog.Root open={open} onOpenChange={setOpen}>
 				<Dialog.Portal>
-					<Dialog.Overlay className="fixed inset-0 z-[var(--z-overlay)] bg-kumo-overlay" />
+					<Dialog.Overlay className="cf-dialog-overlay fixed inset-0 z-[var(--z-overlay)] bg-kumo-overlay" />
 					<Dialog.Content
 						aria-describedby={undefined}
 						className={cn(
 							surfaceRole.commandMenuPanel,
-							"fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden text-kumo-default outline-none",
+							"cf-dialog-content fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden text-kumo-default outline-none",
 						)}
 					>
 						<VisuallyHidden.Root>
@@ -134,11 +134,11 @@ export function CommandMenu() {
 							)}
 						>
 							<div className="flex items-center gap-2 border-b border-kumo-hairline px-4">
-								<MagnifyingGlass className="size-4 text-kumo-default opacity-70 shrink-0" />
+								<MagnifyingGlass className="size-4 shrink-0 text-kumo-default opacity-70" aria-hidden="true" />
 								<Command.Input
 									autoFocus={!coarsePointer}
 									placeholder="Jump to a section, open a link…"
-									className="w-full bg-transparent py-3.5 text-sm font-sans text-kumo-default outline-none placeholder:text-kumo-default placeholder:opacity-50"
+									className="w-full rounded-md bg-transparent py-3.5 text-sm font-sans text-kumo-default outline-none placeholder:text-kumo-default placeholder:opacity-50 focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-kumo-focus"
 								/>
 							</div>
 
@@ -148,16 +148,16 @@ export function CommandMenu() {
 								</Command.Empty>
 
 								<Command.Group heading="Sections">
-									{SECTIONS.map((s) => (
+									{SECTIONS.map((section) => (
 										<Command.Item
-											key={s.id}
-											value={`section ${s.label}`}
-											onSelect={() => goToSection(s.id)}
+											key={section.id}
+											value={`section ${section.label}`}
+											onSelect={() => goToSection(section.id)}
 											className={ITEM_CLASS}
 										>
-											<Hash className={ICON_CLASS} weight="regular" />
-											<span>{s.label}</span>
-											<ArrowElbowDownLeft className="ml-auto size-3.5 opacity-0 group-data-[selected=true]:opacity-40" weight="regular" aria-hidden="true" />
+											<Hash className={ICON_CLASS} weight="regular" aria-hidden="true" />
+											<span>{section.label}</span>
+											<ArrowElbowDownLeft className="ml-auto size-3.5 shrink-0 opacity-0 group-data-[selected=true]:opacity-40" weight="regular" aria-hidden="true" />
 										</Command.Item>
 									))}
 								</Command.Group>
@@ -168,7 +168,7 @@ export function CommandMenu() {
 										onSelect={openPlayground}
 										className={ITEM_CLASS}
 									>
-										<Flask className={ICON_CLASS} weight="regular" />
+										<Flask className={ICON_CLASS} weight="regular" aria-hidden="true" />
 										<span>Playground</span>
 									</Command.Item>
 									<Command.Item
@@ -176,18 +176,19 @@ export function CommandMenu() {
 										onSelect={openResume}
 										className={ITEM_CLASS}
 									>
-										<FileText className={ICON_CLASS} weight="regular" />
+										<FileText className={ICON_CLASS} weight="regular" aria-hidden="true" />
 										<span>Resume</span>
 									</Command.Item>
-									{SOCIALS.map((l) => (
+									{SOCIALS.map((social) => (
 										<Command.Item
-											key={l.label}
-											value={`link ${l.label} ${l.keywords}`}
-											onSelect={() => openLink(l.href)}
+											key={social.label}
+											value={`link ${social.label} ${social.keywords}`}
+											onSelect={() => openLink(social.href)}
 											className={ITEM_CLASS}
 										>
-											<l.icon className={ICON_CLASS} weight="regular" />
-											<span>{l.label}</span>
+											<social.icon className={ICON_CLASS} weight="regular" aria-hidden="true" />
+											<span>{social.label}</span>
+											<ArrowSquareOut className="ml-auto size-3.5 shrink-0 text-kumo-link" weight="regular" aria-hidden="true" />
 										</Command.Item>
 									))}
 								</Command.Group>
@@ -198,7 +199,7 @@ export function CommandMenu() {
 										onSelect={sendEmail}
 										className={ITEM_CLASS}
 									>
-										<EnvelopeSimple className={ICON_CLASS} weight="regular" />
+										<EnvelopeSimple className={ICON_CLASS} weight="regular" aria-hidden="true" />
 										<span>Email me</span>
 										<span className="ml-auto text-kumo-default opacity-70">{EMAIL}</span>
 									</Command.Item>
@@ -207,12 +208,13 @@ export function CommandMenu() {
 										onSelect={copyEmail}
 										className={ITEM_CLASS}
 									>
-										<Copy className={ICON_CLASS} weight="regular" />
+										<Copy className={ICON_CLASS} weight="regular" aria-hidden="true" />
 										<span>{copied ? "Copied to clipboard" : "Copy email address"}</span>
 									</Command.Item>
 								</Command.Group>
 							</Command.List>
 						</Command>
+
 						<span role="status" aria-live="polite" className="sr-only">
 							{copied ? "Copied to clipboard" : ""}
 						</span>
