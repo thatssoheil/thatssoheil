@@ -18,10 +18,14 @@ export function ConnectSection() {
 				<Button
 					asChild
 					variant="primary"
-					size="lg"
-					className="h-11 w-full min-w-0 justify-center gap-2 sm:w-auto"
+					size="default"
+					className="h-11 w-full min-w-0 justify-center gap-2 sm:h-9 sm:w-auto"
 				>
-					<Link href={`mailto:${EMAIL}`} variant="plain" className="min-w-0">
+					<Link
+						href={`mailto:${EMAIL}`}
+						variant="plain"
+						className="min-w-0 gap-2 text-white hover:text-white"
+					>
 						<EnvelopeSimple className="size-5 shrink-0" aria-hidden="true" />
 						<span className="min-w-0 truncate">{EMAIL}</span>
 					</Link>
@@ -36,7 +40,7 @@ export function ConnectSection() {
 							variant="plain"
 							aria-label={label}
 							title={label}
-							className="flex size-11 items-center justify-center gap-0 rounded-lg border border-transparent opacity-70 hover:border-kumo-hairline hover:bg-kumo-fill-hover"
+							className="flex size-11 items-center justify-center gap-0 rounded-lg border border-transparent opacity-80 hover:border-kumo-hairline hover:bg-kumo-fill-hover hover:opacity-100"
 						>
 							<Icon className="size-5" weight="regular" aria-hidden="true" />
 						</Link>

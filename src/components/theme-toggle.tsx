@@ -15,7 +15,7 @@ export function ThemeToggle() {
 			onClick={toggleSessionTheme}
 			aria-label="Toggle light and dark theme"
 			aria-pressed={theme === "dark"}
-			className="size-11 sm:size-8"
+			className="size-11 sm:size-9"
 		>
 			{theme === "dark" ? (
 				<Sun className="size-4" weight="regular" aria-hidden="true" />

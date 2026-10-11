@@ -2,7 +2,7 @@ import { LogoMark } from "@/components/logo";
 import { Surface } from "@/components/ui";
 import { SITE } from "@/lib/constants";
 
-/** Static page-end bookend; no scroll-reveal dependency. */
+/** Static page-end bookend. */
 export function Footer() {
 	const year = new Date().getFullYear();
 

@@ -2,8 +2,8 @@ import { cn } from "@/lib/utils";
 
 /**
  * Brand mark — the monoline double-slash from the favicon.
- * First slash inherits `currentColor` (so it tracks foreground/hover); the
- * second is the signal accent. Decorative by default; pass a `title` to label it.
+ * First slash inherits `currentColor`; the second uses the Tangerine brand-text role.
+ * Decorative by default; pass a `title` to label it.
  */
 export function LogoMark({
 	className,
@@ -31,7 +31,7 @@ export function LogoMark({
 			/>
 			<path
 				d="M11.6 17.5 L15.2 4.5"
-				stroke="var(--color-kumo-brand)"
+				stroke="var(--text-color-kumo-brand)"
 				strokeWidth="3.2"
 				strokeLinecap="round"
 			/>

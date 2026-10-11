@@ -11,7 +11,6 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { LogoMark } from "@/components/logo";
 import { Link, Surface, textRole } from "@/components/ui";
 
-/** Static Kumo surface navigation; section links remain keyboard and touch friendly. */
 export function Header() {
 	const { activeSection } = useActiveSection();
 	const pathname = usePathname();
@@ -52,7 +51,7 @@ export function Header() {
 				</Link>
 
 				<div className="flex items-center gap-4 sm:gap-6">
-					<nav aria-label="Main navigation" className="hidden items-center gap-6 sm:flex">
+					<nav aria-label="Main navigation" className="hidden items-center gap-3 sm:flex">
 						{NAV_LINKS.map(({ label, href }) => {
 							const isHash = href.startsWith("#");
 							const isActive = isHash
@@ -66,8 +65,8 @@ export function Header() {
 									onClick={(e) => handleClick(e, href)}
 									aria-current={isActive ? "page" : undefined}
 									className={cn(
-										"rounded-lg py-1",
-										isActive ? textRole.default : "opacity-70",
+										"flex min-h-9 items-center rounded-lg px-1.5",
+										isActive ? textRole.default : "opacity-75",
 									)}
 								>
 									{label}

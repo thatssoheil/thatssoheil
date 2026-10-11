@@ -1,4 +1,5 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+@source "../";
 
 /* The system mode is expressed only by data-mode on the root element. */
 @theme inline {
@@ -19,6 +20,9 @@
 	--color-kumo-overlay: var(--color-kumo-overlay);
 	--color-kumo-interact: var(--color-kumo-interact);
 	--color-kumo-fill-hover: var(--color-kumo-fill-hover);
+	--color-cf-brand-tangerine: var(--cf-brand-tangerine);
+	--color-cf-brand-ruby: var(--cf-brand-ruby);
+	--color-cf-brand-mango: var(--cf-brand-mango);
 }
 
 @utility text-kumo-default {
@@ -38,6 +42,47 @@
 	font-size: clamp(2.25rem, 1.55rem + 3vw, 4.5rem);
 	font-weight: 600;
 	line-height: 1;
+}
+
+/* Cloudflare brand roles are used only on the home story surfaces. */
+@utility brand-eyebrow {
+	font-family: var(--font-sans);
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+@utility brand-body {
+	font-family: var(--font-sans);
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+@utility brand-headline {
+	font-family: var(--font-sans);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: -0.03em;
+}
+
+@utility brand-subheadline {
+	font-family: var(--font-sans);
+	font-size: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);
+	font-weight: 500;
+	line-height: 1.1;
+	letter-spacing: -0.03em;
+}
+
+@utility brand-url {
+	font-family: var(--font-sans);
+	font-size: 1rem;
+	font-weight: 500;
+	line-height: 1;
+	letter-spacing: -0.03em;
 }
 
 @utility text-heading {
@@ -189,16 +234,28 @@
 	}
 }
 
-@media (min-width: 40rem) {
-	:root { --site-gutter: 2rem; }
+@keyframes cf-dialog-fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
 }
 
-@media (min-width: 48rem) {
-	:root { --site-gutter: 3rem; }
+@keyframes cf-dialog-scale-in {
+	from {
+		opacity: 0;
+		transform: translateY(0.35rem) scale(0.98);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
 }
 
-@media (min-width: 64rem) {
-	:root { --site-gutter: 4rem; }
+.cf-dialog-overlay {
+	animation: cf-dialog-fade-in 140ms ease-out both;
+}
+
+.cf-dialog-content {
+	animation: cf-dialog-scale-in 160ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -209,6 +266,23 @@
 		animation-iteration-count: 1 !important;
 		scroll-behavior: auto !important;
 	}
+
+	.cf-dialog-overlay,
+	.cf-dialog-content {
+		animation: none !important;
+	}
+}
+
+@media (min-width: 40rem) {
+	:root { --site-gutter: 2rem; }
+}
+
+@media (min-width: 48rem) {
+	:root { --site-gutter: 3rem; }
+}
+
+@media (min-width: 64rem) {
+	:root { --site-gutter: 4rem; }
 }
 
 /* Preserve visible focus when forced-colors replaces authored ring colors. */
