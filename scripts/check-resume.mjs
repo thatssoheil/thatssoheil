@@ -74,6 +74,7 @@ for (const [source, pattern, message] of [
 	[experience, /<article/, "experience entries need article elements"],
 	[dateRange, /<time dateTime={startDate}>/, "date ranges need a semantic start time"],
 	[dateRange, /endDate \? <time dateTime={endDate}>/, "completed date ranges need a semantic end time"],
+	[exportControls, /window\.print\(\)/, "Export PDF control must invoke the native print flow"],
 	[exportControls, /Save as PDF[^\n]+disable [^\n]+Headers and footers/, "export guidance must disable browser headers and footers"],
 ]) {
 	if (!pattern.test(source)) failures.push(message);
@@ -167,7 +168,8 @@ for (const [pattern, message] of [
 	[/\.experienceList\s*{[^}]*gap:\s*6mm/s, "print roles need the approved separation"],
 	[/\.highlights,\s*\.compactList\s*{[^}]*gap:\s*1\.4mm;[^}]*margin-top:\s*2mm/s, "print bullets need the approved vertical rhythm"],
 	[/:global\(html\),\s*:global\(body\)\s*{[^}]*width:\s*(?:auto|100%)/s, "print roots must fit within @page margins"],
-	[/:global\(html\)\s*{[^}]*color-scheme:\s*light/s, "print root must force light color scheme"],
+	[/:global\(html\)\s*{[^}]*color-scheme:\s*light\s*!important/s, "print root must force light color scheme over inline mode"],
+	[/\.projectSection\s*{\s*break-inside:\s*avoid;[^}]*page-break-inside:\s*avoid/s, "print project heading and content must stay together"],
 ]) {
 	if (!pattern.test(printCss)) failures.push(message);
 }

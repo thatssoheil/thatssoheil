@@ -80,7 +80,7 @@
 		--text-color-kumo-link: black;
 		--text-color-kumo-brand: black;
 	}
-	:global(html) { color-scheme: light; }
+	:global(html) { color-scheme: light !important; }
 	:global(html), :global(body) {
 		width: auto;
 		min-height: auto;
@@ -117,6 +117,7 @@
 	.skillGroups { gap: 0.6mm; }
 	.experienceList { gap: 6mm; }
 	.experienceEntry, .project, .education { break-inside: avoid; page-break-inside: avoid; }
+	.projectSection { break-inside: avoid; page-break-inside: avoid; }
 	.experienceHeader h3, .project h3, .education h3 { font-size: 9pt; }
 	.employerLine, .context, .experienceMeta { color: black; }
 	.experienceMeta, .context { font-size: 7.6pt; }

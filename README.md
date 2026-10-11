@@ -42,6 +42,6 @@ Email first. Catch me on X. Everything else, eventually. Currently open to remot
 
 Small, working versions of ideas in progress. Live data, public method, honest labels.
 
-- [Tokenized assets tracker](https://thatssoheil.website/playground/rwa): the real-world-asset sector as it actually trades, refreshed about every 30 minutes.
-- [BTC and ETH macro notes](https://thatssoheil.website/playground/macro): a weekly regime read from a backtested macro engine.
+- [Tokenized assets tracker](https://dev.dev.thatssoheil.website/playground/rwa): the real-world-asset sector as it actually trades, refreshed about every 30 minutes.
+- [BTC and ETH macro notes](https://dev.dev.thatssoheil.website/playground/macro): a weekly regime read from a backtested macro engine.
 

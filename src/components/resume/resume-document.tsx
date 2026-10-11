@@ -51,7 +51,7 @@ export function ResumeDocument() {
 				</div>
 			</section>
 
-			<section id="project" className={styles.section}>
+			<section id="project" className={`${styles.section} ${styles.projectSection}`}>
 				<SectionHeading>Projects</SectionHeading>
 				<article className={styles.project}>
 					<h3><Link href={sections.project.href} target="_blank">{sections.project.name}</Link></h3>
