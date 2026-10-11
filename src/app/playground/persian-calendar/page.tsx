@@ -3,6 +3,7 @@ import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { SectionHeading } from "@/components/playground/section-heading";
 import { PersianCalendar } from "@/components/playground/persian-calendar";
 import { WINDOW_MAX_JY, WINDOW_MIN_JY, tehranToday } from "@/lib/playground/persian-calendar";
+import { Link } from "@/components/ui";
 
 // The page renders per request so "today" is the visitor's actual day, never
 // baked into the build.
@@ -37,21 +38,21 @@ export default function PersianCalendarPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						The Shamsi (Solar Hijri) calendar starts its year at 1 Farvardin - the day whose
 						March equinox falls before solar noon in Tehran - so the calendar and the sky stay
 						in step, and Nowruz lands on 20 or 21 March. This page computes with the
 						arithmetic of Kazimierz Borkowski&apos;s 1996 paper, the same method behind the
 						widely used{" "}
-						<a
+						<Link
 							href="https://github.com/jalaali/jalaali-js"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							jalaali-js
-						</a>{" "}
+						</Link>{" "}
 						library (MIT): deterministic, dependency-free, identical on the server and in your
 						browser.
 					</p>

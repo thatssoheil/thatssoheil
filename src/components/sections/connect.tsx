@@ -1,5 +1,5 @@
-import { Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { EnvelopeSimple } from "@phosphor-icons/react/ssr";
+import { Button, Link } from "@/components/ui";
 import { SOCIALS, EMAIL, type SectionId } from "@/lib/constants";
 import { SectionPanel } from "@/components/sections/section-panel";
 
@@ -17,28 +17,29 @@ export function ConnectSection() {
 			<div className="flex w-full flex-col items-stretch gap-4 sm:flex-row sm:items-center">
 				<Button
 					asChild
+					variant="primary"
 					size="lg"
-					className="h-12 w-full min-w-0 justify-center gap-2 border border-alpha-300 bg-primary text-sm shadow-[0_0_16px_color-mix(in_oklch,var(--primary)_14%,transparent)] hover:bg-primary/90 sm:w-auto sm:text-base"
+					className="h-11 w-full min-w-0 justify-center gap-2 sm:w-auto"
 				>
-					<a href={`mailto:${EMAIL}`} className="min-w-0">
-						<Mail className="size-5 shrink-0" />
+					<Link href={`mailto:${EMAIL}`} variant="plain" className="min-w-0">
+						<EnvelopeSimple className="size-5 shrink-0" aria-hidden="true" />
 						<span className="min-w-0 truncate">{EMAIL}</span>
-					</a>
+					</Link>
 				</Button>
 
 				<div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
 					{SOCIALS.map(({ label, href, icon: Icon }) => (
-						<a
+						<Link
 							key={label}
 							href={href}
 							target="_blank"
-							rel="noopener noreferrer"
+							variant="plain"
 							aria-label={label}
 							title={label}
-							className="group flex size-11 items-center justify-center rounded-xl border border-transparent text-text-faint transition-colors hover:border-alpha-300 hover:bg-alpha-100 hover:text-foreground"
+							className="flex size-11 items-center justify-center gap-0 rounded-lg border border-transparent opacity-70 hover:border-kumo-hairline hover:bg-kumo-fill-hover"
 						>
-							<Icon className="size-5" />
-						</a>
+							<Icon className="size-5" weight="regular" aria-hidden="true" />
+						</Link>
 					))}
 				</div>
 			</div>

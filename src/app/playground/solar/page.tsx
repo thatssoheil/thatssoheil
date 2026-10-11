@@ -127,7 +127,7 @@ export default async function SolarWatchPage() {
 						hint={`solar radio flux · ${formatUtcShort(data.flux.t)}`}
 					/>
 				</div>
-				<p className="mt-3 text-copy-13 text-text-faint">
+				<p className="mt-3 text-body-sm text-kumo-default opacity-70">
 					Kp is a 3-hour planetary reading; the solar wind numbers are near-real-time
 					from the L1 monitors. Storm labels (G1-G5) are NOAA&apos;s, taken straight
 					from the feed.
@@ -139,7 +139,7 @@ export default async function SolarWatchPage() {
 					label="The past week"
 					note={`3-hour bins · through ${formatDayShort(data.kp[data.kp.length - 1].t)}`}
 				/>
-				<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+				<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 					<KpStrip
 						bins={data.kp}
 						peakIndex={peakIndex}
@@ -154,13 +154,13 @@ export default async function SolarWatchPage() {
 							<span
 								key={group.label}
 								style={{ flexGrow: group.count }}
-								className="basis-0 text-center text-label-12-mono text-text-faint"
+								className="basis-0 text-center text-code text-kumo-default opacity-70"
 							>
 								{group.count >= 4 ? group.label : "\u00A0"}
 							</span>
 						))}
 					</div>
-					<p className="mt-4 text-copy-13 text-text-muted">
+					<p className="mt-4 text-body-sm text-kumo-default opacity-80">
 						Dashed line: Kp 5, NOAA&apos;s storm threshold. Peak: Kp{" "}
 						{formatKp(weekPeak.kp)}
 						{weekPeak.scale ? ` (${weekPeak.scale})` : ""} on {formatUtcShort(weekPeak.t)}.
@@ -173,7 +173,7 @@ export default async function SolarWatchPage() {
 
 			<section aria-label="Next three days">
 				<SectionHeading label="Next three days" note="NOAA's 3-day forecast" />
-				<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+				<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 					{outlook.length > 0 ? (
 						<>
 							<KpStrip
@@ -183,21 +183,21 @@ export default async function SolarWatchPage() {
 									outlook[0].t,
 								)} to ${formatDayShort(outlook[outlook.length - 1].t)}.`}
 							/>
-							<div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-copy-13 text-text-faint">
+							<div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-body-sm text-kumo-default opacity-70">
 								<span className="flex items-center gap-1.5">
-									<span aria-hidden="true" className="h-2.5 w-2.5 rounded-[2px] bg-brand/70" />
+									<span aria-hidden="true" className="h-2.5 w-2.5 rounded-[2px] bg-kumo-brand" />
 									estimated
 								</span>
 								<span className="flex items-center gap-1.5">
-									<span aria-hidden="true" className="h-2.5 w-2.5 rounded-[2px] bg-brand/30" />
+									<span aria-hidden="true" className="h-2.5 w-2.5 rounded-[2px] bg-kumo-brand-hover" />
 									predicted
 								</span>
 								<span className="flex items-center gap-1.5">
-									<span aria-hidden="true" className="h-2.5 w-2.5 rounded-[2px] bg-destructive/80" />
+									<span aria-hidden="true" className="h-2.5 w-2.5 rounded-[2px] bg-kumo-recessed" />
 									storm label
 								</span>
 							</div>
-							<p className="mt-3 text-copy-13 text-text-muted">
+							<p className="mt-3 text-body-sm text-kumo-default opacity-80">
 								{outlookRange ? `${outlookRange}. ` : ""}
 								{outlookPeak
 									? `Outlook peak: Kp ${formatKp(outlookPeak.kp)} on ${formatUtcShort(
@@ -210,7 +210,7 @@ export default async function SolarWatchPage() {
 							</p>
 						</>
 					) : (
-						<p className="text-copy-13 text-text-muted">
+						<p className="text-body-sm text-kumo-default opacity-80">
 							No outlook bins in the feed right now.
 						</p>
 					)}
@@ -219,7 +219,7 @@ export default async function SolarWatchPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						Kp is the planetary K index: a 3-hour reading, 0 to 9, of how disturbed
 						Earth&apos;s magnetic field is. NOAA issues a new bin every three hours, and

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocalTheme } from "@/components/theme-provider";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { cn } from "@/lib/utils";
+import { Button, Link } from "@/components/ui";
 import {
 	attractorValues,
 	boundedCycle,
@@ -78,7 +79,7 @@ function atlasGeo(canvas: HTMLCanvasElement, dpr: number): AtlasGeo {
 
 /** Paint atlas columns [from, to): each column one r, its dots the orbit. */
 function paintColumns(ctx: CanvasRenderingContext2D, geo: AtlasGeo, from: number, to: number) {
-	ctx.fillStyle = tokenColor("--alpha-600");
+	ctx.fillStyle = tokenColor("--color-kumo-line");
 	const colW = Math.max(1, geo.colW);
 	for (let c = from; c < to; c += 1) {
 		const r = R_MIN + ((c + 0.5) / geo.cols) * (R_MAX - R_MIN);
@@ -95,7 +96,7 @@ function paintColumns(ctx: CanvasRenderingContext2D, geo: AtlasGeo, from: number
 
 /** Short marks along the bottom edge at the dial's landmark stops. */
 function paintTicks(ctx: CanvasRenderingContext2D, geo: AtlasGeo, dpr: number) {
-	ctx.fillStyle = tokenColor("--alpha-600");
+	ctx.fillStyle = tokenColor("--color-kumo-line");
 	const tickH = Math.max(3, Math.round(4 * dpr));
 	const tickW = Math.max(1, Math.round(dpr));
 	for (const landmark of LANDMARKS) {
@@ -145,7 +146,7 @@ function drawOverlay(canvas: HTMLCanvasElement, r: number, dpr: number) {
 	const x = padX + ((r - R_MIN) / (R_MAX - R_MIN)) * plotW;
 	const lineW = Math.max(1, Math.round(1.5 * dpr));
 	const lx = Math.min(Math.max(x - lineW / 2, 0), w - lineW);
-	ctx.fillStyle = tokenColor("--brand");
+	ctx.fillStyle = tokenColor("--color-kumo-brand");
 	ctx.globalAlpha = 0.9;
 	ctx.fillRect(lx, 0, lineW, h);
 	ctx.globalAlpha = 1;
@@ -171,7 +172,7 @@ function drawStrip(canvas: HTMLCanvasElement, r: number, dpr: number) {
 	const plotW = Math.max(1, w - padX * 2);
 	const plotH = Math.max(1, h - padY * 2);
 	const values = orbitWindow(r, STRIP_BURN, STRIP_STEPS);
-	ctx.fillStyle = tokenColor("--brand");
+	ctx.fillStyle = tokenColor("--color-kumo-brand");
 	const dotR = Math.max(1, 1.2 * dpr);
 	for (let i = 0; i < values.length; i += 1) {
 		const x = padX + (i / (values.length - 1)) * plotW;
@@ -319,17 +320,17 @@ export function LogisticMap() {
 			: `The last 160 values of the orbit at r = ${r.toFixed(4)}: a repeating cycle of length ${cycle}.`;
 
 	return (
-		<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-				<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">The instrument</span>
-				<span role="status" aria-live="polite" className="text-label-12-mono text-text-faint">
+				<span className="text-label uppercase  text-kumo-default opacity-70">The instrument</span>
+				<span role="status" aria-live="polite" className="text-code text-kumo-default opacity-70">
 					{cycleText}
 				</span>
 			</div>
 
 			<div
 				ref={boxRef}
-				className="relative mt-4 aspect-[2/1] w-full overflow-hidden rounded-lg border border-alpha-200"
+				className="relative mt-4 aspect-[2/1] w-full overflow-hidden rounded-lg border border-kumo-hairline"
 			>
 				<canvas ref={atlasRef} role="img" aria-label={atlasLabel} className="block h-full w-full" />
 				<canvas
@@ -338,7 +339,7 @@ export function LogisticMap() {
 					className="pointer-events-none absolute inset-0 block h-full w-full"
 				/>
 			</div>
-			<div className="mt-1.5 flex items-baseline justify-between text-label-12-mono text-text-faint">
+			<div className="mt-1.5 flex items-baseline justify-between text-code text-kumo-default opacity-70">
 				<span>r = 2.4</span>
 				<span>4.0</span>
 			</div>
@@ -346,10 +347,10 @@ export function LogisticMap() {
 			<div className="mt-4 flex flex-col gap-4">
 				<div className="flex flex-col gap-1.5">
 					<span className="flex items-baseline justify-between gap-3">
-						<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+						<span className="text-label uppercase  text-kumo-default opacity-70">
 							r (growth rate)
 						</span>
-						<span className="text-label-12-mono text-text-faint">{r.toFixed(4)}</span>
+						<span className="text-code text-kumo-default opacity-70">{r.toFixed(4)}</span>
 					</span>
 					<input
 						type="range"
@@ -365,30 +366,30 @@ export function LogisticMap() {
 				</div>
 
 				<div className="flex flex-col gap-2">
-					<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<span className="text-label uppercase  text-kumo-default opacity-70">
 						Stops on the dial
 					</span>
 					<div className="flex flex-wrap gap-2">
 						{LANDMARKS.map((landmark) => {
 							const active = activeLandmark?.slug === landmark.slug;
 							return (
-								<button
+								<Button variant="ghost" size="default"
 									key={landmark.slug}
 									type="button"
 									onClick={() => handleLandmark(landmark)}
 									aria-pressed={active}
 									className={cn(
-										"flex flex-col items-start gap-0.5 rounded-lg border px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
+										"h-auto flex flex-col items-start gap-0.5 rounded-lg border px-3 py-2 text-left",
 										active
-											? "border-brand/60 bg-brand/10"
-											: "border-border bg-background hover:border-alpha-500 hover:bg-muted",
+											? "border-kumo-brand bg-kumo-fill-hover"
+											: "border-kumo-hairline bg-kumo-canvas hover:border-kumo-line hover:bg-kumo-recessed",
 									)}
 								>
-									<span className="text-label-13 text-foreground">{landmark.name}</span>
-									<span className="text-label-12-mono text-text-faint">
+									<span className="text-label text-kumo-default">{landmark.name}</span>
+									<span className="text-code text-kumo-default opacity-70">
 										r = {landmark.exact ?? landmark.r} · {landmark.note}
 									</span>
-								</button>
+								</Button>
 							);
 						})}
 					</div>
@@ -396,7 +397,7 @@ export function LogisticMap() {
 			</div>
 
 			<div className="mt-5">
-				<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+				<span className="text-label uppercase  text-kumo-default opacity-70">
 					The orbit (last 160 steps)
 				</span>
 				<div className="mt-2 h-[72px] w-full">
@@ -404,16 +405,16 @@ export function LogisticMap() {
 				</div>
 			</div>
 
-			<p className="mt-4 text-copy-13 text-text-faint">
+			<p className="mt-4 text-body-sm text-kumo-default opacity-70">
 				After May, 1976 -{" "}
-				<a
+				<Link
 					href="https://www.nature.com/articles/261459a0"
 					target="_blank"
 					rel="noreferrer"
-					className="text-brand transition-opacity hover:opacity-75"
+					className="text-kumo-link transition-opacity hover:opacity-75"
 				>
 					Simple mathematical models with very complicated dynamics
-				</a>{" "}
+				</Link>{" "}
 				(Nature 261, pp. 459-467). The map and the atlas are computed in your browser; nothing is
 				fetched, so nothing here can go stale.
 			</p>

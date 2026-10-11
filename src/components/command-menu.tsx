@@ -6,31 +6,29 @@ import { Command } from "cmdk";
 import { Dialog, VisuallyHidden } from "radix-ui";
 import {
 	Hash,
-	Mail,
+	EnvelopeSimple,
 	Copy,
-	Search,
-	Menu,
-	CornerDownLeft,
+	MagnifyingGlass,
+	List,
+	ArrowElbowDownLeft,
 	FileText,
-	FlaskConical,
-} from "lucide-react";
+	Flask,
+} from "@phosphor-icons/react/ssr";
 import { SECTIONS, SOCIALS, EMAIL } from "@/lib/constants";
 import { useCoarsePointer } from "@/hooks/use-coarse-pointer";
 import { jumpToSection } from "@/lib/section-navigation";
 import { cn } from "@/lib/utils";
-import { surfaceRole } from "@/components/ui/surface";
-import { textRole, typeRole } from "@/components/ui/typography";
-
+import { surfaceRole, textRole, typeRole, Button } from "@/components/ui";
 const ITEM_CLASS =
 	// py-3 on mobile keeps each row a ≥44px touch target (the palette is the
 	// mobile nav); sm:py-2.5 keeps the compact desktop rows unchanged.
 	[
-		"group flex items-center gap-3 rounded-xl px-3 py-3 sm:py-2.5 text-sm cursor-pointer data-[selected=true]:bg-alpha-100 data-[selected=true]:text-foreground",
+		"group flex items-center gap-3 rounded-lg px-3 py-3 sm:py-2.5 text-sm cursor-pointer data-[selected=true]:bg-kumo-fill-hover data-[selected=true]:text-kumo-default",
 		textRole.muted,
 	].join(" ");
 
 const ICON_CLASS =
-	"size-4 text-muted-foreground group-data-[selected=true]:text-brand";
+	"size-4 text-kumo-default opacity-70 group-data-[selected=true]:text-kumo-link";
 
 export function CommandMenu() {
 	const [open, setOpen] = useState(false);
@@ -94,34 +92,34 @@ export function CommandMenu() {
 	return (
 		<>
 			{/* Desktop trigger — ⌘K hint chip */}
-			<button
+			<Button variant="ghost" size="default"
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-xl border border-alpha-300 px-2.5 text-xs text-text-faint hover:text-foreground hover:border-alpha-500 hover:bg-alpha-100 focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+				className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-lg border border-kumo-hairline px-2.5 text-sm text-kumo-default opacity-70 hover:text-kumo-default hover:border-kumo-line hover:bg-kumo-fill-hover focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus"
 			>
 				<span className="font-sans" aria-hidden="true">⌘</span>
 				<span aria-hidden="true">K</span>
-			</button>
+			</Button>
 
 			{/* Mobile trigger — opens the same menu (also serves as mobile nav) */}
-			<button
+			<Button variant="ghost" size="default"
 				type="button"
 				onClick={() => setOpen(true)}
 				aria-label="Open command menu"
-				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 rounded-xl text-text-faint hover:bg-alpha-100 hover:text-foreground focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+				className="sm:hidden inline-flex size-11 items-center justify-center -mr-2 rounded-lg text-kumo-default opacity-70 hover:bg-kumo-fill-hover hover:text-kumo-default focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus"
 			>
-				<Menu className="size-5" strokeWidth={1.5} aria-hidden="true" />
-			</button>
+				<List className="size-5" aria-hidden="true" />
+			</Button>
 
 			<Dialog.Root open={open} onOpenChange={setOpen}>
 				<Dialog.Portal>
-					<Dialog.Overlay className="fixed inset-0 z-[var(--z-overlay)] bg-black/70 backdrop-blur-sm" />
+					<Dialog.Overlay className="fixed inset-0 z-[var(--z-overlay)] bg-kumo-overlay" />
 					<Dialog.Content
 						aria-describedby={undefined}
 						className={cn(
 							surfaceRole.commandMenuPanel,
-							"fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden text-popover-foreground outline-none",
+							"fixed left-1/2 top-[16%] z-[var(--z-modal)] w-[92vw] max-w-lg -translate-x-1/2 overflow-hidden text-kumo-default outline-none",
 						)}
 					>
 						<VisuallyHidden.Root>
@@ -131,21 +129,21 @@ export function CommandMenu() {
 						<Command
 							label="Command menu"
 							className={cn(
-								"[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:text-muted-foreground",
+								"[&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5",
 								typeRole.commandGroupHeading,
 							)}
 						>
-							<div className="flex items-center gap-2 border-b border-border px-4">
-								<Search className="size-4 text-muted-foreground shrink-0" strokeWidth={1.5} />
+							<div className="flex items-center gap-2 border-b border-kumo-hairline px-4">
+								<MagnifyingGlass className="size-4 text-kumo-default opacity-70 shrink-0" />
 								<Command.Input
 									autoFocus={!coarsePointer}
 									placeholder="Jump to a section, open a link…"
-									className="w-full bg-transparent py-3.5 text-sm font-sans text-foreground outline-none placeholder:text-muted-foreground"
+									className="w-full bg-transparent py-3.5 text-sm font-sans text-kumo-default outline-none placeholder:text-kumo-default placeholder:opacity-50"
 								/>
 							</div>
 
 							<Command.List className="max-h-[min(60vh,22rem)] overflow-y-auto p-2">
-								<Command.Empty className="py-8 text-center text-sm text-muted-foreground">
+								<Command.Empty className="py-8 text-center text-sm text-kumo-default opacity-70">
 									Nothing here.
 								</Command.Empty>
 
@@ -157,9 +155,9 @@ export function CommandMenu() {
 											onSelect={() => goToSection(s.id)}
 											className={ITEM_CLASS}
 										>
-											<Hash className={ICON_CLASS} strokeWidth={1.5} />
+											<Hash className={ICON_CLASS} weight="regular" />
 											<span>{s.label}</span>
-											<CornerDownLeft className="ml-auto size-3.5 opacity-0 group-data-[selected=true]:opacity-40" strokeWidth={1.5} aria-hidden="true" />
+											<ArrowElbowDownLeft className="ml-auto size-3.5 opacity-0 group-data-[selected=true]:opacity-40" weight="regular" aria-hidden="true" />
 										</Command.Item>
 									))}
 								</Command.Group>
@@ -170,7 +168,7 @@ export function CommandMenu() {
 										onSelect={openPlayground}
 										className={ITEM_CLASS}
 									>
-										<FlaskConical className={ICON_CLASS} strokeWidth={1.5} />
+										<Flask className={ICON_CLASS} weight="regular" />
 										<span>Playground</span>
 									</Command.Item>
 									<Command.Item
@@ -178,7 +176,7 @@ export function CommandMenu() {
 										onSelect={openResume}
 										className={ITEM_CLASS}
 									>
-										<FileText className={ICON_CLASS} strokeWidth={1.5} />
+										<FileText className={ICON_CLASS} weight="regular" />
 										<span>Resume</span>
 									</Command.Item>
 									{SOCIALS.map((l) => (
@@ -188,7 +186,7 @@ export function CommandMenu() {
 											onSelect={() => openLink(l.href)}
 											className={ITEM_CLASS}
 										>
-											<l.icon className={ICON_CLASS} strokeWidth={1.5} />
+											<l.icon className={ICON_CLASS} weight="regular" />
 											<span>{l.label}</span>
 										</Command.Item>
 									))}
@@ -200,16 +198,16 @@ export function CommandMenu() {
 										onSelect={sendEmail}
 										className={ITEM_CLASS}
 									>
-										<Mail className={ICON_CLASS} strokeWidth={1.5} />
+										<EnvelopeSimple className={ICON_CLASS} weight="regular" />
 										<span>Email me</span>
-										<span className="ml-auto text-muted-foreground">{EMAIL}</span>
+										<span className="ml-auto text-kumo-default opacity-70">{EMAIL}</span>
 									</Command.Item>
 									<Command.Item
 										value="copy email address clipboard"
 										onSelect={copyEmail}
 										className={ITEM_CLASS}
 									>
-										<Copy className={ICON_CLASS} strokeWidth={1.5} />
+										<Copy className={ICON_CLASS} weight="regular" />
 										<span>{copied ? "Copied to clipboard" : "Copy email address"}</span>
 									</Command.Item>
 								</Command.Group>

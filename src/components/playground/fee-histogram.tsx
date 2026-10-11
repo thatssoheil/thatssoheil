@@ -44,7 +44,7 @@ export function FeeHistogram({
 					x2={width}
 					y1={baseline}
 					y2={baseline}
-					className="text-alpha-200"
+					className="text-kumo-default opacity-70"
 					stroke="currentColor"
 					strokeWidth={1}
 					vectorEffect="non-scaling-stroke"
@@ -60,7 +60,7 @@ export function FeeHistogram({
 							width={barWidth}
 							height={barHeight}
 							rx={2}
-							className="text-brand"
+							className="text-kumo-link"
 							fill="currentColor"
 							fillOpacity={0.85}
 						/>
@@ -71,7 +71,7 @@ export function FeeHistogram({
 				{buckets.map((bucket) => (
 					<span
 						key={bucket.lo}
-						className="flex-1 text-center text-label-12-mono text-text-faint"
+						className="flex-1 text-center text-code text-kumo-default opacity-70"
 					>
 						{LABEL_EDGES.has(bucket.lo)
 							? Number.isFinite(bucket.hi)

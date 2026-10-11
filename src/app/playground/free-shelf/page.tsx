@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/playground/section-heading";
 import { FreeShelf } from "@/components/playground/free-shelf";
 import { getFreeShelfData } from "@/lib/playground/free-shelf-source";
 import { formatDateShort, formatDateTimeUtc } from "@/lib/playground/format";
+import { Link } from "@/components/ui";
 
 // The page renders per request from the live chart (with a per-isolate cache
 // in the source module) - never baked into the build.
@@ -41,7 +42,7 @@ export default async function FreeShelfPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						This page reads Project Gutenberg&apos;s own most-downloaded chart. The library
 						is the oldest on the internet, all of it public domain and free to read; its
@@ -61,14 +62,14 @@ export default async function FreeShelfPage() {
 						Covers come from PG&apos;s own cover cache; a book without one shows a plain
 						tile. Every entry links to the book&apos;s landing page on gutenberg.org - the
 						full text is free there. Data:{" "}
-						<a
+						<Link
 							href="https://www.gutenberg.org/browse/scores/top"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							Project Gutenberg
-						</a>{" "}
+						</Link>{" "}
 						(public domain). The page identifies itself politely and reads one chart page
 						per hour at most - a reading list, not a downloader.
 					</p>

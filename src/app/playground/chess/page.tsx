@@ -5,6 +5,7 @@ import { StatTile } from "@/components/playground/stat-tile";
 import { ChessBoard } from "@/components/playground/chess-board";
 import { getChessData } from "@/lib/playground/chess-source";
 import { formatDateShort, formatDateTimeUtc } from "@/lib/playground/format";
+import { Link } from "@/components/ui";
 
 // The page renders per request from the live feed (with a per-isolate cache
 // in the source module) - never baked into the build.
@@ -82,24 +83,24 @@ export default async function ChessPuzzlePage() {
 								hint={`solver attempts · as of ${hmUtc(data.asOf)}`}
 							/>
 						</div>
-						<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-5">
-							<p className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+						<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-5">
+							<p className="text-label uppercase  text-kumo-default opacity-70">
 								Themes
 							</p>
-							<p className="mt-1 text-copy-14 text-text-muted">{themesText}</p>
-							<p className="mt-4 text-label-12 uppercase tracking-[0.14em] text-text-faint">
+							<p className="mt-1 text-body-sm text-kumo-default opacity-80">{themesText}</p>
+							<p className="mt-4 text-label uppercase  text-kumo-default opacity-70">
 								The game behind it
 							</p>
-							<p className="mt-1 text-copy-14 text-text-muted">{gameLine}</p>
-							<p className="mt-4 text-copy-13 text-text-faint">
-								<a
+							<p className="mt-1 text-body-sm text-kumo-default opacity-80">{gameLine}</p>
+							<p className="mt-4 text-body-sm text-kumo-default opacity-70">
+								<Link
 									href={puzzleUrl}
 									target="_blank"
 									rel="noreferrer"
-									className="text-brand transition-opacity hover:opacity-75"
+									className="text-kumo-link transition-opacity hover:opacity-75"
 								>
 									Puzzle by Lichess
-								</a>{" "}
+								</Link>{" "}
 								- the position and its solution arrive together from the Lichess API.
 							</p>
 						</div>
@@ -109,7 +110,7 @@ export default async function ChessPuzzlePage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						This is the daily puzzle from Lichess. The position arrives as a FEN string
 						together with the solution as coordinate moves, and the page checks your moves
@@ -125,14 +126,14 @@ export default async function ChessPuzzlePage() {
 					</p>
 					<p>
 						Data:{" "}
-						<a
+						<Link
 							href="https://lichess.org/api"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							the Lichess public API
-						</a>{" "}
+						</Link>{" "}
 						(keyless; the database exports are CC0). Requests are kept to one per minute
 						per running instance; on any failure the page falls back rather than
 						retrying.

@@ -70,8 +70,8 @@ export default async function RwaTrackerPage() {
 			<section aria-label="The long view">
 				<SectionHeading label="The long view" note="daily, December 2023 to today" />
 				<div className="flex flex-col gap-3">
-					<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
-						<span className="mb-3 block text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
+						<span className="mb-3 block text-label uppercase  text-kumo-default opacity-70">
 							Daily volume
 						</span>
 						<AreaChart
@@ -83,8 +83,8 @@ export default async function RwaTrackerPage() {
 							ariaLabel="Daily tokenized-asset trading volume since December 2023"
 						/>
 					</div>
-					<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
-						<span className="mb-3 block text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
+						<span className="mb-3 block text-label uppercase  text-kumo-default opacity-70">
 							Tokenized assets
 						</span>
 						<AreaChart
@@ -126,7 +126,7 @@ export default async function RwaTrackerPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						Issuer and flow data comes from Birdeye&apos;s public beta feed,
 						fetched by this site about every 30 minutes. When the feed is

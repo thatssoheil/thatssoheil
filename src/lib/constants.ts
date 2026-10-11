@@ -1,4 +1,4 @@
-import { GitHubIcon, LinkedInIcon, XIcon } from "@/components/brand-icons";
+import { GithubLogo, LinkedinLogo, XLogo } from "@phosphor-icons/react/ssr";
 
 // ─── Identity — the single source of truth for who Soheil is ───
 // Every surface (hero, metadata, JSON-LD, the AI persona) derives from these, so
@@ -62,7 +62,7 @@ export const AVAILABILITY =
     section, and the Person JSON-LD `sameAs`, so the three can't drift. Icons +
     command-menu search keywords ride along as data. */
 export const SOCIALS = [
-	{ label: "GitHub", href: "https://github.com/thatssoheil", icon: GitHubIcon, keywords: "code repos source" },
-	{ label: "LinkedIn", href: "https://linkedin.com/in/soheilfakour", icon: LinkedInIcon, keywords: "work cv resume" },
-	{ label: "X / Twitter", href: "https://x.com/Thatssoheil", icon: XIcon, keywords: "tweets social" },
+	{ label: "GitHub", href: "https://github.com/thatssoheil", icon: GithubLogo, keywords: "code repos source" },
+	{ label: "LinkedIn", href: "https://linkedin.com/in/soheilfakour", icon: LinkedinLogo, keywords: "work cv resume" },
+	{ label: "X / Twitter", href: "https://x.com/Thatssoheil", icon: XLogo, keywords: "tweets social" },
 ] as const;

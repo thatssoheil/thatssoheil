@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Button } from "@/components/ui";
 import { useLocalTheme } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import matricesJson from "@/data/playground/cvd-matrices.json";
@@ -45,15 +46,23 @@ const TYPE_NOTES: Record<CvdType, string> = {
 // The curated palette; token names are data here, read at runtime so the
 // grid follows whatever the browser actually renders (and the theme).
 const TOKENS: { name: string; label: string }[] = [
-	{ name: "--signal-200", label: "signal 200" },
-	{ name: "--signal-300", label: "signal 300" },
-	{ name: "--signal-400", label: "signal 400" },
-	{ name: "--signal-500", label: "signal 500" },
-	{ name: "--signal-600", label: "signal 600" },
-	{ name: "--signal-700", label: "signal 700" },
-	{ name: "--brand", label: "brand" },
-	{ name: "--destructive", label: "destructive" },
-	{ name: "--field-accent", label: "field accent" },
+	{ name: "--color-kumo-canvas", label: "canvas" },
+	{ name: "--color-kumo-base", label: "base surface" },
+	{ name: "--color-kumo-elevated", label: "elevated surface" },
+	{ name: "--color-kumo-recessed", label: "recessed surface" },
+	{ name: "--color-kumo-control", label: "control" },
+	{ name: "--color-kumo-brand", label: "blue action" },
+	{ name: "--color-kumo-brand-hover", label: "action hover" },
+	{ name: "--color-kumo-line", label: "line" },
+	{ name: "--color-kumo-hairline", label: "hairline" },
+	{ name: "--color-kumo-focus", label: "focus" },
+	{ name: "--color-kumo-contrast", label: "contrast" },
+	{ name: "--color-kumo-overlay", label: "overlay surface" },
+	{ name: "--color-kumo-interact", label: "interaction" },
+	{ name: "--color-kumo-fill-hover", label: "hover fill" },
+	{ name: "--text-color-kumo-default", label: "default text" },
+	{ name: "--text-color-kumo-link", label: "link text" },
+	{ name: "--text-color-kumo-brand", label: "Cloudflare brand text" },
 ];
 
 function currentDpr(): number {
@@ -122,7 +131,7 @@ export function ColorVision() {
 
 	// The palette readback: canvas resolves lab()/oklch()/hex identically, so
 	// the values shown are exactly what the browser renders. Re-runs when the
-	// site flips theme by the hour. The microtask keeps the update out of the
+	// theme changes. The microtask keeps the update out of the
 	// effect body (react-hooks/set-state-in-effect); the pattern matches the
 	// night-side clock.
 	useEffect(() => {
@@ -196,45 +205,45 @@ export function ColorVision() {
 	const simLabel = `The same hue circle through ${type} eyes at severity ${pct} percent.`;
 
 	return (
-		<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-				<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">The instrument</span>
-				<span role="status" aria-live="polite" className="text-label-12-mono text-text-faint">
+				<span className="text-label uppercase  text-kumo-default opacity-70">The instrument</span>
+				<span role="status" aria-live="polite" className="text-code text-kumo-default opacity-70">
 					{typeLabel} · severity {pct}%
 				</span>
 			</div>
 
 			<div className="mt-4 grid gap-4 sm:grid-cols-2">
 				<div className="flex flex-col gap-2">
-					<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">Type</span>
+					<span className="text-label uppercase  text-kumo-default opacity-70">Type</span>
 					<div className="flex flex-wrap gap-2">
 						{CVD_TYPES.map((candidate) => {
 							const active = type === candidate;
 							return (
-								<button
+								<Button variant="ghost" size="default"
 									key={candidate}
 									type="button"
 									onClick={() => setType(candidate)}
 									aria-pressed={active}
 									className={cn(
-										"rounded-full border px-3 py-1 text-copy-13 transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
+										"min-h-11 rounded-full border px-3 py-2 text-body-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand",
 										active
-											? "border-brand/60 bg-brand/10 text-foreground"
-											: "border-border text-text-muted hover:border-alpha-500 hover:text-foreground",
+											? "border-kumo-brand bg-kumo-fill-hover text-kumo-default"
+											: "border-kumo-hairline text-kumo-default opacity-80 hover:border-kumo-line hover:text-kumo-default",
 									)}
 								>
 									{TYPE_LABELS[candidate]}
-								</button>
+								</Button>
 							);
 						})}
 					</div>
-					<p className="text-copy-13 text-text-faint">{TYPE_NOTES[type]}</p>
+					<p className="text-body-sm text-kumo-default opacity-70">{TYPE_NOTES[type]}</p>
 				</div>
 
 				<div className="flex flex-col gap-1.5">
 					<span className="flex items-baseline justify-between gap-3">
-						<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">Severity</span>
-						<span className="text-label-12-mono text-text-faint">{pct}%</span>
+						<span className="text-label uppercase  text-kumo-default opacity-70">Severity</span>
+						<span className="text-code text-kumo-default opacity-70">{pct}%</span>
 					</span>
 					<input
 						type="range"
@@ -243,11 +252,11 @@ export function ColorVision() {
 						step={1}
 						value={pct}
 						onChange={(event) => setSeverity(Number(event.target.value) / 100)}
-						className="w-full accent-brand"
+						className="w-full accent-kumo-brand"
 						aria-label="Severity"
 						aria-valuetext={`${pct} percent`}
 					/>
-					<p className="text-copy-13 text-text-faint">
+					<p className="text-body-sm text-kumo-default opacity-70">
 						At 100%, protan and deutan approximate complete dichromacy; tritan at 100% is the
 						model&apos;s restrained maximum, not tritanopia.
 					</p>
@@ -256,22 +265,22 @@ export function ColorVision() {
 
 			<div className="mt-5">
 				<div className="flex flex-wrap items-baseline justify-between gap-x-3">
-					<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">The spectrum</span>
-					<span className="text-label-12-mono text-text-faint">all hues at oklch(0.73 0.12)</span>
+					<span className="text-label uppercase  text-kumo-default opacity-70">The spectrum</span>
+					<span className="text-code text-kumo-default opacity-70">all hues at oklch(0.73 0.12)</span>
 				</div>
 				<div className="mt-2 flex flex-col gap-3">
 					<div>
-						<span className="text-label-12-mono text-text-faint">Normal vision</span>
-						<div className="mt-1.5 h-10 overflow-hidden rounded-lg border border-alpha-200">
+						<span className="text-code text-kumo-default opacity-70">Normal vision</span>
+						<div className="mt-1.5 h-10 overflow-hidden rounded-lg border border-kumo-hairline">
 							<canvas ref={normalRef} role="img" aria-label={normalLabel} className="block h-full w-full" />
 						</div>
 					</div>
 					<div>
 						<div className="flex flex-wrap items-baseline justify-between gap-x-3">
-							<span className="text-label-12-mono text-text-faint">Through {type} eyes</span>
-							<span className="text-label-12-mono text-text-faint">severity {pct}%</span>
+							<span className="text-code text-kumo-default opacity-70">Through {type} eyes</span>
+							<span className="text-code text-kumo-default opacity-70">severity {pct}%</span>
 						</div>
-						<div className="mt-1.5 h-10 overflow-hidden rounded-lg border border-alpha-200">
+						<div className="mt-1.5 h-10 overflow-hidden rounded-lg border border-kumo-hairline">
 							<canvas ref={simRef} role="img" aria-label={simLabel} className="block h-full w-full" />
 						</div>
 					</div>
@@ -280,17 +289,17 @@ export function ColorVision() {
 
 			<div className="mt-5">
 				<div className="flex flex-wrap items-baseline justify-between gap-x-3">
-					<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<span className="text-label uppercase  text-kumo-default opacity-70">
 						This site&apos;s palette
 					</span>
-					<span className="text-label-12-mono text-text-faint">
+					<span className="text-code text-kumo-default opacity-70">
 						read live from the design tokens - current theme
 					</span>
 				</div>
-				<div className="mt-2 overflow-hidden rounded-lg border border-alpha-200">
+				<div className="mt-2 overflow-hidden rounded-lg border border-kumo-hairline">
 					<table className="w-full border-collapse text-left">
 						<thead>
-							<tr className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+							<tr className="text-label uppercase  text-kumo-default opacity-70">
 								<th className="px-2 py-2 font-normal sm:px-4">Token</th>
 								<th className="px-2 py-2 font-normal sm:px-4">Normal</th>
 								<th className="px-2 py-2 font-normal sm:px-4">Through {type}</th>
@@ -298,28 +307,28 @@ export function ColorVision() {
 						</thead>
 						<tbody>
 							{tableRows.map((row) => (
-								<tr key={row.name} className="border-t border-alpha-200">
+								<tr key={row.name} className="border-t border-kumo-hairline">
 									<td className="px-2 py-2 sm:px-4">
-										<span className="text-label-12-mono text-text-muted">{row.label}</span>
+										<span className="text-code text-kumo-default opacity-80">{row.label}</span>
 									</td>
 									<td className="px-2 py-2 sm:px-4">
 										<span className="flex items-center gap-1.5 sm:gap-2">
 											<span
 												aria-hidden="true"
-												className="h-3.5 w-3.5 shrink-0 rounded-sm border border-alpha-300"
+												className="h-3.5 w-3.5 shrink-0 rounded-sm border border-kumo-hairline"
 												style={row.hex ? { background: row.hex } : undefined}
 											/>
-											<span className="text-label-12-mono text-text-faint">{row.hex ?? "-"}</span>
+											<span className="text-code text-kumo-default opacity-70">{row.hex ?? "-"}</span>
 										</span>
 									</td>
 									<td className="px-2 py-2 sm:px-4">
 										<span className="flex items-center gap-1.5 sm:gap-2">
 											<span
 												aria-hidden="true"
-												className="h-3.5 w-3.5 shrink-0 rounded-sm border border-alpha-300"
+												className="h-3.5 w-3.5 shrink-0 rounded-sm border border-kumo-hairline"
 												style={row.sim ? { background: row.sim } : undefined}
 											/>
-											<span className="text-label-12-mono text-text-faint">{row.sim ?? "-"}</span>
+											<span className="text-code text-kumo-default opacity-70">{row.sim ?? "-"}</span>
 										</span>
 									</td>
 								</tr>
@@ -331,10 +340,10 @@ export function ColorVision() {
 
 			<div className="mt-5">
 				<div className="flex flex-wrap items-baseline justify-between gap-x-3">
-					<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<span className="text-label uppercase  text-kumo-default opacity-70">
 						A color you bring
 					</span>
-					<span className="text-label-12-mono text-text-faint">native picker - any color</span>
+					<span className="text-code text-kumo-default opacity-70">native picker - any color</span>
 				</div>
 				<div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-3">
 					<div className="flex items-center gap-3">
@@ -343,23 +352,23 @@ export function ColorVision() {
 							value={picked}
 							onChange={(event) => setPicked(event.target.value)}
 							aria-label="Pick a color to simulate"
-							className="h-10 w-14 cursor-pointer rounded-lg border border-input bg-background p-1"
+							className="h-10 w-14 cursor-pointer rounded-lg border border-kumo-line bg-kumo-control p-1"
 						/>
-						<span className="text-label-12-mono text-text-faint">{pickedHex}</span>
+						<span className="text-code text-kumo-default opacity-70">{pickedHex}</span>
 					</div>
-					<span className="text-copy-13 text-text-faint">simulates to</span>
+					<span className="text-body-sm text-kumo-default opacity-70">simulates to</span>
 					<span className="flex items-center gap-1.5 sm:gap-2">
 						<span
 							aria-hidden="true"
-							className="h-5 w-5 shrink-0 rounded-sm border border-alpha-300"
+							className="h-5 w-5 shrink-0 rounded-sm border border-kumo-hairline"
 							style={{ background: pickedSim }}
 						/>
-						<span className="text-label-12-mono text-text-faint">{pickedSim}</span>
+						<span className="text-code text-kumo-default opacity-70">{pickedSim}</span>
 					</span>
 				</div>
 			</div>
 
-			<p className="mt-5 text-copy-13 text-text-faint">
+			<p className="mt-5 text-body-sm text-kumo-default opacity-70">
 				Machado, Oliveira and Fernandes, 2009 - 33 precomputed matrices applied in linear RGB, severity
 				by the authors&apos; own interpolation. Nothing is fetched at runtime.
 			</p>

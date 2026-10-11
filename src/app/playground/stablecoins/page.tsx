@@ -68,8 +68,8 @@ export default async function StablecoinFloatPage() {
 			<section aria-label="The long view">
 				<SectionHeading label="The long view" note="daily, November 2017 to today" />
 				<div className="flex flex-col gap-3">
-					<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
-						<span className="mb-3 block text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
+						<span className="mb-3 block text-label uppercase  text-kumo-default opacity-70">
 							All time, log scale
 						</span>
 						<AreaChart
@@ -82,8 +82,8 @@ export default async function StablecoinFloatPage() {
 							scale="log"
 						/>
 					</div>
-					<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
-						<span className="mb-3 block text-label-12 uppercase tracking-[0.14em] text-text-faint">
+					<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
+						<span className="mb-3 block text-label uppercase  text-kumo-default opacity-70">
 							The last year
 						</span>
 						<AreaChart
@@ -101,7 +101,7 @@ export default async function StablecoinFloatPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						Total stablecoin circulation from DefiLlama&apos;s public aggregate
 						feed, fetched by this site about every 30 minutes. When the feed is

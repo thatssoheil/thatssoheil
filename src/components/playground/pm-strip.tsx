@@ -52,7 +52,7 @@ export function PmStrip({
 				x2={width}
 				y1={guidelineY}
 				y2={guidelineY}
-				className="text-alpha-400"
+				className="text-kumo-default opacity-50"
 				stroke="currentColor"
 				strokeWidth={1}
 				strokeDasharray="4 5"
@@ -63,7 +63,7 @@ export function PmStrip({
 				x2={width}
 				y1={baseline}
 				y2={baseline}
-				className="text-alpha-200"
+				className="text-kumo-default opacity-70"
 				stroke="currentColor"
 				strokeWidth={1}
 				vectorEffect="non-scaling-stroke"
@@ -79,7 +79,7 @@ export function PmStrip({
 						width={barWidth}
 						height={baseline - y}
 						rx={2}
-						className="text-brand"
+						className="text-kumo-link"
 						fill="currentColor"
 						fillOpacity={opacity}
 					/>
@@ -90,7 +90,7 @@ export function PmStrip({
 					cx={currentIndex * step + step / 2}
 					cy={barY(bins[currentIndex].pm25) - 6}
 					r={3}
-					className="text-brand"
+					className="text-kumo-link"
 					fill="currentColor"
 					fillOpacity={0.95}
 				/>

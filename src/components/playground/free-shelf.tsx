@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { FreeShelfBook, FreeShelfData, FreeShelfWindowKey } from "@/lib/playground/types";
-
+import { Link, Button } from "@/components/ui";
 // The shelf: Project Gutenberg's most-downloaded chart behind one toggle
 // (yesterday / last 7 days / last 30 days). The whole chart arrives with the
 // page - switching windows swaps lists, nothing is fetched here. Covers load
@@ -38,8 +38,8 @@ function ShelfCover({ book }: { book: FreeShelfBook }) {
 
 	if (failed) {
 		return (
-			<div className="flex aspect-[19/30] w-full items-center justify-center rounded-lg border border-border bg-muted p-3">
-				<span className="text-center text-copy-13 text-text-muted">{book.title}</span>
+			<div className="flex aspect-[19/30] w-full items-center justify-center rounded-lg border border-kumo-hairline bg-kumo-recessed p-3">
+				<span className="text-center text-body-sm text-kumo-default opacity-80">{book.title}</span>
 			</div>
 		);
 	}
@@ -54,30 +54,30 @@ function ShelfCover({ book }: { book: FreeShelfBook }) {
 			loading="lazy"
 			decoding="async"
 			onError={() => setFailed(true)}
-			className="aspect-[19/30] w-full rounded-lg border border-border bg-muted object-cover"
+			className="aspect-[19/30] w-full rounded-lg border border-kumo-hairline bg-kumo-recessed object-cover"
 		/>
 	);
 }
 
 function ShelfCard({ book }: { book: FreeShelfBook }) {
 	return (
-		<a
+		<Link
 			href={`https://www.gutenberg.org/ebooks/${book.id}`}
 			target="_blank"
 			rel="noreferrer"
-			className="group flex flex-col gap-3 rounded-xl focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+			className="group flex flex-col gap-3 rounded-lg focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus"
 		>
 			<ShelfCover book={book} />
 			<div className="flex flex-col gap-0.5">
-				<p className="text-copy-14 text-foreground transition-colors group-hover:text-brand">
+				<p className="text-body-sm text-kumo-default  group-hover:text-kumo-link">
 					{book.title}
 				</p>
-				{book.author ? <p className="text-copy-13 text-text-faint">{book.author}</p> : null}
-				<p className="mt-1 text-label-12-mono text-text-faint">
+				{book.author ? <p className="text-body-sm text-kumo-default opacity-70">{book.author}</p> : null}
+				<p className="mt-1 text-code text-kumo-default opacity-70">
 					{book.downloads.toLocaleString("en-US")} downloads
 				</p>
 			</div>
-		</a>
+		</Link>
 	);
 }
 
@@ -87,31 +87,31 @@ export function FreeShelf({ data }: { data: FreeShelfData }) {
 	const books = data.windows[active].slice(0, DISPLAY);
 
 	return (
-		<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 			<div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
 				<div
 					role="group"
 					aria-label="Chart window"
-					className="inline-flex rounded-full border border-border p-0.5"
+					className="inline-flex rounded-full border border-kumo-hairline p-0.5"
 				>
 					{WINDOWS.map((window) => (
-						<button
+						<Button variant="ghost" size="default"
 							key={window.key}
 							type="button"
 							onClick={() => setActive(window.key)}
 							aria-pressed={active === window.key}
 							className={cn(
-								"rounded-full px-3 py-1.5 text-copy-13 transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
+								"rounded-full px-3 py-1.5 text-body-sm  focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus",
 								active === window.key
-									? "bg-alpha-200 text-foreground"
-									: "text-text-faint hover:text-text-muted",
+									? "bg-kumo-fill-hover text-kumo-default"
+									: "text-kumo-default opacity-70 hover:text-kumo-default hover:opacity-80",
 							)}
 						>
 							{window.label}
-						</button>
+						</Button>
 					))}
 				</div>
-				<p className="text-copy-13 text-text-faint">
+				<p className="text-body-sm text-kumo-default opacity-70">
 					Ranked by {activeWindow.note} - counted once per address per day, robots excluded.
 				</p>
 			</div>
@@ -124,7 +124,7 @@ export function FreeShelf({ data }: { data: FreeShelfData }) {
 				))}
 			</ul>
 
-			<p className="mt-6 text-copy-13 text-text-faint">
+			<p className="mt-6 text-body-sm text-kumo-default opacity-70">
 				Every entry opens its Project Gutenberg page, where the full text is free to read.
 			</p>
 		</div>

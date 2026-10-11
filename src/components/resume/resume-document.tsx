@@ -1,5 +1,5 @@
 import { RESUME } from "@/data/resume";
-import { Surface } from "@/components/ui/surface";
+import { Link, Surface } from "@/components/ui";
 import { DateRange } from "./date-range";
 import { ExperienceEntry } from "./experience-entry";
 import styles from "./resume.module.css";
@@ -12,9 +12,8 @@ export function ResumeDocument() {
 	const { sections } = RESUME;
 	return (
 		<Surface
-			variant="panel"
-			radius="lg"
-			className={styles.paper}
+			layer="base"
+			className={`${styles.paper} rounded-lg shadow-xs ring ring-kumo-line`}
 			aria-label={`${RESUME.name} résumé`}
 		>
 			<header className={styles.identity}>
@@ -24,7 +23,7 @@ export function ResumeDocument() {
 				<p className={styles.location}>{RESUME.location}</p>
 				<address className={styles.contact}>
 					{RESUME.contact.map((item) => (
-						<a key={item.href} href={item.href}>{item.label}</a>
+						<Link key={item.href} href={item.href}>{item.label}</Link>
 					))}
 				</address>
 			</header>
@@ -55,7 +54,7 @@ export function ResumeDocument() {
 			<section id="project" className={styles.section}>
 				<SectionHeading>Projects</SectionHeading>
 				<article className={styles.project}>
-					<h3><a href={sections.project.href}>{sections.project.name}</a></h3>
+					<h3><Link href={sections.project.href} target="_blank">{sections.project.name}</Link></h3>
 					<p className={styles.context}>{sections.project.stack.join(", ")}</p>
 					<ul className={styles.highlights}>
 						{sections.project.highlights.map((item) => <li key={item}>{item}</li>)}

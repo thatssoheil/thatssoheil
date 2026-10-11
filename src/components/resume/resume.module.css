@@ -15,105 +15,81 @@
 	gap: 1.25rem;
 	width: min(100%, 56rem);
 	margin: 1rem auto 0;
-	padding: 1.25rem 1.5rem;
+	padding: 1rem 1.25rem;
 }
 
-.toolbar > div:first-child { display: flex; align-items: center; min-height: 2.75rem; }
-.toolbar span { color: var(--text-faint); font-size: 0.8125rem; line-height: 1.5; }
-.toolbar button {
-	display: inline-flex;
-	flex: none;
-	min-height: 2.75rem;
-	align-items: center;
-	justify-content: center;
-	gap: 0.5rem;
-	padding: 0 1.25rem;
-	border: 1px solid color-mix(in oklch, var(--primary) 45%, transparent);
-	border-radius: var(--radius-md);
-	background: var(--primary);
-	color: var(--primary-foreground);
-	font-size: 0.8125rem;
-	font-weight: 600;
-	letter-spacing: 0.01em;
-	box-shadow: 0 1px 0 color-mix(in oklch, var(--primary-foreground) 18%, transparent) inset,
-		0 1px 2px color-mix(in oklch, #000 14%, transparent);
-	transition: transform var(--dur-micro) var(--ease-snap),
-		box-shadow var(--dur-micro) var(--ease-snap),
-		background-color var(--dur-micro) var(--ease-snap);
-}
-.toolbar button:hover { background: var(--primary); box-shadow: 0 2px 10px color-mix(in oklch, var(--primary) 35%, transparent), 0 1px 0 color-mix(in oklch, var(--primary-foreground) 22%, transparent) inset; }
-.toolbar button:active { transform: scale(0.98); }
-.toolbar button:focus-visible {
-	outline: 2px solid transparent;
-	outline-offset: 2px;
-	box-shadow: var(--ring-focus);
+.instructions {
+	color: var(--text-color-kumo-default);
+	opacity: 0.7;
+	font-size: 0.875rem;
+	line-height: 1.5;
 }
 
 .paper {
 	width: min(100%, 56rem);
 	margin: 0 auto;
 	padding: clamp(1.5rem, 4vw, 3.5rem);
-	color: var(--foreground);
+	color: var(--text-color-kumo-default);
+	font-family: var(--font-sans);
 	font-size: 0.9375rem;
 	line-height: 1.6;
 }
 
-.identity { padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
-.eyebrow { color: var(--brand); font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; }
-.identity h1 { margin-top: 0.35rem; font-size: clamp(2.25rem, 7vw, 4rem); font-weight: 300; line-height: 1; letter-spacing: -0.06em; }
+.identity { padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-kumo-hairline); }
+.eyebrow { color: var(--text-color-kumo-brand); font-family: var(--font-mono); font-size: 0.875rem; text-transform: uppercase; }
+.identity h1 { margin-top: 0.35rem; font-size: clamp(2.25rem, 7vw, 4rem); font-weight: 300; line-height: 1; }
 .title { margin-top: 0.75rem; font-size: 1.125rem; font-weight: 500; }
-.location { margin-top: 0.125rem; color: var(--text-muted); }
+.location { margin-top: 0.125rem; opacity: 0.8; }
 .contact { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; margin-top: 1rem; font-style: normal; }
-.contact a, .project a { color: var(--brand); text-decoration: underline; text-decoration-color: color-mix(in oklch, var(--brand) 38%, transparent); text-underline-offset: 0.2em; }
-.contact a:hover, .project a:hover { text-decoration-color: currentColor; }
+.contact a, .project a { color: var(--text-color-kumo-link); text-decoration: underline; text-underline-offset: 0.2em; }
 
 .section { padding-top: 1.5rem; }
-.sectionHeading { margin-bottom: 0.75rem; color: var(--brand); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; }
+.sectionHeading { margin-bottom: 0.75rem; color: var(--text-color-kumo-brand); font-family: var(--font-mono); font-size: 0.875rem; font-weight: 500; text-transform: uppercase; }
 .skillGroups { display: grid; gap: 0.35rem; }
 .skillGroups strong { font-weight: 600; }
 .experienceList { display: grid; gap: 1.5rem; }
 .experienceEntry, .project { break-inside: avoid; }
 .experienceHeader, .education { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; }
 .experienceHeader h3, .project h3, .education h3 { font-size: 1rem; font-weight: 600; }
-.employerLine { color: var(--text-muted); }
-.experienceMeta { display: grid; flex: none; justify-items: end; color: var(--text-faint); font-size: 0.8125rem; line-height: 1.4; text-align: right; }
-.context { margin-top: 0.3rem; color: var(--text-faint); font-size: 0.8125rem; }
+.employerLine { opacity: 0.8; }
+.experienceMeta { display: grid; flex: none; justify-items: end; opacity: 0.7; font-size: 0.875rem; line-height: 1.4; text-align: right; }
+.context { margin-top: 0.3rem; opacity: 0.7; font-size: 0.875rem; }
 .highlights, .compactList { display: grid; gap: 0.35rem; margin-top: 0.55rem; padding-left: 1.1rem; list-style: disc; }
-.highlights li::marker, .compactList li::marker { color: var(--brand); }
+.highlights li::marker, .compactList li::marker { color: var(--color-kumo-brand); }
 .pageTwoStart { scroll-margin-top: 7rem; }
 
 @media (max-width: 40rem) {
 	.toolbar { display: grid; }
-	.toolbar button { justify-content: center; }
+	.toolbar > :global(button) { justify-content: center; }
 	.experienceHeader, .education { display: grid; gap: 0.25rem; }
 	.experienceMeta { justify-items: start; text-align: left; }
-}
-
-@media (forced-colors: active) {
-	.toolbar button:focus-visible {
-		outline-color: Highlight;
-		box-shadow: none;
-	}
 }
 
 @page {
 	size: A4 portrait;
 	margin: 9mm 11mm;
-	background: #fff;
+	background: white;
 }
 
 @media print {
-	.screenOnly, .toolbar { display: none !important; }
-	:global(.signal-field), :global(.structure-grid) { display: none !important; }
-	:global(html) { color-scheme: only light !important; }
+	:global(:root[data-mode]) {
+		--color-kumo-canvas: white;
+		--color-kumo-base: white;
+		--color-kumo-hairline: lightgray;
+		--text-color-kumo-default: black;
+		--text-color-kumo-link: black;
+		--text-color-kumo-brand: black;
+	}
+	:global(html) { color-scheme: light; }
 	:global(html), :global(body) {
 		width: auto;
 		min-height: auto;
-		background: #fff !important;
-		color: #111 !important;
+		background: white !important;
+		color: black !important;
 		print-color-adjust: exact;
 		-webkit-print-color-adjust: exact;
 	}
+	.screenOnly, .toolbar { display: none !important; }
 	.resumeViewport { min-height: 0; padding: 0; }
 	.paper {
 		width: auto;
@@ -122,35 +98,33 @@
 		padding: 0;
 		border: 0;
 		border-radius: 0;
-		background: #fff !important;
+		background: white !important;
 		box-shadow: none;
-		color: #111 !important;
+		color: black !important;
 		font-family: Arial, Helvetica, sans-serif;
 		font-size: 8.7pt;
 		line-height: 1.42;
 	}
-	.identity { padding-bottom: 5mm; border-color: #c9c9c9; }
+	.identity { padding-bottom: 5mm; border-color: lightgray; }
 	.eyebrow { display: none; }
-	.identity h1 { margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 20pt; font-weight: 700; letter-spacing: -0.035em; }
+	.identity h1 { margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 20pt; font-weight: 700; }
 	.title { margin-top: 1mm; font-size: 11pt; }
-	.location { margin-top: 0; color: #333; }
+	.location { margin-top: 0; color: black; }
 	.contact { gap: 0.5mm 3mm; margin-top: 2mm; font-size: 8pt; }
-	.contact a, .project a { color: #111; text-decoration: none; }
+	.contact a, .project a { color: black; text-decoration: none; }
 	.section { padding-top: 7mm; }
-	.sectionHeading { margin-bottom: 1.5mm; color: #111; font-family: Arial, Helvetica, sans-serif; font-size: 8pt; font-weight: 700; letter-spacing: 0.08em; }
+	.sectionHeading { margin-bottom: 1.5mm; color: black; font-family: Arial, Helvetica, sans-serif; font-size: 8pt; font-weight: 700; }
 	.skillGroups { gap: 0.6mm; }
 	.experienceList { gap: 6mm; }
 	.experienceEntry, .project, .education { break-inside: avoid; page-break-inside: avoid; }
 	.experienceHeader h3, .project h3, .education h3 { font-size: 9pt; }
-	.employerLine, .context, .experienceMeta { color: #333; }
+	.employerLine, .context, .experienceMeta { color: black; }
 	.experienceMeta, .context { font-size: 7.6pt; }
-	/* Single-column flow: ATS parsers detach dates when they sit in a
-	   right-aligned flex column. Collapse the space-between row so role,
-	   company, dates, and location read linearly top-to-bottom. */
+	/* Single-column flow keeps role, company, dates, and location in ATS order. */
 	.experienceHeader, .education { display: block; }
 	.experienceMeta { justify-items: start; text-align: left; }
 	.highlights, .compactList { gap: 1.4mm; margin-top: 2mm; padding-left: 4mm; }
-	.highlights li::marker, .compactList li::marker { color: #111; }
+	.highlights li::marker, .compactList li::marker { color: black; }
 	.pageTwoStart { break-before: page; page-break-before: always; }
 	.resumeViewport * { animation: none !important; transition: none !important; }
 }

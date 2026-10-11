@@ -5,6 +5,7 @@ import { StatTile } from "@/components/playground/stat-tile";
 import { PmStrip } from "@/components/playground/pm-strip";
 import { getAirData } from "@/lib/playground/air-source";
 import { formatDateTimeUtc } from "@/lib/playground/format";
+import { Link } from "@/components/ui";
 
 // The page renders per request from the live feed (with a per-isolate cache
 // in the source module) - never baked into the build.
@@ -134,7 +135,7 @@ export default async function TehranAirPage() {
 						hint={`the feed's USAQI scale · ${formatHour(current.t)}`}
 					/>
 				</div>
-				<p className="mt-3 text-copy-13 text-text-faint">
+				<p className="mt-3 text-body-sm text-kumo-default opacity-70">
 					For scale: the current hour reads {whoComparison(current.pm25)}. This is
 					modeled, city-scale data, not a single street station.
 				</p>
@@ -145,7 +146,7 @@ export default async function TehranAirPage() {
 					label="The past two days and today"
 					note={`hourly PM2.5 · ${formatDayShort(first.t)} through ${formatDayShort(last.t)}`}
 				/>
-				<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+				<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 					<PmStrip
 						bins={bins}
 						guideline={WHO_24H}
@@ -157,13 +158,13 @@ export default async function TehranAirPage() {
 							<span
 								key={group.label}
 								style={{ flexGrow: group.count }}
-								className="basis-0 text-center text-label-12-mono text-text-faint"
+								className="basis-0 text-center text-code text-kumo-default opacity-70"
 							>
 								{group.count >= 8 ? group.label : "\u00A0"}
 							</span>
 						))}
 					</div>
-					<p className="mt-4 text-copy-13 text-text-muted">
+					<p className="mt-4 text-body-sm text-kumo-default opacity-80">
 						Solid bars: the model&apos;s hourly values up to the current hour. Faded
 						bars: its forecast for the rest of today. Dashed line: the WHO 24-hour
 						guideline, {WHO_24H} ug/m3. The window ran from {fmt1(windowMin)} to{" "}
@@ -174,9 +175,9 @@ export default async function TehranAirPage() {
 
 			<section aria-label="The evening outlook">
 				<SectionHeading label="The evening outlook" note="the model's call for the rest of today" />
-				<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+				<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 					{eveningPeak && lastBin && eveningMin !== null ? (
-						<p className="text-copy-14 text-text-muted">
+						<p className="text-body-sm text-kumo-default opacity-80">
 							For the rest of today, the model runs between about {fmt1(eveningMin)}{" "}
 							and about {fmt1(eveningPeak.pm25)} ug/m3, topping out around{" "}
 							{formatHour(eveningPeak.t)}. The peak reads{" "}
@@ -184,11 +185,11 @@ export default async function TehranAirPage() {
 							sits at about {fmt1(lastBin.pm25)}.
 						</p>
 					) : (
-						<p className="text-copy-14 text-text-muted">
+						<p className="text-body-sm text-kumo-default opacity-80">
 							No forecast bins remain for today; the series picks up again tomorrow.
 						</p>
 					)}
-					<p className="mt-3 text-copy-13 text-text-faint">
+					<p className="mt-3 text-body-sm text-kumo-default opacity-70">
 						Forecast bins are the model&apos;s current call and shift as conditions
 						change.
 					</p>
@@ -197,7 +198,7 @@ export default async function TehranAirPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						These are modeled air-quality numbers: Copernicus CAMS model output for
 						the Tehran grid point, delivered by Open-Meteo and refreshed hourly. The
@@ -214,24 +215,24 @@ export default async function TehranAirPage() {
 						The page re-reads the feed about once a minute, and every reading keeps
 						its own timestamp; when the feed is unreachable, the page serves the
 						last good snapshot and says so. Times are Tehran local. Data:{" "}
-						<a
+						<Link
 							href="https://open-meteo.com/"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							Open-Meteo
-						</a>{" "}
+						</Link>{" "}
 						(CC BY 4.0), &quot;Weather data by Open-Meteo.com&quot;. Guideline
 						citation:{" "}
-						<a
+						<Link
 							href="https://www.who.int/publications/i/item/9789240034228"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							WHO global air quality guidelines, Geneva 2021
-						</a>
+						</Link>
 						, Table 0.1.
 					</p>
 				</div>

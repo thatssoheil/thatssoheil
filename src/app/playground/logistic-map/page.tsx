@@ -3,6 +3,7 @@ import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { SectionHeading } from "@/components/playground/section-heading";
 import { LogisticMap } from "@/components/playground/logistic-map";
 import { FEIGENBAUM_DELTA, ONSET_TABLE } from "@/lib/playground/logistic";
+import { Link } from "@/components/ui";
 
 export const metadata: Metadata = {
 	title: "Logistic map",
@@ -26,7 +27,7 @@ export default function LogisticMapPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						The logistic map is the canonical model of how a simple rule makes
 						complicated behavior: x(t+1) = r*x(t)*(1-x(t)), where each value is the
@@ -52,10 +53,10 @@ export default function LogisticMapPage() {
 						Feigenbaum&apos;s delta = {FEIGENBAUM_DELTA}...
 					</p>
 				</div>
-				<div className="mt-4 max-w-2xl overflow-hidden rounded-xl border border-border bg-card">
+				<div className="mt-4 max-w-2xl overflow-hidden rounded-lg border border-kumo-hairline bg-kumo-base">
 					<table className="w-full border-collapse text-left">
 						<thead>
-							<tr className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+							<tr className="text-label uppercase  text-kumo-default opacity-70">
 								<th className="px-4 py-2.5 font-normal sm:px-6">Onset</th>
 								<th className="px-4 py-2.5 font-normal sm:px-6">r</th>
 								<th className="px-4 py-2.5 font-normal sm:px-6">Closed form</th>
@@ -63,14 +64,14 @@ export default function LogisticMapPage() {
 						</thead>
 						<tbody>
 							{ONSET_TABLE.map((row) => (
-								<tr key={row.name} className="border-t border-alpha-200">
-									<td className="px-4 py-2.5 text-copy-13 text-foreground sm:px-6">
+								<tr key={row.name} className="border-t border-kumo-hairline">
+									<td className="px-4 py-2.5 text-body-sm text-kumo-default sm:px-6">
 										{row.name}
 									</td>
-									<td className="px-4 py-2.5 text-copy-13-mono text-text-muted sm:px-6">
+									<td className="px-4 py-2.5 text-code text-kumo-default opacity-80 sm:px-6">
 										{row.r}
 									</td>
-									<td className="px-4 py-2.5 text-copy-13-mono text-text-faint sm:px-6">
+									<td className="px-4 py-2.5 text-code text-kumo-default opacity-70 sm:px-6">
 										{row.exact ?? "-"}
 									</td>
 								</tr>
@@ -78,35 +79,35 @@ export default function LogisticMapPage() {
 						</tbody>
 					</table>
 				</div>
-				<p className="mt-3 max-w-2xl text-copy-13 text-text-faint">
+				<p className="mt-3 max-w-2xl text-body-sm text-kumo-default opacity-70">
 					Landmarks after{" "}
-					<a
+					<Link
 						href="https://www.nature.com/articles/261459a0"
 						target="_blank"
 						rel="noreferrer"
-						className="text-brand transition-opacity hover:opacity-75"
+						className="text-kumo-link transition-opacity hover:opacity-75"
 					>
 						May, 1976
-					</a>
+					</Link>
 					, &quot;Simple mathematical models with very complicated dynamics&quot;, Nature
 					261, 459-467;{" "}
-					<a
+					<Link
 						href="https://doi.org/10.1007/BF01020332"
 						target="_blank"
 						rel="noreferrer"
-						className="text-brand transition-opacity hover:opacity-75"
+						className="text-kumo-link transition-opacity hover:opacity-75"
 					>
 						Feigenbaum, 1978
-					</a>
+					</Link>
 					, J. Stat. Phys. 19, 25-52;{" "}
-					<a
+					<Link
 						href="https://doi.org/10.1080/00029890.1975.11994008"
 						target="_blank"
 						rel="noreferrer"
-						className="text-brand transition-opacity hover:opacity-75"
+						className="text-kumo-link transition-opacity hover:opacity-75"
 					>
 						Li &amp; Yorke, 1975
-					</a>
+					</Link>
 					, &quot;Period Three Implies Chaos&quot;, Amer. Math. Monthly 82(10), 985-992.
 				</p>
 			</section>

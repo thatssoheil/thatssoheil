@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Input, Button } from "@/components/ui";
 import { useLocalTheme } from "@/components/theme-provider";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { cn } from "@/lib/utils";
@@ -87,7 +88,7 @@ function paintAtlas(canvas: HTMLCanvasElement | null, dpr: number, bytes: Uint8A
 	const h = canvas.height;
 	ctx.clearRect(0, 0, w, h);
 	if (w < 2 || h < 2) return;
-	ctx.fillStyle = tokenColor("--alpha-600");
+	ctx.fillStyle = tokenColor("--color-kumo-line");
 	const { cols, rows } = maskData;
 	const cellW = w / cols;
 	const cellH = h / rows;
@@ -125,7 +126,7 @@ function paintOverlay(
 	const homeY = ((90 - place.lat) / 180) * h;
 	const antiX = ((anti.lon + 180) / 360) * w;
 	const antiY = ((90 - anti.lat) / 180) * h;
-	const ink = tokenColor("--brand");
+	const ink = tokenColor("--color-kumo-brand");
 
 	// The dashed link, drawn from the place toward the antipode.
 	ctx.strokeStyle = ink;
@@ -226,10 +227,10 @@ function PlacePicker({
 
 	return (
 		<div className="relative flex flex-col gap-1.5">
-			<label htmlFor={id} className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+			<label htmlFor={id} className="text-label uppercase  text-kumo-default opacity-70">
 				{label}
 			</label>
-			<input
+			<Input
 				id={id}
 				type="text"
 				role="combobox"
@@ -258,33 +259,33 @@ function PlacePicker({
 						select(results[0]);
 					}
 				}}
-				className="h-11 w-full rounded-xl border border-input bg-background px-4 text-copy-14 text-foreground placeholder:text-text-faint focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+				className="h-11 w-full bg-kumo-canvas px-4"
 			/>
 			{searching ? (
 				<div
 					id={listId}
-					className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-xl border border-border bg-card"
+					className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-lg border border-kumo-hairline bg-kumo-base"
 				>
 					{results.length > 0 ? (
 						<ul className="max-h-72 overflow-auto py-1">
 							{results.map((place) => (
 								<li key={`${place.lat}|${place.lon}`}>
-									<button
+									<Button variant="ghost" size="default"
 										type="button"
 										onMouseDown={(event) => event.preventDefault()}
 										onClick={() => select(place)}
-										className="flex w-full flex-col items-start gap-0.5 px-3 py-2 text-left transition-colors hover:bg-muted focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+										className="h-auto flex w-full flex-col items-start gap-0.5 px-3 py-2 text-left hover:bg-kumo-recessed"
 									>
-										<span className="text-copy-14 text-foreground">{place.name}</span>
-										<span className="text-label-12-mono text-text-faint">
+										<span className="text-body-sm text-kumo-default">{place.name}</span>
+										<span className="text-code text-kumo-default opacity-70">
 											{place.country} · {formatPop(place.pop)}
 										</span>
-									</button>
+									</Button>
 								</li>
 							))}
 						</ul>
 					) : (
-						<p className="px-3 py-2 text-copy-13 text-text-faint">No matches.</p>
+						<p className="px-3 py-2 text-body-sm text-kumo-default opacity-70">No matches.</p>
 					)}
 				</div>
 			) : null}
@@ -294,10 +295,10 @@ function PlacePicker({
 
 function ReadoutTile({ label, value, hint }: { label: string; value: string; hint: string }) {
 	return (
-		<div className="rounded-lg border border-alpha-200 bg-background px-3 py-2.5">
-			<div className="text-label-12 uppercase tracking-[0.14em] text-text-faint">{label}</div>
-			<div className="mt-1 text-heading-20 text-foreground">{value}</div>
-			<div className="mt-0.5 text-copy-13 text-text-faint">{hint}</div>
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-canvas px-3 py-2.5">
+			<div className="text-label uppercase  text-kumo-default opacity-70">{label}</div>
+			<div className="mt-1 text-heading text-kumo-default">{value}</div>
+			<div className="mt-0.5 text-body-sm text-kumo-default opacity-70">{hint}</div>
 		</div>
 	);
 }
@@ -430,10 +431,10 @@ export function Antipodes() {
 	const mapLabel = `World map with ${place.name} marked and its antipode at ${antiText}.`;
 
 	return (
-		<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-				<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">The instrument</span>
-				<span className="text-label-12-mono text-text-faint">
+				<span className="text-label uppercase  text-kumo-default opacity-70">The instrument</span>
+				<span className="text-code text-kumo-default opacity-70">
 					{place.name} · {place.country}
 				</span>
 			</div>
@@ -443,31 +444,31 @@ export function Antipodes() {
 			</div>
 
 			<div className="mt-3 flex flex-wrap items-center gap-2">
-				<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">Try</span>
+				<span className="text-label uppercase  text-kumo-default opacity-70">Try</span>
 				{CHIPS.map((chip) => {
 					const active = place.name === chip.place;
 					return (
-						<button
+						<Button variant="ghost" size="default"
 							key={chip.label}
 							type="button"
 							onClick={() => setPlace(pickPlace(chip.place))}
 							aria-pressed={active}
 							className={cn(
-								"rounded-full border px-3 py-1 text-copy-13 transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
+								"rounded-full border px-3 py-1 text-body-sm  focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus",
 								active
-									? "border-brand/60 bg-brand/10 text-foreground"
-									: "border-border text-text-muted hover:border-alpha-500 hover:text-foreground",
+									? "border-kumo-brand bg-kumo-fill-hover text-kumo-default"
+									: "border-kumo-hairline text-kumo-default opacity-80 hover:border-kumo-line hover:text-kumo-default",
 							)}
 						>
 							{chip.label}
-						</button>
+						</Button>
 					);
 				})}
 			</div>
 
 			<div
 				ref={boxRef}
-				className="relative mt-4 aspect-[2/1] w-full overflow-hidden rounded-lg border border-alpha-200"
+				className="relative mt-4 aspect-[2/1] w-full overflow-hidden rounded-lg border border-kumo-hairline"
 			>
 				<canvas ref={atlasRef} role="img" aria-label={mapLabel} className="block h-full w-full" />
 				<canvas
@@ -476,7 +477,7 @@ export function Antipodes() {
 					className="pointer-events-none absolute inset-0 block h-full w-full"
 				/>
 			</div>
-			<p className="mt-2 text-copy-13 text-text-faint">
+			<p className="mt-2 text-body-sm text-kumo-default opacity-70">
 				The solid dot is {place.name}; the crosshair is its antipode - the exact other side of the Earth.
 				The dashed line links them on the map; the real way through is the straight diameter.
 			</p>
@@ -505,7 +506,7 @@ export function Antipodes() {
 				<ReadoutTile label="Solar clock" value="12 h" hint="solar noon at one antipode is solar midnight at the other" />
 			</div>
 
-			<p className="mt-4 text-copy-13 text-text-faint">
+			<p className="mt-4 text-body-sm text-kumo-default opacity-70">
 				Every antipode pair sits exactly as far apart as every other - half the circumference. No airliner can
 				fly a full-load nonstop between them: the longest-range jet today (an A350-900ULR,{" "}
 				{LONGEST_RANGE_KM.toLocaleString("en-US")} km) covers about {rangePercent} of the distance. The place

@@ -87,8 +87,6 @@ function applyDocumentTheme(theme: ThemeName, disableTransitions = false) {
 
 	const root = document.documentElement;
 	root.setAttribute("data-mode", theme);
-	// Keep the legacy class until the old styling system is removed in R2.
-	root.classList.toggle("dark", theme === "dark");
 	root.style.colorScheme = theme;
 }
 

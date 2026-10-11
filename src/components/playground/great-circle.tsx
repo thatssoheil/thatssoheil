@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Input, Button } from "@/components/ui";
 import { useLocalTheme } from "@/components/theme-provider";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { cn } from "@/lib/utils";
@@ -112,7 +113,7 @@ function paintFlatLand(canvas: HTMLCanvasElement | null, dpr: number, bytes: Uin
 	const h = canvas.height;
 	ctx.clearRect(0, 0, w, h);
 	if (w < 2 || h < 2) return;
-	ctx.fillStyle = tokenColor("--alpha-600");
+	ctx.fillStyle = tokenColor("--color-kumo-line");
 	const { cols, rows } = maskData;
 	const cellW = w / cols;
 	const cellH = h / rows;
@@ -174,13 +175,13 @@ function paintFlatRoute(canvas: HTMLCanvasElement | null, dpr: number, a: Vec3, 
 	const last = Math.min(Math.floor(t), SEGMENTS);
 	const frac = t - last;
 
-	ctx.strokeStyle = tokenColor("--brand");
+	ctx.strokeStyle = tokenColor("--color-kumo-brand");
 	ctx.lineWidth = Math.max(1.5, 1.5 * dpr);
 	ctx.lineJoin = "round";
 	ctx.lineCap = "round";
 	for (const shift of [-w, 0, w]) strokePolyline(ctx, xs, ys, last, frac, shift);
 
-	ctx.fillStyle = tokenColor("--brand");
+	ctx.fillStyle = tokenColor("--color-kumo-brand");
 	const dotR = Math.max(2, 2.6 * dpr);
 	drawDot(ctx, wrapX(xs[0], w), ys[0], dotR);
 	if (progress >= 1) drawDot(ctx, wrapX(xs[SEGMENTS], w), ys[SEGMENTS], dotR);
@@ -200,13 +201,13 @@ function paintGlobe(canvas: HTMLCanvasElement | null, dpr: number, center: Vec3,
 	const cy = h / 2;
 	const radius = globeRadius(w, h, dpr);
 
-	ctx.strokeStyle = tokenColor("--alpha-500");
+	ctx.strokeStyle = tokenColor("--color-kumo-line");
 	ctx.lineWidth = Math.max(1, Math.round(dpr));
 	ctx.beginPath();
 	ctx.arc(cx, cy, radius, 0, Math.PI * 2);
 	ctx.stroke();
 
-	ctx.fillStyle = tokenColor("--alpha-600");
+	ctx.fillStyle = tokenColor("--color-kumo-line");
 	const { cols, rows } = maskData;
 	const dotR = Math.max(1, 1.15 * dpr);
 	for (let j = 0; j < rows; j += 1) {
@@ -257,13 +258,13 @@ function paintGlobeRoute(
 	const last = Math.min(Math.floor(t), SEGMENTS);
 	const frac = t - last;
 
-	ctx.strokeStyle = tokenColor("--brand");
+	ctx.strokeStyle = tokenColor("--color-kumo-brand");
 	ctx.lineWidth = Math.max(1.5, 1.5 * dpr);
 	ctx.lineJoin = "round";
 	ctx.lineCap = "round";
 	strokePolyline(ctx, xs, ys, last, frac, 0);
 
-	ctx.fillStyle = tokenColor("--brand");
+	ctx.fillStyle = tokenColor("--color-kumo-brand");
 	const dotR = Math.max(2, 2.6 * dpr);
 	drawDot(ctx, xs[0], ys[0], dotR);
 	if (progress >= 1) drawDot(ctx, xs[SEGMENTS], ys[SEGMENTS], dotR);
@@ -303,10 +304,10 @@ function AirportPicker({
 
 	return (
 		<div className="relative flex flex-col gap-1.5">
-			<label htmlFor={id} className="text-label-12 uppercase tracking-[0.14em] text-text-faint">
+			<label htmlFor={id} className="text-label uppercase  text-kumo-default opacity-70">
 				{label}
 			</label>
-			<input
+			<Input
 				id={id}
 				type="text"
 				role="combobox"
@@ -335,33 +336,33 @@ function AirportPicker({
 						select(results[0]);
 					}
 				}}
-				className="h-11 w-full rounded-xl border border-input bg-background px-4 text-copy-14 text-foreground placeholder:text-text-faint focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+				className="h-11 w-full bg-kumo-canvas px-4"
 			/>
 			{searching ? (
 				<div
 					id={listId}
-					className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-xl border border-border bg-card"
+					className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-lg border border-kumo-hairline bg-kumo-base"
 				>
 					{results.length > 0 ? (
 						<ul className="max-h-72 overflow-auto py-1">
 							{results.map((airport) => (
 								<li key={airport.iata}>
-									<button
+									<Button variant="ghost" size="default"
 										type="button"
 										onMouseDown={(event) => event.preventDefault()}
 										onClick={() => select(airport)}
-										className="flex w-full flex-col items-start gap-0.5 px-3 py-2 text-left transition-colors hover:bg-muted focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]"
+										className="h-auto flex w-full flex-col items-start gap-0.5 px-3 py-2 text-left hover:bg-kumo-recessed"
 									>
-										<span className="text-copy-14 text-foreground">{displayName(airport)}</span>
-										<span className="text-label-12-mono text-text-faint">
+										<span className="text-body-sm text-kumo-default">{displayName(airport)}</span>
+										<span className="text-code text-kumo-default opacity-70">
 											{airport.name} · {airport.cc}
 										</span>
-									</button>
+									</Button>
 								</li>
 							))}
 						</ul>
 					) : (
-						<p className="px-3 py-2 text-copy-13 text-text-faint">No matches.</p>
+						<p className="px-3 py-2 text-body-sm text-kumo-default opacity-70">No matches.</p>
 					)}
 				</div>
 			) : null}
@@ -371,10 +372,10 @@ function AirportPicker({
 
 function ReadoutTile({ label, value, hint }: { label: string; value: string; hint: string }) {
 	return (
-		<div className="rounded-lg border border-alpha-200 bg-background px-3 py-2.5">
-			<div className="text-label-12 uppercase tracking-[0.14em] text-text-faint">{label}</div>
-			<div className="mt-1 text-heading-20 text-foreground">{value}</div>
-			<div className="mt-0.5 text-copy-13 text-text-faint">{hint}</div>
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-canvas px-3 py-2.5">
+			<div className="text-label uppercase  text-kumo-default opacity-70">{label}</div>
+			<div className="mt-1 text-heading text-kumo-default">{value}</div>
+			<div className="mt-0.5 text-body-sm text-kumo-default opacity-70">{hint}</div>
 		</div>
 	);
 }
@@ -514,10 +515,10 @@ export function GreatCircle() {
 	const globeLabel = `Globe centered on the midpoint of the route from ${from.iata} to ${to.iata}: the same path is a straight line.`;
 
 	return (
-		<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-				<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">The instrument</span>
-				<span className="text-label-12-mono text-text-faint">
+				<span className="text-label uppercase  text-kumo-default opacity-70">The instrument</span>
+				<span className="text-code text-kumo-default opacity-70">
 					{from.iata} to {to.iata}
 				</span>
 			</div>
@@ -528,11 +529,11 @@ export function GreatCircle() {
 			</div>
 
 			<div className="mt-3 flex flex-wrap items-center gap-2">
-				<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">Try</span>
+				<span className="text-label uppercase  text-kumo-default opacity-70">Try</span>
 				{ROUTES.map((routeChip) => {
 					const active = from.iata === routeChip.from && to.iata === routeChip.to;
 					return (
-						<button
+						<Button variant="ghost" size="default"
 							key={routeChip.label}
 							type="button"
 							onClick={() => {
@@ -541,21 +542,21 @@ export function GreatCircle() {
 							}}
 							aria-pressed={active}
 							className={cn(
-								"rounded-full border px-3 py-1 text-copy-13 transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
+								"rounded-full border px-3 py-1 text-body-sm  focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kumo-focus",
 								active
-									? "border-brand/60 bg-brand/10 text-foreground"
-									: "border-border text-text-muted hover:border-alpha-500 hover:text-foreground",
+									? "border-kumo-brand bg-kumo-fill-hover text-kumo-default"
+									: "border-kumo-hairline text-kumo-default opacity-80 hover:border-kumo-line hover:text-kumo-default",
 							)}
 						>
 							{routeChip.label}
-						</button>
+						</Button>
 					);
 				})}
 			</div>
 
 			<div
 				ref={flatBoxRef}
-				className="relative mt-4 aspect-[2/1] w-full overflow-hidden rounded-lg border border-alpha-200"
+				className="relative mt-4 aspect-[2/1] w-full overflow-hidden rounded-lg border border-kumo-hairline"
 			>
 				<canvas ref={flatLandRef} role="img" aria-label={flatLabel} className="block h-full w-full" />
 				<canvas
@@ -564,7 +565,7 @@ export function GreatCircle() {
 					className="pointer-events-none absolute inset-0 block h-full w-full"
 				/>
 			</div>
-			<p className="mt-2 text-copy-13 text-text-faint">
+			<p className="mt-2 text-body-sm text-kumo-default opacity-70">
 				As a map draws it: the shortest path bows. The straight line across the map is not the short way
 				around.
 			</p>
@@ -573,7 +574,7 @@ export function GreatCircle() {
 				<div>
 					<div
 						ref={globeBoxRef}
-						className="relative aspect-square w-full overflow-hidden rounded-lg border border-alpha-200"
+						className="relative aspect-square w-full overflow-hidden rounded-lg border border-kumo-hairline"
 					>
 						<canvas ref={globeLandRef} role="img" aria-label={globeLabel} className="block h-full w-full" />
 						<canvas
@@ -582,13 +583,13 @@ export function GreatCircle() {
 							className="pointer-events-none absolute inset-0 block h-full w-full"
 						/>
 					</div>
-					<p className="mt-2 text-copy-13 text-text-faint">
+					<p className="mt-2 text-body-sm text-kumo-default opacity-70">
 						As the Earth draws it: turn the globe to the route&apos;s midpoint and the same path is a
 						straight line.
 					</p>
 				</div>
 				<div className="flex flex-col gap-2">
-					<p className="text-copy-13 text-text-muted">
+					<p className="text-body-sm text-kumo-default opacity-80">
 						{from.name} ({from.iata}) to {to.name} ({to.iata}).
 					</p>
 					<ReadoutTile
@@ -609,7 +610,7 @@ export function GreatCircle() {
 				</div>
 			</div>
 
-			<p className="mt-4 text-copy-13 text-text-faint">
+			<p className="mt-4 text-body-sm text-kumo-default opacity-70">
 				Distances are great circles on a spherical Earth. Flight time: distance divided by {CRUISE_KMH}{" "}
 				km/h, plus {TAXI_MIN} minutes of taxi - an estimate, not a schedule. The airport table is{" "}
 				{TABLE.count.toLocaleString("en-US")} airports with scheduled service from OurAirports (public

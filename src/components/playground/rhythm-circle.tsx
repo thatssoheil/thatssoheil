@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { cn } from "@/lib/utils";
 import { bjorklund, patternToString, RHYTHM_PRESETS, type RhythmPreset } from "@/lib/playground/rhythm";
-
+import { Link, Button } from "@/components/ui";
 // The instrument: a Euclidean rhythm machine. The pattern is Bjorklund's
 // algorithm (pure and deterministic); the sound is a Web Audio tick built
 // from an oscillator and a short envelope - no audio files, no dependencies.
@@ -271,10 +270,10 @@ export function RhythmCircle() {
 	const centreName = preset ? preset.name : "free play";
 
 	return (
-		<div className="rounded-xl border border-border bg-card px-4 py-5 sm:px-6">
+		<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-				<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">The instrument</span>
-				<span role="status" aria-live="polite" className="text-label-12-mono text-text-faint">
+				<span className="text-label uppercase  text-kumo-default opacity-70">The instrument</span>
+				<span role="status" aria-live="polite" className="text-code text-kumo-default opacity-70">
 					{stateLine}
 				</span>
 			</div>
@@ -291,7 +290,7 @@ export function RhythmCircle() {
 							cx={CENTER}
 							cy={CENTER}
 							r={RING_R}
-							className="text-alpha-200"
+							className="text-kumo-default opacity-70"
 							stroke="currentColor"
 							strokeWidth={1}
 							fill="none"
@@ -305,7 +304,7 @@ export function RhythmCircle() {
 										cx={point.x}
 										cy={point.y}
 										r={on ? PULSE_DOT_R : OFF_DOT_R}
-										className={on ? "text-brand" : "text-alpha-400"}
+										className={on ? "text-kumo-link" : "text-kumo-default opacity-50"}
 										fill="currentColor"
 										fillOpacity={on ? 0.9 : 0.5}
 									/>
@@ -314,7 +313,7 @@ export function RhythmCircle() {
 											cx={point.x}
 											cy={point.y}
 											r={PULSE_DOT_R + 5}
-											className="text-foreground"
+											className="text-kumo-default"
 											stroke="currentColor"
 											strokeWidth={1.5}
 											fill="none"
@@ -331,7 +330,7 @@ export function RhythmCircle() {
 									y1={CENTER - 36}
 									x2={CENTER}
 									y2={CENTER - RING_R + 14}
-									className="text-brand"
+									className="text-kumo-link"
 									stroke="currentColor"
 									strokeWidth={2}
 									strokeLinecap="round"
@@ -343,7 +342,7 @@ export function RhythmCircle() {
 							x={CENTER}
 							y={CENTER - 2}
 							textAnchor="middle"
-							className="font-mono text-text-muted"
+							className="font-mono text-kumo-default opacity-80"
 							fill="currentColor"
 							fontSize={15}
 						>
@@ -353,7 +352,7 @@ export function RhythmCircle() {
 							x={CENTER}
 							y={CENTER + 18}
 							textAnchor="middle"
-							className="font-mono text-text-faint"
+							className="font-mono text-kumo-default opacity-70"
 							fill="currentColor"
 							fontSize={11}
 						>
@@ -366,8 +365,8 @@ export function RhythmCircle() {
 					<div className="flex flex-col gap-4">
 						<div className="flex flex-col gap-1.5">
 							<span className="flex items-baseline justify-between gap-3">
-								<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">Steps</span>
-								<span className="text-label-12-mono text-text-faint">{steps}</span>
+								<span className="text-label uppercase  text-kumo-default opacity-70">Steps</span>
+								<span className="text-code text-kumo-default opacity-70">{steps}</span>
 							</span>
 							<input
 								type="range"
@@ -382,8 +381,8 @@ export function RhythmCircle() {
 						</div>
 						<div className="flex flex-col gap-1.5">
 							<span className="flex items-baseline justify-between gap-3">
-								<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">Pulses</span>
-								<span className="text-label-12-mono text-text-faint">{pulses}</span>
+								<span className="text-label uppercase  text-kumo-default opacity-70">Pulses</span>
+								<span className="text-code text-kumo-default opacity-70">{pulses}</span>
 							</span>
 							<input
 								type="range"
@@ -398,8 +397,8 @@ export function RhythmCircle() {
 						</div>
 						<div className="flex flex-col gap-1.5">
 							<span className="flex items-baseline justify-between gap-3">
-								<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">Tempo</span>
-								<span className="text-label-12-mono text-text-faint">{bpm} BPM</span>
+								<span className="text-label uppercase  text-kumo-default opacity-70">Tempo</span>
+								<span className="text-code text-kumo-default opacity-70">{bpm} BPM</span>
 							</span>
 							<input
 								type="range"
@@ -415,28 +414,28 @@ export function RhythmCircle() {
 					</div>
 
 					<div className="flex flex-col gap-2">
-						<span className="text-label-12 uppercase tracking-[0.14em] text-text-faint">From the catalogue</span>
+						<span className="text-label uppercase  text-kumo-default opacity-70">From the catalogue</span>
 						<div className="flex flex-wrap gap-2">
 							{RHYTHM_PRESETS.map((entry) => {
 								const active = presetSlug === entry.slug;
 								return (
-									<button
+									<Button variant="ghost" size="default"
 										key={entry.slug}
 										type="button"
 										onClick={() => handlePreset(entry)}
 										aria-pressed={active}
 										className={cn(
-											"flex flex-col items-start gap-0.5 rounded-lg border px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:shadow-[var(--ring-focus)]",
+											"h-auto flex flex-col items-start gap-0.5 rounded-lg border px-3 py-2 text-left",
 											active
-												? "border-brand/60 bg-brand/10"
-												: "border-border bg-background hover:border-alpha-500 hover:bg-muted",
+												? "border-kumo-brand bg-kumo-fill-hover"
+												: "border-kumo-hairline bg-kumo-canvas hover:border-kumo-line hover:bg-kumo-recessed",
 										)}
 									>
-										<span className="text-label-13 text-foreground">{entry.name}</span>
-										<span className="text-label-12-mono text-text-faint">
+										<span className="text-label text-kumo-default">{entry.name}</span>
+										<span className="text-code text-kumo-default opacity-70">
 											{entry.origin} · E({entry.pulses},{entry.steps})
 										</span>
-									</button>
+									</Button>
 								);
 							})}
 						</div>
@@ -445,23 +444,23 @@ export function RhythmCircle() {
 			</div>
 
 			<div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-				<p className="max-w-md text-copy-14 text-text-muted">
+				<p className="max-w-md text-body-sm text-kumo-default opacity-80">
 					Press play to hear the loop; the sliders and chips apply while it runs. The first pulse of
 					each cycle is accented.
 				</p>
 				<Button onClick={handleToggle}>{playing ? "Stop" : "Play"}</Button>
 			</div>
-			{note ? <p className="mt-2 text-copy-13 text-text-faint">{note}</p> : null}
-			<p className="mt-4 text-copy-13 text-text-faint">
+			{note ? <p className="mt-2 text-body-sm text-kumo-default opacity-70">{note}</p> : null}
+			<p className="mt-4 text-body-sm text-kumo-default opacity-70">
 				Rhythms after Toussaint, 2005 -{" "}
-				<a
+				<Link
 					href="https://www-cgrl.cs.mcgill.ca/~godfried/publications/banff.pdf"
 					target="_blank"
 					rel="noreferrer"
-					className="text-brand transition-opacity hover:opacity-75"
+					className="text-kumo-link transition-opacity hover:opacity-75"
 				>
 					The Euclidean Algorithm Generates Traditional Musical Rhythms
-				</a>{" "}
+				</Link>{" "}
 				(Renaissance Banff, pp. 47-56). The pattern is computed in your browser; nothing is fetched.
 			</p>
 		</div>

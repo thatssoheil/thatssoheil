@@ -1,18 +1,12 @@
 export const textRole = {
-	default: "text-foreground",
-	muted: "text-text-muted",
-	faint: "text-text-faint",
+	default: "text-kumo-default",
+	muted: "text-kumo-default opacity-80",
+	faint: "text-kumo-default opacity-70",
 } as const;
 
 export const typeRole = {
 	commandGroupHeading:
-		"[&_[cmdk-group-heading]]:font-sans [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-[0.18em]",
-	commandMeta: "font-sans text-[10px]",
-	chatAttribution: "font-sans text-[0.62rem] uppercase tracking-[0.24em]",
-	chatUserBubble: "text-[0.95rem] leading-relaxed",
-	chatAssistantBody: "text-[0.98rem] leading-relaxed",
-	chatStatus: "font-sans text-[0.8rem] tracking-wide",
-	chatAction: "font-sans text-[0.7rem] tracking-wide",
-	chatStarter: "font-sans text-[0.72rem] tracking-wide",
-	manifestoEntryLabel: "font-sans text-[11px] tracking-[0.16em] uppercase",
+		"[&_[cmdk-group-heading]]:text-label [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:text-kumo-default",
+	commandMeta: "text-body-sm text-kumo-default opacity-70",
+	manifestoEntryLabel: "text-label font-medium",
 } as const;

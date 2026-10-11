@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PlaygroundShell } from "@/components/playground/playground-shell";
 import { SectionHeading } from "@/components/playground/section-heading";
 import { Antipodes } from "@/components/playground/antipodes";
+import { Link } from "@/components/ui";
 
 export const metadata: Metadata = {
 	title: "Antipodes",
@@ -30,7 +31,7 @@ export default function AntipodesPage() {
 
 			<section aria-label="Method and sources">
 				<SectionHeading label="Method and sources" />
-				<div className="flex max-w-2xl flex-col gap-3 text-copy-13 text-text-faint">
+				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
 						An antipode is the point diametrically opposite on the globe: flip the latitude and shift the
 						longitude by 180 degrees. Both points of a pair can never be seen together on a globe - they
@@ -50,26 +51,26 @@ export default function AntipodesPage() {
 					</p>
 					<p>
 						The place table holds 7,342 populated places from{" "}
-						<a
+						<Link
 							href="https://www.naturalearthdata.com/about/terms-of-use/"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							Natural Earth
-						</a>{" "}
+						</Link>{" "}
 						(public domain, version 5.1.2), committed to the page with coordinates rounded to 3 decimals
 						- about 100 meters per coordinate. The nearest-place readout is measured over the same table,
 						so tiny settlements can be missing; a cross-check against Natural Earth&apos;s coarser 1:50m
 						file found coordinates identical where both list a place. Pairs quoted in{" "}
-						<a
+						<Link
 							href="https://en.wikipedia.org/wiki/Antipodes_on_Earth"
 							target="_blank"
 							rel="noreferrer"
-							className="text-brand transition-opacity hover:opacity-75"
+							className="text-kumo-link transition-opacity hover:opacity-75"
 						>
 							Antipodes on Earth
-						</a>{" "}
+						</Link>{" "}
 						reproduce closely: Taipei and Asunción, about 80 km apart in the article, read 85.9 km on
 						these coordinates. Land and ocean come from the same 1.5-degree grid the map draws (cells
 						about 150 km across); near a coast the reading can flip - about 1 in 80 places checked
