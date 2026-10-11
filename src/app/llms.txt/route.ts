@@ -1,4 +1,6 @@
-# Soheil Fakour
+import { isProductionHost } from "@/middleware";
+
+const LLMS_CONTENT = `# Soheil Fakour
 
 > Frontend Engineer and Product Curator. Coding vision into existence.
 
@@ -15,11 +17,7 @@ real product.
 - Home: https://thatssoheil.website/
 - Manifesto: https://thatssoheil.website/#manifesto
 - Connect: https://thatssoheil.website/#connect
-
-## Playground
-
-- Tokenized assets tracker: https://thatssoheil.website/playground/rwa
-- BTC and ETH macro notes: https://thatssoheil.website/playground/macro
+- Resume: https://thatssoheil.website/resume - detailed experience, skills, education, and project outcomes
 
 ## Profile Links
 
@@ -40,6 +38,19 @@ real product.
 
 ## Crawl Notes
 
-The canonical page is indexable and intended for search engines and AI search
-features. The internal design-system route `/ds` and API routes are not public
-index targets. Prefer the canonical URL when citing this site.
+The canonical pages are intended for search engines and AI search features.
+Prefer canonical URLs when citing this site.
+`;
+
+export function GET(request: Request) {
+	const headers = new Headers({
+		"Content-Type": "text/plain; charset=utf-8",
+		"Cache-Control": "public, max-age=3600",
+	});
+
+	if (!isProductionHost(request.headers.get("host"))) {
+		headers.set("X-Robots-Tag", "noindex, nofollow");
+	}
+
+	return new Response(LLMS_CONTENT, { headers });
+}
