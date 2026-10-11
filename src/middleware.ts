@@ -36,7 +36,7 @@ const CANONICAL_PREVIEW_HOST = "dev.dev.thatssoheil.website";
 // 'unsafe-inline' and block other framework-generated inline scripts.
 const SECURITY_HEADERS = {
 	"Content-Security-Policy":
-		"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; object-src 'none'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+		"default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; object-src 'none'; connect-src 'self' https://cloudflareinsights.com; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
 	"Strict-Transport-Security": "max-age=31536000",
 	"X-Frame-Options": "DENY",
 	"Referrer-Policy": "strict-origin-when-cross-origin",
