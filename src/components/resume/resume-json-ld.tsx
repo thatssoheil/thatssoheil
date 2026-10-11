@@ -1,5 +1,5 @@
 import { RESUME } from "@/data/resume";
-import { SITE } from "@/lib/constants";
+import { ROLE_PROSE, SITE } from "@/lib/constants";
 
 export function ResumeJsonLd() {
 	const url = `${SITE.url}/resume`;
@@ -22,7 +22,7 @@ export function ResumeJsonLd() {
 				"@id": `${SITE.url}/#person`,
 				name: RESUME.name,
 				url: SITE.url,
-				jobTitle: RESUME.title,
+				jobTitle: ROLE_PROSE,
 				email: RESUME.contact.find((item) => item.href.startsWith("mailto:"))?.href,
 				telephone: RESUME.contact.find((item) => item.href.startsWith("tel:"))?.label,
 				homeLocation: { "@type": "Place", name: RESUME.location },
