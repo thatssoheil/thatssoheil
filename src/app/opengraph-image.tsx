@@ -19,6 +19,26 @@ const CONTACT_ITEMS = [
 	{ label: "github.com/thatssoheil" },
 ] as const;
 
+let fontDataPromise: Promise<ArrayBuffer[]> | undefined;
+
+function loadFontData(): Promise<ArrayBuffer[]> {
+	if (!fontDataPromise) {
+		fontDataPromise = Promise.all(
+			FONT_URLS.map(async (url) => {
+				const response = await fetch(url);
+				if (!response.ok) throw new Error(`Could not load OG font: ${response.status}`);
+				return response.arrayBuffer();
+			}),
+		).catch((error: unknown) => {
+			// The fonts have immutable, versioned URLs. Share the successful load
+			// across renders in a Worker isolate, but let a transient failure retry.
+			fontDataPromise = undefined;
+			throw error;
+		});
+	}
+	return fontDataPromise;
+}
+
 function BrandMark() {
 	return (
 		<svg width="18" height="20" viewBox="0 0 20 22" fill="none" aria-hidden="true">
@@ -29,14 +49,7 @@ function BrandMark() {
 }
 
 export default async function OpengraphImage() {
-	const fontData = await Promise.all(
-		FONT_URLS.map(async (url) => {
-			const response = await fetch(url);
-			if (!response.ok) throw new Error(`Could not load OG font: ${response.status}`);
-			return response.arrayBuffer();
-		}),
-	);
-	const [inter400, inter500, inter600] = fontData;
+	const [inter400, inter500, inter600] = await loadFontData();
 
 	return new ImageResponse(
 		<div
