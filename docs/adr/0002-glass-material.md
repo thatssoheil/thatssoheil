@@ -1,6 +1,6 @@
 # ADR-0002 — Glass material: solid-by-default + scoped refraction
 
-**Status:** Accepted (2026-06-29)
+**Status:** Superseded by ADR-0007 (2026-10-11)
 
 ## Context
 

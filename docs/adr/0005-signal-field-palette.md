@@ -1,6 +1,6 @@
 # ADR-0005 — The signal field uses a named second hue
 
-**Status:** Accepted (2026-06-29)
+**Status:** Superseded by ADR-0007 (2026-10-11)
 
 ## Context
 

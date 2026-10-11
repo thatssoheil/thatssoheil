@@ -1,33 +1,31 @@
-# ADR-0001 — Token tier-precedence law
+# ADR-0001 - Token tier-precedence law
 
-**Status:** Accepted (2026-06-29)
+**Status:** Accepted (2026-06-29); re-mapped by ADR-0007 (2026-10-11)
 
 ## Context
 
-The design system has three token tiers but no written rule about how they compose,
-so components reached past the semantic layer to raw primitives (`var(--signal-500)`,
-`text-foreground/40`, hardcoded `oklch`). That broke the retheme contract and let the
-system drift (see `docs/audits/2026-06-29-design-system-gap-analysis.md`, risk #4).
+The design system needs an explicit rule for how source values, semantic roles, and
+component-facing utilities compose. Without it, components can bypass semantic roles
+and depend directly on values, making a source-system change expensive and inconsistent.
 
 ## Decision
 
-**Components consume semantics; semantics consume primitives. Never skip a tier.**
+**Components consume semantic roles; semantic roles consume source values. Never skip a tier.**
 
-- **Tier 1 — primitives** (`--ink-*`, `--signal-*`, raw `oklch`): defined in `:root`
-  in `globals.css`. **Only the semantic tier may reference them.**
-- **Tier 2 — semantics** (`--background`, `--primary`, `--brand`, `--ring`,
-  `--glass-*`, `--text-muted/-faint`, `--field-*`, …): per-theme in `:root`/`.dark`.
-  This is the layer the product speaks to.
-- **Tier 3 — Tailwind** (`@theme inline` `--color-*`, `--text-*`, `--radius-*`): the
-  utilities. Product code uses these.
+- **Tier 1 - source values:** Kumo theme values and the official Cloudflare brand
+  constants, held in the canonical token source. Raw values are not used in components.
+- **Tier 2 - semantic roles:** source-mapped Kumo roles, including the `--color-kumo-*`
+  and `--text-color-kumo-*` namespaces. This is the design vocabulary; use names only
+  when the mapping is supported by the published source.
+- **Tier 3 - Tailwind:** component-facing utilities exposed from the semantic roles in
+  `@theme inline`. Product code uses this layer or named semantic component APIs.
 
-**In `src/components`, the following are forbidden** (lint-enforced, ADR-0006-style
-governance / audit #4): raw hex/`oklch` literals · arbitrary `text-[…rem]` ·
-`text-foreground/NN` for text (use `--text-muted`/`--text-faint`) · bare
-`var(--signal-*)`/`var(--ink-*)` (use `--primary`/`--brand`/`--ring`/`--color-*`).
+The law is enforced by lint and token-coverage checks. Raw color literals and direct
+source values are forbidden in product components. The only hex literals permitted by
+the rebuild contract are the official brand constants in the canonical token source.
 
 ## Consequences
 
-Swapping the six `--signal-*` values rethemes the whole product. Contrast and accent
-behavior live in one place. The lint gate makes the law cheap to keep and expensive to
-break.
+The site can change its source values without rewriting components. Kumo roles and
+brand constants remain traceable to their sources, and the lint gate makes tier
+boundaries verifiable.
