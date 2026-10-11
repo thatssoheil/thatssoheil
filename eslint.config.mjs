@@ -8,22 +8,81 @@ const tierSelectors = [
 	{
 		selector: "Literal[value=/var\\(--(signal|ink)-/]",
 		message:
-			"Tier law (ADR-0001): no bare --signal-*/--ink-* in components — use --primary / --brand / --ring / a semantic --color-*.",
+			"Tier law (ADR-0001): no bare --signal-*/--ink-* in components - use semantic token utilities.",
 	},
 	{
 		selector: "TemplateElement[value.raw=/var\\(--(signal|ink)-/]",
 		message:
-			"Tier law (ADR-0001): no bare --signal-*/--ink-* in components — use --primary / --brand / --ring / a semantic --color-*.",
+			"Tier law (ADR-0001): no bare --signal-*/--ink-* in components - use semantic token utilities.",
 	},
 	{
 		selector: "Literal[value=/(oklch|rgba?)\\(/]",
 		message:
-			"Tier law (ADR-0001): no raw color literals in components — use a semantic token (masks may use #000/#fff/transparent).",
+			"Tier law (ADR-0001): no raw color literals in components - use a semantic token.",
 	},
 	{
 		selector: "TemplateElement[value.raw=/(oklch|rgba?)\\(/]",
 		message:
-			"Tier law (ADR-0001): no raw color literals in components — use a semantic token (masks may use #000/#fff/transparent).",
+			"Tier law (ADR-0001): no raw color literals in components - use a semantic token.",
+	},
+];
+
+const rawHexSelectors = [
+	{
+		selector: "Literal[value=/#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})\\b/i]",
+		message:
+			"Tier law (ADR-0001): raw hex colors belong only in the canonical token file.",
+	},
+	{
+		selector:
+			"TemplateElement[value.raw=/#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})\\b/i]",
+		message:
+			"Tier law (ADR-0001): raw hex colors belong only in the canonical token file.",
+	},
+];
+
+const backdropSelectors = [
+	{
+		selector: "Literal[value=/\\bbackdrop-filter\\s*:/]",
+		message:
+			"Kumo material rule: do not add backdrop-filter declarations in components.",
+	},
+	{
+		selector: "TemplateElement[value.raw=/\\bbackdrop-filter\\s*:/]",
+		message:
+			"Kumo material rule: do not add backdrop-filter declarations in components.",
+	},
+	{
+		selector: "Property[key.name='backdropFilter']",
+		message:
+			"Kumo material rule: do not add backdrop-filter declarations in components.",
+	},
+];
+
+const backdropUtilitySelectors = [
+	{
+		selector: "Literal[value=/\\bbackdrop-(blur|filter|saturate)(-|\\b)/]",
+		message:
+			"Kumo material rule: do not add backdrop-filter utilities.",
+	},
+	{
+		selector:
+			"TemplateElement[value.raw=/\\bbackdrop-(blur|filter|saturate)(-|\\b)/]",
+		message:
+			"Kumo material rule: do not add backdrop-filter utilities.",
+	},
+];
+
+const darkVariantSelectors = [
+	{
+		selector: "Literal[value=/\\bdark:/]",
+		message:
+			"ADR-0010: do not use Tailwind dark: variants - use data-mode semantic tokens.",
+	},
+	{
+		selector: "TemplateElement[value.raw=/\\bdark:/]",
+		message:
+			"ADR-0010: do not use Tailwind dark: variants - use data-mode semantic tokens.",
 	},
 ];
 
@@ -83,30 +142,56 @@ const config = [
 	...coreWebVitals,
 	...typescript,
 
-	// Tier law on ALL components (incl. the primitives themselves).
+	// Tier law, raw-hex tokens, and explicit backdrop-filter declarations across
+	// components. The one functional color-input value is handled below.
 	{
 		files: ["src/components/**/*.{ts,tsx}"],
+		ignores: ["src/components/playground/color-vision.tsx"],
 		rules: {
-			"no-restricted-syntax": ["error", ...tierSelectors],
+			"no-restricted-syntax": [
+				"error",
+				...tierSelectors,
+				...rawHexSelectors,
+				...backdropSelectors,
+			],
 		},
 	},
 
-	// Glass ban on product components only — the primitives in ui/ and the field in
-	// signal-field/ are where glass legitimately lives. Repeats tierSelectors because
-	// flat-config replaces (not merges) a rule's options for matching files.
+	// Legacy dark: variants remain only in ui/ until R2 replaces those primitives.
+	// The command menu retains one old backdrop-blur utility until R2 migration.
+	// Glass classes are internal to the old primitives and field; other product
+	// surfaces use semantic roles and opaque materials.
 	{
 		files: ["src/components/**/*.{ts,tsx}"],
 		ignores: [
 			"src/components/ui/**",
 			"src/components/signal-field/**",
+			"src/components/command-menu.tsx",
+			"src/components/playground/color-vision.tsx",
 		],
 		rules: {
 			"no-restricted-syntax": [
 				"error",
 				...tierSelectors,
+				...rawHexSelectors,
 				...glassSelectors,
 				...productSurfaceSelectors,
 				...productTextSelectors,
+				...darkVariantSelectors,
+				...backdropUtilitySelectors,
+			],
+		},
+	},
+
+	// This existing value is an input default for <input type="color">, not CSS.
+	// R2 owns its migration; keep other tier checks active here until then.
+	{
+		files: ["src/components/playground/color-vision.tsx"],
+		rules: {
+			"no-restricted-syntax": [
+				"error",
+				...tierSelectors,
+				...backdropSelectors,
 			],
 		},
 	},

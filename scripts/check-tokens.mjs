@@ -7,12 +7,13 @@
  */
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { assertCspPolicy } from "./check-csp-policy.mjs";
 
 const ROOT = process.cwd();
 const GLOBALS = join(ROOT, "src/app/globals.css");
 
 // Tokens set outside globals.css (next/font runtime vars, Tailwind internals): allowed.
-const ALLOW = [/^--font-(lexend|cipher)$/, /^--tw-/];
+const ALLOW = [/^--font-(inter|jetbrains-mono)$/, /^--tw-/];
 
 function walk(dir, out = []) {
 	for (const name of readdirSync(dir)) {
@@ -58,3 +59,4 @@ if (missing.length) {
 	process.exit(1);
 }
 console.log(`✓ token-coverage: all ${referenced.size} referenced tokens resolve in globals.css`);
+assertCspPolicy(ROOT);
