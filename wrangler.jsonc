@@ -72,31 +72,13 @@
 			"previews_enabled": true
 		}
 	],
-	"vars": {
-		"AI_SOHEIL_API_URL": "https://agent.thatssoheil.website/v1",
-		"ENABLE_CHAT": "false"
-	},
-	// Per-IP rate limit for the AI Soheil chat proxy. period must be 10 or 60s.
-	// AI_SOHEIL_API_KEY is a secret — set via `wrangler secret put AI_SOHEIL_API_KEY`
-	// (prod) and .dev.vars (local). Never put the key in this file.
-	"ratelimits": [
-		{
-			"name": "CHAT_RATELIMIT",
-			"namespace_id": "1001",
-			"simple": { "limit": 10, "period": 60 }
-		}
-	],
 	/**
 	 * Worker Previews — the `dev` branch's isolated environment under this same
 	 * Worker, created by `wrangler preview` in Workers Builds. Previews do not
-	 * inherit production settings, so non-inheritable keys are restated here:
-	 * vars, images, services, ratelimits.
+	 * inherit production settings, so non-inheritable bindings are restated here:
+	 * images and services.
 	 */
 	"previews": {
-		"vars": {
-			"AI_SOHEIL_API_URL": "https://agent.thatssoheil.website/v1",
-			"ENABLE_CHAT": "false"
-		},
 		"images": {
 			"binding": "IMAGES"
 		},
@@ -104,13 +86,6 @@
 			{
 				"binding": "WORKER_SELF_REFERENCE",
 				"service": "thatssoheil"
-			}
-		],
-		"ratelimits": [
-			{
-				"name": "CHAT_RATELIMIT",
-				"namespace_id": "1001",
-				"simple": { "limit": 10, "period": 60 }
 			}
 		]
 	},
