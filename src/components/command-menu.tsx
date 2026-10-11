@@ -202,7 +202,7 @@ export function CommandMenu() {
 									>
 										<Mail className={ICON_CLASS} strokeWidth={1.5} />
 										<span>Email me</span>
-										<span className="ml-auto text-muted-foreground" role="status" aria-live="polite">{copied ? "Copied to clipboard" : EMAIL}</span>
+										<span className="ml-auto text-muted-foreground">{EMAIL}</span>
 									</Command.Item>
 									<Command.Item
 										value="copy email address clipboard"
@@ -215,6 +215,9 @@ export function CommandMenu() {
 								</Command.Group>
 							</Command.List>
 						</Command>
+						<span role="status" aria-live="polite" className="sr-only">
+							{copied ? "Copied to clipboard" : ""}
+						</span>
 					</Dialog.Content>
 				</Dialog.Portal>
 			</Dialog.Root>
