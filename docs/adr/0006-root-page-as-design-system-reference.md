@@ -1,28 +1,26 @@
-# ADR-0006 — Root page as the design-system reference
+# ADR-0006 - Root page as the design-system reference
 
 **Status:** Accepted (2026-07-06)
 
 ## Context
 
-Signal Glass used to have a dedicated `/ds` route that mirrored tokens, type, glass,
-and component examples. That page was useful while the system was still being built,
-but the site has now stabilized around a single consumer: the homepage. Keeping a
-parallel gallery creates drift pressure and makes polish decisions happen twice.
+The site has one primary consumer: the homepage. A separate `/ds` showcase would create
+a parallel gallery that can drift from the real product and duplicate polish work.
 
 ## Decision
 
-Remove the `/ds` route. The root page is now the living reference for Signal Glass.
+There is no `/ds` route. The root page is the living reference for the Cloudflare-based
+design system.
 
-- `src/app/globals.css` remains the token and material source of truth.
-- `src/components/ui/*` owns reusable primitives such as `Surface`, `Button`, `Input`,
-  and `IconButton`.
-- Product sections on `/` are the proof of the system. New design-system work should
-  land in those primitives or in the root page's actual surfaces.
-- Historical audits and specs may still mention `/ds`; they are records, not current
-  routing or governance.
+- `src/app/globals.css` is the canonical token and global-style source.
+- `src/components/ui/*` owns reusable interface primitives.
+- The actual sections on `/` demonstrate the system in use. New design-system work
+  should land in those primitives or real root-page surfaces.
+- Historical audits and specifications may mention `/ds`; they are records, not
+  current routing or governance.
 
 ## Consequences
 
 There is no separate gallery to maintain or exempt from product lint gates. Design
-system conventions must be verifiable through the homepage, lint rules, token coverage,
-and production build rather than a hand-maintained showcase.
+conventions are verified through the homepage, lint rules, token coverage, and the
+production build.

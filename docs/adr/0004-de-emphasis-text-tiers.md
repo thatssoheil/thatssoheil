@@ -1,25 +1,26 @@
-# ADR-0004 — De-emphasis text tiers (no ad-hoc opacity)
+# ADR-0004 - Semantic text roles and de-emphasis
 
-**Status:** Accepted (2026-06-29)
+**Status:** Accepted (2026-06-29); re-checked under ADR-0007 (2026-10-11)
 
 ## Context
 
-Quiet/secondary text was set with ad-hoc `text-foreground/NN` opacities. Alpha-over-light
-and alpha-over-dark aren't symmetric, so dark-tuned values silently failed WCAG AA in
-light mode (audit #2, #7) — and the contrast couldn't be certified because it depended
-on whatever pixels sat behind.
+Text color must remain semantic and theme-correct. Ad hoc opacity on text makes its
+contrast depend on the surface behind it and can silently lower legibility.
 
 ## Decision
 
-Two measured, per-theme semantic tiers replace ad-hoc opacity for **text**:
+Use source-backed Kumo text roles rather than raw colors or opacity utilities. The
+pinned roles are:
 
-- **`--text-muted`** — body de-emphasis, measured ≥ ~7:1.
-- **`--text-faint`** — quiet/decorative copy, measured ≥ 4.5:1 (still AA).
+- `--text-color-kumo-default` for default text.
+- `--text-color-kumo-link` for inline links.
+- `--text-color-kumo-brand` for brand text; this role is orange, unlike the blue
+  `--color-kumo-brand` action color.
 
-`text-foreground/NN` is **banned for text** in `src/components` (lint, ADR-0001).
-Opacity remains fine for non-text (hairlines, decorative fills).
+Use additional Kumo text roles only when their names and behavior are verified in the
+published source. Do not invent aliases or use alpha opacity to create a text tier.
 
 ## Consequences
 
-Contrast is certifiable and theme-correct by construction. The eyebrow/tagline that
-previously failed AA now pass in both themes without a visible change to the design.
+Text remains tied to explicit semantic intent and the selected theme. Contrast checks
+can evaluate named roles instead of arbitrary alpha-over-surface combinations.

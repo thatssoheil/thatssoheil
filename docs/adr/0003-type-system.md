@@ -1,6 +1,6 @@
 # ADR-0003 — Type system: honest fonts + a thin semantic ramp
 
-**Status:** Accepted (2026-06-29) · supersedes the unused 40-step Geist-clone ramp
+**Status:** Superseded by ADR-0007 (2026-10-11)
 
 ## Context
 
