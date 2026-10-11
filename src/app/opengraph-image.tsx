@@ -103,6 +103,10 @@ export default async function OpengraphImage() {
 		</div>,
 		{
 			...size,
+			headers: {
+				"Cache-Control":
+					"public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+			},
 			fonts: [
 				{ name: "Inter", data: inter400, style: "normal", weight: 400 },
 				{ name: "Inter", data: inter500, style: "normal", weight: 500 },
