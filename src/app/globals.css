@@ -6,9 +6,9 @@
 
 /* ─── Design Tokens ─── */
 @theme inline {
-	/* Fonts — Lexend carries UI/prose; generic mono labels use the local stack. */
-	--font-sans: var(--font-lexend);
-	--font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+	/* Fonts - Inter is the proportional face; JetBrains Mono is the code face. */
+	--font-sans: var(--font-inter);
+	--font-mono: var(--font-jetbrains-mono);
 
 	/* Typography scale */
 	--text-xs: 0.75rem;
@@ -117,9 +117,40 @@
 	--spacing-96: 24rem;
 }
 
+/* Kumo product roles use the public source names. Brand text is separate from the
+   blue product action role, so its text utilities bind to the text namespace. */
+@theme {
+	--color-kumo-canvas: oklch(98.75% 0 0);
+	--color-kumo-base: white;
+	--color-kumo-elevated: oklch(98% 0 0);
+	--color-kumo-recessed: oklch(96% 0 0);
+	--color-kumo-control: white;
+	--color-kumo-brand-hover: oklch(48.8% 0.243 264.376);
+	--color-kumo-line: oklch(14.5% 0 0 / 0.1);
+	--color-kumo-hairline: oklch(93.5% 0 0);
+	--color-kumo-focus: oklch(15% 0 0);
+	--color-kumo-contrast: oklch(8.5% 0 0);
+	--color-kumo-overlay: oklch(97.5% 0 0);
+	--color-kumo-interact: oklch(87% 0 0);
+	--color-kumo-fill-hover: oklch(96.5% 0 0);
+}
+
+@utility bg-kumo-brand {
+	background-color: var(--color-kumo-brand);
+}
+@utility text-kumo-default {
+	color: var(--text-color-kumo-default);
+}
+@utility text-kumo-link {
+	color: var(--text-color-kumo-link);
+}
+@utility text-kumo-brand {
+	color: var(--text-color-kumo-brand);
+}
+
 /* ─── Primitive scales + global tokens (theme-independent, source of truth) ─── */
 :root {
-	/* Ink — true neutral shades of black (no hue tint). Never pure #000. */
+	/* Ink — true neutral shades of black (no hue tint). Never pure black. */
 	--ink-950: oklch(0.12 0 0);
 	--ink-900: oklch(0.16 0 0);
 	--ink-850: oklch(0.19 0 0);
@@ -133,7 +164,7 @@
 	--ink-100: oklch(0.93 0 0);
 	--ink-50: oklch(0.97 0 0);
 
-	/* Signal — the ambient accent ramp. Currently iMessage blue (≈ #0A84FF).
+	/* Signal — the ambient accent ramp. Currently a bright blue accent.
 	   Swap these six values to retheme the accent; everything else points here.
 	   Fills/CTAs use signal-500; TEXT uses --brand (a legible per-theme step). */
 	--signal-200: oklch(0.82 0.08 250);
@@ -176,13 +207,44 @@
 
 	/* Shared horizontal rhythm for site chrome and structural content rails. */
 	--site-gutter: 1.25rem;
+
+	/* Cloudflare brand constants. These are the only raw hex values in this file. */
+	--cf-brand-tangerine: #F6821F;
+	--cf-brand-ruby: #FF6633;
+	--cf-brand-mango: #FBAD41;
+
+	/* Kumo source roles not exposed by Tailwind's color namespace. */
+	--color-kumo-brand: oklch(0.5772 0.2324 260);
+	--text-color-kumo-default: oklch(21% 0.006 285.885);
+	--text-color-kumo-link: oklch(42.4% 0.199 265.638);
+	--text-color-kumo-brand: var(--cf-brand-tangerine);
+}
+
+:root[data-mode="dark"] {
+	/* Kumo dark values from https://kumo-ui.com/colors/ */
+	--color-kumo-canvas: oklch(10% 0 0);
+	--color-kumo-base: oklch(17% 0 0);
+	--color-kumo-elevated: oklch(12% 0 0);
+	--color-kumo-recessed: oklch(15% 0 0);
+	--color-kumo-control: oklch(21% 0.006 285.885);
+	--color-kumo-brand: color-mix(in oklch, oklch(0.5772 0.2324 260), black 10%);
+	--color-kumo-brand-hover: oklch(48.8% 0.243 264.376);
+	--color-kumo-line: oklch(32% 0 0);
+	--color-kumo-hairline: oklch(26.9% 0 0);
+	--color-kumo-focus: oklch(93.5% 0 0);
+	--color-kumo-contrast: oklch(98.5% 0 0);
+	--color-kumo-overlay: oklch(26.9% 0 0);
+	--color-kumo-interact: oklch(37.1% 0 0);
+	--color-kumo-fill-hover: oklch(37.1% 0 0);
+	--text-color-kumo-default: oklch(97% 0 0);
+	--text-color-kumo-link: oklch(70.7% 0.165 254.624);
 }
 
 /* ─── Light theme (default) — neutral paper + signal accent ─── */
 :root {
 	--radius: 0.625rem;
 
-	/* Surfaces — soft warm paper, never pure #fff */
+	/* Surfaces — soft warm paper, never pure white */
 	--background: oklch(0.955 0.006 85);
 	--foreground: oklch(0.2 0 0);
 	--card: oklch(0.985 0.004 85);
@@ -265,8 +327,8 @@
 	--grid-fade: linear-gradient(
 		to bottom,
 		transparent 0%,
-		#000 14%,
-		#000 82%,
+		black 14%,
+		black 82%,
 		transparent 100%
 	);
 
@@ -289,7 +351,7 @@
 
 /* ─── Dark Mode — deep neutral-black + signal accent (the active theme) ─── */
 .dark {
-	/* Surfaces — cinematic near-black void, lifted panels (never pure #000) */
+	/* Surfaces — cinematic near-black void, lifted panels (never pure black) */
 	--background: oklch(0.045 0.003 245);
 	--foreground: var(--ink-50);
 	--card: oklch(0.11 0.004 245);
@@ -362,8 +424,8 @@
 	--grid-fade: linear-gradient(
 		to bottom,
 		transparent 0%,
-		#000 12%,
-		#000 84%,
+		black 12%,
+		black 84%,
 		transparent 100%
 	);
 

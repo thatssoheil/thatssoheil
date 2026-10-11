@@ -1,16 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Lexend } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { ROLE_PROSE, SITE, X_HANDLE } from "@/lib/constants";
 import { PersonJsonLd } from "@/components/json-ld";
 import { SkipToContent } from "@/components/skip-to-content";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-// Primary typeface: Lexend — tuned for low reading fatigue. Variable (no `weight`),
-// so the full 100–900 axis is available. --font-sans resolves to it across the
-// site's UI and prose.
-const lexend = Lexend({
-	variable: "--font-lexend",
+// Inter supplies the proportional face; JetBrains Mono supplies code and mono.
+// Keep the CSS variable names as the stable plumbing for existing font utilities.
+const inter = Inter({
+	variable: "--font-inter",
+	subsets: ["latin"],
+	display: "swap",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+	variable: "--font-jetbrains-mono",
 	subsets: ["latin"],
 	display: "swap",
 });
@@ -97,8 +102,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
 	themeColor: [
-		{ media: "(prefers-color-scheme: dark)", color: "#0a0a0f" },
-		{ media: "(prefers-color-scheme: light)", color: "#f4f1ea" },
+		{ media: "(prefers-color-scheme: dark)", color: "oklch(10% 0 0)" },
+		{ media: "(prefers-color-scheme: light)", color: "oklch(98.75% 0 0)" },
 	],
 	width: "device-width",
 	initialScale: 1,
@@ -119,12 +124,12 @@ export default function RootLayout({
 				    the `.js` class, so the gate stays inert and content is visible. */}
 				<script
 					dangerouslySetInnerHTML={{
-						__html: `(function(){var root=document.documentElement;root.classList.add('js');try{var overrideKey='thatssoheil-theme-override';var getScheduledTheme=function(){var hour=(new Date()).getHours();return hour>=7&&hour<18?'light':'dark'};var getTheme=function(){try{var raw=window.localStorage&&window.localStorage.getItem(overrideKey);if(raw){var override=JSON.parse(raw);if((override.theme==='light'||override.theme==='dark')&&typeof override.expiresAt==='number'&&override.expiresAt>Date.now()){return override.theme}window.localStorage.removeItem(overrideKey)}}catch(error){try{window.localStorage.removeItem(overrideKey)}catch(error){}}return getScheduledTheme()};var theme=getTheme();root.classList.toggle('dark',theme==='dark');root.style.colorScheme=theme;if('scrollRestoration'in history)history.scrollRestoration='manual';var width=window.innerWidth;var coarse=window.matchMedia&&window.matchMedia('(pointer: coarse)').matches;var setStableViewport=function(){root.style.setProperty('--stable-viewport-height',window.innerHeight+'px')};setStableViewport();window.addEventListener('resize',function(){var nextWidth=window.innerWidth;if(!coarse||nextWidth!==width){width=nextWidth;setStableViewport()}},{passive:true})}catch(e){}})();`,
+						__html: `(function(){var root=document.documentElement;var overrideKey='thatssoheil-theme-override';var getSystemTheme=function(){return window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'};var theme=null;root.classList.add('js');try{var raw=window.localStorage&&window.localStorage.getItem(overrideKey);if(raw){var override=JSON.parse(raw);if(override&&(override.theme==='light'||override.theme==='dark')){theme=override.theme}else{window.localStorage.removeItem(overrideKey)}}}catch(e){}if(!theme){theme=getSystemTheme()}root.setAttribute('data-mode',theme);root.classList.toggle('dark',theme==='dark');root.style.colorScheme=theme;if('scrollRestoration'in history)history.scrollRestoration='manual';var width=window.innerWidth;var coarse=window.matchMedia&&window.matchMedia('(pointer: coarse)').matches;var setStableViewport=function(){root.style.setProperty('--stable-viewport-height',window.innerHeight+'px')};setStableViewport();window.addEventListener('resize',function(){var nextWidth=window.innerWidth;if(!coarse||nextWidth!==width){width=nextWidth;setStableViewport()}},{passive:true})})();`,
 					}}
 				/>
 				<PersonJsonLd />
 			</head>
-			<body className={`${lexend.variable} antialiased`}>
+			<body className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}>
 				<ThemeProvider>
 					<SkipToContent />
 					{children}
