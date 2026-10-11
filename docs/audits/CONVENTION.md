@@ -63,3 +63,4 @@ the prior audit's priorities were resolved — the folder is a ledger, not a gra
   overall maturity **4.7/10**; "a beautiful theme, not yet a system" — the product is
   built *beside* the system (≈0 product adoption of the type ramps / motion tokens /
   Button / Card), with no lint gate to stop the drift.
+- [2026-10-11 - Signal Glass website](./2026-10-11-signal-glass-audit.md) - overall **7.1/10**; strong craft and engineering with concentrated platform security, forced-colors, and crawl-hygiene work remaining.
