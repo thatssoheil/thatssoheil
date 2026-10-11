@@ -1,7 +1,6 @@
 "use client";
 
 import { type SectionId, TAGLINE } from "@/lib/constants";
-import { jumpToSection } from "@/lib/section-navigation";
 
 const MOTTO_REST = TAGLINE.replace(/^Coding\s+/, "");
 
@@ -9,15 +8,12 @@ const MOTTO_REST = TAGLINE.replace(/^Coding\s+/, "");
 
 function ScrollCue() {
 	return (
-		<button
-			onClick={() => jumpToSection("#manifesto")}
-			aria-label="Scroll to content"
+		<div
 			aria-hidden="true"
-			tabIndex={-1}
-			className="group absolute inset-x-0 bottom-10 z-10 mx-auto flex h-12 w-11 cursor-pointer items-center justify-center"
+			className="pointer-events-none absolute inset-x-0 bottom-10 z-10 mx-auto flex h-12 w-11 items-center justify-center"
 		>
 			<span className="block h-8 w-px bg-foreground/20" />
-		</button>
+		</div>
 	);
 }
 
@@ -49,7 +45,6 @@ export function HeroSection() {
 
 					{/* The name — static, SSR-safe. */}
 					<h1 className="mt-6 text-foreground">
-						<span className="sr-only">Soheil Fakour</span>
 						<span className="relative left-1/2 flex w-screen -translate-x-1/2 flex-col gap-1 text-[26vw] font-light leading-[0.78] sm:hidden font-sans">
 							<span className="block w-full">Soheil</span>
 							<span className="block w-full">Fakour</span>
