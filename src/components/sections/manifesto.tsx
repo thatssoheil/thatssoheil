@@ -1,5 +1,5 @@
 import type { SectionId } from "@/lib/constants";
-import { CUTS, MANIFESTO } from "@/data/manifesto";
+import { MANIFESTO } from "@/data/manifesto";
 import { SectionPanel } from "@/components/sections/section-panel";
 import { Separator, typeRole } from "@/components/ui";
 
@@ -30,23 +30,6 @@ export function ManifestoSection() {
 						</p>
 					</div>
 				))}
-
-				<div className="relative grid gap-3 pt-6 sm:grid-cols-[8.75rem_minmax(0,1fr)]">
-					<Separator className="absolute inset-x-0 top-0" aria-hidden="true" />
-					<p className={`pt-1 text-kumo-default ${typeRole.manifestoEntryLabel}`}>
-						{CUTS.label}
-					</p>
-					<div className="brand-body text-kumo-default">
-						<ul className="space-y-2">
-							{CUTS.items.map((entry) => (
-								<li key={entry.text}>
-									{entry.text} ({entry.date})
-								</li>
-							))}
-						</ul>
-						<p className="mt-3">{CUTS.note}</p>
-					</div>
-				</div>
 			</div>
 		</SectionPanel>
 	);
