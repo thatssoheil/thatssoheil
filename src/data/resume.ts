@@ -110,7 +110,7 @@ export const RESUME = {
 					"Audited and modernized an early AI-generated React codebase, replacing inconsistent components and uncoordinated API calls with reusable UI, TanStack Query services, centralized query keys, and documented frontend conventions.",
 					"Redesigned a 50-row patient workflow from more than 100 potential per-row requests to 2-3 list-level requests using server pagination, list-shaped payloads, and lazy-loaded histories.",
 					"Hardened live encounters with HTTP/WebSocket reconciliation, cross-tab recording synchronization, token refresh, ordered autosave, submit flushing, and signoff guards, using Claude for agentic development and AI-driven debugging.",
-					"Built shared table, form, date/time, localization, access-control, and encounter foundations across four locales while continuously curating small workflow and scope decisions with the team, including participating in code review and raising code quality.",
+					"Built shared table, form, date/time, localization, access-control, and encounter foundations across four locales while working with the team on workflow and scope decisions, including participating in code review and raising code quality.",
 				],
 			},
 			{
@@ -153,7 +153,7 @@ export const RESUME = {
 				location: "Remote, Dallas, Texas",
 				highlights: [
 					"Implemented responsive email, social, print, and deal-document templates from supplied designs using HTML, CSS, MJML, and the platform's templating system.",
-					"Tested cross-device output and published versioned templates through a repository-to-CMS delivery pipeline.",
+					"Tested cross-device output and published versioned templates from the repository to the CMS.",
 				],
 			},
 			{

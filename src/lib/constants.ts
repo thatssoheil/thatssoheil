@@ -17,9 +17,9 @@ export const X_HANDLE = "@thatssoheil";
 
 export const SITE = {
 	name: "Soheil Fakour",
-	title: `Soheil Fakour — ${TAGLINE}`,
+	title: `Soheil Fakour - ${TAGLINE}`,
 	description:
-		"Soheil Fakour is a frontend engineer and product curator building refined, AI-aware product interfaces with React, Next.js, TypeScript, and Cloudflare. Based in Tehran, working across EMEA and GCC hours.",
+		"Soheil Fakour is a frontend engineer and product curator in Tehran, building product interfaces with React, Next.js, TypeScript, and Cloudflare. Available for roles across EMEA and GCC time zones.",
 	url: "https://thatssoheil.website",
 	ogImage: "/opengraph-image",
 	ogImageAlt:

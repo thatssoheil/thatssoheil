@@ -101,7 +101,7 @@ export function HafezFal({
 				provenance: "local",
 				asOf: fallbackSet.generatedAt,
 			});
-			setNote("Ganjoor was unreachable from your browser just now, so this draw came from the local set.");
+			setNote("Ganjoor is unavailable. Showing a poem from the local collection.");
 		} finally {
 			setDrawing(false);
 			setDrawCount((count) => count + 1);

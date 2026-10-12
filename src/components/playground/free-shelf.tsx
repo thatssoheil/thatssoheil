@@ -91,7 +91,7 @@ export function FreeShelf({ data }: { data: FreeShelfData }) {
 			<div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
 				<div
 					role="group"
-					aria-label="Chart window"
+					aria-label="Download period"
 					className="inline-flex rounded-full border border-kumo-hairline p-0.5"
 				>
 					{WINDOWS.map((window) => (

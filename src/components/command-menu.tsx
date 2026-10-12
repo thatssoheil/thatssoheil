@@ -144,7 +144,7 @@ export function CommandMenu() {
 
 							<Command.List className="max-h-[min(60vh,22rem)] overflow-y-auto p-2">
 								<Command.Empty className="py-8 text-center text-sm text-kumo-default opacity-70">
-									Nothing here.
+									No results.
 								</Command.Empty>
 
 								<Command.Group heading="Sections">

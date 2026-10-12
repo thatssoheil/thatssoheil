@@ -16,7 +16,7 @@ export default function RhythmCirclePage() {
 		<PlaygroundShell
 			eyebrow="Playground"
 			title="Rhythm circle"
-			intro="Every timeline you have tapped along to may be Euclid's algorithm in disguise: spread a few pulses as evenly as possible around a ring and out come the tresillo, the bossa nova, the Turkish aksak. Pick steps and pulses, press play, and hear the math while the circle shows the pattern."
+			intro="Euclid distributes pulses evenly around a ring to produce patterns such as the tresillo, bossa nova, and Turkish aksak. Set the number of steps and pulses, then press play to hear the pattern."
 			meta={<>No data feed - the pattern is computed in the page · Rhythms after Toussaint, 2005</>}
 		>
 			<section aria-label="The instrument">

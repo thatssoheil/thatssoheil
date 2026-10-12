@@ -322,7 +322,7 @@ export function LogisticMap() {
 	return (
 		<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-				<span className="text-label uppercase  text-kumo-default opacity-70">The instrument</span>
+				<span className="text-label uppercase  text-kumo-default opacity-70">Logistic map: adjust the growth rate</span>
 				<span role="status" aria-live="polite" className="text-code text-kumo-default opacity-70">
 					{cycleText}
 				</span>

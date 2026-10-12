@@ -6,13 +6,12 @@ const LLMS_CONTENT = `# Soheil Fakour
 
 Canonical site: https://thatssoheil.website/
 
-Soheil Fakour builds refined, AI-aware product interfaces with TypeScript,
+Soheil Fakour builds product interfaces with TypeScript,
 React, Next.js, Tailwind, GSAP, and Cloudflare Workers. His work sits between
-frontend engineering and product curation: shipping small working versions,
-shaping interaction details, and cutting what does not survive contact with the
-real product.
+frontend engineering and product curation. He builds small prototypes, refines
+interaction details, and removes ideas that fail in the product.
 
-## Primary Page
+## Site pages
 
 - Home: https://thatssoheil.website/
 - Manifesto: https://thatssoheil.website/#manifesto

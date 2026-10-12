@@ -7,7 +7,7 @@ import { Link } from "@/components/ui";
 export const metadata: Metadata = {
 	title: "Color vision",
 	description:
-		"What the web looks like through colorblind eyes: a full hue circle and this site's own palette, simulated through the 2009 Machado-Oliveira-Fernandes model - pick a type and a severity.",
+		"Compare a full hue circle and the site palette under the 2009 Machado, Oliveira, and Fernandes model.",
 	alternates: { canonical: "/playground/color-vision" },
 };
 
@@ -44,7 +44,7 @@ export default function ColorVisionPage() {
 					<p>
 						The subjects: a full hue circle at fixed lightness and chroma, where the collapse is
 						widest; this site&apos;s own palette, read live from the rendered design tokens (the
-						swatches follow the current theme - the site flips light and dark by the hour); and any
+						swatches follow the current theme); and any
 						color you bring from a native picker. Hex readouts come from the browser&apos;s own
 						resolution of each color: the palette values are read back from a canvas after the
 						browser paints them, so the numbers are what this site actually renders.

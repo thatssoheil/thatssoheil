@@ -166,11 +166,11 @@ export function PersianCalendar({ initialToday }: { initialToday: TehranToday })
 	const onGregorian = (value: string) => {
 		const g = parseIsoDate(value);
 		if (!g) {
-			setNote("That date could not be read - pick one from the field.");
+			setNote("Choose a valid date in the field.");
 			return;
 		}
 		if (!inWindowGregorian(g.gy, g.gm, g.gd)) {
-			setNote(`Outside the supported window: ${windowLabel()}.`);
+			setNote(`Choose a date from ${windowLabel()}.`);
 			return;
 		}
 		setNote(null);
