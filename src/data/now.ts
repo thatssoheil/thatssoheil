@@ -1,10 +1,8 @@
 // ─── Now / Work Data ───
-// The concrete, hireable facts — current work, availability, stack, background.
+// The concrete facts — current work, stack, background.
 // These used to live only in README.md and reached neither visitors nor the AI
 // persona (audit #1). Edit here to update both the on-page "Now" block and the chat.
 // Voice: plain, grounded, first-person-adjacent. No corporate fluff.
-
-import { AVAILABILITY } from "@/lib/constants";
 
 export interface WorkNote {
 	label: string;
@@ -12,8 +10,6 @@ export interface WorkNote {
 }
 
 export const NOW = {
-	/** One-line availability — answers the "are you available?" starter chip. */
-	status: AVAILABILITY,
 	/** What he's anchoring right now. */
 	current:
 		"Recently owned frontend delivery on a small team building clinical AI that turns physician-patient conversations into structured medical documentation.",

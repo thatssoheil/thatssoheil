@@ -22,7 +22,7 @@ I'd rather show you the thing than argue about the thing. If an idea matters, I'
 
 Say hello.
 
-Email first. Catch me on X. Everything else, eventually. Currently open to remote and on-site roles in Tehran, and remote roles across the GCC and Europe.
+Email first. Catch me on X. Everything else, eventually.
 
 - **Email:** [soheil.fakour@gmail.com](mailto:soheil.fakour@gmail.com)
 - **GitHub:** [github.com/thatssoheil](https://github.com/thatssoheil)

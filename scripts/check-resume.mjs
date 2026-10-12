@@ -31,7 +31,6 @@ const required = [
 	"MCI (Hamrah-e Avval)",
 	"Xperix",
 	"Amirkabir University of Technology",
-	"+98 910 313 9376",
 	"soheil.fakour@gmail.com",
 ];
 
@@ -42,6 +41,8 @@ const forbidden = [
 	/solo developer at Zaman/i,
 	/designed Xperix/i,
 	/Developer of the Month/i,
+	/910\s*313\s*9376/,
+	/open to remote and on-site roles/i,
 ];
 
 const failures = [];
