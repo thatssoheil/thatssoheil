@@ -1,8 +1,6 @@
 import {
-	AVAILABILITY,
 	EMAIL,
 	LOCATION,
-	PHONE,
 	SITE,
 	SOCIALS,
 } from "@/lib/constants";
@@ -42,7 +40,6 @@ export interface ResumeData {
 	name: string;
 	title: string;
 	location: string;
-	availability: string;
 	contact: readonly ResumeLink[];
 	sections: {
 		summary: string;
@@ -67,9 +64,7 @@ export const RESUME = {
 	name: SITE.name,
 	title: "Frontend Engineer",
 	location: LOCATION,
-	availability: AVAILABILITY,
 	contact: [
-		{ label: PHONE, href: `tel:${PHONE.replaceAll(" ", "")}` },
 		{ label: EMAIL, href: `mailto:${EMAIL}` },
 		{ label: "thatssoheil.website", href: SITE.url },
 		{ label: "github.com/thatssoheil", href: github?.href ?? "https://github.com/thatssoheil" },
@@ -197,6 +192,6 @@ export const RESUME = {
 			startDate: "2016-10",
 			endDate: "2021-10",
 		},
-		additional: ["English - Advanced Professional Proficiency", AVAILABILITY],
+		additional: ["English - Advanced Professional Proficiency"],
 	},
 } as const satisfies ResumeData;
