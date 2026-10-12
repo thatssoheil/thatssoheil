@@ -177,14 +177,14 @@ export function RhythmCircle() {
 		}
 		const ctx = ensureContext();
 		if (!ctx) {
-			setNote("This browser does not support Web Audio, so the loop cannot sound here. The circle still shows the pattern.");
+			setNote("Audio is not supported in this browser. The pattern is still visible.");
 			return;
 		}
 		setNote(null);
 		try {
 			if (ctx.state === "suspended") await ctx.resume();
 		} catch {
-			setNote("The browser kept audio suspended, so the loop cannot sound here.");
+			setNote("Audio did not start. Select Play to try again.");
 			return;
 		}
 		startScheduler(ctx);
@@ -272,7 +272,7 @@ export function RhythmCircle() {
 	return (
 		<div className="rounded-lg border border-kumo-hairline bg-kumo-base px-4 py-5 sm:px-6">
 			<div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-				<span className="text-label uppercase  text-kumo-default opacity-70">The instrument</span>
+				<span className="text-label uppercase  text-kumo-default opacity-70">Rhythm controls: set steps and pulses</span>
 				<span role="status" aria-live="polite" className="text-code text-kumo-default opacity-70">
 					{stateLine}
 				</span>

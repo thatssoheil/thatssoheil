@@ -36,10 +36,7 @@ export default async function HafezFalPage() {
 				<SectionHeading label="Method and sources" />
 				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
-						This page is a window onto an established ritual rather than a re-creation:
-						Ganjoor&apos;s own fal service draws a random ghazal from Hafez&apos;s Divan, the
-						way opening the book at random would. The draw is random every time; the page adds
-						no reading and no advice.
+						Ganjoor draws a random ghazal from Hafez. The page adds no interpretation or advice.
 					</p>
 					<p>
 						The first draw is fetched when the page loads and rendered with it; each redraw asks

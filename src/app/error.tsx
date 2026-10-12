@@ -23,7 +23,7 @@ export default function Error({
 			<title>{`Error | ${SITE.name}`}</title>
 			<RouteFallback
 				code="500"
-				title="Signal dropped."
+				title="Something went wrong."
 				actionLabel="Try again"
 				onAction={unstable_retry ?? reset}
 			/>

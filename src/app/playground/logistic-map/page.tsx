@@ -47,9 +47,8 @@ export default function LogisticMapPage() {
 						nothing here can go stale.
 					</p>
 					<p>
-						Every value in the table below was verified against the page&apos;s own
-						machinery at build time - the deepest onsets within a few parts per
-						million of the published values. The cascade&apos;s universal rate is
+						The page verifies the table values at build time against published values.
+						Its deepest onsets are within a few parts per million of those values. The cascade&apos;s universal rate is
 						Feigenbaum&apos;s delta = {FEIGENBAUM_DELTA}...
 					</p>
 				</div>

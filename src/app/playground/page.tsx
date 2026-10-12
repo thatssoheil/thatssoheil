@@ -5,7 +5,7 @@ import { PlaygroundShell } from "@/components/playground/playground-shell";
 export const metadata: Metadata = {
 	title: "Playground",
 	description:
-		"Small, working versions of ideas in progress: a tokenized-assets tracker, a stablecoin float tracker, a volatility gauge, a Bitcoin network pulse, a seismic watch, a solar watch, a Tehran air panel, a daily chess puzzle, a dollar dry powder panel, a Hafez fal, a Euclidean rhythm machine, a logistic map dial, a night-side map of Earth, a free shelf of Project Gutenberg's most-downloaded books, a sugar-cubes check for packaged food and drink, a great-circle route viewer, a color-vision palette simulator, a Persian calendar, an antipodes viewer, and weekly BTC and ETH macro notes. Live data, public method.",
+		"Small experiments with live trackers, interactive tools, and weekly BTC and ETH notes.",
 	alternates: { canonical: "/playground" },
 };
 
@@ -15,7 +15,7 @@ const EXPERIMENTS = [
 		title: "Tokenized assets tracker",
 		status: "Live",
 		blurb:
-			"The real-world-asset sector by the numbers: who is issuing, how much actually trades, and the race between venues wrapping the same stocks on different chains.",
+			"The real-world-asset market: issuers, trading volume, and tokenized versions of the same stocks across chains.",
 		meta: "Refreshes about every 30 minutes",
 	},
 	{
@@ -23,7 +23,7 @@ const EXPERIMENTS = [
 		title: "Stablecoin float tracker",
 		status: "Live",
 		blurb:
-			"The crypto market's dry powder by the numbers: total stablecoin circulation, recent moves, and the full record since 2017.",
+			"Total stablecoin circulation, recent changes, and the full record since 2017.",
 		meta: "Refreshes about every 30 minutes",
 	},
 	{
@@ -31,7 +31,7 @@ const EXPERIMENTS = [
 		title: "Volatility gauge",
 		status: "Live",
 		blurb:
-			"Crypto's fear gauge by the numbers: Bitcoin and Ethereum implied volatility, the day's move, and where each sits against its history since 2021.",
+			"Bitcoin and Ethereum implied volatility, daily moves, and both histories since 2021.",
 		meta: "Live reading, snapshot fallback",
 	},
 	{
@@ -39,7 +39,7 @@ const EXPERIMENTS = [
 		title: "Bitcoin network pulse",
 		status: "Live",
 		blurb:
-			"The Bitcoin network itself by the numbers: what a transaction costs right now, how full the mempool is, and when the next difficulty change lands.",
+			"The Bitcoin network: transaction costs, mempool size, and the next difficulty change.",
 		meta: "Live reading, snapshot fallback",
 	},
 	{
@@ -47,7 +47,7 @@ const EXPERIMENTS = [
 		title: "Seismic watch",
 		status: "Live",
 		blurb:
-			"The week's significant earthquakes by the numbers: how many shook the planet, the largest event, and the latest ones, from the USGS feed.",
+			"USGS earthquakes of magnitude 4.5 and above this week: the count, largest event, and latest events.",
 		meta: "Live reading, snapshot fallback",
 	},
 	{
@@ -55,7 +55,7 @@ const EXPERIMENTS = [
 		title: "Solar watch",
 		status: "Live",
 		blurb:
-			"Earth's space weather by the numbers: the planetary K index right now, the past week of geomagnetic activity, and NOAA's three-day outlook.",
+			"Current space weather: the planetary K index, the past week of geomagnetic activity, and NOAA forecast for the next three days.",
 		meta: "Live reading, snapshot fallback",
 	},
 	{
@@ -63,7 +63,7 @@ const EXPERIMENTS = [
 		title: "Tehran air",
 		status: "Live",
 		blurb:
-			"The air in Tehran by the numbers: PM2.5 and PM10 right now, the past two days and today's rise and fall, and how the current hour sits against the WHO guideline.",
+			"PM2.5 and PM10 in Tehran now, recent readings, and the current hour against the WHO guideline.",
 		meta: "Live reading, snapshot fallback",
 	},
 	{
@@ -79,7 +79,7 @@ const EXPERIMENTS = [
 		title: "Dollar dry powder",
 		status: "Live",
 		blurb:
-			"Where the dollar system's spare cash sits by the numbers: the Treasury's account at the Federal Reserve and the overnight reverse repo pool, each against its history.",
+			"The Treasury General Account and overnight reverse repo pool, each compared with its own history.",
 		meta: "Live reading, snapshot fallback",
 	},
 	{
@@ -167,7 +167,7 @@ const EXPERIMENTS = [
 		title: "BTC and ETH macro notes",
 		status: "Weekly",
 		blurb:
-			"A weekly regime read from a backtested macro engine: the current phase, the signals behind it, and what would change the picture.",
+			"A weekly regime read from a backtested macro model: the current phase, signals, and what would change the picture.",
 		meta: "A new note every week",
 	},
 ] as const;
@@ -175,9 +175,9 @@ const EXPERIMENTS = [
 export default function PlaygroundPage() {
 	return (
 		<PlaygroundShell
-			eyebrow="Playground"
+			eyebrow="Experiments"
 			title="Playground"
-			intro="Small, working versions of ideas I keep coming back to. Live data, public method, honest labels."
+			intro="Small experiments with live data and a clear account of how each works."
 		>
 			<section aria-label="Experiments" className="grid gap-3 sm:grid-cols-2">
 				{EXPERIMENTS.map((experiment) => (

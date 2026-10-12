@@ -27,7 +27,7 @@ export default function DryPowderPage() {
 		<PlaygroundShell
 			eyebrow="Playground"
 			title="Dollar dry powder"
-			intro="The dollar system's spare cash, by the numbers: the Treasury's checking account at the Federal Reserve and the overnight reverse repo pool, each against its own history."
+			intro="The Treasury General Account and overnight reverse repo pool, each compared with its own history."
 			meta={
 				<>
 					Data: U.S. Treasury Fiscal Data and the Federal Reserve Bank of New York · TGA

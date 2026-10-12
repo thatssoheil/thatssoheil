@@ -160,8 +160,7 @@ export default async function SeismicWatchPage() {
 					<p>
 						The list is the USGS M4.5+ feed: every earthquake of magnitude 4.5 and
 						above in the past 7 days, a rolling window that USGS updates every minute.
-						This is the USGS cut of a very active planet, not everything that shook -
-						smaller quakes happen constantly and never appear here. The list below
+						The list covers USGS earthquakes of magnitude 4.5 and above; smaller events are not shown. The list below
 						shows the {LIST_LIMIT} most recent; the counts above cover the full week.
 					</p>
 					<p>

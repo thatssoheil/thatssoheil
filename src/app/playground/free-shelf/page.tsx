@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
 	title: "Free shelf",
 	description:
-		"Project Gutenberg's most-downloaded books: what the world is reading for free, in three windows, covers and all. Every entry opens the full text.",
+		"Project Gutenberg's most-downloaded books across three periods: yesterday, the past 7 days, and the past 30 days. Each entry opens the book page with the full text.",
 	alternates: { canonical: "/playground/free-shelf" },
 };
 
@@ -25,7 +25,7 @@ export default async function FreeShelfPage() {
 		<PlaygroundShell
 			eyebrow="Playground"
 			title="Free shelf"
-			intro="Project Gutenberg's most-downloaded books: what the world is reading for free, in three windows - yesterday, the last 7 days, the last 30 days. Every cover opens the book's page, where the full text waits."
+			intro="Project Gutenberg lists its most-downloaded books across three periods: yesterday, the past 7 days, and the past 30 days. Each cover links to its book page, which contains the full text."
 			meta={
 				<>
 					Data: Project Gutenberg · chart generated {formatDateTimeUtc(chartDate)}

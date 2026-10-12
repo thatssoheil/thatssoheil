@@ -9,7 +9,7 @@ import { Link } from "@/components/ui";
 export const metadata: Metadata = {
 	title: "BTC and ETH macro notes",
 	description:
-		"A weekly crypto macro regime read from a backtested engine: phase, signals, and what would change the picture.",
+		"A weekly crypto macro regime read from a backtested model: phase, signals, and what would change the picture.",
 	alternates: { canonical: "/playground/macro" },
 };
 
@@ -22,11 +22,11 @@ export default function MacroNotesPage() {
 		<PlaygroundShell
 			eyebrow="Playground"
 			title="BTC and ETH macro notes"
-			intro="A weekly read of the crypto macro regime from a backtested engine. The method and the code are public; the notes change when the regime does."
+			intro="A weekly read of the crypto macro regime from a backtested model. The method and code are public; the notes change when the regime changes."
 			meta={
 				<>
-					Latest note: {formatDateLong(latest.date)} · engine data through{" "}
-					{formatDateLong(latest.dataThrough)}
+					Latest note: {formatDateLong(latest.date)}; data through{" "}
+					{formatDateLong(latest.dataThrough)}.
 				</>
 			}
 		>
@@ -89,14 +89,13 @@ export default function MacroNotesPage() {
 				<SectionHeading label="Method" />
 				<div className="flex max-w-2xl flex-col gap-3 text-body-sm text-kumo-default opacity-70">
 					<p>
-						The engine scores 14 weighted signals across liquidity, risk
-						appetite, crypto internals, and inflation into a single regime
-						score. The validated execution rule behind these notes is a 200-day
+						The model combines 14 weighted signals across liquidity, risk appetite,
+						crypto internals, and inflation into one regime score. The validated execution rule behind these notes is a 200-day
 						moving-average trend filter, backtested on full-cycle data; the
 						score itself is context, not a trigger.
 					</p>
 					<p>
-						The code, the data pipeline, and the backtests are public:{" "}
+						The code, input data, and backtests are public:{" "}
 						<Link
 							href={REPO_URL}
 							target="_blank"

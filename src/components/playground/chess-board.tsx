@@ -183,7 +183,7 @@ export function ChessBoard({ data }: { data: ChessData }) {
 			setStep((current) => current + 1);
 		} else {
 			setSelected(null);
-			setNote("Not that one. The position stays as it is - try another move.");
+			setNote("Not that move. Try another.");
 		}
 	}
 
