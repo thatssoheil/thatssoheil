@@ -52,10 +52,7 @@ export const NAV_LINKS = [
 // ─── Contact / social ───
 
 export const EMAIL = "soheil.fakour@gmail.com";
-export const PHONE = "+98 910 313 9376";
 export const LOCATION = "Tehran, Iran";
-export const AVAILABILITY =
-	"Open to remote and on-site roles in Tehran, and remote roles in GCC and European countries.";
 
 /** Canonical social profiles — single source for the command menu, the connect
     section, and the Person JSON-LD `sameAs`, so the three can't drift. Icons +
